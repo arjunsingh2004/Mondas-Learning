@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "text": "Which of these is the strongest password?",
+    "explanation": "Longer, random, mixed characters are harder to guess.",
+    "metadata": {
+      "topic": "Passwords",
+      "subtopic": "Length & variety",
+      "difficulty": "Easy",
+      "bloomLevel": "Understand",
+      "threatVector": "Account",
+      "questionType": "SingleChoice",
+      "misconceptionTags": ["short_ok", "simple_words_ok"]
+    },
+    "options": [
+      {
+        "id": 1,
+        "text": "Password123",
+        "isCorrect": false
+      },
+      {
+        "id": 2,
+        "text": "H0rse!Staple!Rain?92",
+        "isCorrect": true
+      },
+      {
+        "id": 3,
+        "text": "qwerty",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "You receive an email from your bank asking you to verify your account. What is the biggest red flag?",
+    "explanation": "Banks don't ask you to click links and enter full credentials from random emails.",
+    "metadata": {
+      "topic": "Phishing",
+      "subtopic": "Email content",
+      "difficulty": "Medium",
+      "bloomLevel": "Apply",
+      "threatVector": "Email",
+      "questionType": "SingleChoice",
+      "misconceptionTags": ["trusts_brand_logo", "ignores_sender_address"]
+    },
+    "options": [
+      {
+        "id": 1,
+        "text": "It uses your full name",
+        "isCorrect": false
+      },
+      {
+        "id": 2,
+        "text": "The sender address is weird and not your bank's domain",
+        "isCorrect": true
+      },
+      {
+        "id": 3,
+        "text": "The email uses your bank's logo",
+        "isCorrect": false
+      }
+    ]
+  }
+]

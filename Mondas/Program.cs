@@ -37,7 +37,7 @@ namespace Mondas
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             OnStartup();
-            Application.Run();
+            Application.Run(new QuizForm());
             _host.Dispose();
             _host = null;
         }
@@ -73,7 +73,6 @@ namespace Mondas
             services.AddTransient<IShellWindow, ShellWindow>();
             services.AddTransient<MainPage>();
 
-            // <<< ADD THIS LINE TO REGISTER YOUR START FORM
             services.AddTransient<Start>();
 
             // Configuration
