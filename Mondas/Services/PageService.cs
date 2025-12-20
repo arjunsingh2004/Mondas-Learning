@@ -34,8 +34,7 @@ namespace Mondas.Services
                     tempKey = key.Contains("Page") ? key : key + "Page";
                 }
                 var selectedPages = _pages.Select(x => x)
-                .Where(x => x.Key.Split('.')[2].Equals(tempKey))
-                          .ToList();
+                .Where(x => x.Key.Split('.')[2].Equals(tempKey)).ToList();
                 if (!_pages.TryGetValue(selectedPages[0].Key, out pageType))
                 {
                     throw new ArgumentException($"Page not found: {key}. Did you forget to call PageService.Configure?");

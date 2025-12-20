@@ -5,9 +5,9 @@ namespace Mondas.Contracts.Services
 {
     public sealed class SelectionResult
     {
-        public Question SelectedQuestion { get; set; } = null!;
-        public string ReasonString { get; set; } = "";
-        public List<string> RulesFired { get; set; } = new();
+        public Question? SelectedQuestion {get; set;}
+        public string ReasonString {get; set;} = "";
+        public List<string> RulesFired {get; set;} = new();
     }
 
     public interface IRuleEngine

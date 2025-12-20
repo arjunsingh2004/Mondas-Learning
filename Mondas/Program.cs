@@ -14,6 +14,8 @@ using Mondas.Models;
 using Mondas.Services;
 using Mondas.Views;
 
+using SQLitePCL;
+
 namespace Mondas
 {
     internal static class Program
@@ -36,6 +38,15 @@ namespace Mondas
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JFaF5cXGRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH9ednVdRmJeWEZzXEFWYEg=");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            var baseDir = AppContext.BaseDirectory;
+
+            SQLitePCL.Batteries_V2.Init();
+
+            var init = new Mondas.Services.SqliteDatabaseInitializer (
+                Path.Combine(baseDir, "mondas.db"),
+                Path.Combine(baseDir, "Resources", "questions.json"));
+
+            init.Initialize();
             OnStartup();
             Application.Run(new QuizForm());
             _host.Dispose();

@@ -22,6 +22,17 @@ namespace Mondas.Services
             candidates = candidates.Where(q => !recentIds.Contains(q.Id)).ToList();
             trace.Add("AvoidRecentQuestions");
 
+            if (!candidates.Any())
+            {
+                trace.Add("NoCandidatesAfterAvoidRecent");
+                return new SelectionResult
+                {
+                    SelectedQuestion = null,
+                    ReasonString = "No more questions available.",
+                    RulesFired = trace
+                };
+            }
+
             Topic? weakestTopic = null;
             double weakestMastery = double.MaxValue;
 
@@ -49,6 +60,17 @@ namespace Mondas.Services
                 }
             }
 
+            if (!candidates.Any())
+            {
+                trace.Add("NoCandidatesAfterWeakTopicFocus");
+                return new SelectionResult
+                {
+                    SelectedQuestion = null,
+                    ReasonString = "No more questions available.",
+                    RulesFired = trace
+                };
+            }
+
             var preferred = candidates.Where(q => q.Metadata.Difficulty == DifficultyBand.Medium).ToList();
 
             if (!preferred.Any())
@@ -59,6 +81,17 @@ namespace Mondas.Services
             else
             {
                 trace.Add("TargetDifficulty:Medium");
+            }
+
+            if (!preferred.Any())
+            {
+                trace.Add("NoPreferredCandidates");
+                return new SelectionResult
+                {
+                    SelectedQuestion = null,
+                    ReasonString = "No more questions available.",
+                    RulesFired = trace
+                };
             }
 
             var selected = preferred[_random.Next(preferred.Count)];

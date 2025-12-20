@@ -23,7 +23,7 @@ namespace Mondas
 
         QuizSession session;
         SelectionResult currentSelection;
-        Question currentQuestion;
+        Question? currentQuestion;
         Stopwatch stopwatch = new Stopwatch();
         int questionsAsked = 0;
         int maxQuestions = 10;
@@ -166,6 +166,8 @@ namespace Mondas
             var repo = new JsonQuestionRepository(path);
             var questions = repo.GetAllQuestions();
 
+            maxQuestions = Math.Min(maxQuestions, questions.Count);
+
             if (questions.Count == 0)
             {
                 MessageBox.Show(this, "No questions found. Check questions.json.", "Mondas",
@@ -191,17 +193,23 @@ namespace Mondas
             }
 
             currentSelection = session.GetNextQuestion();
+
+            if (currentSelection == null || currentSelection.SelectedQuestion == null)
+            {
+                ShowSummaryAndClose();
+                return;
+            }
+
             currentQuestion = currentSelection.SelectedQuestion;
             questionsAsked++;
 
             lblQuestion.Text = currentQuestion.Text;
             lblProgress.Text = $"Question {questionsAsked} of {maxQuestions}";
-            lblReason.Text = "Why this question: " + currentSelection.ReasonString;
+            lblReason.Text = "Reason for question: " + currentSelection.ReasonString;
 
             optionsPanel.Controls.Clear();
 
-            bool singleChoice = currentQuestion.Metadata.QuestionType == QuestionType.SingleChoice
-                                || currentQuestion.Metadata.QuestionType == QuestionType.TrueFalse;
+            bool singleChoice = currentQuestion.Metadata.QuestionType == QuestionType.SingleChoice || currentQuestion.Metadata.QuestionType == QuestionType.TrueFalse;
 
             if (singleChoice)
             {
@@ -233,21 +241,17 @@ namespace Mondas
                     optionsPanel.Controls.Add(cb);
                 }
             }
-
             stopwatch.Restart();
         }
+
 
         void BtnSubmit_Click(object sender, EventArgs e)
         {
             if (currentQuestion == null) return;
 
-            bool singleChoice = currentQuestion.Metadata.QuestionType == QuestionType.SingleChoice
-                                || currentQuestion.Metadata.QuestionType == QuestionType.TrueFalse;
+            bool singleChoice = currentQuestion.Metadata.QuestionType == QuestionType.SingleChoice || currentQuestion.Metadata.QuestionType == QuestionType.TrueFalse;
 
-            var selectedIds = singleChoice
-                ? optionsPanel.Controls.OfType<RadioButton>()
-                    .Where(rb => rb.Checked)
-                    .Select(rb => (int)rb.Tag)
+            var selectedIds = singleChoice ? optionsPanel.Controls.OfType<RadioButton>().Where(rb => rb.Checked).Select(rb => (int)rb.Tag)
                     .ToList()
                 : optionsPanel.Controls.OfType<CheckBox>()
                     .Where(cb => cb.Checked)
@@ -256,18 +260,13 @@ namespace Mondas
 
             if (!selectedIds.Any())
             {
-                MessageBox.Show(this, "Please select an answer.", "Mondas",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(this, "Please select an answer.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             stopwatch.Stop();
 
-            var correctIds = currentQuestion.Options
-                .Where(o => o.IsCorrect)
-                .Select(o => o.Id)
-                .OrderBy(id => id)
-                .ToList();
+            var correctIds = currentQuestion.Options.Where(o => o.IsCorrect).Select(o => o.Id).OrderBy(id => id).ToList();
 
             var chosenSorted = selectedIds.OrderBy(id => id).ToList();
             bool isCorrect = correctIds.SequenceEqual(chosenSorted);
@@ -285,12 +284,7 @@ namespace Mondas
 
             session.RecordAttempt(currentQuestion, attempt);
 
-            MessageBox.Show(this,
-                isCorrect ? "Correct ✅" : "Incorrect ❌",
-                "Mondas",
-                MessageBoxButtons.OK,
-                isCorrect ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-
+            MessageBox.Show(this, isCorrect ? "Correct!" : "Incorrect!", "Mondas", MessageBoxButtons.OK, isCorrect ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
             LoadNextQuestion();
         }
 
@@ -301,12 +295,7 @@ namespace Mondas
             int correct = attempts.Count(a => a.IsCorrect);
             double percent = total == 0 ? 0 : correct * 100.0 / total;
 
-            MessageBox.Show(this,
-                $"Quiz complete!\n\nCorrect: {correct}/{total} ({percent:0}%)",
-                "Mondas",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-
+            MessageBox.Show(this, $"Quiz complete!\n\nCorrect: {correct}/{total} ({percent:0}%)", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Close();
         }
 
