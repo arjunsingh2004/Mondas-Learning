@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using System.Text.Json;
 using Mondas.Contracts.Services;
 using Mondas.Models;
 using Mondas.Services;
@@ -24,6 +25,8 @@ namespace Mondas
         QuizSession session;
         SelectionResult currentSelection;
         Question? currentQuestion;
+        SqliteAttemptRepository attemptRepo;
+        string userKey = "local";
         Stopwatch stopwatch = new Stopwatch();
         int questionsAsked = 0;
         int maxQuestions = 10;
@@ -161,6 +164,10 @@ namespace Mondas
         void InitSession()
         {
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            
+            var dbPath = System.IO.Path.Combine(baseDir, "mondas.db");
+            attemptRepo = new SqliteAttemptRepository(dbPath);
+            
             var path = System.IO.Path.Combine(baseDir, "Resources", "questions.json");
 
             var repo = new JsonQuestionRepository(path);
@@ -283,6 +290,19 @@ namespace Mondas
             };
 
             session.RecordAttempt(currentQuestion, attempt);
+            var record = new AttemptRecord
+            {
+                UserKey = userKey,
+                QuestionId = currentQuestion.Id,
+                SelectedOptionIdsJson = JsonSerializer.Serialize(selectedIds),
+                IsCorrect = isCorrect,
+                SecondsTaken = stopwatch.Elapsed.TotalSeconds,
+                SubmittedAt = DateTime.Now,
+                ReasonString = currentSelection.ReasonString,
+                RulesFiredJson = JsonSerializer.Serialize(currentSelection.RulesFired ?? new System.Collections.Generic.List<string>())
+            };
+
+            attemptRepo.Add(record);
 
             MessageBox.Show(this, isCorrect ? "Correct!" : "Incorrect!", "Mondas", MessageBoxButtons.OK, isCorrect ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
             LoadNextQuestion();

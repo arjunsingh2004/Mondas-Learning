@@ -42,49 +42,67 @@ namespace Mondas.Services
         private static void CreateSchema(SqliteConnection conn)
         {
             var sql = @"
-CREATE TABLE IF NOT EXISTS Questions (
-  Id              INTEGER PRIMARY KEY,
-  Text            TEXT NOT NULL,
-  Explanation     TEXT NOT NULL,
-  Topic           INTEGER NOT NULL,
-  Subtopic        TEXT NOT NULL,
-  Difficulty      INTEGER NOT NULL,
-  BloomLevel      INTEGER NOT NULL,
-  ThreatVector    TEXT NOT NULL,
-  QuestionType    INTEGER NOT NULL
-);
+            CREATE TABLE IF NOT EXISTS Questions (
+            Id INTEGER PRIMARY KEY,
+            Text TEXT NOT NULL,
+            Explanation TEXT NOT NULL,
+            Topic INTEGER NOT NULL,
+            Subtopic TEXT NOT NULL,
+            Difficulty INTEGER NOT NULL,
+            BloomLevel INTEGER NOT NULL,
+            ThreatVector TEXT NOT NULL,
+            QuestionType INTEGER NOT NULL
+            );
 
-CREATE TABLE IF NOT EXISTS AnswerOptions (
-  Id          INTEGER PRIMARY KEY AUTOINCREMENT,
-  QuestionId  INTEGER NOT NULL,
-  Text        TEXT NOT NULL,
-  IsCorrect   INTEGER NOT NULL,
-  FOREIGN KEY (QuestionId) REFERENCES Questions(Id) ON DELETE CASCADE
-);
+            CREATE TABLE IF NOT EXISTS AnswerOptions (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            QuestionId INTEGER NOT NULL,
+            Text TEXT NOT NULL,
+            IsCorrect INTEGER NOT NULL,
+            FOREIGN KEY (QuestionId) REFERENCES Questions(Id) ON DELETE CASCADE
+            );
 
 
-CREATE TABLE IF NOT EXISTS MisconceptionTags (
-  Id   INTEGER PRIMARY KEY,
-  Tag  TEXT NOT NULL UNIQUE
-);
+            CREATE TABLE IF NOT EXISTS MisconceptionTags (
+            Id  INTEGER PRIMARY KEY,
+            Tag TEXT NOT NULL UNIQUE
+            );
 
-CREATE TABLE IF NOT EXISTS QuestionMisconceptionTags (
-  QuestionId INTEGER NOT NULL,
-  TagId      INTEGER NOT NULL,
-  PRIMARY KEY (QuestionId, TagId),
-  FOREIGN KEY (QuestionId) REFERENCES Questions(Id) ON DELETE CASCADE,
-  FOREIGN KEY (TagId) REFERENCES MisconceptionTags(Id) ON DELETE CASCADE
-);
+            CREATE TABLE IF NOT EXISTS QuestionMisconceptionTags (
+            QuestionId INTEGER NOT NULL,
+            TagId INTEGER NOT NULL,
+            PRIMARY KEY (QuestionId, TagId),
+            FOREIGN KEY (QuestionId) REFERENCES Questions(Id) ON DELETE CASCADE,
+            FOREIGN KEY (TagId) REFERENCES MisconceptionTags(Id) ON DELETE CASCADE
+            );
 
-CREATE INDEX IF NOT EXISTS IX_Questions_Topic_Difficulty
-ON Questions(Topic, Difficulty);
+            CREATE TABLE IF NOT EXISTS Attempts (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            UserKey TEXT NOT NULL,
+            QuestionId INTEGER NOT NULL,
+            SelectedOptionIdsJson TEXT NOT NULL,
+            IsCorrect INTEGER NOT NULL,
+            SecondsTaken REAL NOT NULL,
+            SubmittedAt TEXT NOT NULL,
+            ReasonString TEXT NOT NULL,
+            RulesFiredJson TEXT NOT NULL
+            );
 
-CREATE INDEX IF NOT EXISTS IX_AnswerOptions_QuestionId
-ON AnswerOptions(QuestionId);
+            CREATE INDEX IF NOT EXISTS IX_Questions_Topic_Difficulty
+            ON Questions(Topic, Difficulty);
 
-CREATE INDEX IF NOT EXISTS IX_QMT_TagId
-ON QuestionMisconceptionTags(TagId);
-";
+            CREATE INDEX IF NOT EXISTS IX_AnswerOptions_QuestionId
+            ON AnswerOptions(QuestionId);
+
+            CREATE INDEX IF NOT EXISTS IX_QMT_TagId
+            ON QuestionMisconceptionTags(TagId);
+
+            CREATE INDEX IF NOT EXISTS IX_Attempts_User_Submitted
+            ON Attempts(UserKey, SubmittedAt);  
+            ";
+
+         
+
             using var cmd = conn.CreateCommand();
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
@@ -122,10 +140,10 @@ ON QuestionMisconceptionTags(TagId);
             {
                 cmd.Transaction = tx;
                 cmd.CommandText = @"
-INSERT INTO Questions
-(Id, Text, Explanation, Topic, Subtopic, Difficulty, BloomLevel, ThreatVector, QuestionType)
-VALUES
-($id, $text, $explanation, $topic, $subtopic, $difficulty, $bloom, $threat, $qtype);";
+                INSERT INTO Questions
+                (Id, Text, Explanation, Topic, Subtopic, Difficulty, BloomLevel, ThreatVector, QuestionType)
+                VALUES
+                ($id, $text, $explanation, $topic, $subtopic, $difficulty, $bloom, $threat, $qtype);";
 
                 cmd.Parameters.AddWithValue("$id", q.Id);
                 cmd.Parameters.AddWithValue("$text", q.Text ?? "");
@@ -162,8 +180,8 @@ VALUES
                     using var cmd = conn.CreateCommand();
                     cmd.Transaction = tx;
                     cmd.CommandText = @"
-INSERT OR IGNORE INTO QuestionMisconceptionTags (QuestionId, TagId)
-VALUES ($qid, $tid);";
+                    INSERT OR IGNORE INTO QuestionMisconceptionTags (QuestionId, TagId)
+                    VALUES ($qid, $tid);";
                     cmd.Parameters.AddWithValue("$qid", q.Id);
                     cmd.Parameters.AddWithValue("$tid", tagId);
                     cmd.ExecuteNonQuery();
