@@ -87,8 +87,8 @@
             this.tlpQuizCenter = new System.Windows.Forms.TableLayoutPanel();
             this.btnStartQuiz = new Syncfusion.WinForms.Controls.SfButton();
             this.pnlFooter = new System.Windows.Forms.Panel();
-            this.lblFooterLeft = new System.Windows.Forms.Label();
             this.lblFooterUser = new System.Windows.Forms.Label();
+            this.lblFooterLeft = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -883,18 +883,6 @@
             this.pnlFooter.Size = new System.Drawing.Size(902, 20);
             this.pnlFooter.TabIndex = 3;
             // 
-            // lblFooterLeft
-            // 
-            this.lblFooterLeft.AutoSize = true;
-            this.lblFooterLeft.Font = new System.Drawing.Font("Muro", 9F);
-            this.lblFooterLeft.ForeColor = System.Drawing.Color.Gray;
-            this.lblFooterLeft.Location = new System.Drawing.Point(0, 0);
-            this.lblFooterLeft.Name = "lblFooterLeft";
-            this.lblFooterLeft.Size = new System.Drawing.Size(195, 18);
-            this.lblFooterLeft.TabIndex = 0;
-            this.lblFooterLeft.Text = "© 2026 Mondas Learning";
-            this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblFooterUser
             // 
             this.lblFooterUser.AutoSize = true;
@@ -906,6 +894,18 @@
             this.lblFooterUser.TabIndex = 1;
             this.lblFooterUser.Text = "User: Arjun Singh";
             this.lblFooterUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblFooterLeft
+            // 
+            this.lblFooterLeft.AutoSize = true;
+            this.lblFooterLeft.Font = new System.Drawing.Font("Muro", 9F);
+            this.lblFooterLeft.ForeColor = System.Drawing.Color.Gray;
+            this.lblFooterLeft.Location = new System.Drawing.Point(0, 0);
+            this.lblFooterLeft.Name = "lblFooterLeft";
+            this.lblFooterLeft.Size = new System.Drawing.Size(195, 18);
+            this.lblFooterLeft.TabIndex = 0;
+            this.lblFooterLeft.Text = "© 2026 Mondas Learning";
+            this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DashboardForm
             // 
