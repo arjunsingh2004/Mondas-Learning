@@ -285,6 +285,12 @@
     <Compile Include="QuizForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="QuizSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuizSelectionForm.Designer.cs">
+      <DependentUpon>QuizSelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\ApplicationHostService.cs" />
     <Compile Include="Services\JsonQuestionRepository.cs" />
     <Compile Include="Services\NavigationService.cs" />
@@ -321,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="QuizForm.resx">
       <DependentUpon>QuizForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuizSelectionForm.resx">
+      <DependentUpon>QuizSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Start.resx">
       <DependentUpon>Start.cs</DependentUpon>

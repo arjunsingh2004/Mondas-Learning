@@ -58,23 +58,20 @@
             this.lblAvgTimeValue = new System.Windows.Forms.Label();
             this.lblAvgTimeTitle = new System.Windows.Forms.Label();
             this.pnlWeakest = new System.Windows.Forms.Panel();
+            this.lblWeakestValue = new System.Windows.Forms.Label();
             this.lblWeakestTitle = new System.Windows.Forms.Label();
             this.pnlStrongest = new System.Windows.Forms.Panel();
-            this.lblStrongestTitle = new System.Windows.Forms.Label();
-            this.lblWeakestValue = new System.Windows.Forms.Label();
             this.lblStrongestValue = new System.Windows.Forms.Label();
+            this.lblStrongestTitle = new System.Windows.Forms.Label();
             this.pnlMain = new System.Windows.Forms.Panel();
-            this.pnlQuizRow = new System.Windows.Forms.Panel();
-            this.tlpQuizCenter = new System.Windows.Forms.TableLayoutPanel();
-            this.btnStartQuiz = new Syncfusion.WinForms.Controls.SfButton();
             this.tlpMainGrid = new System.Windows.Forms.TableLayoutPanel();
             this.gbMastery = new System.Windows.Forms.GroupBox();
             this.tlpMastery = new System.Windows.Forms.TableLayoutPanel();
             this.gbReports = new System.Windows.Forms.GroupBox();
             this.pnlReportsPreview = new System.Windows.Forms.Panel();
-            this.lblStreak = new System.Windows.Forms.Label();
-            this.lblMistakes = new System.Windows.Forms.Label();
             this.btnViewReports = new Syncfusion.WinForms.Controls.SfButton();
+            this.lblMistakes = new System.Windows.Forms.Label();
+            this.lblStreak = new System.Windows.Forms.Label();
             this.gbMisconA = new System.Windows.Forms.GroupBox();
             this.lvMisconA = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -82,8 +79,16 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbMiniGames = new System.Windows.Forms.GroupBox();
             this.tlpMiniTiles = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlTilePass = new System.Windows.Forms.Panel();
+            this.lblTilePassTitle = new System.Windows.Forms.Label();
             this.pnlTilePhish = new System.Windows.Forms.Panel();
             this.lblTilePhishTitle = new System.Windows.Forms.Label();
+            this.pnlQuizRow = new System.Windows.Forms.Panel();
+            this.tlpQuizCenter = new System.Windows.Forms.TableLayoutPanel();
+            this.btnStartQuiz = new Syncfusion.WinForms.Controls.SfButton();
+            this.pnlFooter = new System.Windows.Forms.Panel();
+            this.lblFooterLeft = new System.Windows.Forms.Label();
+            this.lblFooterUser = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -98,8 +103,6 @@
             this.pnlWeakest.SuspendLayout();
             this.pnlStrongest.SuspendLayout();
             this.pnlMain.SuspendLayout();
-            this.pnlQuizRow.SuspendLayout();
-            this.tlpQuizCenter.SuspendLayout();
             this.tlpMainGrid.SuspendLayout();
             this.gbMastery.SuspendLayout();
             this.gbReports.SuspendLayout();
@@ -107,7 +110,11 @@
             this.gbMisconA.SuspendLayout();
             this.gbMiniGames.SuspendLayout();
             this.tlpMiniTiles.SuspendLayout();
+            this.pnlTilePass.SuspendLayout();
             this.pnlTilePhish.SuspendLayout();
+            this.pnlQuizRow.SuspendLayout();
+            this.tlpQuizCenter.SuspendLayout();
+            this.pnlFooter.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlSidebar
@@ -269,6 +276,7 @@
             this.tlpPage.Controls.Add(this.tlpHeader, 0, 0);
             this.tlpPage.Controls.Add(this.tlpStats, 0, 1);
             this.tlpPage.Controls.Add(this.pnlMain, 0, 2);
+            this.tlpPage.Controls.Add(this.pnlFooter, 0, 3);
             this.tlpPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpPage.Location = new System.Drawing.Point(16, 16);
             this.tlpPage.Name = "tlpPage";
@@ -324,7 +332,7 @@
             this.lblWelcome.ForeColor = System.Drawing.Color.Black;
             this.lblWelcome.Location = new System.Drawing.Point(35, 13);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(424, 50);
+            this.lblWelcome.Size = new System.Drawing.Size(424, 70);
             this.lblWelcome.TabIndex = 0;
             this.lblWelcome.Text = "WELCOME BACK, ARJUN!";
             // 
@@ -513,6 +521,18 @@
             this.pnlWeakest.Size = new System.Drawing.Size(168, 77);
             this.pnlWeakest.TabIndex = 3;
             // 
+            // lblWeakestValue
+            // 
+            this.lblWeakestValue.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblWeakestValue.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblWeakestValue.ForeColor = System.Drawing.Color.Black;
+            this.lblWeakestValue.Location = new System.Drawing.Point(8, 27);
+            this.lblWeakestValue.Name = "lblWeakestValue";
+            this.lblWeakestValue.Size = new System.Drawing.Size(150, 40);
+            this.lblWeakestValue.TabIndex = 4;
+            this.lblWeakestValue.Text = "PHISHING";
+            this.lblWeakestValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lblWeakestTitle
             // 
             this.lblWeakestTitle.Dock = System.Windows.Forms.DockStyle.Top;
@@ -539,30 +559,6 @@
             this.pnlStrongest.Size = new System.Drawing.Size(170, 77);
             this.pnlStrongest.TabIndex = 4;
             // 
-            // lblStrongestTitle
-            // 
-            this.lblStrongestTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblStrongestTitle.Font = new System.Drawing.Font("Agency", 8.5F);
-            this.lblStrongestTitle.ForeColor = System.Drawing.Color.Black;
-            this.lblStrongestTitle.Location = new System.Drawing.Point(8, 8);
-            this.lblStrongestTitle.Name = "lblStrongestTitle";
-            this.lblStrongestTitle.Size = new System.Drawing.Size(152, 24);
-            this.lblStrongestTitle.TabIndex = 3;
-            this.lblStrongestTitle.Text = "STRONGEST TOPIC";
-            this.lblStrongestTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lblWeakestValue
-            // 
-            this.lblWeakestValue.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblWeakestValue.Font = new System.Drawing.Font("Muro", 16F);
-            this.lblWeakestValue.ForeColor = System.Drawing.Color.Black;
-            this.lblWeakestValue.Location = new System.Drawing.Point(8, 27);
-            this.lblWeakestValue.Name = "lblWeakestValue";
-            this.lblWeakestValue.Size = new System.Drawing.Size(150, 40);
-            this.lblWeakestValue.TabIndex = 4;
-            this.lblWeakestValue.Text = "PHISHING";
-            this.lblWeakestValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // lblStrongestValue
             // 
             this.lblStrongestValue.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -575,6 +571,18 @@
             this.lblStrongestValue.Text = "PASSWORDS";
             this.lblStrongestValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblStrongestTitle
+            // 
+            this.lblStrongestTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblStrongestTitle.Font = new System.Drawing.Font("Agency", 8.5F);
+            this.lblStrongestTitle.ForeColor = System.Drawing.Color.Black;
+            this.lblStrongestTitle.Location = new System.Drawing.Point(8, 8);
+            this.lblStrongestTitle.Name = "lblStrongestTitle";
+            this.lblStrongestTitle.Size = new System.Drawing.Size(152, 24);
+            this.lblStrongestTitle.TabIndex = 3;
+            this.lblStrongestTitle.Text = "STRONGEST TOPIC";
+            this.lblStrongestTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // pnlMain
             // 
             this.pnlMain.Controls.Add(this.tlpMainGrid);
@@ -584,45 +592,6 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(902, 341);
             this.pnlMain.TabIndex = 2;
-            // 
-            // pnlQuizRow
-            // 
-            this.pnlQuizRow.Controls.Add(this.tlpQuizCenter);
-            this.pnlQuizRow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlQuizRow.Location = new System.Drawing.Point(0, 0);
-            this.pnlQuizRow.Name = "pnlQuizRow";
-            this.pnlQuizRow.Size = new System.Drawing.Size(902, 80);
-            this.pnlQuizRow.TabIndex = 0;
-            // 
-            // tlpQuizCenter
-            // 
-            this.tlpQuizCenter.ColumnCount = 1;
-            this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuizCenter.Controls.Add(this.btnStartQuiz, 0, 0);
-            this.tlpQuizCenter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpQuizCenter.Location = new System.Drawing.Point(0, 0);
-            this.tlpQuizCenter.Name = "tlpQuizCenter";
-            this.tlpQuizCenter.RowCount = 1;
-            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuizCenter.Size = new System.Drawing.Size(902, 80);
-            this.tlpQuizCenter.TabIndex = 0;
-            // 
-            // btnStartQuiz
-            // 
-            this.btnStartQuiz.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnStartQuiz.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnStartQuiz.Font = new System.Drawing.Font("Muro", 13F);
-            this.btnStartQuiz.ForeColor = System.Drawing.Color.White;
-            this.btnStartQuiz.Location = new System.Drawing.Point(321, 15);
-            this.btnStartQuiz.Name = "btnStartQuiz";
-            this.btnStartQuiz.Size = new System.Drawing.Size(260, 50);
-            this.btnStartQuiz.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnStartQuiz.Style.ForeColor = System.Drawing.Color.White;
-            this.btnStartQuiz.TabIndex = 0;
-            this.btnStartQuiz.Text = "START ADAPTIVE QUIZ";
-            this.btnStartQuiz.UseVisualStyleBackColor = false;
             // 
             // tlpMainGrid
             // 
@@ -691,23 +660,26 @@
             this.pnlReportsPreview.Controls.Add(this.btnViewReports);
             this.pnlReportsPreview.Controls.Add(this.lblMistakes);
             this.pnlReportsPreview.Controls.Add(this.lblStreak);
-            this.pnlReportsPreview.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlReportsPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlReportsPreview.Location = new System.Drawing.Point(3, 28);
             this.pnlReportsPreview.Name = "pnlReportsPreview";
-            this.pnlReportsPreview.Size = new System.Drawing.Size(295, 120);
+            this.pnlReportsPreview.Size = new System.Drawing.Size(295, 124);
             this.pnlReportsPreview.TabIndex = 0;
             // 
-            // lblStreak
+            // btnViewReports
             // 
-            this.lblStreak.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStreak.AutoSize = true;
-            this.lblStreak.Font = new System.Drawing.Font("Muro", 8F);
-            this.lblStreak.Location = new System.Drawing.Point(204, 19);
-            this.lblStreak.Name = "lblStreak";
-            this.lblStreak.Size = new System.Drawing.Size(73, 16);
-            this.lblStreak.TabIndex = 0;
-            this.lblStreak.Text = "10 streak";
-            this.lblStreak.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnViewReports.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnViewReports.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnViewReports.Font = new System.Drawing.Font("Muro", 9F);
+            this.btnViewReports.ForeColor = System.Drawing.Color.White;
+            this.btnViewReports.Location = new System.Drawing.Point(89, 87);
+            this.btnViewReports.Name = "btnViewReports";
+            this.btnViewReports.Size = new System.Drawing.Size(123, 28);
+            this.btnViewReports.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnViewReports.Style.ForeColor = System.Drawing.Color.White;
+            this.btnViewReports.TabIndex = 1;
+            this.btnViewReports.Text = "VIEW REPORTS";
+            this.btnViewReports.UseVisualStyleBackColor = false;
             // 
             // lblMistakes
             // 
@@ -721,20 +693,17 @@
             this.lblMistakes.Text = "7 mistakes";
             this.lblMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnViewReports
+            // lblStreak
             // 
-            this.btnViewReports.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnViewReports.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnViewReports.Font = new System.Drawing.Font("Muro", 9F);
-            this.btnViewReports.ForeColor = System.Drawing.Color.White;
-            this.btnViewReports.Location = new System.Drawing.Point(89, 87);
-            this.btnViewReports.Name = "btnViewReports";
-            this.btnViewReports.Size = new System.Drawing.Size(123, 28);
-            this.btnViewReports.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnViewReports.Style.ForeColor = System.Drawing.Color.White;
-            this.btnViewReports.TabIndex = 1;
-            this.btnViewReports.Text = "VIEW REPORTS";
-            this.btnViewReports.UseVisualStyleBackColor = false;
+            this.lblStreak.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStreak.AutoSize = true;
+            this.lblStreak.Font = new System.Drawing.Font("Muro", 8F);
+            this.lblStreak.Location = new System.Drawing.Point(204, 19);
+            this.lblStreak.Name = "lblStreak";
+            this.lblStreak.Size = new System.Drawing.Size(73, 16);
+            this.lblStreak.TabIndex = 0;
+            this.lblStreak.Text = "10 streak";
+            this.lblStreak.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // gbMisconA
             // 
@@ -800,6 +769,7 @@
             this.tlpMiniTiles.ColumnCount = 2;
             this.tlpMiniTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpMiniTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpMiniTiles.Controls.Add(this.pnlTilePass, 1, 0);
             this.tlpMiniTiles.Controls.Add(this.pnlTilePhish, 0, 0);
             this.tlpMiniTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMiniTiles.Location = new System.Drawing.Point(3, 28);
@@ -811,31 +781,131 @@
             this.tlpMiniTiles.Size = new System.Drawing.Size(295, 63);
             this.tlpMiniTiles.TabIndex = 0;
             // 
+            // pnlTilePass
+            // 
+            this.pnlTilePass.BackColor = System.Drawing.Color.RoyalBlue;
+            this.pnlTilePass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTilePass.Controls.Add(this.lblTilePassTitle);
+            this.pnlTilePass.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlTilePass.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTilePass.Location = new System.Drawing.Point(147, 6);
+            this.pnlTilePass.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTilePass.Name = "pnlTilePass";
+            this.pnlTilePass.Padding = new System.Windows.Forms.Padding(12);
+            this.pnlTilePass.Size = new System.Drawing.Size(142, 51);
+            this.pnlTilePass.TabIndex = 1;
+            // 
+            // lblTilePassTitle
+            // 
+            this.lblTilePassTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTilePassTitle.Font = new System.Drawing.Font("Muro", 7F);
+            this.lblTilePassTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTilePassTitle.Location = new System.Drawing.Point(12, 12);
+            this.lblTilePassTitle.Name = "lblTilePassTitle";
+            this.lblTilePassTitle.Size = new System.Drawing.Size(116, 25);
+            this.lblTilePassTitle.TabIndex = 0;
+            this.lblTilePassTitle.Text = "Password Workshop";
+            this.lblTilePassTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // pnlTilePhish
             // 
             this.pnlTilePhish.BackColor = System.Drawing.Color.RoyalBlue;
             this.pnlTilePhish.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlTilePhish.Controls.Add(this.lblTilePhishTitle);
             this.pnlTilePhish.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlTilePhish.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTilePhish.Location = new System.Drawing.Point(12, 12);
-            this.pnlTilePhish.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlTilePhish.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTilePhish.Location = new System.Drawing.Point(6, 6);
+            this.pnlTilePhish.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTilePhish.Name = "pnlTilePhish";
             this.pnlTilePhish.Padding = new System.Windows.Forms.Padding(12);
-            this.pnlTilePhish.Size = new System.Drawing.Size(129, 39);
+            this.pnlTilePhish.Size = new System.Drawing.Size(141, 51);
             this.pnlTilePhish.TabIndex = 0;
             // 
             // lblTilePhishTitle
             // 
-            this.lblTilePhishTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblTilePhishTitle.Font = new System.Drawing.Font("Muro", 7F);
+            this.lblTilePhishTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTilePhishTitle.Font = new System.Drawing.Font("Muro", 7.5F);
             this.lblTilePhishTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTilePhishTitle.Location = new System.Drawing.Point(3, 7);
+            this.lblTilePhishTitle.Location = new System.Drawing.Point(12, 12);
+            this.lblTilePhishTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTilePhishTitle.Name = "lblTilePhishTitle";
-            this.lblTilePhishTitle.Size = new System.Drawing.Size(120, 50);
+            this.lblTilePhishTitle.Size = new System.Drawing.Size(115, 25);
             this.lblTilePhishTitle.TabIndex = 0;
             this.lblTilePhishTitle.Text = "Phishing Simulator";
-            this.lblTilePhishTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblTilePhishTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlQuizRow
+            // 
+            this.pnlQuizRow.Controls.Add(this.tlpQuizCenter);
+            this.pnlQuizRow.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlQuizRow.Location = new System.Drawing.Point(0, 0);
+            this.pnlQuizRow.Name = "pnlQuizRow";
+            this.pnlQuizRow.Size = new System.Drawing.Size(902, 80);
+            this.pnlQuizRow.TabIndex = 0;
+            // 
+            // tlpQuizCenter
+            // 
+            this.tlpQuizCenter.ColumnCount = 1;
+            this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpQuizCenter.Controls.Add(this.btnStartQuiz, 0, 0);
+            this.tlpQuizCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpQuizCenter.Location = new System.Drawing.Point(0, 0);
+            this.tlpQuizCenter.Name = "tlpQuizCenter";
+            this.tlpQuizCenter.RowCount = 1;
+            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpQuizCenter.Size = new System.Drawing.Size(902, 80);
+            this.tlpQuizCenter.TabIndex = 0;
+            // 
+            // btnStartQuiz
+            // 
+            this.btnStartQuiz.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnStartQuiz.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnStartQuiz.Font = new System.Drawing.Font("Muro", 13F);
+            this.btnStartQuiz.ForeColor = System.Drawing.Color.White;
+            this.btnStartQuiz.Location = new System.Drawing.Point(321, 15);
+            this.btnStartQuiz.Name = "btnStartQuiz";
+            this.btnStartQuiz.Size = new System.Drawing.Size(260, 50);
+            this.btnStartQuiz.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnStartQuiz.Style.ForeColor = System.Drawing.Color.White;
+            this.btnStartQuiz.TabIndex = 0;
+            this.btnStartQuiz.Text = "START ADAPTIVE QUIZ";
+            this.btnStartQuiz.UseVisualStyleBackColor = false;
+            // 
+            // pnlFooter
+            // 
+            this.pnlFooter.Controls.Add(this.lblFooterUser);
+            this.pnlFooter.Controls.Add(this.lblFooterLeft);
+            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFooter.Location = new System.Drawing.Point(3, 555);
+            this.pnlFooter.Name = "pnlFooter";
+            this.pnlFooter.Size = new System.Drawing.Size(902, 20);
+            this.pnlFooter.TabIndex = 3;
+            // 
+            // lblFooterLeft
+            // 
+            this.lblFooterLeft.AutoSize = true;
+            this.lblFooterLeft.Font = new System.Drawing.Font("Muro", 9F);
+            this.lblFooterLeft.ForeColor = System.Drawing.Color.Gray;
+            this.lblFooterLeft.Location = new System.Drawing.Point(0, 0);
+            this.lblFooterLeft.Name = "lblFooterLeft";
+            this.lblFooterLeft.Size = new System.Drawing.Size(195, 18);
+            this.lblFooterLeft.TabIndex = 0;
+            this.lblFooterLeft.Text = "© 2026 Mondas Learning";
+            this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblFooterUser
+            // 
+            this.lblFooterUser.AutoSize = true;
+            this.lblFooterUser.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblFooterUser.ForeColor = System.Drawing.Color.Gray;
+            this.lblFooterUser.Location = new System.Drawing.Point(761, 0);
+            this.lblFooterUser.Name = "lblFooterUser";
+            this.lblFooterUser.Size = new System.Drawing.Size(141, 18);
+            this.lblFooterUser.TabIndex = 1;
+            this.lblFooterUser.Text = "User: Arjun Singh";
+            this.lblFooterUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // DashboardForm
             // 
@@ -872,8 +942,6 @@
             this.pnlWeakest.ResumeLayout(false);
             this.pnlStrongest.ResumeLayout(false);
             this.pnlMain.ResumeLayout(false);
-            this.pnlQuizRow.ResumeLayout(false);
-            this.tlpQuizCenter.ResumeLayout(false);
             this.tlpMainGrid.ResumeLayout(false);
             this.gbMastery.ResumeLayout(false);
             this.gbReports.ResumeLayout(false);
@@ -882,7 +950,12 @@
             this.gbMisconA.ResumeLayout(false);
             this.gbMiniGames.ResumeLayout(false);
             this.tlpMiniTiles.ResumeLayout(false);
+            this.pnlTilePass.ResumeLayout(false);
             this.pnlTilePhish.ResumeLayout(false);
+            this.pnlQuizRow.ResumeLayout(false);
+            this.tlpQuizCenter.ResumeLayout(false);
+            this.pnlFooter.ResumeLayout(false);
+            this.pnlFooter.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -945,5 +1018,10 @@
         private System.Windows.Forms.TableLayoutPanel tlpMiniTiles;
         private System.Windows.Forms.Panel pnlTilePhish;
         private System.Windows.Forms.Label lblTilePhishTitle;
+        private System.Windows.Forms.Panel pnlTilePass;
+        private System.Windows.Forms.Label lblTilePassTitle;
+        private System.Windows.Forms.Panel pnlFooter;
+        private System.Windows.Forms.Label lblFooterLeft;
+        private System.Windows.Forms.Label lblFooterUser;
     }
 }
