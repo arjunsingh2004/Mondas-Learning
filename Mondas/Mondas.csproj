@@ -285,6 +285,12 @@
     <Compile Include="QuizForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="QuizPreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuizPreferencesForm.Designer.cs">
+      <DependentUpon>QuizPreferencesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="QuizSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -327,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="QuizForm.resx">
       <DependentUpon>QuizForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuizPreferencesForm.resx">
+      <DependentUpon>QuizPreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="QuizSelectionForm.resx">
       <DependentUpon>QuizSelectionForm.cs</DependentUpon>
