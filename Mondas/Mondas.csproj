@@ -272,6 +272,7 @@
     <Compile Include="Models\AttemptRecord.cs" />
     <Compile Include="Models\QuestionAttempt.cs" />
     <Compile Include="Models\QuestionModels.cs" />
+    <Compile Include="Models\QuizPreferences.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Models\AppConfig.cs" />

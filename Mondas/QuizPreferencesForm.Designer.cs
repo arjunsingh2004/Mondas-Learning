@@ -230,6 +230,7 @@
             this.cmbQuestionCount.Name = "cmbQuestionCount";
             this.cmbQuestionCount.Size = new System.Drawing.Size(180, 26);
             this.cmbQuestionCount.TabIndex = 1;
+            this.cmbQuestionCount.SelectedIndexChanged += new System.EventHandler(this.cmbQuestionCount_SelectedIndexChanged);
             // 
             // lblTimer
             // 
@@ -258,6 +259,7 @@
             this.cmbTimer.Name = "cmbTimer";
             this.cmbTimer.Size = new System.Drawing.Size(180, 26);
             this.cmbTimer.TabIndex = 3;
+            this.cmbTimer.SelectedIndexChanged += new System.EventHandler(this.cmbTimer_SelectedIndexChanged);
             // 
             // gbTopics
             // 
@@ -359,6 +361,7 @@
             this.cmbDifficulty.Name = "cmbDifficulty";
             this.cmbDifficulty.Size = new System.Drawing.Size(180, 26);
             this.cmbDifficulty.TabIndex = 1;
+            this.cmbDifficulty.SelectedIndexChanged += new System.EventHandler(this.cmbDifficulty_SelectedIndexChanged);
             // 
             // gbTypes
             // 
@@ -390,6 +393,7 @@
             this.clbQuestionTypes.Name = "clbQuestionTypes";
             this.clbQuestionTypes.Size = new System.Drawing.Size(432, 113);
             this.clbQuestionTypes.TabIndex = 0;
+            this.clbQuestionTypes.SelectedIndexChanged += new System.EventHandler(this.clbQuestionTypes_SelectedIndexChanged);
             // 
             // gbAdvanced
             // 
@@ -452,6 +456,7 @@
             this.cmbBloom.Name = "cmbBloom";
             this.cmbBloom.Size = new System.Drawing.Size(180, 26);
             this.cmbBloom.TabIndex = 1;
+            this.cmbBloom.SelectedIndexChanged += new System.EventHandler(this.cmbBloom_SelectedIndexChanged);
             // 
             // lblThreatVector
             // 
@@ -477,6 +482,7 @@
             this.cmbThreatVector.Name = "cmbThreatVector";
             this.cmbThreatVector.Size = new System.Drawing.Size(180, 26);
             this.cmbThreatVector.TabIndex = 3;
+            this.cmbThreatVector.SelectedIndexChanged += new System.EventHandler(this.cmbThreatVector_SelectedIndexChanged);
             // 
             // pnlPrefsButtons
             // 
@@ -514,6 +520,7 @@
             this.btnUseDefaults.TabIndex = 1;
             this.btnUseDefaults.Text = "USE DEFAULTS";
             this.btnUseDefaults.UseVisualStyleBackColor = false;
+            this.btnUseDefaults.Click += new System.EventHandler(this.btnUseDefaults_Click);
             // 
             // btnCancel
             // 
@@ -526,6 +533,7 @@
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "CANCEL";
             this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnApply
             // 
@@ -540,6 +548,7 @@
             this.btnApply.TabIndex = 3;
             this.btnApply.Text = "APPLY";
             this.btnApply.UseVisualStyleBackColor = false;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
             // gbMode
             // 
@@ -581,6 +590,7 @@
             this.rbDefault.TabStop = true;
             this.rbDefault.Text = "Use recommended defaults";
             this.rbDefault.UseVisualStyleBackColor = true;
+            this.rbDefault.CheckedChanged += new System.EventHandler(this.rbDefault_CheckedChanged);
             // 
             // rbCustom
             // 
@@ -593,6 +603,7 @@
             this.rbCustom.TabStop = true;
             this.rbCustom.Text = "Custom preferences";
             this.rbCustom.UseVisualStyleBackColor = true;
+            this.rbCustom.CheckedChanged += new System.EventHandler(this.rbCustom_CheckedChanged);
             // 
             // QuizPreferencesForm
             // 

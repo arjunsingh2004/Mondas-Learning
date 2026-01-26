@@ -10,6 +10,15 @@ namespace Mondas.Services
     {
         private readonly Random _random = new Random();
 
+        private readonly bool _focusWeakTopic;
+        private readonly DifficultyBand? _preferredDifficulty;
+
+        public RuleEngineV1(bool focusWeakTopic = true, DifficultyBand? preferredDifficulty = DifficultyBand.Medium)
+        {
+            _focusWeakTopic = focusWeakTopic;
+            _preferredDifficulty = preferredDifficulty;
+        }
+
         public SelectionResult SelectNextQuestion(
             UserModel userModel,
             IReadOnlyList<Question> allQuestions,
@@ -22,7 +31,7 @@ namespace Mondas.Services
             candidates = candidates.Where(q => !recentIds.Contains(q.Id)).ToList();
             trace.Add("AvoidRecentQuestions");
 
-            if (!candidates.Any())
+            if (candidates.Count == 0)
             {
                 trace.Add("NoCandidatesAfterAvoidRecent");
                 return new SelectionResult
@@ -49,49 +58,54 @@ namespace Mondas.Services
                 }
             }
 
-            if (weakestTopic != null)
+            if (_focusWeakTopic && weakestTopic != null)
             {
                 var topicCandidates = candidates.Where(q => q.Metadata.Topic == weakestTopic.Value).ToList();
 
-                if (topicCandidates.Any())
+                if (topicCandidates.Count > 0)
                 {
                     candidates = topicCandidates;
                     trace.Add("FocusWeakTopic:" + weakestTopic.Value);
                 }
-            }
-
-            if (!candidates.Any())
-            {
-                trace.Add("NoCandidatesAfterWeakTopicFocus");
-                return new SelectionResult
+                else
                 {
-                    SelectedQuestion = null,
-                    ReasonString = "No more questions available.",
-                    RulesFired = trace
-                };
-            }
-
-            var preferred = candidates.Where(q => q.Metadata.Difficulty == DifficultyBand.Medium).ToList();
-
-            if (!preferred.Any())
-            {
-                preferred = candidates;
-                trace.Add("FallbackDifficulty");
+                    trace.Add("WeakTopicHadNoCandidates");
+                }
             }
             else
             {
-                trace.Add("TargetDifficulty:Medium");
+                trace.Add("SkipWeakTopicFocus");
             }
 
-            if (!preferred.Any())
+            if (candidates.Count == 0)
             {
-                trace.Add("NoPreferredCandidates");
+                trace.Add("NoCandidatesAfterTopicPhase");
                 return new SelectionResult
                 {
                     SelectedQuestion = null,
                     ReasonString = "No more questions available.",
                     RulesFired = trace
                 };
+            }
+
+            List<Question> preferred = candidates;
+
+            if (_preferredDifficulty.HasValue)
+            {
+                var byDifficulty = candidates.Where(q => q.Metadata.Difficulty == _preferredDifficulty.Value).ToList();
+                if (byDifficulty.Count > 0)
+                {
+                    preferred = byDifficulty;
+                    trace.Add("TargetDifficulty:" + _preferredDifficulty.Value);
+                }
+                else
+                {
+                    trace.Add("FallbackDifficulty");
+                }
+            }
+            else
+            {
+                trace.Add("NoDifficultyPreference");
             }
 
             var selected = preferred[_random.Next(preferred.Count)];
@@ -104,6 +118,7 @@ namespace Mondas.Services
                 RulesFired = trace
             };
         }
+
 
         private static string BuildReasonString(Question question, Topic? weakestTopic, double weakestMastery)
         {

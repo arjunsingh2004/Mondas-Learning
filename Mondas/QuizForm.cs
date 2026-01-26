@@ -7,6 +7,7 @@ using Mondas.Contracts.Services;
 using Mondas.Models;
 using Mondas.Services;
 using Syncfusion.WinForms.Controls;
+using System.Collections.Generic;
 
 namespace Mondas
 {
@@ -30,9 +31,15 @@ namespace Mondas
         Stopwatch stopwatch = new Stopwatch();
         int questionsAsked = 0;
         int maxQuestions = 10;
+        private readonly QuizPreferences _prefs;
 
-        public QuizForm()
+        public QuizForm() : this(new QuizPreferences())
         {
+        }
+
+        public QuizForm(QuizPreferences prefs)
+        {
+            _prefs = prefs ?? new QuizPreferences();
             InitializeComponent();
             ConfigureForm();
             BuildUI();
@@ -169,26 +176,144 @@ namespace Mondas
             attemptRepo = new SqliteAttemptRepository(dbPath);
             
             var path = System.IO.Path.Combine(baseDir, "Resources", "questions.json");
-
             var repo = new JsonQuestionRepository(path);
-            var questions = repo.GetAllQuestions();
+            var allQuestions = repo.GetAllQuestions();
 
-            maxQuestions = Math.Min(maxQuestions, questions.Count);
-
-            if (questions.Count == 0)
+            if (allQuestions == null || allQuestions.Count == 0)
             {
-                MessageBox.Show(this, "No questions found. Check questions.json.", "Mondas",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "No questions found. Check questions.json.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
                 return;
             }
 
+            var questionPool = BuildQuestionPool(allQuestions, _prefs);
+
+            if (questionPool.Count == 0)
+            {
+                MessageBox.Show(this, "No questions match your preferences. Try adjusting the filters.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Close();
+                return;
+            }
+
+            var requested = _prefs.UseDefaults ? 10 : _prefs.QuestionCount;
+            if (requested <= 0)
+            {
+                requested = 10;
+            }
+
+            maxQuestions = Math.Min(requested, questionPool.Count);
+
             var userModel = new UserModel();
-            IRuleEngine ruleEngine = new RuleEngineV1();
-            session = new QuizSession(questions, ruleEngine, userModel);
+            SeedUserModelFromHistory(userModel, allQuestions);
+
+            bool focusWeak = _prefs.UseDefaults ? true : _prefs.PrioritiseWeakTopics;
+            DifficultyBand? prefDiff = _prefs.UseDefaults ? DifficultyBand.Medium : _prefs.Difficulty;
+
+            IRuleEngine ruleEngine = new RuleEngineV1(focusWeakTopic: focusWeak, preferredDifficulty: prefDiff);
+            
+            session = new QuizSession(questionPool, ruleEngine, userModel);
 
             lblProgress.Text = $"Question 0 of {maxQuestions}";
+            questionsAsked = 0;
+            
             LoadNextQuestion();
+        }
+
+        private List<Question> BuildQuestionPool(IReadOnlyList<Question> all, QuizPreferences prefs)
+        {
+            IEnumerable<Question> q = all;
+
+            if (!prefs.UseDefaults)
+            {
+                if (prefs.Topics != null && prefs.Topics.Count > 0)
+                {
+                    q = q.Where(x => prefs.Topics.Contains(x.Metadata.Topic));
+                }
+
+                if (prefs.QuestionTypes != null && prefs.QuestionTypes.Count > 0)
+                {
+                    q = q.Where(x => prefs.QuestionTypes.Contains(x.Metadata.QuestionType));
+                }
+
+                if (prefs.Difficulty.HasValue)
+                {
+                    q = q.Where(x => x.Metadata.Difficulty == prefs.Difficulty.Value);
+                }
+
+                if (prefs.BloomLevel.HasValue)
+                {
+                    q = q.Where(x => x.Metadata.BloomLevel == prefs.BloomLevel.Value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(prefs.ThreatVector))
+                {
+                    q = q.Where(x => string.Equals(x.Metadata.ThreatVector, prefs.ThreatVector, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            return q.ToList();
+        }
+
+        private void SeedUserModelFromHistory(UserModel userModel, IReadOnlyList<Question> allQuestions)
+        {
+            var byId = allQuestions.ToDictionary(x => x.Id, x => x);
+
+            var history = attemptRepo.GetForUser(userKey).OrderBy(x => x.SubmittedAt).ToList();
+
+            foreach (var r in history)
+            {
+                if (!byId.TryGetValue(r.QuestionId, out var q))
+                {
+                    continue;
+                }
+
+                var attempt = new QuestionAttempt
+                {
+                    QuestionId = r.QuestionId,
+                    StartedAt = r.SubmittedAt.AddSeconds(-r.SecondsTaken).ToUniversalTime(),
+                    SubmittedAt = r.SubmittedAt.ToUniversalTime(),
+                    IsCorrect = r.IsCorrect,
+                    SelectedOptionIds = SafeReadIds(r.SelectedOptionIdsJson),
+                    ReasonString = r.ReasonString ?? "",
+                    RulesFired = SafeReadRules(r.RulesFiredJson)
+                };
+
+                userModel.UpdateFromAttempt(q, attempt);
+            }
+        }
+
+        private List<int> SafeReadIds(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    return new List<int>();
+                    
+                }
+                var ids = System.Text.Json.JsonSerializer.Deserialize<List<int>>(json);
+                return ids ?? new List<int>();
+            }
+            catch
+            {
+                return new List<int>();
+            }
+        }
+
+        private List<string> SafeReadRules(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    return new List<string>();
+                }
+                var rules = System.Text.Json.JsonSerializer.Deserialize<List<string>>(json);
+                return rules ?? new List<string>();
+            }
+            catch
+            {
+                return new List<string>();
+            }
         }
 
         void LoadNextQuestion()
@@ -326,14 +451,7 @@ namespace Mondas
             this.Name = "QuizForm";
             this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
             this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
-            this.Load += new System.EventHandler(this.QuizForm_Load);
             this.ResumeLayout(false);
-
-        }
-
-        private void QuizForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
