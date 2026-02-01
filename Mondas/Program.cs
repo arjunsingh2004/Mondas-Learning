@@ -48,7 +48,7 @@ namespace Mondas
 
             init.Initialize();
             OnStartup();
-            Application.Run(new QuizPreferencesForm());
+            Application.Run(new QuizFormOld());
             _host.Dispose();
             _host = null;
         }

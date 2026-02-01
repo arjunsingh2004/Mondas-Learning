@@ -42,22 +42,22 @@
             this.tlpQuizPage = new System.Windows.Forms.TableLayoutPanel();
             this.tlpHeader = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeaderLeft = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.lblSub = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlHeaderRight = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
             this.lblUser = new System.Windows.Forms.Label();
             this.gbRecommended = new System.Windows.Forms.GroupBox();
             this.pnlRecommended = new System.Windows.Forms.Panel();
-            this.lblRecSummary = new System.Windows.Forms.Label();
-            this.lblRecReason = new System.Windows.Forms.Label();
-            this.btnStartRecommended = new Syncfusion.WinForms.Controls.SfButton();
             this.lnkChangePreferences = new System.Windows.Forms.LinkLabel();
+            this.btnStartRecommended = new Syncfusion.WinForms.Controls.SfButton();
+            this.lblRecReason = new System.Windows.Forms.Label();
+            this.lblRecSummary = new System.Windows.Forms.Label();
             this.gbAdaptive = new System.Windows.Forms.GroupBox();
             this.pnlAdaptive = new System.Windows.Forms.Panel();
-            this.lblAdaptiveDesc = new System.Windows.Forms.Label();
+            this.btnPreferences = new Syncfusion.WinForms.Controls.SfButton();
             this.btnStartAdaptive = new Syncfusion.WinForms.Controls.SfButton();
-            this.sfButton1 = new Syncfusion.WinForms.Controls.SfButton();
+            this.lblAdaptiveDesc = new System.Windows.Forms.Label();
             this.gbPerformance = new System.Windows.Forms.GroupBox();
             this.pnlPerfFilters = new System.Windows.Forms.Panel();
             this.pnlSidebar.SuspendLayout();
@@ -130,6 +130,7 @@
             this.btnNavDashboard.TabIndex = 0;
             this.btnNavDashboard.Text = "DASHBOARD";
             this.btnNavDashboard.UseVisualStyleBackColor = false;
+            this.btnNavDashboard.Click += new System.EventHandler(this.btnNavDashboard_Click);
             // 
             // btnNavQuiz
             // 
@@ -144,6 +145,7 @@
             this.btnNavQuiz.TabIndex = 1;
             this.btnNavQuiz.Text = "QUIZ";
             this.btnNavQuiz.UseVisualStyleBackColor = false;
+            this.btnNavQuiz.Click += new System.EventHandler(this.btnNavQuiz_Click);
             // 
             // btnNavMiniGames
             // 
@@ -158,6 +160,7 @@
             this.btnNavMiniGames.TabIndex = 2;
             this.btnNavMiniGames.Text = "MINI GAMES";
             this.btnNavMiniGames.UseVisualStyleBackColor = false;
+            this.btnNavMiniGames.Click += new System.EventHandler(this.btnNavMiniGames_Click);
             // 
             // btnNavReports
             // 
@@ -172,6 +175,7 @@
             this.btnNavReports.TabIndex = 3;
             this.btnNavReports.Text = "REPORTS";
             this.btnNavReports.UseVisualStyleBackColor = false;
+            this.btnNavReports.Click += new System.EventHandler(this.btnNavReports_Click);
             // 
             // btnNavLeaderboard
             // 
@@ -186,6 +190,7 @@
             this.btnNavLeaderboard.TabIndex = 4;
             this.btnNavLeaderboard.Text = "LEADERBOARD";
             this.btnNavLeaderboard.UseVisualStyleBackColor = false;
+            this.btnNavLeaderboard.Click += new System.EventHandler(this.btnNavLeaderboard_Click);
             // 
             // btnNavCommunity
             // 
@@ -200,6 +205,7 @@
             this.btnNavCommunity.TabIndex = 5;
             this.btnNavCommunity.Text = "COMMUNITY";
             this.btnNavCommunity.UseVisualStyleBackColor = false;
+            this.btnNavCommunity.Click += new System.EventHandler(this.btnNavCommunity_Click);
             // 
             // btnNavSettings
             // 
@@ -214,6 +220,7 @@
             this.btnNavSettings.TabIndex = 6;
             this.btnNavSettings.Text = "SETTINGS";
             this.btnNavSettings.UseVisualStyleBackColor = false;
+            this.btnNavSettings.Click += new System.EventHandler(this.btnNavSettings_Click);
             // 
             // pnlContent
             // 
@@ -256,7 +263,7 @@
             this.tlpHeader.Name = "tlpHeader";
             this.tlpHeader.RowCount = 1;
             this.tlpHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
             this.tlpHeader.Size = new System.Drawing.Size(902, 84);
             this.tlpHeader.TabIndex = 0;
             // 
@@ -270,16 +277,6 @@
             this.pnlHeaderLeft.Size = new System.Drawing.Size(636, 78);
             this.pnlHeaderLeft.TabIndex = 0;
             // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Muro", 22F);
-            this.lblTitle.Location = new System.Drawing.Point(3, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(284, 44);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "QUIZ SELECTION";
-            // 
             // lblSub
             // 
             this.lblSub.AutoSize = true;
@@ -289,6 +286,16 @@
             this.lblSub.Size = new System.Drawing.Size(473, 14);
             this.lblSub.TabIndex = 1;
             this.lblSub.Text = "CHOOSE A QUIZ MODE AND START TESTING YOUR SKILLS";
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Muro", 22F);
+            this.lblTitle.Location = new System.Drawing.Point(3, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(284, 44);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "QUIZ SELECTION";
             // 
             // pnlHeaderRight
             // 
@@ -313,6 +320,7 @@
             this.btnLogout.TabIndex = 3;
             this.btnLogout.Text = "LOG OUT";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblUser
             // 
@@ -351,25 +359,18 @@
             this.pnlRecommended.Size = new System.Drawing.Size(896, 133);
             this.pnlRecommended.TabIndex = 0;
             // 
-            // lblRecSummary
+            // lnkChangePreferences
             // 
-            this.lblRecSummary.AutoSize = true;
-            this.lblRecSummary.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblRecSummary.Location = new System.Drawing.Point(0, 0);
-            this.lblRecSummary.Name = "lblRecSummary";
-            this.lblRecSummary.Size = new System.Drawing.Size(606, 15);
-            this.lblRecSummary.TabIndex = 0;
-            this.lblRecSummary.Text = "Focus: PHISHING • Difficulty: MEDIUM • Length: 15 • Timer: Off";
-            // 
-            // lblRecReason
-            // 
-            this.lblRecReason.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblRecReason.ForeColor = System.Drawing.Color.DimGray;
-            this.lblRecReason.Location = new System.Drawing.Point(0, 30);
-            this.lblRecReason.Name = "lblRecReason";
-            this.lblRecReason.Size = new System.Drawing.Size(669, 20);
-            this.lblRecReason.TabIndex = 1;
-            this.lblRecReason.Text = "Recommended because your mastery in PHISHING is lowest (42%).";
+            this.lnkChangePreferences.ActiveLinkColor = System.Drawing.Color.RoyalBlue;
+            this.lnkChangePreferences.Font = new System.Drawing.Font("Muro", 10F);
+            this.lnkChangePreferences.LinkColor = System.Drawing.Color.Gray;
+            this.lnkChangePreferences.Location = new System.Drawing.Point(207, 80);
+            this.lnkChangePreferences.Name = "lnkChangePreferences";
+            this.lnkChangePreferences.Size = new System.Drawing.Size(301, 83);
+            this.lnkChangePreferences.TabIndex = 3;
+            this.lnkChangePreferences.TabStop = true;
+            this.lnkChangePreferences.Text = "Change Preferences...";
+            this.lnkChangePreferences.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkChangePreferences_LinkClicked);
             // 
             // btnStartRecommended
             // 
@@ -386,18 +387,27 @@
             this.btnStartRecommended.TabIndex = 2;
             this.btnStartRecommended.Text = "START RECOMMENDED";
             this.btnStartRecommended.UseVisualStyleBackColor = false;
+            this.btnStartRecommended.Click += new System.EventHandler(this.btnStartRecommended_Click);
             // 
-            // lnkChangePreferences
+            // lblRecReason
             // 
-            this.lnkChangePreferences.ActiveLinkColor = System.Drawing.Color.RoyalBlue;
-            this.lnkChangePreferences.Font = new System.Drawing.Font("Muro", 10F);
-            this.lnkChangePreferences.LinkColor = System.Drawing.Color.Gray;
-            this.lnkChangePreferences.Location = new System.Drawing.Point(207, 80);
-            this.lnkChangePreferences.Name = "lnkChangePreferences";
-            this.lnkChangePreferences.Size = new System.Drawing.Size(301, 83);
-            this.lnkChangePreferences.TabIndex = 3;
-            this.lnkChangePreferences.TabStop = true;
-            this.lnkChangePreferences.Text = "Change Preferences...";
+            this.lblRecReason.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblRecReason.ForeColor = System.Drawing.Color.DimGray;
+            this.lblRecReason.Location = new System.Drawing.Point(0, 30);
+            this.lblRecReason.Name = "lblRecReason";
+            this.lblRecReason.Size = new System.Drawing.Size(893, 20);
+            this.lblRecReason.TabIndex = 1;
+            this.lblRecReason.Text = "Recommended because your mastery in PHISHING is lowest (42%).";
+            // 
+            // lblRecSummary
+            // 
+            this.lblRecSummary.AutoSize = true;
+            this.lblRecSummary.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblRecSummary.Location = new System.Drawing.Point(0, 0);
+            this.lblRecSummary.Name = "lblRecSummary";
+            this.lblRecSummary.Size = new System.Drawing.Size(606, 15);
+            this.lblRecSummary.TabIndex = 0;
+            this.lblRecSummary.Text = "Focus: PHISHING • Difficulty: MEDIUM • Length: 15 • Timer: Off";
             // 
             // gbAdaptive
             // 
@@ -414,7 +424,7 @@
             // 
             // pnlAdaptive
             // 
-            this.pnlAdaptive.Controls.Add(this.sfButton1);
+            this.pnlAdaptive.Controls.Add(this.btnPreferences);
             this.pnlAdaptive.Controls.Add(this.btnStartAdaptive);
             this.pnlAdaptive.Controls.Add(this.lblAdaptiveDesc);
             this.pnlAdaptive.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -424,15 +434,20 @@
             this.pnlAdaptive.Size = new System.Drawing.Size(896, 103);
             this.pnlAdaptive.TabIndex = 0;
             // 
-            // lblAdaptiveDesc
+            // btnPreferences
             // 
-            this.lblAdaptiveDesc.AutoSize = true;
-            this.lblAdaptiveDesc.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblAdaptiveDesc.Location = new System.Drawing.Point(0, 0);
-            this.lblAdaptiveDesc.Name = "lblAdaptiveDesc";
-            this.lblAdaptiveDesc.Size = new System.Drawing.Size(748, 15);
-            this.lblAdaptiveDesc.TabIndex = 0;
-            this.lblAdaptiveDesc.Text = "Adaptive questions based on your recent attempts and topic mastery.";
+            this.btnPreferences.AutoSize = true;
+            this.btnPreferences.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnPreferences.Font = new System.Drawing.Font("Muro", 9F);
+            this.btnPreferences.Location = new System.Drawing.Point(211, 50);
+            this.btnPreferences.Name = "btnPreferences";
+            this.btnPreferences.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.btnPreferences.Size = new System.Drawing.Size(127, 48);
+            this.btnPreferences.Style.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnPreferences.TabIndex = 2;
+            this.btnPreferences.Text = "Preferences";
+            this.btnPreferences.UseVisualStyleBackColor = false;
+            this.btnPreferences.Click += new System.EventHandler(this.sfButton1_Click);
             // 
             // btnStartAdaptive
             // 
@@ -449,20 +464,17 @@
             this.btnStartAdaptive.TabIndex = 1;
             this.btnStartAdaptive.Text = "START ADAPTIVE QUIZ";
             this.btnStartAdaptive.UseVisualStyleBackColor = false;
+            this.btnStartAdaptive.Click += new System.EventHandler(this.btnStartAdaptive_Click);
             // 
-            // sfButton1
+            // lblAdaptiveDesc
             // 
-            this.sfButton1.AutoSize = true;
-            this.sfButton1.BackColor = System.Drawing.Color.Gainsboro;
-            this.sfButton1.Font = new System.Drawing.Font("Muro", 9F);
-            this.sfButton1.Location = new System.Drawing.Point(211, 50);
-            this.sfButton1.Name = "sfButton1";
-            this.sfButton1.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.sfButton1.Size = new System.Drawing.Size(127, 48);
-            this.sfButton1.Style.BackColor = System.Drawing.Color.Gainsboro;
-            this.sfButton1.TabIndex = 2;
-            this.sfButton1.Text = "Preferences";
-            this.sfButton1.UseVisualStyleBackColor = false;
+            this.lblAdaptiveDesc.AutoSize = true;
+            this.lblAdaptiveDesc.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblAdaptiveDesc.Location = new System.Drawing.Point(0, 0);
+            this.lblAdaptiveDesc.Name = "lblAdaptiveDesc";
+            this.lblAdaptiveDesc.Size = new System.Drawing.Size(748, 15);
+            this.lblAdaptiveDesc.TabIndex = 0;
+            this.lblAdaptiveDesc.Text = "Adaptive questions based on your recent attempts and topic mastery.";
             // 
             // gbPerformance
             // 
@@ -554,7 +566,7 @@
         private System.Windows.Forms.Panel pnlAdaptive;
         private System.Windows.Forms.Label lblAdaptiveDesc;
         private Syncfusion.WinForms.Controls.SfButton btnStartAdaptive;
-        private Syncfusion.WinForms.Controls.SfButton sfButton1;
+        private Syncfusion.WinForms.Controls.SfButton btnPreferences;
         private System.Windows.Forms.GroupBox gbPerformance;
         private System.Windows.Forms.Panel pnlPerfFilters;
     }

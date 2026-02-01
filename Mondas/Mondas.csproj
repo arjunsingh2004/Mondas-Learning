@@ -189,6 +189,7 @@
     </Reference>
     <Reference Include="Syncfusion.Maps.Windows, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Scripting.Base, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.SfInput.WinForms, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfListView.WinForms, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=31.1462.22.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Shared.Base.31.1.22\lib\net462\Syncfusion.Shared.Base.dll</HintPath>
@@ -274,6 +275,12 @@
     <Compile Include="Models\QuestionModels.cs" />
     <Compile Include="Models\QuizPreferences.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="OptionTile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OptionTile.Designer.cs">
+      <DependentUpon>OptionTile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Models\AppConfig.cs" />
     <Compile Include="Contracts\Views\IShellWindow.cs" />
@@ -285,6 +292,9 @@
     </Compile>
     <Compile Include="QuizForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuizForm.Designer.cs">
+      <DependentUpon>QuizForm.cs</DependentUpon>
     </Compile>
     <Compile Include="QuizPreferencesForm.cs">
       <SubType>Form</SubType>
@@ -302,6 +312,8 @@
     <Compile Include="Services\JsonQuestionRepository.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\PageService.cs" />
+    <Compile Include="Services\QuizPreferencesStore.cs" />
+    <Compile Include="Services\QuizRecommendationService.cs" />
     <Compile Include="Services\QuizSession.cs" />
     <Compile Include="Services\RuleEngineV1.cs" />
     <Compile Include="Services\SqliteAttemptRepository.cs" />
@@ -326,6 +338,9 @@
     </Compile>
     <EmbeddedResource Include="DashboardForm.resx">
       <DependentUpon>DashboardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionTile.resx">
+      <DependentUpon>OptionTile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,457 +1,76 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
-using System.Text.Json;
-using Mondas.Contracts.Services;
-using Mondas.Models;
-using Mondas.Services;
-using Syncfusion.WinForms.Controls;
+﻿using Syncfusion.WinForms.Controls;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Mondas
 {
     public partial class QuizForm : SfForm
     {
-        TableLayoutPanel root;
-        Panel card;
-        Label lblHeader;
-        Label lblQuestion;
-        Label lblReason;
-        Label lblProgress;
-        FlowLayoutPanel optionsPanel;
-        Button btnSubmit;
-        Button btnClose;
-
-        QuizSession session;
-        SelectionResult currentSelection;
-        Question? currentQuestion;
-        SqliteAttemptRepository attemptRepo;
-        string userKey = "local";
-        Stopwatch stopwatch = new Stopwatch();
-        int questionsAsked = 0;
-        int maxQuestions = 10;
-        private readonly QuizPreferences _prefs;
-
-        public QuizForm() : this(new QuizPreferences())
+        public QuizForm()
         {
-        }
-
-        public QuizForm(QuizPreferences prefs)
-        {
-            _prefs = prefs ?? new QuizPreferences();
             InitializeComponent();
-            ConfigureForm();
-            BuildUI();
-            InitSession();
         }
 
-        void ConfigureForm()
+        private void QuizFormTemp_Load(object sender, EventArgs e)
         {
-            AutoScaleMode = AutoScaleMode.Dpi;
-            StartPosition = FormStartPosition.CenterScreen;
-            MinimumSize = new System.Drawing.Size(800, 500);
-            Text = "Quiz | Mondas";
+
         }
 
-        void BuildUI()
+        private void btnNavDashboard_Click(object sender, EventArgs e)
         {
-            Controls.Clear();
 
-            root = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 1,
-                RowCount = 1,
-                BackColor = System.Drawing.Color.FromArgb(245, 247, 252)
-            };
-            root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
-            Controls.Add(root);
-
-            card = new Panel
-            {
-                Dock = DockStyle.Fill,
-                Padding = new Padding(24),
-                BackColor = System.Drawing.Color.White
-            };
-            root.Controls.Add(card, 0, 0);
-
-            var grid = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 1,
-                RowCount = 5
-            };
-            grid.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            grid.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
-            grid.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            grid.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            card.Controls.Add(grid);
-
-            lblHeader = new Label
-            {
-                Text = "Cyber Awareness Quiz",
-                Font = new System.Drawing.Font("Segoe UI Semibold", 20f),
-                AutoSize = true
-            };
-            grid.Controls.Add(lblHeader, 0, 0);
-
-            lblProgress = new Label
-            {
-                Text = "Question 0 of 0",
-                Font = new System.Drawing.Font("Segoe UI", 10f),
-                ForeColor = System.Drawing.Color.Gray,
-                AutoSize = true,
-                Margin = new Padding(0, 4, 0, 12)
-            };
-            grid.Controls.Add(lblProgress, 0, 1);
-
-            lblQuestion = new Label
-            {
-                Text = "Question text...",
-                Font = new System.Drawing.Font("Segoe UI", 12.5f),
-                AutoSize = false,
-                Dock = DockStyle.Top,
-                Height = 80
-            };
-            grid.Controls.Add(lblQuestion, 0, 2);
-
-            optionsPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                AutoScroll = true,
-                Margin = new Padding(0, 8, 0, 8)
-            };
-            grid.Controls.Add(optionsPanel, 0, 3);
-
-            lblReason = new Label
-            {
-                Text = "Why this question: ",
-                Font = new System.Drawing.Font("Segoe UI", 9f),
-                ForeColor = System.Drawing.Color.Gray,
-                AutoSize = true,
-                Margin = new Padding(0, 4, 0, 4)
-            };
-            grid.Controls.Add(lblReason, 0, 4);
-
-            var buttonRow = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Bottom,
-                FlowDirection = FlowDirection.RightToLeft,
-                Height = 48
-            };
-            card.Controls.Add(buttonRow);
-
-            btnSubmit = new Button
-            {
-                Text = "Submit",
-                Font = new System.Drawing.Font("Segoe UI Semibold", 10.5f),
-                AutoSize = true,
-                Margin = new Padding(6)
-            };
-            btnSubmit.Click += BtnSubmit_Click;
-            buttonRow.Controls.Add(btnSubmit);
-
-            btnClose = new Button
-            {
-                Text = "Close",
-                Font = new System.Drawing.Font("Segoe UI", 10f),
-                AutoSize = true,
-                Margin = new Padding(6)
-            };
-            btnClose.Click += (s, e) => Close();
-            buttonRow.Controls.Add(btnClose);
-
-            AcceptButton = btnSubmit;
         }
 
-        void InitSession()
+        private void btnNavQuiz_Click(object sender, EventArgs e)
         {
-            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            
-            var dbPath = System.IO.Path.Combine(baseDir, "mondas.db");
-            attemptRepo = new SqliteAttemptRepository(dbPath);
-            
-            var path = System.IO.Path.Combine(baseDir, "Resources", "questions.json");
-            var repo = new JsonQuestionRepository(path);
-            var allQuestions = repo.GetAllQuestions();
 
-            if (allQuestions == null || allQuestions.Count == 0)
-            {
-                MessageBox.Show(this, "No questions found. Check questions.json.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
-                return;
-            }
-
-            var questionPool = BuildQuestionPool(allQuestions, _prefs);
-
-            if (questionPool.Count == 0)
-            {
-                MessageBox.Show(this, "No questions match your preferences. Try adjusting the filters.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Close();
-                return;
-            }
-
-            var requested = _prefs.UseDefaults ? 10 : _prefs.QuestionCount;
-            if (requested <= 0)
-            {
-                requested = 10;
-            }
-
-            maxQuestions = Math.Min(requested, questionPool.Count);
-
-            var userModel = new UserModel();
-            SeedUserModelFromHistory(userModel, allQuestions);
-
-            bool focusWeak = _prefs.UseDefaults ? true : _prefs.PrioritiseWeakTopics;
-            DifficultyBand? prefDiff = _prefs.UseDefaults ? DifficultyBand.Medium : _prefs.Difficulty;
-
-            IRuleEngine ruleEngine = new RuleEngineV1(focusWeakTopic: focusWeak, preferredDifficulty: prefDiff);
-            
-            session = new QuizSession(questionPool, ruleEngine, userModel);
-
-            lblProgress.Text = $"Question 0 of {maxQuestions}";
-            questionsAsked = 0;
-            
-            LoadNextQuestion();
         }
 
-        private List<Question> BuildQuestionPool(IReadOnlyList<Question> all, QuizPreferences prefs)
+        private void btnNavMiniGames_Click(object sender, EventArgs e)
         {
-            IEnumerable<Question> q = all;
 
-            if (!prefs.UseDefaults)
-            {
-                if (prefs.Topics != null && prefs.Topics.Count > 0)
-                {
-                    q = q.Where(x => prefs.Topics.Contains(x.Metadata.Topic));
-                }
-
-                if (prefs.QuestionTypes != null && prefs.QuestionTypes.Count > 0)
-                {
-                    q = q.Where(x => prefs.QuestionTypes.Contains(x.Metadata.QuestionType));
-                }
-
-                if (prefs.Difficulty.HasValue)
-                {
-                    q = q.Where(x => x.Metadata.Difficulty == prefs.Difficulty.Value);
-                }
-
-                if (prefs.BloomLevel.HasValue)
-                {
-                    q = q.Where(x => x.Metadata.BloomLevel == prefs.BloomLevel.Value);
-                }
-
-                if (!string.IsNullOrWhiteSpace(prefs.ThreatVector))
-                {
-                    q = q.Where(x => string.Equals(x.Metadata.ThreatVector, prefs.ThreatVector, StringComparison.OrdinalIgnoreCase));
-                }
-            }
-            return q.ToList();
         }
 
-        private void SeedUserModelFromHistory(UserModel userModel, IReadOnlyList<Question> allQuestions)
+        private void btnNavReports_Click(object sender, EventArgs e)
         {
-            var byId = allQuestions.ToDictionary(x => x.Id, x => x);
 
-            var history = attemptRepo.GetForUser(userKey).OrderBy(x => x.SubmittedAt).ToList();
-
-            foreach (var r in history)
-            {
-                if (!byId.TryGetValue(r.QuestionId, out var q))
-                {
-                    continue;
-                }
-
-                var attempt = new QuestionAttempt
-                {
-                    QuestionId = r.QuestionId,
-                    StartedAt = r.SubmittedAt.AddSeconds(-r.SecondsTaken).ToUniversalTime(),
-                    SubmittedAt = r.SubmittedAt.ToUniversalTime(),
-                    IsCorrect = r.IsCorrect,
-                    SelectedOptionIds = SafeReadIds(r.SelectedOptionIdsJson),
-                    ReasonString = r.ReasonString ?? "",
-                    RulesFired = SafeReadRules(r.RulesFiredJson)
-                };
-
-                userModel.UpdateFromAttempt(q, attempt);
-            }
         }
 
-        private List<int> SafeReadIds(string json)
+        private void btnNavLeaderboard_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    return new List<int>();
-                    
-                }
-                var ids = System.Text.Json.JsonSerializer.Deserialize<List<int>>(json);
-                return ids ?? new List<int>();
-            }
-            catch
-            {
-                return new List<int>();
-            }
+
         }
 
-        private List<string> SafeReadRules(string json)
+        private void btnNavCommunity_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    return new List<string>();
-                }
-                var rules = System.Text.Json.JsonSerializer.Deserialize<List<string>>(json);
-                return rules ?? new List<string>();
-            }
-            catch
-            {
-                return new List<string>();
-            }
+
         }
 
-        void LoadNextQuestion()
+        private void btnNavSettings_Click(object sender, EventArgs e)
         {
-            if (questionsAsked >= maxQuestions)
-            {
-                ShowSummaryAndClose();
-                return;
-            }
 
-            currentSelection = session.GetNextQuestion();
-
-            if (currentSelection == null || currentSelection.SelectedQuestion == null)
-            {
-                ShowSummaryAndClose();
-                return;
-            }
-
-            currentQuestion = currentSelection.SelectedQuestion;
-            questionsAsked++;
-
-            lblQuestion.Text = currentQuestion.Text;
-            lblProgress.Text = $"Question {questionsAsked} of {maxQuestions}";
-            lblReason.Text = "Reason for question: " + currentSelection.ReasonString;
-
-            optionsPanel.Controls.Clear();
-
-            bool singleChoice = currentQuestion.Metadata.QuestionType == QuestionType.SingleChoice || currentQuestion.Metadata.QuestionType == QuestionType.TrueFalse;
-
-            if (singleChoice)
-            {
-                foreach (var opt in currentQuestion.Options)
-                {
-                    var rb = new RadioButton
-                    {
-                        Text = opt.Text,
-                        Tag = opt.Id,
-                        AutoSize = true,
-                        Font = new System.Drawing.Font("Segoe UI", 10.5f),
-                        Margin = new Padding(0, 4, 0, 4)
-                    };
-                    optionsPanel.Controls.Add(rb);
-                }
-            }
-            else
-            {
-                foreach (var opt in currentQuestion.Options)
-                {
-                    var cb = new CheckBox
-                    {
-                        Text = opt.Text,
-                        Tag = opt.Id,
-                        AutoSize = true,
-                        Font = new System.Drawing.Font("Segoe UI", 10.5f),
-                        Margin = new Padding(0, 4, 0, 4)
-                    };
-                    optionsPanel.Controls.Add(cb);
-                }
-            }
-            stopwatch.Restart();
         }
 
-
-        void BtnSubmit_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object sender, EventArgs e)
         {
-            if (currentQuestion == null) return;
 
-            bool singleChoice = currentQuestion.Metadata.QuestionType == QuestionType.SingleChoice || currentQuestion.Metadata.QuestionType == QuestionType.TrueFalse;
-
-            var selectedIds = singleChoice ? optionsPanel.Controls.OfType<RadioButton>().Where(rb => rb.Checked).Select(rb => (int)rb.Tag)
-                    .ToList()
-                : optionsPanel.Controls.OfType<CheckBox>()
-                    .Where(cb => cb.Checked)
-                    .Select(cb => (int)cb.Tag)
-                    .ToList();
-
-            if (!selectedIds.Any())
-            {
-                MessageBox.Show(this, "Please select an answer.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            stopwatch.Stop();
-
-            var correctIds = currentQuestion.Options.Where(o => o.IsCorrect).Select(o => o.Id).OrderBy(id => id).ToList();
-
-            var chosenSorted = selectedIds.OrderBy(id => id).ToList();
-            bool isCorrect = correctIds.SequenceEqual(chosenSorted);
-
-            var attempt = new QuestionAttempt
-            {
-                QuestionId = currentQuestion.Id,
-                StartedAt = DateTime.UtcNow - stopwatch.Elapsed,
-                SubmittedAt = DateTime.UtcNow,
-                IsCorrect = isCorrect,
-                SelectedOptionIds = selectedIds,
-                ReasonString = currentSelection.ReasonString,
-                RulesFired = currentSelection.RulesFired
-            };
-
-            session.RecordAttempt(currentQuestion, attempt);
-            var record = new AttemptRecord
-            {
-                UserKey = userKey,
-                QuestionId = currentQuestion.Id,
-                SelectedOptionIdsJson = JsonSerializer.Serialize(selectedIds),
-                IsCorrect = isCorrect,
-                SecondsTaken = stopwatch.Elapsed.TotalSeconds,
-                SubmittedAt = DateTime.Now,
-                ReasonString = currentSelection.ReasonString,
-                RulesFiredJson = JsonSerializer.Serialize(currentSelection.RulesFired ?? new System.Collections.Generic.List<string>())
-            };
-
-            attemptRepo.Add(record);
-
-            MessageBox.Show(this, isCorrect ? "Correct!" : "Incorrect!", "Mondas", MessageBoxButtons.OK, isCorrect ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-            LoadNextQuestion();
         }
 
-        void ShowSummaryAndClose()
+        private void btnPrevious_Click(object sender, EventArgs e)
         {
-            var attempts = session.Attempts;
-            int total = attempts.Count;
-            int correct = attempts.Count(a => a.IsCorrect);
-            double percent = total == 0 ? 0 : correct * 100.0 / total;
 
-            MessageBox.Show(this, $"Quiz complete!\n\nCorrect: {correct}/{total} ({percent:0}%)", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Close();
         }
 
-        private void InitializeComponent()
+        private void btnNext_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "QuizForm";
-            this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
-            this.ResumeLayout(false);
+
         }
     }
 }
