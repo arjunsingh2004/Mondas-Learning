@@ -251,7 +251,7 @@ namespace Mondas
             prefsToUse ??= new QuizPreferences { UseDefaults = true };
             prefsToUse = Normalise(prefsToUse);
 
-            using (var quiz = new QuizFormOld(prefsToUse))
+            using (var quiz = new QuizForm(prefsToUse))
             {
                 quiz.StartPosition = FormStartPosition.CenterParent;
                 quiz.ShowDialog(this);
