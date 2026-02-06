@@ -155,6 +155,7 @@
             this.flpOptions.AutoScroll = true;
             this.flpOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpOptions.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpOptions.Font = new System.Drawing.Font("Agency", 22F);
             this.flpOptions.Location = new System.Drawing.Point(0, 90);
             this.flpOptions.Margin = new System.Windows.Forms.Padding(0);
             this.flpOptions.Name = "flpOptions";

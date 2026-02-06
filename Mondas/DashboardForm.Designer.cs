@@ -409,7 +409,7 @@
             // lblAttemptsValue
             // 
             this.lblAttemptsValue.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblAttemptsValue.Font = new System.Drawing.Font("Muro", 20F);
+            this.lblAttemptsValue.Font = new System.Drawing.Font("Muro", 16F);
             this.lblAttemptsValue.ForeColor = System.Drawing.Color.Black;
             this.lblAttemptsValue.Location = new System.Drawing.Point(8, 27);
             this.lblAttemptsValue.Name = "lblAttemptsValue";
@@ -447,7 +447,7 @@
             // lblAccuracyValue
             // 
             this.lblAccuracyValue.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblAccuracyValue.Font = new System.Drawing.Font("Muro", 20F);
+            this.lblAccuracyValue.Font = new System.Drawing.Font("Muro", 16F);
             this.lblAccuracyValue.ForeColor = System.Drawing.Color.Black;
             this.lblAccuracyValue.Location = new System.Drawing.Point(8, 27);
             this.lblAccuracyValue.Name = "lblAccuracyValue";
@@ -485,7 +485,7 @@
             // lblAvgTimeValue
             // 
             this.lblAvgTimeValue.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblAvgTimeValue.Font = new System.Drawing.Font("Muro", 20F);
+            this.lblAvgTimeValue.Font = new System.Drawing.Font("Muro", 16F);
             this.lblAvgTimeValue.ForeColor = System.Drawing.Color.Black;
             this.lblAvgTimeValue.Location = new System.Drawing.Point(8, 27);
             this.lblAvgTimeValue.Name = "lblAvgTimeValue";
