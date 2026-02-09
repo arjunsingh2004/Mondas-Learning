@@ -108,7 +108,9 @@
             this.tlpSidebar.Controls.Add(this.lblHeroSubtitle, 0, 4);
             this.tlpSidebar.Controls.Add(this.lblFooter, 0, 5);
             this.tlpSidebar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpSidebar.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tlpSidebar.Location = new System.Drawing.Point(48, 48);
+            this.tlpSidebar.Margin = new System.Windows.Forms.Padding(0);
             this.tlpSidebar.Name = "tlpSidebar";
             this.tlpSidebar.RowCount = 6;
             this.tlpSidebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
@@ -154,7 +156,7 @@
             this.lblHeroSubtitle.AutoSize = true;
             this.lblHeroSubtitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblHeroSubtitle.Font = new System.Drawing.Font("Agency", 14F);
-            this.lblHeroSubtitle.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblHeroSubtitle.ForeColor = System.Drawing.Color.White;
             this.lblHeroSubtitle.Location = new System.Drawing.Point(0, 288);
             this.lblHeroSubtitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblHeroSubtitle.Name = "lblHeroSubtitle";
@@ -452,13 +454,12 @@
             // lnkSignUp
             // 
             this.lnkSignUp.AutoSize = true;
-            this.lnkSignUp.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lnkSignUp.Font = new System.Drawing.Font("Agency FB", 12F);
+            this.lnkSignUp.Font = new System.Drawing.Font("Agency FB", 11F);
             this.lnkSignUp.LinkColor = System.Drawing.Color.RoyalBlue;
             this.lnkSignUp.Location = new System.Drawing.Point(0, 17);
             this.lnkSignUp.Name = "lnkSignUp";
             this.lnkSignUp.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lnkSignUp.Size = new System.Drawing.Size(245, 38);
+            this.lnkSignUp.Size = new System.Drawing.Size(218, 36);
             this.lnkSignUp.TabIndex = 1;
             this.lnkSignUp.TabStop = true;
             this.lnkSignUp.Text = "Don\'t have an account? Sign up";

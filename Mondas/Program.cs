@@ -48,7 +48,7 @@ namespace Mondas
 
             init.Initialize();
             OnStartup();
-            Application.Run(new LoginForm());
+            Application.Run(new SignupForm());
             _host.Dispose();
             _host = null;
         }
