@@ -76,6 +76,18 @@ namespace Mondas.Services
             FOREIGN KEY (TagId) REFERENCES MisconceptionTags(Id) ON DELETE CASCADE
             );
 
+            CREATE TABLE IF NOT EXISTS Users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            FullName TEXT NOT NULL,
+            Email TEXT NOT NULL UNIQUE,
+            PasswordHash TEXT NOT NULL,
+            PasswordSalt TEXT NOT NULL,
+            PasswordIterations INTEGER NOT NULL,
+            TotpSecretBase32 TEXT,
+            TotpEnabled INTEGER NOT NULL DEFAULT 0,
+            CreatedUtc TEXT NOT NULL                                                           
+            );
+
             CREATE TABLE IF NOT EXISTS Attempts (
             Id INTEGER PRIMARY KEY AUTOINCREMENT,
             UserKey TEXT NOT NULL,
@@ -98,10 +110,11 @@ namespace Mondas.Services
             ON QuestionMisconceptionTags(TagId);
 
             CREATE INDEX IF NOT EXISTS IX_Attempts_User_Submitted
-            ON Attempts(UserKey, SubmittedAt);  
-            ";
+            ON Attempts(UserKey, SubmittedAt);
 
-         
+            CREATE INDEX IF NOT EXISTS IX_Users_Email
+            ON Users(Email);
+            ";
 
             using var cmd = conn.CreateCommand();
             cmd.CommandText = sql;
@@ -196,10 +209,9 @@ namespace Mondas.Services
                 return fallback; 
             }
               
-            
-                
 
-            try {
+            try
+            {
                 return Enum.Parse(enumType, value.Trim(), true);
             }
             catch
