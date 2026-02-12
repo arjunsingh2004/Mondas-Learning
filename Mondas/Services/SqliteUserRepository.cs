@@ -8,14 +8,9 @@ using System;
 
 namespace Mondas.Services
 {
-    public sealed class SqliteUserRepository
+    public sealed class SqliteUserRepository(string dbPath)
     {
-        private readonly string _dbPath;
-
-        public SqliteUserRepository(string dbPath)
-        {
-            _dbPath = dbPath ?? throw new ArgumentNullException(nameof(dbPath));
-        }
+        private readonly string _dbPath = dbPath ?? throw new ArgumentNullException(nameof(dbPath));
 
         private SqliteConnection Open()
         {

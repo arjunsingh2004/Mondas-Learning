@@ -31,7 +31,10 @@
             this.tlpRoot = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHero = new System.Windows.Forms.Panel();
             this.tlpHero = new System.Windows.Forms.TableLayoutPanel();
+            this.lblMondas = new System.Windows.Forms.Label();
             this.lblHeroFooter = new System.Windows.Forms.Label();
+            this.lblHeroTitle = new System.Windows.Forms.Label();
+            this.lblHeroSubtitle = new System.Windows.Forms.Label();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.tlpCenter = new System.Windows.Forms.TableLayoutPanel();
             this.pnlCard = new System.Windows.Forms.Panel();
@@ -49,9 +52,6 @@
             this.chkTerms = new System.Windows.Forms.CheckBox();
             this.btnSignUp = new Syncfusion.WinForms.Controls.SfButton();
             this.lnkSignIn = new System.Windows.Forms.LinkLabel();
-            this.lblMondas = new System.Windows.Forms.Label();
-            this.lblHeroTitle = new System.Windows.Forms.Label();
-            this.lblHeroSubtitle = new System.Windows.Forms.Label();
             this.tlpRoot.SuspendLayout();
             this.pnlHero.SuspendLayout();
             this.tlpHero.SuspendLayout();
@@ -115,6 +115,20 @@
             this.tlpHero.Size = new System.Drawing.Size(417, 621);
             this.tlpHero.TabIndex = 0;
             // 
+            // lblMondas
+            // 
+            this.lblMondas.AutoSize = true;
+            this.lblMondas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMondas.Font = new System.Drawing.Font("Muro", 46F);
+            this.lblMondas.ForeColor = System.Drawing.Color.White;
+            this.lblMondas.Location = new System.Drawing.Point(0, 0);
+            this.lblMondas.Margin = new System.Windows.Forms.Padding(0);
+            this.lblMondas.Name = "lblMondas";
+            this.lblMondas.Size = new System.Drawing.Size(417, 100);
+            this.lblMondas.TabIndex = 5;
+            this.lblMondas.Text = "MONDAS";
+            this.lblMondas.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // lblHeroFooter
             // 
             this.lblHeroFooter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -127,6 +141,32 @@
             this.lblHeroFooter.TabIndex = 4;
             this.lblHeroFooter.Text = "© 2026 Mondas Learning";
             this.lblHeroFooter.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // lblHeroTitle
+            // 
+            this.lblHeroTitle.AutoSize = true;
+            this.lblHeroTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHeroTitle.Font = new System.Drawing.Font("Muro", 22F);
+            this.lblHeroTitle.ForeColor = System.Drawing.Color.White;
+            this.lblHeroTitle.Location = new System.Drawing.Point(3, 140);
+            this.lblHeroTitle.Name = "lblHeroTitle";
+            this.lblHeroTitle.Size = new System.Drawing.Size(411, 44);
+            this.lblHeroTitle.TabIndex = 6;
+            this.lblHeroTitle.Text = "Welcome to Mondas";
+            this.lblHeroTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblHeroSubtitle
+            // 
+            this.lblHeroSubtitle.AutoSize = true;
+            this.lblHeroSubtitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHeroSubtitle.Font = new System.Drawing.Font("Agency", 14F);
+            this.lblHeroSubtitle.ForeColor = System.Drawing.Color.White;
+            this.lblHeroSubtitle.Location = new System.Drawing.Point(3, 264);
+            this.lblHeroSubtitle.Name = "lblHeroSubtitle";
+            this.lblHeroSubtitle.Size = new System.Drawing.Size(411, 21);
+            this.lblHeroSubtitle.TabIndex = 7;
+            this.lblHeroSubtitle.Text = "Create your Account";
+            this.lblHeroSubtitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // pnlRight
             // 
@@ -384,46 +424,6 @@
             this.lnkSignIn.TabStop = true;
             this.lnkSignIn.Text = "Already have an account? Sign in";
             this.lnkSignIn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMondas
-            // 
-            this.lblMondas.AutoSize = true;
-            this.lblMondas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMondas.Font = new System.Drawing.Font("Muro", 46F);
-            this.lblMondas.ForeColor = System.Drawing.Color.White;
-            this.lblMondas.Location = new System.Drawing.Point(0, 0);
-            this.lblMondas.Margin = new System.Windows.Forms.Padding(0);
-            this.lblMondas.Name = "lblMondas";
-            this.lblMondas.Size = new System.Drawing.Size(417, 100);
-            this.lblMondas.TabIndex = 5;
-            this.lblMondas.Text = "MONDAS";
-            this.lblMondas.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lblHeroTitle
-            // 
-            this.lblHeroTitle.AutoSize = true;
-            this.lblHeroTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeroTitle.Font = new System.Drawing.Font("Muro", 22F);
-            this.lblHeroTitle.ForeColor = System.Drawing.Color.White;
-            this.lblHeroTitle.Location = new System.Drawing.Point(3, 140);
-            this.lblHeroTitle.Name = "lblHeroTitle";
-            this.lblHeroTitle.Size = new System.Drawing.Size(411, 44);
-            this.lblHeroTitle.TabIndex = 6;
-            this.lblHeroTitle.Text = "Welcome to Mondas";
-            this.lblHeroTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lblHeroSubtitle
-            // 
-            this.lblHeroSubtitle.AutoSize = true;
-            this.lblHeroSubtitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeroSubtitle.Font = new System.Drawing.Font("Agency", 14F);
-            this.lblHeroSubtitle.ForeColor = System.Drawing.Color.White;
-            this.lblHeroSubtitle.Location = new System.Drawing.Point(3, 264);
-            this.lblHeroSubtitle.Name = "lblHeroSubtitle";
-            this.lblHeroSubtitle.Size = new System.Drawing.Size(411, 21);
-            this.lblHeroSubtitle.TabIndex = 7;
-            this.lblHeroSubtitle.Text = "Create your Account";
-            this.lblHeroSubtitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // SignupForm
             // 

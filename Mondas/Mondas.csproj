@@ -17,6 +17,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -45,7 +60,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINFORMS</DefineConstants>
-    <WarningLevel>0</WarningLevel>
+    <WarningLevel>1</WarningLevel>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
@@ -272,10 +287,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\Services\Base32.cs" />
     <Compile Include="Contracts\Services\INavigationService.cs" />
     <Compile Include="Contracts\Services\IPageService.cs" />
     <Compile Include="Contracts\Services\IQuestionRepository.cs" />
     <Compile Include="Contracts\Services\IRuleEngine.cs" />
+    <Compile Include="Contracts\Services\QrCodeService.cs" />
+    <Compile Include="Contracts\Services\TotpService.cs" />
     <Compile Include="DashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -350,6 +368,12 @@
     <Compile Include="Start.Designer.cs">
       <DependentUpon>Start.cs</DependentUpon>
     </Compile>
+    <Compile Include="TotpSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TotpSetupForm.Designer.cs">
+      <DependentUpon>TotpSetupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -391,6 +415,9 @@
     <EmbeddedResource Include="Start.resx">
       <DependentUpon>Start.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TotpSetupForm.resx">
+      <DependentUpon>TotpSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -406,7 +433,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
