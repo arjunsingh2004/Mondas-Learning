@@ -1,13 +1,11 @@
 ﻿using Mondas.Contracts.Services;
 using Mondas.Models;
 using Mondas.Services;
-using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 using Syncfusion.WinForms.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -17,7 +15,7 @@ namespace Mondas
 {
     public partial class QuizForm : SfForm
     {
-        private const string UserKey = "local";
+        private readonly string _userKey;
 
         private readonly QuizPreferences _prefs;
 
@@ -42,17 +40,43 @@ namespace Mondas
 
         private bool _updateRadioGroup;
 
-        public QuizForm() : this(new QuizPreferences { UseDefaults = true })
+        public QuizForm() : this("local", new QuizPreferences { UseDefaults = true })
         {
 
         }
 
-        public QuizForm(QuizPreferences prefs)
+        public QuizForm(QuizPreferences prefs) : this("local", prefs)
+        {
+
+        }
+
+        public QuizForm(long userId) : this(BuildUserKey(userId), new QuizPreferences { UseDefaults = true })
+        {
+
+        }
+
+        public QuizForm(long userId, QuizPreferences prefs) : this(BuildUserKey(userId), prefs)
+        {
+
+        }
+
+        private QuizForm(string userKey, QuizPreferences prefs)
         {
             InitializeComponent();
             _prefs = prefs ?? new QuizPreferences { UseDefaults = true };
+            _userKey = NormalizeUserKey(userKey);
 
             WireUiDefaults();
+        }
+
+        private static string BuildUserKey(long userId)
+        {
+            return userId > 0 ? "u:" + userId.ToString() : "local";
+        }
+
+        private static string NormalizeUserKey(string userKey)
+        {
+            return string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
         }
 
         private void WireUiDefaults()
@@ -303,8 +327,9 @@ namespace Mondas
 
             try
             {
-                history = _attemptRepo.GetForUser(UserKey)?.OrderBy(x => x.SubmittedAt).ToList() ?? new List<AttemptRecord>();
+                history = _attemptRepo.GetForUser(_userKey)?.OrderBy(x => x.SubmittedAt).ToList() ?? new List<AttemptRecord>();
             }
+
             catch
             {
                 history = new List<AttemptRecord>();
@@ -845,7 +870,7 @@ namespace Mondas
 
             if (_attemptRepo != null)
             {
-                var record = new AttemptRecord { UserKey = UserKey, QuestionId = item.Question.Id, SelectedOptionIdsJson = JsonSerializer.Serialize(selectedIds), IsCorrect = isCorrect, SecondsTaken = item.SecondsTaken, SubmittedAt = DateTime.Now, ReasonString = item.Selection?.ReasonString ?? "", RulesFiredJson = JsonSerializer.Serialize(item.Selection?.RulesFired ??new List<string>()) };
+                var record = new AttemptRecord { UserKey = _userKey, QuestionId = item.Question.Id, SelectedOptionIdsJson = JsonSerializer.Serialize(selectedIds), IsCorrect = isCorrect, SecondsTaken = item.SecondsTaken, SubmittedAt = DateTime.Now, ReasonString = item.Selection?.ReasonString ?? "", RulesFiredJson = JsonSerializer.Serialize(item.Selection?.RulesFired ??new List<string>()) };
 
                 _attemptRepo.Add(record);
             }

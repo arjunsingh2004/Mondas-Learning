@@ -17,7 +17,7 @@ namespace Mondas.Services
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new ArgumentException("Password cannot be null or whitespace.");
+                throw new ArgumentException("Password cannot be empty.", nameof(password));
             }
 
             var salt = new byte[SaltBytes];
@@ -27,7 +27,7 @@ namespace Mondas.Services
             }
 
             byte[] hash;
-            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, DefaultIterations, HashAlgorithmName.SHA256))
+            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, DefaultIterations))
             {
                 hash = pbkdf2.GetBytes(HashBytes);
             }
@@ -62,7 +62,7 @@ namespace Mondas.Services
             }
 
             byte[] actual;
-            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, HashAlgorithmName.SHA256))
+            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations))
             {
                 actual = pbkdf2.GetBytes(expected.Length);
             }

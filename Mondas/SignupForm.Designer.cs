@@ -410,6 +410,7 @@
             this.btnSignUp.TabIndex = 10;
             this.btnSignUp.Text = "SIGN UP";
             this.btnSignUp.UseVisualStyleBackColor = false;
+            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
             // lnkSignIn
             // 
@@ -424,6 +425,7 @@
             this.lnkSignIn.TabStop = true;
             this.lnkSignIn.Text = "Already have an account? Sign in";
             this.lnkSignIn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lnkSignIn.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSignIn_LinkClicked);
             // 
             // SignupForm
             // 

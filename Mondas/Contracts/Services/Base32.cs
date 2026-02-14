@@ -52,7 +52,7 @@ namespace Mondas.Contracts.Services
         {
             if (string.IsNullOrWhiteSpace(base32))
             {
-                return [];
+                return Array.Empty<byte>();
             }
 
             base32 = base32.Trim().Replace(" ", "").ToUpperInvariant();
@@ -81,7 +81,7 @@ namespace Mondas.Contracts.Services
                 }
             }
 
-            return [.. output];
+            return output.ToArray();
         }
     }
 }

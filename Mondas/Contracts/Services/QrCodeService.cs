@@ -10,13 +10,15 @@ namespace Mondas.Contracts.Services
 {
     public sealed class QrCodeService
     {
-        public Bitmap MakeQr(string payload)
+        public Bitmap GenerateQrBitmap(string payload, int pixelsPerModule)
         {
-            using var generator = new QRCodeGenerator();
-            using var data = generator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
-            using var code = new QRCode(data);
-       
-            return code.GetGraphic(10);
+            using (var gen = new QRCodeGenerator())
+            using (var data = gen.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q))
+            using (var code = new QRCode(data))
+            {
+                return code.GetGraphic(pixelsPerModule);
+            }
         }
+
     }
 }

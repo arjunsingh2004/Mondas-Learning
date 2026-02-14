@@ -4,97 +4,176 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using System;
 
 namespace Mondas.Services
 {
-    public sealed class SqliteUserRepository(string dbPath)
+    public sealed class SqliteUserRepository
     {
-        private readonly string _dbPath = dbPath ?? throw new ArgumentNullException(nameof(dbPath));
+        private readonly string _dbPath;
+
+        public SqliteUserRepository(string dbPath)
+        {
+            if (string.IsNullOrWhiteSpace(dbPath))
+            {
+                throw new ArgumentNullException(nameof(dbPath));
+            }
+
+            _dbPath = dbPath;
+        }
 
         private SqliteConnection Open()
         {
-            var conn = new SqliteConnection($"Data Source={_dbPath}");
+            var conn = new SqliteConnection("Data Source=" + _dbPath);
             conn.Open();
+
+            using (var pragma = conn.CreateCommand())
+            {
+                pragma.CommandText = "PRAGMA foreign_keys = ON;";
+                pragma.ExecuteNonQuery();
+            }
+
             return conn;
         }
 
         public bool EmailExists(string email)
         {
-            using var conn = Open();
-            using var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT 1 FROM users WHERE email = @email LIMIT 1;";
-            cmd.Parameters.AddWithValue("@Email", email);
-            var result = cmd.ExecuteScalar();
-            return result != null;
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+
+            var cleanEmail = email.Trim().ToLowerInvariant();
+
+            using (var conn = Open())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "SELECT 1 FROM Users WHERE Email = @email LIMIT 1;";
+                cmd.Parameters.AddWithValue("@email", cleanEmail);
+
+                var result = cmd.ExecuteScalar();
+                return result != null && result != DBNull.Value;
+            }
         }
 
-        public int CreateUser(string fullName, string email, string passwordHash, string passwordSalt, int iterations, string totpSecretBase32)
+        public long CreateUser(string fullName, string email, string passwordHash, string passwordSalt, int iterations)
         {
-            using var conn = Open();
-            using var cmd = conn.CreateCommand();
+            if (string.IsNullOrWhiteSpace(fullName))
+            {
+                throw new ArgumentException("Full name is required.", nameof(fullName));
+            }
 
-            cmd.CommandText = @"INSERT INTO users (full_name, email, password_hash, password_salt, password_iterations, totp_secret_base32, totp_enabled, created_utc)
-                                VALUES (@name, @email, @hash, @salt, @iters, @totp, 0, @created);
-                                SELECT last_insert_rowid();";
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentException("Email is required.", nameof(email));
+            }
 
-            cmd.Parameters.AddWithValue("@name", fullName);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@hash", passwordHash);
-            cmd.Parameters.AddWithValue("@salt", passwordSalt);
-            cmd.Parameters.AddWithValue("@iters", iterations);
-            cmd.Parameters.AddWithValue("@totp", (object)totpSecretBase32 ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@created", DateTime.UtcNow.ToString("O"));
+            if (string.IsNullOrWhiteSpace(passwordHash))
+            {
+                throw new ArgumentException("PasswordHash is required.", nameof(passwordHash));
+            }
 
-            var id = Convert.ToInt32(cmd.ExecuteScalar());
-            return id;
+            if (string.IsNullOrWhiteSpace(passwordSalt))
+            {
+                throw new ArgumentException("PasswordSalt is required.", nameof(passwordSalt));
+            }
+
+            if (iterations <= 0)
+            {
+                throw new ArgumentException("Iterations must be > 0.", nameof(iterations));
+            }
+
+            var cleanEmail = email.Trim().ToLowerInvariant();
+            var createdUtc = DateTime.UtcNow.ToString("o");
+
+            using (var conn = Open())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO Users (FullName, Email, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc)
+                                    VALUES (@name, @email, @hash, @salt, @iters, NULL, 0, @created);
+                                    SELECT last_insert_rowid();";
+
+                cmd.Parameters.AddWithValue("@name", fullName.Trim());
+                cmd.Parameters.AddWithValue("@email", cleanEmail);
+                cmd.Parameters.AddWithValue("@hash", passwordHash);
+                cmd.Parameters.AddWithValue("@salt", passwordSalt);
+                cmd.Parameters.AddWithValue("@iters", iterations);
+                cmd.Parameters.AddWithValue("@created", createdUtc);
+
+                return Convert.ToInt64(cmd.ExecuteScalar());
+            }
         }
 
-        public void SetTotpEnabled(int userId, bool enabled)
+        public void SetTotp(long userId, string totpSecretBase32, bool enabled)
         {
-            using var conn = Open();
-            using var cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE users SET totp_enabled = @enabled WHERE id = @id;";
-            cmd.Parameters.AddWithValue("@enabled", enabled ? 1 : 0);
-            cmd.Parameters.AddWithValue("@id", userId);
-            cmd.ExecuteNonQuery();
+            if (userId <= 0)
+            {
+                throw new ArgumentException("Invalid user id.", nameof(userId));
+            }
+
+            using (var conn = Open())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE Users SET TotpSecretBase32 = @secret, TotpEnabled = @enabled WHERE Id = @id;";
+
+                cmd.Parameters.AddWithValue("@secret", (object)totpSecretBase32 ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@enabled", enabled ? 1 : 0);
+                cmd.Parameters.AddWithValue("@id", userId);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void SetTotpEnabled(long userId, bool enabled)
+        {
+            SetTotp(userId, null, enabled);
         }
 
         public UserRow GetByEmail(string email)
         {
-            using var conn = Open();
-            using var cmd = conn.CreateCommand();
-
-            cmd.CommandText = @"SELECT id, full_name, email, password_hash, password_salt, password_iterations, totp_secret_base32, totp_enabled
-                                FROM users
-                                WHERE email = @Email
-                                LIMIT 1;";
-
-            cmd.Parameters.AddWithValue("@Email", email);
-
-            using var r = cmd.ExecuteReader();
-            if (!r.Read())
+            if (string.IsNullOrWhiteSpace(email))
             {
                 return null;
             }
 
-            return new UserRow
+            var cleanEmail = email.Trim().ToLowerInvariant();
+
+            using (var conn = Open())
+            using (var cmd = conn.CreateCommand())
             {
-                Id = r.GetInt32(0),
-                FullName = r.GetString(1),
-                Email = r.GetString(2),
-                PasswordHash = r.GetString(3),
-                PasswordSalt = r.GetString(4),
-                PasswordIterations = r.GetInt32(5),
-                TotpSecretBase32 = r.IsDBNull(6) ? null : r.GetString(6),
-                TotpEnabled = r.GetInt32(7) == 1
-            };
+                cmd.CommandText = @"SELECT Id, FullName, Email, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc
+                                    FROM Users
+                                    WHERE Email = @email
+                                    LIMIT 1;";
+
+                cmd.Parameters.AddWithValue("@email", cleanEmail);
+
+                using (var r = cmd.ExecuteReader())
+                {
+                    if (!r.Read())
+                    {
+                        return null;
+                    }
+
+                    return new UserRow
+                    {
+                        Id = r.GetInt64(0),
+                        FullName = r.GetString(1),
+                        Email = r.GetString(2),
+                        PasswordHash = r.GetString(3),
+                        PasswordSalt = r.GetString(4),
+                        PasswordIterations = r.GetInt32(5),
+                        TotpSecretBase32 = r.IsDBNull(6) ? null : r.GetString(6),
+                        TotpEnabled = r.GetInt32(7) == 1,
+                        CreatedUtc = DateTime.Parse(r.GetString(8)).ToUniversalTime()
+                    };
+                }
+            }
         }
     }
 
     public sealed class UserRow
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
@@ -102,5 +181,6 @@ namespace Mondas.Services
         public int PasswordIterations { get; set; }
         public string TotpSecretBase32 { get; set; }
         public bool TotpEnabled { get; set; }
+        public DateTime CreatedUtc { get; set; }
     }
 }

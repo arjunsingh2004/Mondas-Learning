@@ -39,12 +39,39 @@
             this.tlpPageCenter = new System.Windows.Forms.TableLayoutPanel();
             this.pnlCard = new System.Windows.Forms.Panel();
             this.tlpCard = new System.Windows.Forms.TableLayoutPanel();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.lblStepScan = new System.Windows.Forms.Label();
+            this.pnlQr = new System.Windows.Forms.Panel();
+            this.picQr = new System.Windows.Forms.PictureBox();
+            this.lblManualKey = new System.Windows.Forms.Label();
+            this.pnlSecret = new System.Windows.Forms.Panel();
+            this.txtSecret = new System.Windows.Forms.TextBox();
+            this.lblStepCode = new System.Windows.Forms.Label();
+            this.tlpVerifyRow = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlCode = new System.Windows.Forms.Panel();
+            this.txtCode = new System.Windows.Forms.TextBox();
+            this.btnVerify = new Syncfusion.WinForms.Controls.SfButton();
+            this.tlpFooter = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlFooterLeft = new System.Windows.Forms.Panel();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.pnlFooterRight = new System.Windows.Forms.Panel();
+            this.btnContinue = new Syncfusion.WinForms.Controls.SfButton();
             this.tlpRoot.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
             this.tlpSidebar.SuspendLayout();
             this.pnlPage.SuspendLayout();
             this.tlpPageCenter.SuspendLayout();
             this.pnlCard.SuspendLayout();
+            this.tlpCard.SuspendLayout();
+            this.pnlQr.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picQr)).BeginInit();
+            this.pnlSecret.SuspendLayout();
+            this.tlpVerifyRow.SuspendLayout();
+            this.pnlCode.SuspendLayout();
+            this.tlpFooter.SuspendLayout();
+            this.pnlFooterLeft.SuspendLayout();
+            this.pnlFooterRight.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpRoot
@@ -159,7 +186,7 @@
             this.pnlPage.Location = new System.Drawing.Point(441, 0);
             this.pnlPage.Margin = new System.Windows.Forms.Padding(0);
             this.pnlPage.Name = "pnlPage";
-            this.pnlPage.Padding = new System.Windows.Forms.Padding(24);
+            this.pnlPage.Padding = new System.Windows.Forms.Padding(12);
             this.pnlPage.Size = new System.Drawing.Size(539, 607);
             this.pnlPage.TabIndex = 1;
             // 
@@ -171,14 +198,14 @@
             this.tlpPageCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpPageCenter.Controls.Add(this.pnlCard, 1, 1);
             this.tlpPageCenter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpPageCenter.Location = new System.Drawing.Point(24, 24);
+            this.tlpPageCenter.Location = new System.Drawing.Point(12, 12);
             this.tlpPageCenter.Margin = new System.Windows.Forms.Padding(0);
             this.tlpPageCenter.Name = "tlpPageCenter";
             this.tlpPageCenter.RowCount = 3;
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpPageCenter.Size = new System.Drawing.Size(491, 559);
+            this.tlpPageCenter.Size = new System.Drawing.Size(515, 583);
             this.tlpPageCenter.TabIndex = 0;
             // 
             // pnlCard
@@ -186,37 +213,270 @@
             this.pnlCard.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlCard.Controls.Add(this.tlpCard);
-            this.pnlCard.Location = new System.Drawing.Point(24, 22);
+            this.pnlCard.Location = new System.Drawing.Point(30, 30);
             this.pnlCard.Margin = new System.Windows.Forms.Padding(0);
             this.pnlCard.Name = "pnlCard";
-            this.pnlCard.Padding = new System.Windows.Forms.Padding(24);
-            this.pnlCard.Size = new System.Drawing.Size(442, 514);
+            this.pnlCard.Padding = new System.Windows.Forms.Padding(12, 6, 12, 12);
+            this.pnlCard.Size = new System.Drawing.Size(455, 522);
             this.pnlCard.TabIndex = 0;
             // 
             // tlpCard
             // 
             this.tlpCard.ColumnCount = 1;
-            this.tlpCard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpCard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpCard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCard.Controls.Add(this.lblTitle, 0, 0);
+            this.tlpCard.Controls.Add(this.lblSubtitle, 0, 1);
+            this.tlpCard.Controls.Add(this.lblStepScan, 0, 3);
+            this.tlpCard.Controls.Add(this.pnlQr, 0, 4);
+            this.tlpCard.Controls.Add(this.lblManualKey, 0, 6);
+            this.tlpCard.Controls.Add(this.pnlSecret, 0, 7);
+            this.tlpCard.Controls.Add(this.lblStepCode, 0, 9);
+            this.tlpCard.Controls.Add(this.tlpVerifyRow, 0, 10);
+            this.tlpCard.Controls.Add(this.tlpFooter, 0, 11);
             this.tlpCard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpCard.Location = new System.Drawing.Point(24, 24);
+            this.tlpCard.Location = new System.Drawing.Point(12, 6);
             this.tlpCard.Margin = new System.Windows.Forms.Padding(0);
             this.tlpCard.Name = "tlpCard";
             this.tlpCard.RowCount = 12;
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCard.Size = new System.Drawing.Size(392, 464);
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCard.Size = new System.Drawing.Size(429, 502);
             this.tlpCard.TabIndex = 0;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitle.Font = new System.Drawing.Font("Muro", 19.5F);
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(429, 39);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "SET UP TWO-FACTOR AUTH";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblSubtitle.ForeColor = System.Drawing.Color.DimGray;
+            this.lblSubtitle.Location = new System.Drawing.Point(35, 47);
+            this.lblSubtitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(358, 30);
+            this.lblSubtitle.TabIndex = 1;
+            this.lblSubtitle.Text = "Scan the QR code in Microsoft or Google Authenticator";
+            this.lblSubtitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblStepScan
+            // 
+            this.lblStepScan.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblStepScan.AutoSize = true;
+            this.lblStepScan.Font = new System.Drawing.Font("Agency", 11F, System.Drawing.FontStyle.Bold);
+            this.lblStepScan.Location = new System.Drawing.Point(91, 91);
+            this.lblStepScan.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.lblStepScan.Name = "lblStepScan";
+            this.lblStepScan.Size = new System.Drawing.Size(246, 17);
+            this.lblStepScan.TabIndex = 2;
+            this.lblStepScan.Text = "1) Scan the QR code";
+            // 
+            // pnlQr
+            // 
+            this.pnlQr.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pnlQr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlQr.Controls.Add(this.picQr);
+            this.pnlQr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlQr.Location = new System.Drawing.Point(0, 116);
+            this.pnlQr.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlQr.Name = "pnlQr";
+            this.pnlQr.Padding = new System.Windows.Forms.Padding(12);
+            this.pnlQr.Size = new System.Drawing.Size(429, 200);
+            this.pnlQr.TabIndex = 3;
+            // 
+            // picQr
+            // 
+            this.picQr.BackColor = System.Drawing.Color.White;
+            this.picQr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picQr.Location = new System.Drawing.Point(12, 12);
+            this.picQr.Name = "picQr";
+            this.picQr.Size = new System.Drawing.Size(403, 174);
+            this.picQr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picQr.TabIndex = 0;
+            this.picQr.TabStop = false;
+            // 
+            // lblManualKey
+            // 
+            this.lblManualKey.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblManualKey.AutoSize = true;
+            this.lblManualKey.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblManualKey.Location = new System.Drawing.Point(54, 326);
+            this.lblManualKey.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.lblManualKey.Name = "lblManualKey";
+            this.lblManualKey.Size = new System.Drawing.Size(321, 15);
+            this.lblManualKey.TabIndex = 4;
+            this.lblManualKey.Text = "Manual key (if unable to scan)";
+            // 
+            // pnlSecret
+            // 
+            this.pnlSecret.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSecret.Controls.Add(this.txtSecret);
+            this.pnlSecret.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSecret.Location = new System.Drawing.Point(0, 344);
+            this.pnlSecret.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlSecret.Name = "pnlSecret";
+            this.pnlSecret.Padding = new System.Windows.Forms.Padding(12);
+            this.pnlSecret.Size = new System.Drawing.Size(429, 40);
+            this.pnlSecret.TabIndex = 5;
+            // 
+            // txtSecret
+            // 
+            this.txtSecret.BackColor = System.Drawing.Color.White;
+            this.txtSecret.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSecret.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSecret.Font = new System.Drawing.Font("Agency", 12F);
+            this.txtSecret.Location = new System.Drawing.Point(12, 12);
+            this.txtSecret.Margin = new System.Windows.Forms.Padding(0);
+            this.txtSecret.Name = "txtSecret";
+            this.txtSecret.ReadOnly = true;
+            this.txtSecret.Size = new System.Drawing.Size(403, 25);
+            this.txtSecret.TabIndex = 0;
+            // 
+            // lblStepCode
+            // 
+            this.lblStepCode.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblStepCode.AutoSize = true;
+            this.lblStepCode.Font = new System.Drawing.Font("Agency", 11F, System.Drawing.FontStyle.Bold);
+            this.lblStepCode.Location = new System.Drawing.Point(64, 392);
+            this.lblStepCode.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.lblStepCode.Name = "lblStepCode";
+            this.lblStepCode.Size = new System.Drawing.Size(300, 17);
+            this.lblStepCode.TabIndex = 6;
+            this.lblStepCode.Text = "2) Enter the 6-digit code";
+            // 
+            // tlpVerifyRow
+            // 
+            this.tlpVerifyRow.ColumnCount = 2;
+            this.tlpVerifyRow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tlpVerifyRow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tlpVerifyRow.Controls.Add(this.pnlCode, 0, 0);
+            this.tlpVerifyRow.Controls.Add(this.btnVerify, 1, 0);
+            this.tlpVerifyRow.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tlpVerifyRow.Location = new System.Drawing.Point(0, 417);
+            this.tlpVerifyRow.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpVerifyRow.Name = "tlpVerifyRow";
+            this.tlpVerifyRow.RowCount = 1;
+            this.tlpVerifyRow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpVerifyRow.Size = new System.Drawing.Size(429, 40);
+            this.tlpVerifyRow.TabIndex = 7;
+            // 
+            // pnlCode
+            // 
+            this.pnlCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlCode.Controls.Add(this.txtCode);
+            this.pnlCode.Location = new System.Drawing.Point(0, 0);
+            this.pnlCode.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.pnlCode.Name = "pnlCode";
+            this.pnlCode.Padding = new System.Windows.Forms.Padding(12);
+            this.pnlCode.Size = new System.Drawing.Size(266, 40);
+            this.pnlCode.TabIndex = 0;
+            // 
+            // txtCode
+            // 
+            this.txtCode.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCode.Font = new System.Drawing.Font("Agency", 14F);
+            this.txtCode.Location = new System.Drawing.Point(12, 12);
+            this.txtCode.Margin = new System.Windows.Forms.Padding(0);
+            this.txtCode.MaxLength = 6;
+            this.txtCode.Name = "txtCode";
+            this.txtCode.Size = new System.Drawing.Size(240, 29);
+            this.txtCode.TabIndex = 0;
+            // 
+            // btnVerify
+            // 
+            this.btnVerify.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnVerify.Font = new System.Drawing.Font("Muro", 14F);
+            this.btnVerify.Location = new System.Drawing.Point(278, 0);
+            this.btnVerify.Margin = new System.Windows.Forms.Padding(0);
+            this.btnVerify.Name = "btnVerify";
+            this.btnVerify.Size = new System.Drawing.Size(151, 40);
+            this.btnVerify.TabIndex = 1;
+            this.btnVerify.Text = "VERIFY";
+            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
+            // 
+            // tlpFooter
+            // 
+            this.tlpFooter.AutoSize = true;
+            this.tlpFooter.ColumnCount = 2;
+            this.tlpFooter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tlpFooter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tlpFooter.Controls.Add(this.pnlFooterLeft, 0, 0);
+            this.tlpFooter.Controls.Add(this.pnlFooterRight, 1, 0);
+            this.tlpFooter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpFooter.Location = new System.Drawing.Point(0, 457);
+            this.tlpFooter.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpFooter.Name = "tlpFooter";
+            this.tlpFooter.Padding = new System.Windows.Forms.Padding(6, 6, 2, 6);
+            this.tlpFooter.RowCount = 1;
+            this.tlpFooter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFooter.Size = new System.Drawing.Size(429, 45);
+            this.tlpFooter.TabIndex = 8;
+            // 
+            // pnlFooterLeft
+            // 
+            this.pnlFooterLeft.AutoSize = true;
+            this.pnlFooterLeft.Controls.Add(this.lblStatus);
+            this.pnlFooterLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFooterLeft.Location = new System.Drawing.Point(6, 6);
+            this.pnlFooterLeft.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.pnlFooterLeft.Name = "pnlFooterLeft";
+            this.pnlFooterLeft.Size = new System.Drawing.Size(261, 33);
+            this.pnlFooterLeft.TabIndex = 0;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblStatus.Location = new System.Drawing.Point(0, 0);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 20);
+            this.lblStatus.TabIndex = 0;
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlFooterRight
+            // 
+            this.pnlFooterRight.AutoSize = true;
+            this.pnlFooterRight.Controls.Add(this.btnContinue);
+            this.pnlFooterRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFooterRight.Location = new System.Drawing.Point(279, 6);
+            this.pnlFooterRight.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlFooterRight.Name = "pnlFooterRight";
+            this.pnlFooterRight.Size = new System.Drawing.Size(148, 33);
+            this.pnlFooterRight.TabIndex = 1;
+            // 
+            // btnContinue
+            // 
+            this.btnContinue.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnContinue.Font = new System.Drawing.Font("Muro", 14F);
+            this.btnContinue.Location = new System.Drawing.Point(0, 0);
+            this.btnContinue.Margin = new System.Windows.Forms.Padding(0);
+            this.btnContinue.Name = "btnContinue";
+            this.btnContinue.Size = new System.Drawing.Size(148, 33);
+            this.btnContinue.TabIndex = 0;
+            this.btnContinue.Text = "Continue";
+            this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 
             // TotpSetupForm
             // 
@@ -238,6 +498,20 @@
             this.pnlPage.ResumeLayout(false);
             this.tlpPageCenter.ResumeLayout(false);
             this.pnlCard.ResumeLayout(false);
+            this.tlpCard.ResumeLayout(false);
+            this.tlpCard.PerformLayout();
+            this.pnlQr.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picQr)).EndInit();
+            this.pnlSecret.ResumeLayout(false);
+            this.pnlSecret.PerformLayout();
+            this.tlpVerifyRow.ResumeLayout(false);
+            this.pnlCode.ResumeLayout(false);
+            this.pnlCode.PerformLayout();
+            this.tlpFooter.ResumeLayout(false);
+            this.tlpFooter.PerformLayout();
+            this.pnlFooterLeft.ResumeLayout(false);
+            this.pnlFooterLeft.PerformLayout();
+            this.pnlFooterRight.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -255,5 +529,23 @@
         private System.Windows.Forms.TableLayoutPanel tlpPageCenter;
         private System.Windows.Forms.Panel pnlCard;
         private System.Windows.Forms.TableLayoutPanel tlpCard;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubtitle;
+        private System.Windows.Forms.Label lblStepScan;
+        private System.Windows.Forms.Panel pnlQr;
+        private System.Windows.Forms.PictureBox picQr;
+        private System.Windows.Forms.Label lblManualKey;
+        private System.Windows.Forms.Panel pnlSecret;
+        private System.Windows.Forms.TextBox txtSecret;
+        private System.Windows.Forms.Label lblStepCode;
+        private System.Windows.Forms.TableLayoutPanel tlpVerifyRow;
+        private System.Windows.Forms.Panel pnlCode;
+        private System.Windows.Forms.TextBox txtCode;
+        private Syncfusion.WinForms.Controls.SfButton btnVerify;
+        private System.Windows.Forms.TableLayoutPanel tlpFooter;
+        private System.Windows.Forms.Panel pnlFooterLeft;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Panel pnlFooterRight;
+        private Syncfusion.WinForms.Controls.SfButton btnContinue;
     }
 }

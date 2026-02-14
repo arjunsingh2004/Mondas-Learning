@@ -86,6 +86,7 @@
             tlpRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tlpRoot.Size = new System.Drawing.Size(1180, 707);
             tlpRoot.TabIndex = 0;
+            tlpRoot.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpRoot_Paint);
             // 
             // pnlSidebar
             // 
@@ -370,6 +371,7 @@
             this.lnkForgot.TabStop = true;
             this.lnkForgot.Text = "Forgot Password";
             this.lnkForgot.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkForgot.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkForgot_LinkClicked);
             // 
             // btnSignIn
             // 
@@ -463,6 +465,7 @@
             this.lnkSignUp.TabIndex = 1;
             this.lnkSignUp.TabStop = true;
             this.lnkSignUp.Text = "Don\'t have an account? Sign up";
+            this.lnkSignUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSignUp_LinkClicked);
             // 
             // lblStatus
             // 

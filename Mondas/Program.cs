@@ -35,7 +35,7 @@ namespace Mondas
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             //Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JFaF5cXGRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH9ednVdRmJeWEZzXEFWYEg=");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWX1fc3VVQmhZWEFzWEBWYEs=");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var baseDir = AppContext.BaseDirectory;
@@ -48,7 +48,7 @@ namespace Mondas
 
             init.Initialize();
             OnStartup();
-            Application.Run(new SignupForm());
+            Application.Run(new LoginForm());
             _host.Dispose();
             _host = null;
         }
