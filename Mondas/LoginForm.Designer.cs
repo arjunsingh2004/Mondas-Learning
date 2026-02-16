@@ -80,11 +80,11 @@
             tlpRoot.Controls.Add(this.pnlSidebar, 0, 0);
             tlpRoot.Controls.Add(this.pnlPage, 1, 0);
             tlpRoot.Dock = System.Windows.Forms.DockStyle.Fill;
-            tlpRoot.Location = new System.Drawing.Point(2, 2);
+            tlpRoot.Location = new System.Drawing.Point(0, 0);
             tlpRoot.Name = "tlpRoot";
             tlpRoot.RowCount = 1;
             tlpRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tlpRoot.Size = new System.Drawing.Size(1180, 707);
+            tlpRoot.Size = new System.Drawing.Size(1184, 711);
             tlpRoot.TabIndex = 0;
             tlpRoot.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpRoot_Paint);
             // 
@@ -96,7 +96,7 @@
             this.pnlSidebar.Location = new System.Drawing.Point(3, 3);
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Padding = new System.Windows.Forms.Padding(48, 48, 32, 32);
-            this.pnlSidebar.Size = new System.Drawing.Size(513, 701);
+            this.pnlSidebar.Size = new System.Drawing.Size(514, 705);
             this.pnlSidebar.TabIndex = 0;
             // 
             // tlpSidebar
@@ -120,7 +120,7 @@
             this.tlpSidebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tlpSidebar.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSidebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSidebar.Size = new System.Drawing.Size(433, 621);
+            this.tlpSidebar.Size = new System.Drawing.Size(434, 625);
             this.tlpSidebar.TabIndex = 0;
             this.tlpSidebar.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpSidebar_Paint);
             // 
@@ -133,7 +133,7 @@
             this.lblMondas.Location = new System.Drawing.Point(0, 0);
             this.lblMondas.Margin = new System.Windows.Forms.Padding(0);
             this.lblMondas.Name = "lblMondas";
-            this.lblMondas.Size = new System.Drawing.Size(433, 100);
+            this.lblMondas.Size = new System.Drawing.Size(434, 100);
             this.lblMondas.TabIndex = 0;
             this.lblMondas.Text = "MONDAS";
             this.lblMondas.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -147,7 +147,7 @@
             this.lblHeroTitle.Location = new System.Drawing.Point(0, 158);
             this.lblHeroTitle.Margin = new System.Windows.Forms.Padding(0, 18, 0, 6);
             this.lblHeroTitle.Name = "lblHeroTitle";
-            this.lblHeroTitle.Size = new System.Drawing.Size(433, 44);
+            this.lblHeroTitle.Size = new System.Drawing.Size(434, 44);
             this.lblHeroTitle.TabIndex = 0;
             this.lblHeroTitle.Text = "Welcome to Mondas";
             this.lblHeroTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -161,7 +161,7 @@
             this.lblHeroSubtitle.Location = new System.Drawing.Point(0, 288);
             this.lblHeroSubtitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblHeroSubtitle.Name = "lblHeroSubtitle";
-            this.lblHeroSubtitle.Size = new System.Drawing.Size(433, 21);
+            this.lblHeroSubtitle.Size = new System.Drawing.Size(434, 21);
             this.lblHeroSubtitle.TabIndex = 2;
             this.lblHeroSubtitle.Text = "Sign in to continue";
             this.lblHeroSubtitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -172,7 +172,7 @@
             this.lblFooter.AutoSize = true;
             this.lblFooter.Font = new System.Drawing.Font("Agency FB", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFooter.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblFooter.Location = new System.Drawing.Point(3, 601);
+            this.lblFooter.Location = new System.Drawing.Point(3, 605);
             this.lblFooter.Name = "lblFooter";
             this.lblFooter.Size = new System.Drawing.Size(120, 20);
             this.lblFooter.TabIndex = 3;
@@ -183,10 +183,10 @@
             // 
             this.pnlPage.Controls.Add(this.tlpPageCenter);
             this.pnlPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPage.Location = new System.Drawing.Point(522, 3);
+            this.pnlPage.Location = new System.Drawing.Point(523, 3);
             this.pnlPage.Name = "pnlPage";
             this.pnlPage.Padding = new System.Windows.Forms.Padding(32);
-            this.pnlPage.Size = new System.Drawing.Size(655, 701);
+            this.pnlPage.Size = new System.Drawing.Size(658, 705);
             this.pnlPage.TabIndex = 1;
             // 
             // tlpPageCenter
@@ -203,7 +203,7 @@
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpPageCenter.Size = new System.Drawing.Size(591, 637);
+            this.tlpPageCenter.Size = new System.Drawing.Size(594, 641);
             this.tlpPageCenter.TabIndex = 0;
             // 
             // pnlCard
@@ -211,7 +211,7 @@
             this.pnlCard.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlCard.Controls.Add(this.tlpLogin);
-            this.pnlCard.Location = new System.Drawing.Point(35, 38);
+            this.pnlCard.Location = new System.Drawing.Point(37, 40);
             this.pnlCard.Margin = new System.Windows.Forms.Padding(0);
             this.pnlCard.Name = "pnlCard";
             this.pnlCard.Padding = new System.Windows.Forms.Padding(28);
@@ -487,8 +487,6 @@
             this.MinimumSize = new System.Drawing.Size(1200, 750);
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             this.Text = "LOGIN | Mondas";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.LoginForm_Load);

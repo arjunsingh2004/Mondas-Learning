@@ -15,7 +15,7 @@ using System.Linq.Expressions;
 
 namespace Mondas
 {
-    public partial class LoginForm : SfForm
+    public partial class LoginForm : Form
     {
         private readonly SqliteUserRepository _users;
         private readonly PasswordHasher _hasher;
@@ -61,9 +61,14 @@ namespace Mondas
             {
                 txtTwoFaCode.TextChanged += (s, args) =>
                 {
-                    var okLen = txtTwoFaCode.Text != null && txtTwoFaCode.Text.Trim().Replace(" ", "").Length == 6;
-                    btnVerifyCode.Enabled = okLen && _pendingUser != null;
+                    var okLen = (txtTwoFaCode.Text ?? "").Trim().Replace(" ", "").Length == 6;
+
+                    if (btnVerifyCode != null)
+                    {
+                        btnVerifyCode.Enabled = okLen && _pendingUser != null;
+                    }
                 };
+
             }
         }
 
@@ -189,8 +194,10 @@ namespace Mondas
             SetStatus("Signed in.");
 
             var dashboard = new DashboardForm(user.Id);
+            dashboard.FormClosed += (_, __) => this.Close();
+
             dashboard.Show();
-            Hide();
+            this.Hide();
         }
 
         private void tlpRoot_Paint(object sender, PaintEventArgs e)
@@ -200,17 +207,18 @@ namespace Mondas
 
         private void lnkSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var f = new SignupForm())
+            BeginInvoke(new Action(() =>
             {
-                Hide();
-                var result = f.ShowDialog(this);
-                Show();
-
-                if (result == DialogResult.OK)
+                using (var f = new SignupForm())
                 {
-                    SetStatus("Account created. Please sign in.");
+                    var result = f.ShowDialog(this);
+
+                    if (result == DialogResult.OK)
+                    {
+                        SetStatus("Account created! Please sign in.");
+                    }
                 }
-            }
+            }));
         }
 
         private void lnkForgot_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

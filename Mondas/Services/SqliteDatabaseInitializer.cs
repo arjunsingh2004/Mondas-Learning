@@ -94,7 +94,7 @@ namespace Mondas.Services
             QuestionId INTEGER NOT NULL,
             SelectedOptionIdsJson TEXT NOT NULL,
             IsCorrect INTEGER NOT NULL,
-            SecondsTaken REAL NOT NULL,
+            SecondsTaken REAL NOT NULL DEFAULT 0,
             SubmittedAt TEXT NOT NULL,
             ReasonString TEXT NOT NULL,
             RulesFiredJson TEXT NOT NULL

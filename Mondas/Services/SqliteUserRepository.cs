@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
+using Syncfusion.Windows.Forms.Diagram;
 
 namespace Mondas.Services
 {
@@ -125,7 +126,19 @@ namespace Mondas.Services
 
         public void SetTotpEnabled(long userId, bool enabled)
         {
-            SetTotp(userId, null, enabled);
+            if (userId <= 0)
+            {
+                throw new ArgumentException("Invalid user id.", nameof(userId));
+            }
+
+            using (var conn = Open())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE Users SET TotpEnabled = @enabled WHERE Id = @id;";
+                cmd.Parameters.AddWithValue("@enabled", enabled ? 1 : 0);
+                cmd.Parameters.AddWithValue("@id", userId);
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public UserRow GetByEmail(string email)
@@ -146,6 +159,45 @@ namespace Mondas.Services
                                     LIMIT 1;";
 
                 cmd.Parameters.AddWithValue("@email", cleanEmail);
+
+                using (var r = cmd.ExecuteReader())
+                {
+                    if (!r.Read())
+                    {
+                        return null;
+                    }
+
+                    return new UserRow
+                    {
+                        Id = r.GetInt64(0),
+                        FullName = r.GetString(1),
+                        Email = r.GetString(2),
+                        PasswordHash = r.GetString(3),
+                        PasswordSalt = r.GetString(4),
+                        PasswordIterations = r.GetInt32(5),
+                        TotpSecretBase32 = r.IsDBNull(6) ? null : r.GetString(6),
+                        TotpEnabled = r.GetInt32(7) == 1,
+                        CreatedUtc = DateTime.Parse(r.GetString(8)).ToUniversalTime()
+                    };
+                }
+            }
+        }
+   
+        public UserRow GetById(long id)
+        {
+            if (id <= 0)
+            {
+                return null;
+            }
+
+            using (var conn = Open())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT Id, FullName, Email, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc
+                                    FROM Users
+                                    WHERE Id = @id
+                                    LIMIT 1;";
+                cmd.Parameters.AddWithValue("@id", id);
 
                 using (var r = cmd.ExecuteReader())
                 {

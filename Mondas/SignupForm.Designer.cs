@@ -73,12 +73,12 @@
             this.tlpRoot.Controls.Add(this.pnlHero, 0, 0);
             this.tlpRoot.Controls.Add(this.pnlRight, 1, 0);
             this.tlpRoot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpRoot.Location = new System.Drawing.Point(2, 2);
+            this.tlpRoot.Location = new System.Drawing.Point(0, 0);
             this.tlpRoot.Margin = new System.Windows.Forms.Padding(0);
             this.tlpRoot.Name = "tlpRoot";
             this.tlpRoot.RowCount = 1;
             this.tlpRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpRoot.Size = new System.Drawing.Size(1180, 707);
+            this.tlpRoot.Size = new System.Drawing.Size(1184, 711);
             this.tlpRoot.TabIndex = 0;
             // 
             // pnlHero
@@ -89,7 +89,7 @@
             this.pnlHero.Location = new System.Drawing.Point(3, 3);
             this.pnlHero.Name = "pnlHero";
             this.pnlHero.Padding = new System.Windows.Forms.Padding(48, 48, 48, 32);
-            this.pnlHero.Size = new System.Drawing.Size(513, 701);
+            this.pnlHero.Size = new System.Drawing.Size(514, 705);
             this.pnlHero.TabIndex = 0;
             // 
             // tlpHero
@@ -112,7 +112,7 @@
             this.tlpHero.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tlpHero.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpHero.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpHero.Size = new System.Drawing.Size(417, 621);
+            this.tlpHero.Size = new System.Drawing.Size(418, 625);
             this.tlpHero.TabIndex = 0;
             // 
             // lblMondas
@@ -124,7 +124,7 @@
             this.lblMondas.Location = new System.Drawing.Point(0, 0);
             this.lblMondas.Margin = new System.Windows.Forms.Padding(0);
             this.lblMondas.Name = "lblMondas";
-            this.lblMondas.Size = new System.Drawing.Size(417, 100);
+            this.lblMondas.Size = new System.Drawing.Size(418, 100);
             this.lblMondas.TabIndex = 5;
             this.lblMondas.Text = "MONDAS";
             this.lblMondas.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -135,7 +135,7 @@
             this.lblHeroFooter.AutoSize = true;
             this.lblHeroFooter.Font = new System.Drawing.Font("Agency FB", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeroFooter.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblHeroFooter.Location = new System.Drawing.Point(3, 601);
+            this.lblHeroFooter.Location = new System.Drawing.Point(3, 605);
             this.lblHeroFooter.Name = "lblHeroFooter";
             this.lblHeroFooter.Size = new System.Drawing.Size(120, 20);
             this.lblHeroFooter.TabIndex = 4;
@@ -150,7 +150,7 @@
             this.lblHeroTitle.ForeColor = System.Drawing.Color.White;
             this.lblHeroTitle.Location = new System.Drawing.Point(3, 140);
             this.lblHeroTitle.Name = "lblHeroTitle";
-            this.lblHeroTitle.Size = new System.Drawing.Size(411, 44);
+            this.lblHeroTitle.Size = new System.Drawing.Size(412, 44);
             this.lblHeroTitle.TabIndex = 6;
             this.lblHeroTitle.Text = "Welcome to Mondas";
             this.lblHeroTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -163,7 +163,7 @@
             this.lblHeroSubtitle.ForeColor = System.Drawing.Color.White;
             this.lblHeroSubtitle.Location = new System.Drawing.Point(3, 264);
             this.lblHeroSubtitle.Name = "lblHeroSubtitle";
-            this.lblHeroSubtitle.Size = new System.Drawing.Size(411, 21);
+            this.lblHeroSubtitle.Size = new System.Drawing.Size(412, 21);
             this.lblHeroSubtitle.TabIndex = 7;
             this.lblHeroSubtitle.Text = "Create your Account";
             this.lblHeroSubtitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -172,9 +172,9 @@
             // 
             this.pnlRight.Controls.Add(this.tlpCenter);
             this.pnlRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlRight.Location = new System.Drawing.Point(522, 3);
+            this.pnlRight.Location = new System.Drawing.Point(523, 3);
             this.pnlRight.Name = "pnlRight";
-            this.pnlRight.Size = new System.Drawing.Size(655, 701);
+            this.pnlRight.Size = new System.Drawing.Size(658, 705);
             this.pnlRight.TabIndex = 1;
             // 
             // tlpCenter
@@ -192,14 +192,14 @@
             this.tlpCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpCenter.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpCenter.Size = new System.Drawing.Size(655, 701);
+            this.tlpCenter.Size = new System.Drawing.Size(658, 705);
             this.tlpCenter.TabIndex = 0;
             // 
             // pnlCard
             // 
             this.pnlCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlCard.Controls.Add(this.tlpCard);
-            this.pnlCard.Location = new System.Drawing.Point(97, 90);
+            this.pnlCard.Location = new System.Drawing.Point(99, 92);
             this.pnlCard.Margin = new System.Windows.Forms.Padding(0);
             this.pnlCard.Name = "pnlCard";
             this.pnlCard.Padding = new System.Windows.Forms.Padding(24);
@@ -436,8 +436,6 @@
             this.MinimumSize = new System.Drawing.Size(1200, 750);
             this.Name = "SignupForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             this.Text = "SIGN UP | Mondas";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.SignupForm_Load);

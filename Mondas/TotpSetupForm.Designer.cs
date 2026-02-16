@@ -82,12 +82,12 @@
             this.tlpRoot.Controls.Add(this.pnlSidebar, 0, 0);
             this.tlpRoot.Controls.Add(this.pnlPage, 1, 0);
             this.tlpRoot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpRoot.Location = new System.Drawing.Point(2, 2);
+            this.tlpRoot.Location = new System.Drawing.Point(0, 0);
             this.tlpRoot.Margin = new System.Windows.Forms.Padding(0);
             this.tlpRoot.Name = "tlpRoot";
             this.tlpRoot.RowCount = 1;
             this.tlpRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpRoot.Size = new System.Drawing.Size(980, 607);
+            this.tlpRoot.Size = new System.Drawing.Size(984, 611);
             this.tlpRoot.TabIndex = 0;
             // 
             // pnlSidebar
@@ -98,7 +98,7 @@
             this.pnlSidebar.Location = new System.Drawing.Point(0, 0);
             this.pnlSidebar.Margin = new System.Windows.Forms.Padding(0);
             this.pnlSidebar.Name = "pnlSidebar";
-            this.pnlSidebar.Size = new System.Drawing.Size(441, 607);
+            this.pnlSidebar.Size = new System.Drawing.Size(442, 611);
             this.pnlSidebar.TabIndex = 0;
             // 
             // tlpSidebar
@@ -120,7 +120,7 @@
             this.tlpSidebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64F));
             this.tlpSidebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpSidebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18F));
-            this.tlpSidebar.Size = new System.Drawing.Size(441, 607);
+            this.tlpSidebar.Size = new System.Drawing.Size(442, 611);
             this.tlpSidebar.TabIndex = 0;
             // 
             // lblMondas
@@ -129,7 +129,7 @@
             this.lblMondas.AutoSize = true;
             this.lblMondas.Font = new System.Drawing.Font("Muro", 48F);
             this.lblMondas.ForeColor = System.Drawing.Color.White;
-            this.lblMondas.Location = new System.Drawing.Point(51, 52);
+            this.lblMondas.Location = new System.Drawing.Point(52, 53);
             this.lblMondas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 18);
             this.lblMondas.Name = "lblMondas";
             this.lblMondas.Size = new System.Drawing.Size(338, 96);
@@ -143,7 +143,7 @@
             this.lblHeroTitle.AutoSize = true;
             this.lblHeroTitle.Font = new System.Drawing.Font("Agency", 20F);
             this.lblHeroTitle.ForeColor = System.Drawing.Color.White;
-            this.lblHeroTitle.Location = new System.Drawing.Point(32, 196);
+            this.lblHeroTitle.Location = new System.Drawing.Point(33, 197);
             this.lblHeroTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.lblHeroTitle.Name = "lblHeroTitle";
             this.lblHeroTitle.Size = new System.Drawing.Size(376, 29);
@@ -157,7 +157,7 @@
             this.lblHeroSubtitle.AutoSize = true;
             this.lblHeroSubtitle.Font = new System.Drawing.Font("Agency", 11F);
             this.lblHeroSubtitle.ForeColor = System.Drawing.Color.White;
-            this.lblHeroSubtitle.Location = new System.Drawing.Point(47, 266);
+            this.lblHeroSubtitle.Location = new System.Drawing.Point(48, 267);
             this.lblHeroSubtitle.Margin = new System.Windows.Forms.Padding(40, 0, 40, 0);
             this.lblHeroSubtitle.Name = "lblHeroSubtitle";
             this.lblHeroSubtitle.Size = new System.Drawing.Size(346, 34);
@@ -171,7 +171,7 @@
             this.lblHeroFooter.AutoSize = true;
             this.lblHeroFooter.Font = new System.Drawing.Font("Agency FB", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeroFooter.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblHeroFooter.Location = new System.Drawing.Point(10, 577);
+            this.lblHeroFooter.Location = new System.Drawing.Point(10, 581);
             this.lblHeroFooter.Margin = new System.Windows.Forms.Padding(10, 0, 0, 10);
             this.lblHeroFooter.Name = "lblHeroFooter";
             this.lblHeroFooter.Size = new System.Drawing.Size(120, 20);
@@ -183,11 +183,11 @@
             // 
             this.pnlPage.Controls.Add(this.tlpPageCenter);
             this.pnlPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPage.Location = new System.Drawing.Point(441, 0);
+            this.pnlPage.Location = new System.Drawing.Point(442, 0);
             this.pnlPage.Margin = new System.Windows.Forms.Padding(0);
             this.pnlPage.Name = "pnlPage";
             this.pnlPage.Padding = new System.Windows.Forms.Padding(12);
-            this.pnlPage.Size = new System.Drawing.Size(539, 607);
+            this.pnlPage.Size = new System.Drawing.Size(542, 611);
             this.pnlPage.TabIndex = 1;
             // 
             // tlpPageCenter
@@ -205,7 +205,7 @@
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPageCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpPageCenter.Size = new System.Drawing.Size(515, 583);
+            this.tlpPageCenter.Size = new System.Drawing.Size(518, 587);
             this.tlpPageCenter.TabIndex = 0;
             // 
             // pnlCard
@@ -213,7 +213,7 @@
             this.pnlCard.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlCard.Controls.Add(this.tlpCard);
-            this.pnlCard.Location = new System.Drawing.Point(30, 30);
+            this.pnlCard.Location = new System.Drawing.Point(31, 32);
             this.pnlCard.Margin = new System.Windows.Forms.Padding(0);
             this.pnlCard.Name = "pnlCard";
             this.pnlCard.Padding = new System.Windows.Forms.Padding(12, 6, 12, 12);
@@ -487,8 +487,6 @@
             this.MinimumSize = new System.Drawing.Size(1000, 650);
             this.Name = "TotpSetupForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             this.Text = "2FA SETUP | Mondas";
             this.Load += new System.EventHandler(this.TotpSetupForm_Load);
             this.tlpRoot.ResumeLayout(false);

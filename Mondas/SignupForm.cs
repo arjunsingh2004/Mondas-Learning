@@ -7,7 +7,7 @@ using Mondas.Services;
 
 namespace Mondas
 {
-    public partial class SignupForm : SfForm
+    public partial class SignupForm : Form
     {
         private readonly SqliteUserRepository _users;
         private readonly PasswordHasher _hasher;
@@ -38,31 +38,31 @@ namespace Mondas
 
             if (string.IsNullOrWhiteSpace(fullName) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirm))
             {
-                MessageBox.Show(this, "Fill in all fields.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Fill in all fields.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!email.Contains("@") || !email.Contains("."))
             {
-                MessageBox.Show(this, "Enter a valid email address.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Enter a valid email address.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (password.Length < 8)
             {
-                MessageBox.Show(this, "Password must be at least 8 characters.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Password must be at least 8 characters.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (password != confirm)
             {
-                MessageBox.Show(this, "Passwords do not match.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Passwords do not match.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (chkTerms != null && !chkTerms.Checked)
             {
-                MessageBox.Show(this, "You must accept the terms to continue.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("You must accept the terms to continue.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace Mondas
 
                 if (_users.EmailExists(cleanEmail))
                 {
-                    MessageBox.Show(this, "An account already exists with that email", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("An account already exists with that email", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -84,7 +84,7 @@ namespace Mondas
                     
                     if (result != DialogResult.OK)
                     {
-                        MessageBox.Show(this, "2FA setup was cancelled. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("2FA setup was cancelled. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
 
@@ -93,7 +93,7 @@ namespace Mondas
             
                 if (string.IsNullOrWhiteSpace(secretBase32))
                 {
-                    MessageBox.Show(this, "2FA setup failed. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("2FA setup failed. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -103,7 +103,7 @@ namespace Mondas
 
                 _users.SetTotp(userId, secretBase32, true);
 
-                MessageBox.Show(this, "Account created!", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Account created!", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 DialogResult = DialogResult.OK;
                 Close();
@@ -112,7 +112,7 @@ namespace Mondas
 
             catch (Exception ex)
             {
-                MessageBox.Show(this, "Signup failed: " + ex.Message, "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Signup failed: " + ex.Message, "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

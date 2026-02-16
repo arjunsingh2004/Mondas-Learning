@@ -13,7 +13,7 @@ using Mondas.Services;
 
 namespace Mondas
 {
-    public partial class TotpSetupForm : SfForm
+    public partial class TotpSetupForm : Form
     {
         private readonly TotpService _totp;
         private readonly QrCodeService _qr;
@@ -32,12 +32,11 @@ namespace Mondas
 
             _totp = new TotpService();
             _qr = new QrCodeService();
-
-            btnContinue.Enabled = false;
         }
 
         private void TotpSetupForm_Load(object sender, EventArgs e)
         {
+            btnContinue.Enabled = false;
             StartFreshSetup();
         }
 

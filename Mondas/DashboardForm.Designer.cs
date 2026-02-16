@@ -872,6 +872,7 @@
             this.btnStartQuiz.TabIndex = 0;
             this.btnStartQuiz.Text = "START ADAPTIVE QUIZ";
             this.btnStartQuiz.UseVisualStyleBackColor = false;
+            this.btnStartQuiz.Click += new System.EventHandler(this.btnStartQuiz_Click);
             // 
             // pnlFooter
             // 

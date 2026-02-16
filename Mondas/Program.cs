@@ -35,7 +35,7 @@ namespace Mondas
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             //Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWX1fc3VVQmhZWEFzWEBWYEs=");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWX1fdXVQRmReUExzV0BWYEs=");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var baseDir = AppContext.BaseDirectory;
@@ -47,26 +47,21 @@ namespace Mondas
                 Path.Combine(baseDir, "Resources", "questions.json"));
 
             init.Initialize();
-            OnStartup();
-            Application.Run(new LoginForm());
-            _host.Dispose();
-            _host = null;
-        }
-        private static async void OnStartup()
-        {
+
             var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            // For more information about .NET generic host see  https://docs.microsoft.com/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.0
             _host = Host.CreateDefaultBuilder()
-                    .ConfigureAppConfiguration(c =>
-                    {
-                        c.SetBasePath(appLocation);
-                    })
-                    .ConfigureServices(ConfigureServices)
-                    .Build();
+                .ConfigureAppConfiguration(c => c.SetBasePath(appLocation))
+                .ConfigureServices(ConfigureServices)
+                .Build();
 
-            await _host.RunAsync();
+            _host.Start();
 
+            Application.Run(new LoginForm());
+
+            _host.StopAsync().GetAwaiter().GetResult();
+            _host.Dispose();
+            _host = null;
         }
 
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)

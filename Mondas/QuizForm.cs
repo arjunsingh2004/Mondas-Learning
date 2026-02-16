@@ -60,7 +60,7 @@ namespace Mondas
 
         }
 
-        private QuizForm(string userKey, QuizPreferences prefs)
+        public QuizForm(string userKey, QuizPreferences prefs)
         {
             InitializeComponent();
             _prefs = prefs ?? new QuizPreferences { UseDefaults = true };
@@ -870,7 +870,7 @@ namespace Mondas
 
             if (_attemptRepo != null)
             {
-                var record = new AttemptRecord { UserKey = _userKey, QuestionId = item.Question.Id, SelectedOptionIdsJson = JsonSerializer.Serialize(selectedIds), IsCorrect = isCorrect, SecondsTaken = item.SecondsTaken, SubmittedAt = DateTime.Now, ReasonString = item.Selection?.ReasonString ?? "", RulesFiredJson = JsonSerializer.Serialize(item.Selection?.RulesFired ??new List<string>()) };
+                var record = new AttemptRecord { UserKey = _userKey, QuestionId = item.Question.Id, SelectedOptionIdsJson = JsonSerializer.Serialize(selectedIds), IsCorrect = isCorrect, SecondsTaken = item.SecondsTaken, SubmittedAt = DateTime.UtcNow, ReasonString = item.Selection?.ReasonString ?? "", RulesFiredJson = JsonSerializer.Serialize(item.Selection?.RulesFired ??new List<string>()) };
 
                 _attemptRepo.Add(record);
             }
