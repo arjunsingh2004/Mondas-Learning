@@ -1,8 +1,7 @@
 ﻿using Mondas.Models;
 using Mondas.Services;
-using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
-using Syncfusion.Windows.Forms.Tools.Win32API;
 using Syncfusion.WinForms.Controls;
+using Syncfusion.Windows.Forms.Tools;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -20,6 +19,7 @@ namespace Mondas
         private readonly DashboardStatsService _stats;
         private readonly Font _masteryHeaderFont;
         private readonly Font _masteryCellFont;
+        private ToolTip _adaptiveTip;
 
         public DashboardForm() : this("local")
         {
@@ -34,14 +34,17 @@ namespace Mondas
         public DashboardForm(string userKey)
         {
             InitializeComponent();
+
             _userKey = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
             _userId = ParseUserId(_userKey);
 
             _dbPath = Path.Combine(AppContext.BaseDirectory, "mondas.db");
             _stats = new DashboardStatsService(_dbPath);
 
-            _masteryHeaderFont = CreateUiFont(11f, FontStyle.Bold);
-            _masteryCellFont = CreateUiFont(12f, FontStyle.Bold);
+            _masteryHeaderFont = CreateUiFont(14f);
+            _masteryCellFont = CreateUiFont(12f);
+
+            InitAdaptiveQuizHoverTip();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -51,7 +54,7 @@ namespace Mondas
             base.OnFormClosed(e);
         }
 
-        private static Font CreateUiFont(float size, FontStyle style)
+        private static Font CreateUiFont(float size)
         {
             string[] families = { "Muro", "Agency FB" };
 
@@ -59,7 +62,7 @@ namespace Mondas
             {
                 try
                 {
-                    return new Font(fam, size, style, GraphicsUnit.Point);
+                    return new Font(fam, size, GraphicsUnit.Point);
                 }
 
                 catch
@@ -68,7 +71,7 @@ namespace Mondas
                 }
             }
 
-            return new Font(SystemFonts.DefaultFont.FontFamily, size, style, GraphicsUnit.Point);
+            return new Font(SystemFonts.DefaultFont.FontFamily, size, GraphicsUnit.Point);
         }
 
         private static long ParseUserId(string userKey)
@@ -247,7 +250,7 @@ namespace Mondas
                 tlpMastery.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
                 var topicLbl = new Label { Text = row.Topic.ToString().Replace('_', ' '), AutoSize = true, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft, Font = _masteryCellFont };
-                var bar = new ProgressBar { Dock = DockStyle.Fill, Minimum = 0, Maximum = 100, Value = ClampToPercent(row.Accuracy01) };
+                var bar = CreateMasteryBar(row.Accuracy01);
                 var seenLbl = new Label { Text = row.Seen.ToString(), AutoSize = true, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleCenter, Font = _masteryCellFont };
                 var pctLbl = new Label { Text = $"{row.Accuracy01 * 100.0:0}%", AutoSize = true, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleCenter, Font = _masteryCellFont };
 
@@ -283,6 +286,7 @@ namespace Mondas
         private static int ClampToPercent(double accuracy01)
         {
             var v = (int)Math.Round(accuracy01 * 100.0);
+
             if (v < 0)
             {
                 v = 0;
@@ -296,6 +300,48 @@ namespace Mondas
             return v;
         }
 
+        private ProgressBarAdv CreateMasteryBar(double accuracy01)
+        {
+            var v = ClampToPercent(accuracy01);
+
+            var bar = new ProgressBarAdv
+            {
+                Dock = DockStyle.Fill,
+
+                Minimum = 0,
+                Maximum = 100,
+                Value = v,
+
+                ProgressStyle = ProgressBarStyles.Constant,
+                ProgressOrientation = Orientation.Horizontal,
+
+                TextVisible = true,
+                TextStyle = ProgressBarTextStyles.Percentage,
+                TextAlignment = TextAlignment.Center,
+                TextShadow = true,
+
+                BackTubeStartColor = Color.LightGray,
+                BackTubeEndColor = Color.White,
+
+                TubeStartColor = Color.RoyalBlue,
+                TubeEndColor = Color.RoyalBlue,
+
+                ForeSegments = false,
+                SegmentWidth = 12,
+
+                Font = _masteryCellFont,
+                FontColor = Color.White,
+
+                Border3DStyle = Border3DStyle.Sunken,
+                BorderColor = Color.Black,
+                BorderSingle = ButtonBorderStyle.Solid,
+                BorderStyle = BorderStyle.Fixed3D,
+                ForeColor = Color.RoyalBlue
+            };
+
+            return bar;
+        }
+
         private void RenderMisconceptions (DashboardStats s)
         {
             if (lvMisconA == null)
@@ -304,16 +350,113 @@ namespace Mondas
             }
 
             lvMisconA.BeginUpdate();
+
+            lvMisconA.View = View.Details;
+            lvMisconA.FullRowSelect = true;
+            lvMisconA.MultiSelect = false;
+            lvMisconA.Scrollable = true;
+            lvMisconA.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+
+            if (lvMisconA.Columns.Count == 0)
+            {
+                lvMisconA.Columns.Add("MISCONCEPTION TAG", 300, HorizontalAlignment.Left);
+                lvMisconA.Columns.Add("COUNT", 100, HorizontalAlignment.Center);
+                lvMisconA.Columns.Add("LAST SEEN", 140, HorizontalAlignment.Center);
+            }
+
+            else
+            {
+                lvMisconA.Columns[0].Text = "MISCONCEPTION TAG";
+                lvMisconA.Columns[1].Text = "COUNT";
+                lvMisconA.Columns[2].Text = "LAST SEEN";
+            }
+
             lvMisconA.Items.Clear();
 
-            foreach (var m in s.TopMisconceptions)
+            foreach (var m in s.TopMisconceptions.Take(20))
             {
                 var last = m.LastSeenUtc.ToLocalTime().ToString("dd MMM yyyy");
-                var item = new ListViewItem(new[] { m.Tag, m.Count.ToString(), last });
+
+                var item = new ListViewItem(m.Tag ?? "");
+                item.SubItems.Add(m.Count.ToString());
+                item.SubItems.Add(last);
+
                 lvMisconA.Items.Add(item);
             }
 
+            if (lvMisconA.Columns.Count >= 3)
+            {
+                lvMisconA.Columns[1].Width = 100;
+                lvMisconA.Columns[2].Width = 140;
+
+                var total = lvMisconA.ClientSize.Width;
+                var first = total - lvMisconA.Columns[1].Width - lvMisconA.Columns[2].Width - SystemInformation.VerticalScrollBarWidth - 8;
+
+                if (first < 180)
+                {
+                    first = 180;
+                }
+
+                lvMisconA.Columns[0].Width = first;
+            }
+
             lvMisconA.EndUpdate();
+        }
+
+        private void InitAdaptiveQuizHoverTip()
+        {
+            if (btnStartQuiz == null)
+            {
+                return;
+            }
+
+            if (_adaptiveTip == null)
+            {
+                _adaptiveTip = new ToolTip { ShowAlways = true, InitialDelay = 0, ReshowDelay = 0, AutoPopDelay = 20000 };
+            }
+
+            const string msg = "Starts an adaptive quiz using default preferences.\n" + "For custom preferences, use the Quiz button in the sidebar.";
+
+            bool showing = false;
+
+            btnStartQuiz.MouseEnter += (_, __) =>
+            {
+                showing = true;
+
+                var pos = btnStartQuiz.PointToClient(Cursor.Position);
+                _adaptiveTip.Show(msg, btnStartQuiz, pos.X + 14, pos.Y + 18);
+            };
+
+            btnStartQuiz.MouseMove += (_, __) =>
+            {
+                if (!showing)
+                {
+                    return;
+                }
+
+                var pos = btnStartQuiz.PointToClient(Cursor.Position);
+
+                if (!btnStartQuiz.ClientRectangle.Contains(pos))
+                {
+                    _adaptiveTip.Hide(btnStartQuiz);
+                    showing = false;
+                    return;
+                }
+
+                _adaptiveTip.Show(msg, btnStartQuiz, pos.X + 14, pos.Y + 18);
+            };
+
+            btnStartQuiz.MouseLeave += (_, __) =>
+            {
+                _adaptiveTip.Hide(btnStartQuiz);
+                showing = false;
+            };
+
+            btnStartQuiz.MouseDown += (_, __) =>
+            {
+                _adaptiveTip.Hide(btnStartQuiz);
+                showing = false;
+            };
         }
 
         private void btnNavDashboard_Click(object sender, EventArgs e)
@@ -344,6 +487,28 @@ namespace Mondas
             };
 
             quiz.Show();
+            Hide();
+        }
+
+        private void btnNavQuiz_Click(object sender, EventArgs e)
+        {
+            var f = new QuizSelectionForm(_userKey);
+
+            f.FormClosed += (_, __) =>
+            {
+                try
+                {
+                    Show();
+                    RefreshDashboard();
+                }
+
+                catch
+                {
+
+                }
+            };
+
+            f.Show();
             Hide();
         }
     }

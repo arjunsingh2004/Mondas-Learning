@@ -188,6 +188,7 @@
             this.btnNavQuiz.TabIndex = 1;
             this.btnNavQuiz.Text = "QUIZ";
             this.btnNavQuiz.UseVisualStyleBackColor = false;
+            this.btnNavQuiz.Click += new System.EventHandler(this.btnNavQuiz_Click);
             // 
             // btnNavMiniGames
             // 
@@ -627,6 +628,7 @@
             // tlpMastery
             // 
             this.tlpMastery.AutoScroll = true;
+            this.tlpMastery.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tlpMastery.ColumnCount = 4;
             this.tlpMastery.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tlpMastery.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));

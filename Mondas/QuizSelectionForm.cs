@@ -13,6 +13,7 @@ namespace Mondas
     public partial class QuizSelectionForm : SfForm
     {
         private const string UserKey = "local";
+        private readonly string _userKey;
 
         private QuizPreferences _adaptivePrefs = new QuizPreferences { UseDefaults = true };
 
@@ -31,6 +32,12 @@ namespace Mondas
         public QuizSelectionForm()
         {
             InitializeComponent();
+        }
+
+        public QuizSelectionForm(string userKey)
+        {
+            InitializeComponent();
+            _userKey = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
         }
 
         private void QuizSelectionForm_Load(object sender, EventArgs e)
