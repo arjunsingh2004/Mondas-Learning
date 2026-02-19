@@ -12,7 +12,6 @@ namespace Mondas
 {
     public partial class QuizSelectionForm : SfForm
     {
-        private const string UserKey = "local";
         private readonly string _userKey;
 
         private QuizPreferences _adaptivePrefs = new QuizPreferences { UseDefaults = true };
@@ -32,6 +31,7 @@ namespace Mondas
         public QuizSelectionForm()
         {
             InitializeComponent();
+            _userKey = "local";
         }
 
         public QuizSelectionForm(string userKey)
@@ -82,7 +82,8 @@ namespace Mondas
             var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mondas");
 
             Directory.CreateDirectory(appDataDir);
-            _prefsPath = Path.Combine(appDataDir, "quiz_prefs.json");
+            var safeKey = (_userKey ?? "local").Replace(":", "_").Replace("\\", "_").Replace("/", "_");
+            _prefsPath = Path.Combine(appDataDir, $"quiz_prefs_{safeKey}.json");
         }
 
         private void LoadAdaptivePrefsFromDisk()
@@ -258,7 +259,7 @@ namespace Mondas
             prefsToUse ??= new QuizPreferences { UseDefaults = true };
             prefsToUse = Normalise(prefsToUse);
 
-            using (var quiz = new QuizForm(prefsToUse))
+            using (var quiz = new QuizForm(_userKey, prefsToUse))
             {
                 quiz.StartPosition = FormStartPosition.CenterParent;
                 quiz.ShowDialog(this);
@@ -281,7 +282,7 @@ namespace Mondas
             List<AttemptRecord> history;
             try
             {
-                history = _attemptRepo.GetForUser(UserKey)?.OrderBy(x => x.SubmittedAt).ToList() ?? new List<AttemptRecord>();
+                history = _attemptRepo.GetForUser(_userKey)?.OrderBy(x => x.SubmittedAt).ToList() ?? new List<AttemptRecord>();
             }
             catch
             {
@@ -492,7 +493,7 @@ namespace Mondas
 
         private void btnNavDashboard_Click(object sender, EventArgs e)
         {
-            var dash = new DashboardForm();
+            var dash = new DashboardForm(_userKey);
             dash.StartPosition = FormStartPosition.CenterScreen;
             dash.Show();
             Close();
