@@ -13,12 +13,25 @@ namespace Mondas
 {
     public partial class ReportsAndChartsForm : SfForm
     {
-        public ReportsAndChartsForm()
+        private readonly string _userKey;
+
+        public ReportsAndChartsForm() : this("local")
+        {
+
+        }
+
+        public ReportsAndChartsForm(string userKey)
         {
             InitializeComponent();
+            _userKey = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
         }
 
         private void ReportsAndChartsForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chartControl1_Click(object sender, EventArgs e)
         {
 
         }
