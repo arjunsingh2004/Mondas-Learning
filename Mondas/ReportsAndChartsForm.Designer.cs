@@ -51,6 +51,12 @@
             this.lblKpiStreakValue = new System.Windows.Forms.Label();
             this.lblKpiStreakTitle = new System.Windows.Forms.Label();
             this.pnlFilters = new System.Windows.Forms.Panel();
+            this.lblGroupBy = new System.Windows.Forms.Label();
+            this.lblXAxis = new System.Windows.Forms.Label();
+            this.lblMetric = new System.Windows.Forms.Label();
+            this.lblDifficulty = new System.Windows.Forms.Label();
+            this.lblTopic = new System.Windows.Forms.Label();
+            this.lblRange = new System.Windows.Forms.Label();
             this.cmbGroupBy = new System.Windows.Forms.ComboBox();
             this.cmbXAxis = new System.Windows.Forms.ComboBox();
             this.cmbMetric = new System.Windows.Forms.ComboBox();
@@ -67,25 +73,19 @@
             this.pnlChartHost = new System.Windows.Forms.Panel();
             this.chartMain = new Syncfusion.Windows.Forms.Chart.ChartControl();
             this.tabReport = new System.Windows.Forms.TabPage();
-            this.lblRange = new System.Windows.Forms.Label();
-            this.lblTopic = new System.Windows.Forms.Label();
-            this.lblDifficulty = new System.Windows.Forms.Label();
-            this.lblMetric = new System.Windows.Forms.Label();
-            this.lblXAxis = new System.Windows.Forms.Label();
-            this.lblGroupBy = new System.Windows.Forms.Label();
             this.splitReports = new System.Windows.Forms.SplitContainer();
-            this.pnlReportLeftTop = new System.Windows.Forms.Panel();
-            this.lblReportsTitle = new System.Windows.Forms.Label();
-            this.btnGenerateReport = new Syncfusion.WinForms.Controls.SfButton();
             this.lvReports = new System.Windows.Forms.ListView();
             this.clmReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pnlReportLeftTop = new System.Windows.Forms.Panel();
+            this.btnGenerateReport = new Syncfusion.WinForms.Controls.SfButton();
+            this.lblReportsTitle = new System.Windows.Forms.Label();
+            this.wPdf = new System.Windows.Forms.WebBrowser();
             this.pnlReportRightTop = new System.Windows.Forms.Panel();
             this.tlpReportActions = new System.Windows.Forms.TableLayoutPanel();
             this.lblSelectedReport = new System.Windows.Forms.Label();
             this.btnDownloadPdf = new Syncfusion.WinForms.Controls.SfButton();
             this.btnOpenExternal = new Syncfusion.WinForms.Controls.SfButton();
-            this.wPdf = new System.Windows.Forms.WebBrowser();
             this.tlpRoot.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -152,6 +152,7 @@
             this.btnLogout.TabIndex = 5;
             this.btnLogout.Text = "LOG OUT";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblUser
             // 
@@ -398,6 +399,66 @@
             this.pnlFilters.Size = new System.Drawing.Size(1112, 70);
             this.pnlFilters.TabIndex = 0;
             // 
+            // lblGroupBy
+            // 
+            this.lblGroupBy.AutoSize = true;
+            this.lblGroupBy.ForeColor = System.Drawing.Color.DimGray;
+            this.lblGroupBy.Location = new System.Drawing.Point(792, 10);
+            this.lblGroupBy.Name = "lblGroupBy";
+            this.lblGroupBy.Size = new System.Drawing.Size(122, 18);
+            this.lblGroupBy.TabIndex = 12;
+            this.lblGroupBy.Text = "Group By";
+            // 
+            // lblXAxis
+            // 
+            this.lblXAxis.AutoSize = true;
+            this.lblXAxis.ForeColor = System.Drawing.Color.DimGray;
+            this.lblXAxis.Location = new System.Drawing.Point(678, 10);
+            this.lblXAxis.Name = "lblXAxis";
+            this.lblXAxis.Size = new System.Drawing.Size(79, 18);
+            this.lblXAxis.TabIndex = 11;
+            this.lblXAxis.Text = "X Axis";
+            // 
+            // lblMetric
+            // 
+            this.lblMetric.AutoSize = true;
+            this.lblMetric.ForeColor = System.Drawing.Color.DimGray;
+            this.lblMetric.Location = new System.Drawing.Point(532, 10);
+            this.lblMetric.Name = "lblMetric";
+            this.lblMetric.Size = new System.Drawing.Size(92, 18);
+            this.lblMetric.TabIndex = 10;
+            this.lblMetric.Text = "Metric";
+            // 
+            // lblDifficulty
+            // 
+            this.lblDifficulty.AutoSize = true;
+            this.lblDifficulty.ForeColor = System.Drawing.Color.DimGray;
+            this.lblDifficulty.Location = new System.Drawing.Point(353, 10);
+            this.lblDifficulty.Name = "lblDifficulty";
+            this.lblDifficulty.Size = new System.Drawing.Size(136, 18);
+            this.lblDifficulty.TabIndex = 9;
+            this.lblDifficulty.Text = "Difficulty";
+            // 
+            // lblTopic
+            // 
+            this.lblTopic.AutoSize = true;
+            this.lblTopic.ForeColor = System.Drawing.Color.DimGray;
+            this.lblTopic.Location = new System.Drawing.Point(202, 10);
+            this.lblTopic.Name = "lblTopic";
+            this.lblTopic.Size = new System.Drawing.Size(74, 18);
+            this.lblTopic.TabIndex = 8;
+            this.lblTopic.Text = "TOPIC";
+            // 
+            // lblRange
+            // 
+            this.lblRange.AutoSize = true;
+            this.lblRange.ForeColor = System.Drawing.Color.DimGray;
+            this.lblRange.Location = new System.Drawing.Point(36, 10);
+            this.lblRange.Name = "lblRange";
+            this.lblRange.Size = new System.Drawing.Size(86, 18);
+            this.lblRange.TabIndex = 7;
+            this.lblRange.Text = "RANGE";
+            // 
             // cmbGroupBy
             // 
             this.cmbGroupBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -456,6 +517,7 @@
             this.btnRefreshCharts.TabIndex = 3;
             this.btnRefreshCharts.Text = "REFRESH";
             this.btnRefreshCharts.UseVisualStyleBackColor = false;
+            this.btnRefreshCharts.Click += new System.EventHandler(this.btnRefreshCharts_Click);
             // 
             // cmbDifficulty
             // 
@@ -540,6 +602,7 @@
             this.btnResetChart.TabIndex = 3;
             this.btnResetChart.Text = "RESET";
             this.btnResetChart.UseVisualStyleBackColor = false;
+            this.btnResetChart.Click += new System.EventHandler(this.btnResetChart_Click);
             // 
             // btnExportChartPng
             // 
@@ -555,6 +618,7 @@
             this.btnExportChartPng.TabIndex = 2;
             this.btnExportChartPng.Text = "EXPORT";
             this.btnExportChartPng.UseVisualStyleBackColor = false;
+            this.btnExportChartPng.Click += new System.EventHandler(this.btnExportChartPng_Click);
             // 
             // lblChartSubtitle
             // 
@@ -602,6 +666,7 @@
             this.chartMain.PrimaryXAxis.Margin = true;
             this.chartMain.PrimaryYAxis.LogLabelsDisplayMode = Syncfusion.Windows.Forms.Chart.LogLabelsDisplayMode.Default;
             this.chartMain.PrimaryYAxis.Margin = true;
+            this.chartMain.ShowLegend = false;
             this.chartMain.Size = new System.Drawing.Size(1100, 276);
             this.chartMain.TabIndex = 0;
             this.chartMain.Text = "chartControl1";
@@ -621,66 +686,6 @@
             this.tabReport.Size = new System.Drawing.Size(1166, 556);
             this.tabReport.TabIndex = 1;
             this.tabReport.Text = "REPORTS";
-            // 
-            // lblRange
-            // 
-            this.lblRange.AutoSize = true;
-            this.lblRange.ForeColor = System.Drawing.Color.DimGray;
-            this.lblRange.Location = new System.Drawing.Point(36, 10);
-            this.lblRange.Name = "lblRange";
-            this.lblRange.Size = new System.Drawing.Size(86, 18);
-            this.lblRange.TabIndex = 7;
-            this.lblRange.Text = "RANGE";
-            // 
-            // lblTopic
-            // 
-            this.lblTopic.AutoSize = true;
-            this.lblTopic.ForeColor = System.Drawing.Color.DimGray;
-            this.lblTopic.Location = new System.Drawing.Point(202, 10);
-            this.lblTopic.Name = "lblTopic";
-            this.lblTopic.Size = new System.Drawing.Size(74, 18);
-            this.lblTopic.TabIndex = 8;
-            this.lblTopic.Text = "TOPIC";
-            // 
-            // lblDifficulty
-            // 
-            this.lblDifficulty.AutoSize = true;
-            this.lblDifficulty.ForeColor = System.Drawing.Color.DimGray;
-            this.lblDifficulty.Location = new System.Drawing.Point(353, 10);
-            this.lblDifficulty.Name = "lblDifficulty";
-            this.lblDifficulty.Size = new System.Drawing.Size(136, 18);
-            this.lblDifficulty.TabIndex = 9;
-            this.lblDifficulty.Text = "Difficulty";
-            // 
-            // lblMetric
-            // 
-            this.lblMetric.AutoSize = true;
-            this.lblMetric.ForeColor = System.Drawing.Color.DimGray;
-            this.lblMetric.Location = new System.Drawing.Point(532, 10);
-            this.lblMetric.Name = "lblMetric";
-            this.lblMetric.Size = new System.Drawing.Size(92, 18);
-            this.lblMetric.TabIndex = 10;
-            this.lblMetric.Text = "Metric";
-            // 
-            // lblXAxis
-            // 
-            this.lblXAxis.AutoSize = true;
-            this.lblXAxis.ForeColor = System.Drawing.Color.DimGray;
-            this.lblXAxis.Location = new System.Drawing.Point(678, 10);
-            this.lblXAxis.Name = "lblXAxis";
-            this.lblXAxis.Size = new System.Drawing.Size(79, 18);
-            this.lblXAxis.TabIndex = 11;
-            this.lblXAxis.Text = "X Axis";
-            // 
-            // lblGroupBy
-            // 
-            this.lblGroupBy.AutoSize = true;
-            this.lblGroupBy.ForeColor = System.Drawing.Color.DimGray;
-            this.lblGroupBy.Location = new System.Drawing.Point(792, 10);
-            this.lblGroupBy.Name = "lblGroupBy";
-            this.lblGroupBy.Size = new System.Drawing.Size(122, 18);
-            this.lblGroupBy.TabIndex = 12;
-            this.lblGroupBy.Text = "Group By";
             // 
             // splitReports
             // 
@@ -702,42 +707,6 @@
             this.splitReports.SplitterDistance = 320;
             this.splitReports.TabIndex = 0;
             // 
-            // pnlReportLeftTop
-            // 
-            this.pnlReportLeftTop.Controls.Add(this.btnGenerateReport);
-            this.pnlReportLeftTop.Controls.Add(this.lblReportsTitle);
-            this.pnlReportLeftTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlReportLeftTop.Location = new System.Drawing.Point(10, 10);
-            this.pnlReportLeftTop.Name = "pnlReportLeftTop";
-            this.pnlReportLeftTop.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlReportLeftTop.Size = new System.Drawing.Size(300, 120);
-            this.pnlReportLeftTop.TabIndex = 0;
-            // 
-            // lblReportsTitle
-            // 
-            this.lblReportsTitle.AutoSize = true;
-            this.lblReportsTitle.Font = new System.Drawing.Font("Muro", 16F);
-            this.lblReportsTitle.Location = new System.Drawing.Point(4, 0);
-            this.lblReportsTitle.Name = "lblReportsTitle";
-            this.lblReportsTitle.Size = new System.Drawing.Size(120, 32);
-            this.lblReportsTitle.TabIndex = 0;
-            this.lblReportsTitle.Text = "REPORTS";
-            // 
-            // btnGenerateReport
-            // 
-            this.btnGenerateReport.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnGenerateReport.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnGenerateReport.Font = new System.Drawing.Font("Muro", 14F);
-            this.btnGenerateReport.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateReport.Location = new System.Drawing.Point(10, 66);
-            this.btnGenerateReport.Name = "btnGenerateReport";
-            this.btnGenerateReport.Size = new System.Drawing.Size(280, 44);
-            this.btnGenerateReport.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnGenerateReport.Style.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateReport.TabIndex = 1;
-            this.btnGenerateReport.Text = "GENERATE NEW REPORT";
-            this.btnGenerateReport.UseVisualStyleBackColor = false;
-            // 
             // lvReports
             // 
             this.lvReports.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -754,6 +723,7 @@
             this.lvReports.TabIndex = 2;
             this.lvReports.UseCompatibleStateImageBehavior = false;
             this.lvReports.View = System.Windows.Forms.View.Details;
+            this.lvReports.SelectedIndexChanged += new System.EventHandler(this.lvReports_SelectedIndexChanged);
             // 
             // clmReport
             // 
@@ -764,6 +734,52 @@
             // 
             this.clmDate.Text = "DATE";
             this.clmDate.Width = 90;
+            // 
+            // pnlReportLeftTop
+            // 
+            this.pnlReportLeftTop.Controls.Add(this.btnGenerateReport);
+            this.pnlReportLeftTop.Controls.Add(this.lblReportsTitle);
+            this.pnlReportLeftTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlReportLeftTop.Location = new System.Drawing.Point(10, 10);
+            this.pnlReportLeftTop.Name = "pnlReportLeftTop";
+            this.pnlReportLeftTop.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlReportLeftTop.Size = new System.Drawing.Size(300, 120);
+            this.pnlReportLeftTop.TabIndex = 0;
+            // 
+            // btnGenerateReport
+            // 
+            this.btnGenerateReport.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnGenerateReport.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnGenerateReport.Font = new System.Drawing.Font("Muro", 14F);
+            this.btnGenerateReport.ForeColor = System.Drawing.Color.White;
+            this.btnGenerateReport.Location = new System.Drawing.Point(10, 66);
+            this.btnGenerateReport.Name = "btnGenerateReport";
+            this.btnGenerateReport.Size = new System.Drawing.Size(280, 44);
+            this.btnGenerateReport.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnGenerateReport.Style.ForeColor = System.Drawing.Color.White;
+            this.btnGenerateReport.TabIndex = 1;
+            this.btnGenerateReport.Text = "GENERATE NEW REPORT";
+            this.btnGenerateReport.UseVisualStyleBackColor = false;
+            this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
+            // 
+            // lblReportsTitle
+            // 
+            this.lblReportsTitle.AutoSize = true;
+            this.lblReportsTitle.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblReportsTitle.Location = new System.Drawing.Point(4, 0);
+            this.lblReportsTitle.Name = "lblReportsTitle";
+            this.lblReportsTitle.Size = new System.Drawing.Size(120, 32);
+            this.lblReportsTitle.TabIndex = 0;
+            this.lblReportsTitle.Text = "REPORTS";
+            // 
+            // wPdf
+            // 
+            this.wPdf.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wPdf.Location = new System.Drawing.Point(0, 60);
+            this.wPdf.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wPdf.Name = "wPdf";
+            this.wPdf.Size = new System.Drawing.Size(836, 490);
+            this.wPdf.TabIndex = 1;
             // 
             // pnlReportRightTop
             // 
@@ -818,6 +834,7 @@
             this.btnDownloadPdf.TabIndex = 1;
             this.btnDownloadPdf.Text = "DOWNLOAD";
             this.btnDownloadPdf.UseVisualStyleBackColor = false;
+            this.btnDownloadPdf.Click += new System.EventHandler(this.btnDownloadPdf_Click);
             // 
             // btnOpenExternal
             // 
@@ -833,15 +850,7 @@
             this.btnOpenExternal.TabIndex = 2;
             this.btnOpenExternal.Text = "OPEN";
             this.btnOpenExternal.UseVisualStyleBackColor = false;
-            // 
-            // wPdf
-            // 
-            this.wPdf.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wPdf.Location = new System.Drawing.Point(0, 60);
-            this.wPdf.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wPdf.Name = "wPdf";
-            this.wPdf.Size = new System.Drawing.Size(836, 490);
-            this.wPdf.TabIndex = 1;
+            this.btnOpenExternal.Click += new System.EventHandler(this.btnOpenExternal_Click);
             // 
             // ReportsAndChartsForm
             // 

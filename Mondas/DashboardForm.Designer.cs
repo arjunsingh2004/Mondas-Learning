@@ -215,8 +215,9 @@
             this.btnNavReports.Name = "btnNavReports";
             this.btnNavReports.Size = new System.Drawing.Size(240, 52);
             this.btnNavReports.TabIndex = 3;
-            this.btnNavReports.Text = "REPORTS";
+            this.btnNavReports.Text = "REPORTS AND CHARTS";
             this.btnNavReports.UseVisualStyleBackColor = false;
+            this.btnNavReports.Click += new System.EventHandler(this.btnNavReports_Click);
             // 
             // btnNavLeaderboard
             // 

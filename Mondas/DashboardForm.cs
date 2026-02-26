@@ -511,5 +511,27 @@ namespace Mondas
             f.Show();
             Hide();
         }
+
+        private void btnNavReports_Click(object sender, EventArgs e)
+        {
+            var f = new ReportsAndChartsForm(_userKey);
+
+            f.FormClosed += (_, __) =>
+            {
+                try
+                {
+                    Show();
+                    RefreshDashboard();
+                }
+
+                catch
+                {
+
+                }
+            };
+
+            f.Show();
+            Hide();
+        }
     }
 }
