@@ -299,8 +299,8 @@ namespace Mondas
             public AxisX AxisXValue;
             public Grouping GroupingValue;
 
-            public enum Metric { Accuracy, AvgTime, Attempts, Mistakes };
-            public enum AxisX { AttemptIndex, Date };
+            public enum Metric { Accuracy, AvgTime, Attempts, Mistakes, Streak, TopicMastery };
+            public enum AxisX { AttemptIndex, Date, Question, Topic };
             public enum Grouping { Attempt, Day, Week };
         }
 
@@ -325,6 +325,21 @@ namespace Mondas
             f.MetricValue = ParseMetric(f.MetricText);
             f.AxisXValue = ParseAxisX(f.XAxisText);
             f.GroupingValue = ParseGrouping(f.GroupByText);
+
+            if (f.GroupingValue != ChartFilter.Grouping.Attempt && f.AxisXValue == ChartFilter.AxisX.AttemptIndex)
+            {
+                f.AxisXValue = ChartFilter.AxisX.Date;
+            }
+
+            if (f.AxisXValue == ChartFilter.AxisX.Topic || f.AxisXValue == ChartFilter.AxisX.Question)
+            {
+                f.GroupingValue = ChartFilter.Grouping.Attempt;
+            }
+
+            if (f.MetricValue == ChartFilter.Metric.TopicMastery)
+            {
+                f.AxisXValue = ChartFilter.AxisX.Topic;
+            }
 
             return f;
         }
@@ -457,6 +472,16 @@ namespace Mondas
         {
             var t = (metricText ?? "").ToUpperInvariant();
 
+            if (t.Contains("STREAK"))
+            {
+                return ChartFilter.Metric.Streak;
+            }
+
+            if (t.Contains("MASTERY"))
+            {
+                return ChartFilter.Metric.TopicMastery;
+            }
+
             if (t.Contains("TIME"))
             {
                 return ChartFilter.Metric.AvgTime;
@@ -478,6 +503,16 @@ namespace Mondas
         private static ChartFilter.AxisX ParseAxisX(string axisText)
         {
             var t = (axisText ?? "").ToUpperInvariant();
+
+            if (t.Contains("QUESTION"))
+            {
+                return ChartFilter.AxisX.Question;
+            }
+
+            if (t.Contains("TOPIC"))
+            {
+                return ChartFilter.AxisX.Topic;
+            }
 
             if (t.Contains("DATE") || t.Contains("TIME") || t.Contains("DAY"))
             {
@@ -511,6 +546,7 @@ namespace Mondas
             public double SecondsTaken;
             public Topic Topic;
             public DifficultyBand Difficulty;
+            public long QuestionId;
         }
 
         private sealed class ChartPointRow
@@ -518,6 +554,7 @@ namespace Mondas
             public DateTime? XDate;
             public double XNumber;
             public double Y;
+            public string XLabel;
         }
 
         private List<AttemptRow> LoadAttemptRows(ChartFilter f)
@@ -558,7 +595,7 @@ namespace Mondas
                 cmd.Parameters.AddWithValue("$lim", Math.Max(1, f.LastNAttempts.Value));
             }
 
-            cmd.CommandText = $@"SELECT a.SubmittedAt, a.IsCorrect, a.SecondsTaken, q.Topic, q.Difficulty
+            cmd.CommandText = $@"SELECT a.SubmittedAt, a.IsCorrect, a.SecondsTaken, a.QuestionId, q.Topic, q.Difficulty
                                  FROM Attempts a
                                  JOIN Questions q ON q.Id = a.QuestionId
                                  {where}
@@ -573,10 +610,11 @@ namespace Mondas
                 var isCorrect = r.GetInt32(1) == 1;
                 var seconds = r.IsDBNull(2) ? 0.0 : r.GetDouble(2);
 
-                var topic = (Topic)r.GetInt32(3);
-                var diff = (DifficultyBand)r.GetInt32(4);
+                var qid = r.GetInt64(3);
+                var topic = (Topic)r.GetInt32(4);
+                var diff = (DifficultyBand)r.GetInt32(5);
 
-                rows.Add(new AttemptRow { SubmittedUtc = submitted, IsCorrect = isCorrect, SecondsTaken = seconds, Topic = topic, Difficulty = diff });
+                rows.Add(new AttemptRow { SubmittedUtc = submitted, IsCorrect = isCorrect, SecondsTaken = seconds, QuestionId = qid, Topic = topic, Difficulty = diff });
             }
 
             rows.Reverse();
@@ -590,6 +628,65 @@ namespace Mondas
             if (attempts.Count == 0)
             {
                 return new List<ChartPointRow>();
+            }
+
+            if (f.AxisXValue == ChartFilter.AxisX.Topic)
+            {
+                var grouped = attempts.GroupBy(a => a.Topic).OrderBy(g => g.Key);
+                var pts = new List<ChartPointRow>();
+                int idx = 0;
+
+                foreach (var g in grouped)
+                {
+                    idx++;
+                    int total = g.Count();
+                    int correct = g.Count(x => x.IsCorrect);
+                    int mistakes = total - correct;
+
+                    var timed = g.Where(x => x.SecondsTaken > 0).Select(x => x.SecondsTaken).ToList();
+                    double avgTime = timed.Count > 0 ? timed.Average() : 0.0;
+
+                    double y = f.MetricValue switch
+                    {
+                        ChartFilter.Metric.Attempts => total,
+                        ChartFilter.Metric.Mistakes => mistakes,
+                        ChartFilter.Metric.AvgTime => avgTime,
+                        ChartFilter.Metric.TopicMastery => (total == 0 ? 0.0 : (correct * 100.0 / total)),
+                        _ => (total == 0 ? 0.0 : (correct * 100.0 / total))
+                    };
+
+                    pts.Add(new ChartPointRow { XNumber = idx, Y = y, XLabel = g.Key.ToString() });
+                }
+
+                return pts;
+            }
+
+            if (f.AxisXValue == ChartFilter.AxisX.Question)
+            {
+                var grouped = attempts.GroupBy(a => a.QuestionId).OrderBy(g => g.Key);
+                var pts = new List<ChartPointRow>();
+                int idx = 0;
+
+                foreach (var g in grouped)
+                {
+                    idx++;
+                    int total = g.Count();
+                    int correct = g.Count(x => x.IsCorrect);
+                    int mistakes = total - correct;
+
+                    var timed = g.Where(x => x.SecondsTaken > 0).Select(x => x.SecondsTaken).ToList();
+                    double avgTime = timed.Count > 0 ? timed.Average() : 0.0;
+
+                    double y = f.MetricValue switch { ChartFilter.Metric.Attempts => total, ChartFilter.Metric.Mistakes => mistakes, ChartFilter.Metric.AvgTime => avgTime, _ => (total == 0 ? 0.0 : (correct * 100.0 / total)) };
+                    pts.Add(new ChartPointRow { XNumber = idx, Y = y, XLabel = $"Q{g.Key}" });
+                }
+
+                return pts;
+            }
+
+            if (f.MetricValue == ChartFilter.Metric.TopicMastery)
+            {
+                return BuildTopicMasteryPoints(attempts);
             }
 
             if (f.GroupingValue == ChartFilter.Grouping.Attempt)
@@ -612,6 +709,7 @@ namespace Mondas
             int runningTotal = 0;
             int runningCorrect = 0;
             int runningMistakes = 0;
+            int streak = 0;
 
             for (int i = 0; i < attempts.Count; i++)
             {
@@ -629,7 +727,12 @@ namespace Mondas
                     runningMistakes++;
                 }
 
-                double y = f.MetricValue switch { ChartFilter.Metric.Attempts => 1.0, ChartFilter.Metric.Mistakes => runningMistakes, ChartFilter.Metric.AvgTime => Math.Max(0.0, a.SecondsTaken), _ => runningTotal == 0 ? 0.0 : (runningCorrect * 100.0 / runningTotal) };
+                if (f.MetricValue == ChartFilter.Metric.Streak)
+                {
+                    streak = a.IsCorrect ? (streak + 1) : 0;
+                }
+
+                double y = f.MetricValue switch { ChartFilter.Metric.Streak => streak, ChartFilter.Metric.Attempts => 1.0, ChartFilter.Metric.Mistakes => runningMistakes, ChartFilter.Metric.AvgTime => Math.Max(0.0, a.SecondsTaken), _ => runningTotal == 0 ? 0.0 : (runningCorrect * 100.0 / runningTotal) };
 
                 points.Add(new ChartPointRow { XDate = a.SubmittedUtc, XNumber = i + 1, Y = y });
             }
@@ -700,9 +803,28 @@ namespace Mondas
             return points;
         }
 
+        private static List<ChartPointRow> BuildTopicMasteryPoints(List<AttemptRow> attempts)
+        {
+            var grouped = attempts.GroupBy(a => a.Topic).OrderBy(g => g.Key).ToList();
+            var points = new List<ChartPointRow>();
+            int idx = 0;
+
+            foreach (var g in grouped)
+            {
+                idx++;
+
+                int total = g.Count();
+                int correct = g.Count(x => x.IsCorrect);
+                double accuracy = total == 0 ? 0.0 : (correct * 100.0 / total);
+                points.Add(new ChartPointRow { XNumber = idx, Y = accuracy });
+            }
+
+            return points;
+        }
+
         private static string BuildChartTitle(ChartFilter f)
         {
-            return f.MetricValue switch { ChartFilter.Metric.AvgTime => "AVG TIME (TREND)", ChartFilter.Metric.Attempts => "ATTEMPTS", ChartFilter.Metric.Mistakes => "MISTAKES", _ => "ACCURACY (TREND)" };
+            return f.MetricValue switch { ChartFilter.Metric.Streak => "STREAK (TREND)", ChartFilter.Metric.TopicMastery => "TOPIC MASTERY", ChartFilter.Metric.AvgTime => "AVG TIME (TREND)", ChartFilter.Metric.Attempts => "ATTEMPTS", ChartFilter.Metric.Mistakes => "MISTAKES", _ => "ACCURACY (TREND)" };
         }
 
         private static string BuildChartSubtitle(ChartFilter f, int points)
@@ -725,7 +847,24 @@ namespace Mondas
 
             chartMain.Series.Clear();
 
+            string metricLabel = f.MetricValue switch { ChartFilter.Metric.Accuracy => "ACCURACY", ChartFilter.Metric.AvgTime => "AVG TIME", ChartFilter.Metric.Attempts => "ATTEMPTS", ChartFilter.Metric.Mistakes => "MISTAKES", ChartFilter.Metric.Streak => "STREAK", ChartFilter.Metric.TopicMastery => "TOPIC MASTERY", _ => "METRIC" };
+            string xLabel = f.AxisXValue switch { ChartFilter.AxisX.Date => (f.GroupingValue == ChartFilter.Grouping.Week ? "WEEK" : "DATE"), ChartFilter.AxisX.Topic => "TOPIC", ChartFilter.AxisX.Question => "QUESTION", _ => "ATTEMPT" };
+            string titleText = $"{metricLabel} vs {xLabel}";
+
+            chartMain.Titles.Clear();
+
+            var title = new ChartTitle { Text = titleText };
+            title.Font = new Font("Agency", 10f, FontStyle.Bold);
+            chartMain.Titles.Add(title);
+            
+
             var seriesType = PickSeriesType(f.MetricValue);
+
+            if (f.AxisXValue == ChartFilter.AxisX.Topic || f.AxisXValue == ChartFilter.AxisX.Question)
+            {
+                seriesType = ChartSeriesType.Column;
+            }
+
             var seriesName = (f.MetricText ?? "").Trim();
 
             if (string.IsNullOrEmpty(seriesName))
@@ -734,6 +873,8 @@ namespace Mondas
             }
 
             var series = new ChartSeries(seriesName, seriesType);
+
+            series.Style.Border.Width = 3;
 
             for (int i = 0; i < points.Count; i++)
             {
@@ -750,6 +891,16 @@ namespace Mondas
                 }
             }
 
+            if ((f.AxisXValue == ChartFilter.AxisX.Topic || f.AxisXValue == ChartFilter.AxisX.Question) && points.Count > 0 && !string.IsNullOrEmpty(points[0].XLabel) && chartMain.PrimaryXAxis != null)
+            {
+                chartMain.PrimaryXAxis.Labels.Clear();
+
+                for (int i = 0; i < points.Count; i++)
+                {
+                    chartMain.PrimaryXAxis.Labels.Add(new ChartAxisLabel(points[i].XNumber, points[i].XLabel));
+                }
+            }
+
             chartMain.Series.Add(series);
 
             TrySetAxisTitles(f);
@@ -758,7 +909,7 @@ namespace Mondas
 
         private static ChartSeriesType PickSeriesType(ChartFilter.Metric metric)
         {
-            return metric switch { ChartFilter.Metric.Attempts => ChartSeriesType.Column, ChartFilter.Metric.Mistakes => ChartSeriesType.Column, _ => ChartSeriesType.Line };
+            return metric switch { ChartFilter.Metric.Attempts => ChartSeriesType.Column, ChartFilter.Metric.Mistakes => ChartSeriesType.Column, ChartFilter.Metric.TopicMastery => ChartSeriesType.Column, _ => ChartSeriesType.Line };
         }
 
         private void TrySetAxisTitles(ChartFilter f)
@@ -767,12 +918,12 @@ namespace Mondas
             {
                 if (chartMain?.PrimaryXAxis != null)
                 {
-                    chartMain.PrimaryXAxis.Title = f.AxisXValue == ChartFilter.AxisX.Date ? "Date" : "Attempt";
+                    chartMain.PrimaryXAxis.Title = f.AxisXValue switch { ChartFilter.AxisX.Date => "Date", ChartFilter.AxisX.Topic => "Topic", ChartFilter.AxisX.Question => "Question", _ => "Attempt" };
                 }
 
                 if (chartMain?.PrimaryYAxis != null)
                 {
-                    chartMain.PrimaryYAxis.Title = f.MetricValue switch { ChartFilter.Metric.AvgTime => "Seconds", ChartFilter.Metric.Attempts => "Attempts", ChartFilter.Metric.Mistakes => "Mistakes", _ => "Accuracy (%)" };
+                    chartMain.PrimaryYAxis.Title = f.MetricValue switch { ChartFilter.Metric.AvgTime => "Seconds", ChartFilter.Metric.Attempts => "Attempts", ChartFilter.Metric.Mistakes => "Mistakes", ChartFilter.Metric.Streak => "Streak", ChartFilter.Metric.TopicMastery => "Accuracy (%)", _ => "Accuracy (%)" };
                 }
             }
 
@@ -1060,7 +1211,7 @@ namespace Mondas
                 name = "USER";
             }
 
-            var localTimeNow = DateTime.Now.ToString("dd MM yyyy HH:mm", CultureInfo.InvariantCulture);
+            var localTimeNow = DateTime.Now.ToString("ddd dd MMM yyyy, HH:mm", CultureInfo.InvariantCulture);
             var sb = new StringBuilder();
 
             sb.Append("<!doctype html><html><head><meta charset='utf-8'/>");

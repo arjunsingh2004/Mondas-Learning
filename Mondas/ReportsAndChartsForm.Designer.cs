@@ -28,6 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Syncfusion.Windows.Forms.Chart.ChartSeries chartSeries1 = new Syncfusion.Windows.Forms.Chart.ChartSeries();
+            Syncfusion.Windows.Forms.Chart.ChartCustomShapeInfo chartCustomShapeInfo1 = new Syncfusion.Windows.Forms.Chart.ChartCustomShapeInfo();
+            Syncfusion.Windows.Forms.Chart.ChartLineInfo chartLineInfo1 = new Syncfusion.Windows.Forms.Chart.ChartLineInfo();
+            Syncfusion.Windows.Forms.Chart.ChartSeries chartSeries2 = new Syncfusion.Windows.Forms.Chart.ChartSeries();
+            Syncfusion.Windows.Forms.Chart.ChartCustomShapeInfo chartCustomShapeInfo2 = new Syncfusion.Windows.Forms.Chart.ChartCustomShapeInfo();
+            Syncfusion.Windows.Forms.Chart.ChartSeries chartSeries3 = new Syncfusion.Windows.Forms.Chart.ChartSeries();
+            Syncfusion.Windows.Forms.Chart.ChartCustomShapeInfo chartCustomShapeInfo3 = new Syncfusion.Windows.Forms.Chart.ChartCustomShapeInfo();
             this.tlpRoot = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
@@ -631,13 +638,12 @@
             // 
             // lblChartTitle
             // 
-            this.lblChartTitle.AutoSize = true;
             this.lblChartTitle.Font = new System.Drawing.Font("Muro", 16F);
             this.lblChartTitle.Location = new System.Drawing.Point(0, 0);
             this.lblChartTitle.Name = "lblChartTitle";
-            this.lblChartTitle.Size = new System.Drawing.Size(258, 32);
+            this.lblChartTitle.Size = new System.Drawing.Size(354, 32);
             this.lblChartTitle.TabIndex = 0;
-            this.lblChartTitle.Text = "ACCURACY (TREND)";
+            this.lblChartTitle.Text = "ACCURACY";
             // 
             // pnlChartHost
             // 
@@ -652,6 +658,7 @@
             // 
             // chartMain
             // 
+            this.chartMain.ChartArea.BackInterior = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.Transparent);
             this.chartMain.ChartArea.CursorLocation = new System.Drawing.Point(0, 0);
             this.chartMain.ChartArea.CursorReDraw = false;
             this.chartMain.DataSourceName = "[none]";
@@ -660,12 +667,65 @@
             // 
             // 
             this.chartMain.Legend.Location = new System.Drawing.Point(967, 87);
+            this.chartMain.Legend.Visible = false;
             this.chartMain.Location = new System.Drawing.Point(8, 8);
             this.chartMain.Name = "chartMain";
             this.chartMain.PrimaryXAxis.LogLabelsDisplayMode = Syncfusion.Windows.Forms.Chart.LogLabelsDisplayMode.Default;
             this.chartMain.PrimaryXAxis.Margin = true;
+            this.chartMain.PrimaryXAxis.TitleColor = System.Drawing.Color.Black;
             this.chartMain.PrimaryYAxis.LogLabelsDisplayMode = Syncfusion.Windows.Forms.Chart.LogLabelsDisplayMode.Default;
             this.chartMain.PrimaryYAxis.Margin = true;
+            this.chartMain.PrimaryYAxis.TitleColor = System.Drawing.Color.Black;
+            chartSeries1.FancyToolTip.ResizeInsideSymbol = true;
+            chartSeries1.Name = "Default0";
+            chartSeries1.Resolution = 0D;
+            chartSeries1.StackingGroup = "Default Group";
+            chartSeries1.Style.AltTagFormat = "";
+            chartSeries1.Style.Border.Width = 2F;
+            chartSeries1.Style.DisplayShadow = true;
+            chartSeries1.Style.DrawTextShape = false;
+            chartLineInfo1.Alignment = System.Drawing.Drawing2D.PenAlignment.Center;
+            chartLineInfo1.Color = System.Drawing.SystemColors.ControlText;
+            chartLineInfo1.DashPattern = null;
+            chartLineInfo1.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            chartLineInfo1.Width = 1F;
+            chartCustomShapeInfo1.Border = chartLineInfo1;
+            chartCustomShapeInfo1.Color = System.Drawing.SystemColors.HighlightText;
+            chartCustomShapeInfo1.Type = Syncfusion.Windows.Forms.Chart.ChartCustomShape.Square;
+            chartSeries1.Style.TextShape = chartCustomShapeInfo1;
+            chartSeries1.Text = "Default0";
+            chartSeries1.Type = Syncfusion.Windows.Forms.Chart.ChartSeriesType.Spline;
+            chartSeries2.FancyToolTip.ResizeInsideSymbol = true;
+            chartSeries2.Name = "Default1";
+            chartSeries2.Resolution = 0D;
+            chartSeries2.StackingGroup = "Default Group";
+            chartSeries2.Style.AltTagFormat = "";
+            chartSeries2.Style.Border.Width = 2F;
+            chartSeries2.Style.DisplayShadow = true;
+            chartSeries2.Style.DrawTextShape = false;
+            chartCustomShapeInfo2.Border = chartLineInfo1;
+            chartCustomShapeInfo2.Color = System.Drawing.SystemColors.HighlightText;
+            chartCustomShapeInfo2.Type = Syncfusion.Windows.Forms.Chart.ChartCustomShape.Square;
+            chartSeries2.Style.TextShape = chartCustomShapeInfo2;
+            chartSeries2.Text = "Default1";
+            chartSeries2.Type = Syncfusion.Windows.Forms.Chart.ChartSeriesType.Spline;
+            chartSeries3.FancyToolTip.ResizeInsideSymbol = true;
+            chartSeries3.Name = "Default2";
+            chartSeries3.Resolution = 0D;
+            chartSeries3.StackingGroup = "Default Group";
+            chartSeries3.Style.AltTagFormat = "";
+            chartSeries3.Style.Border.Width = 2F;
+            chartSeries3.Style.DisplayShadow = true;
+            chartSeries3.Style.DrawTextShape = false;
+            chartCustomShapeInfo3.Border = chartLineInfo1;
+            chartCustomShapeInfo3.Color = System.Drawing.SystemColors.HighlightText;
+            chartCustomShapeInfo3.Type = Syncfusion.Windows.Forms.Chart.ChartCustomShape.Square;
+            chartSeries3.Style.TextShape = chartCustomShapeInfo3;
+            chartSeries3.Text = "Default2";
+            chartSeries3.Type = Syncfusion.Windows.Forms.Chart.ChartSeriesType.Spline;
+            this.chartMain.Series.Add(chartSeries1);
+            this.chartMain.Series.Add(chartSeries2);
+            this.chartMain.Series.Add(chartSeries3);
             this.chartMain.ShowLegend = false;
             this.chartMain.Size = new System.Drawing.Size(1100, 276);
             this.chartMain.TabIndex = 0;
@@ -673,6 +733,7 @@
             // 
             // 
             // 
+            this.chartMain.Title.Font = new System.Drawing.Font("Agency", 14F);
             this.chartMain.Title.Name = "Default";
             this.chartMain.Titles.Add(this.chartMain.Title);
             // 
