@@ -658,7 +658,6 @@
             // 
             // chartMain
             // 
-            this.chartMain.ChartArea.BackInterior = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.Transparent);
             this.chartMain.ChartArea.CursorLocation = new System.Drawing.Point(0, 0);
             this.chartMain.ChartArea.CursorReDraw = false;
             this.chartMain.DataSourceName = "[none]";

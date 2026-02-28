@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using Mondas.Models;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
-using Syncfusion.Drawing;
-using System.Windows.Media.Animation;
+using System.Drawing;
 
 namespace Mondas.Services
 {
@@ -26,29 +24,29 @@ namespace Mondas.Services
             float x = 40;
             float y = 40;
 
-            g.DrawString("Mondas Report", titleFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            g.DrawString("Mondas Report", titleFont, PdfBrushes.Black, new System.Drawing.PointF(x, y));
             y += 40;
 
-            g.DrawString($"User: {userDisplayName}", bodyFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            g.DrawString($"User: {userDisplayName}", bodyFont, PdfBrushes.Black, new System.Drawing.PointF(x, y));
             y += 18;
 
-            g.DrawString($"Generated: {DateTime.Now:dd MMM yyyy HH:mm}", bodyFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            g.DrawString($"Generated: {DateTime.Now:dd MMM yyyy HH:mm}", bodyFont, PdfBrushes.Black, new System.Drawing.PointF(x, y));
             y += 18;
 
-            g.DrawString($"Filters: {filters.Range} · {filters.Metric} · X = {filters.XAxis} · GroupBy = {filters.GroupBy}", bodyFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            g.DrawString($"Filters: {filters.Range} · {filters.Metric} · X = {filters.XAxis} · GroupBy = {filters.GroupBy}", bodyFont, PdfBrushes.Black, new System.Drawing.PointF(x, y));
             y += 26;
 
-            g.DrawString("Summary", hFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            g.DrawString("Summary", hFont, PdfBrushes.Black, new System.Drawing.PointF(x, y));
             y += 18;
 
             var kpiText = $"Attempts: {kpis.Attempts}\n" + $"Accuracy: {(kpis.Accuracy01 * 100.0):0}%\n" + $"Avg Time: {kpis.AvgSeconds:0.0}s\n" + $"Current Streak: {kpis.Streak}";
 
-            g.DrawString(kpiText, bodyFont, PdfBrushes.Black, new Syncfusion.Drawing.RectangleF(x, y, page.GetClientSize().Width - 80, 80));
+            g.DrawString(kpiText, bodyFont, PdfBrushes.Black, new System.Drawing.RectangleF(x, y, page.GetClientSize().Width - 80, 80));
             y += 90;
 
             if (chartPngOrNull != null && chartPngOrNull.Length > 9)
             {
-                g.DrawString("Chart Snapshot", hFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+                g.DrawString("Chart Snapshot", hFont, PdfBrushes.Black, new System.Drawing.PointF(x, y));
                 y += 18;
 
                 using var ms = new MemoryStream(chartPngOrNull);
@@ -58,7 +56,7 @@ namespace Mondas.Services
                 float drawWidth = Math.Min(maxWidth, 520);
                 float drawHeight = drawWidth * 0.55f;
 
-                g.DrawImage(bmp, new Syncfusion.Drawing.RectangleF(x, y, drawWidth, drawHeight));
+                g.DrawImage(bmp, new System.Drawing.RectangleF(x, y, drawWidth, drawHeight));
                 y += drawHeight + 20;
             }
 
@@ -66,30 +64,30 @@ namespace Mondas.Services
             var g2 = page2.Graphics;
 
             float y2 = 40;
-            g2.DrawString("Mastery by Topic", hFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y2));
+            g2.DrawString("Mastery by Topic", hFont, PdfBrushes.Black, new System.Drawing.PointF(x, y2));
             y2 += 20;
 
             foreach (var row in topicBreakdown)
             {
                 var acc = row.seen <= 0 ? 0.0 : (100.0 * row.correct / row.seen);
-                g2.DrawString($"{row.topic,-10} Seen: {row.seen,3} Accuracy: {acc: 0}%", bodyFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y2));
+                g2.DrawString($"{row.topic,-10} Seen: {row.seen,3} Accuracy: {acc: 0}%", bodyFont, PdfBrushes.Black, new System.Drawing.PointF(x, y2));
                 y2 += 16;
             }
 
             y2 += 14;
-            g2.DrawString("Top Misconceptions", hFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y2));
+            g2.DrawString("Top Misconceptions", hFont, PdfBrushes.Black, new System.Drawing.PointF(x, y2));
             y2 += 20;
 
             if (misconceptions == null || misconceptions.Count == 0)
             {
-                g2.DrawString("No misconceptions recorded in this range.", bodyFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y2));
+                g2.DrawString("No misconceptions recorded in this range.", bodyFont, PdfBrushes.Black, new System.Drawing.PointF(x, y2));
             }
 
             else
             {
                 foreach (var row in misconceptions)
                 {
-                    g2.DrawString($"• {row.Tag} (x{row.Count}, last {row.LastSeenUtc.ToLocalTime():dd MMM})", bodyFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y2));
+                    g2.DrawString($"• {row.Tag} (x{row.Count}, last {row.LastSeenUtc.ToLocalTime():dd MMM})", bodyFont, PdfBrushes.Black, new System.Drawing.PointF(x, y2));
                     y2 += 16;
                 }
             }

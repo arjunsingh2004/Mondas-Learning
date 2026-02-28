@@ -191,11 +191,8 @@
     <Reference Include="Syncfusion.BulletGraph.Windows, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Chart.Base, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Chart.Windows, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.Compression.Base, Version=32.2462.5.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Compression.Base.32.2.5\lib\net462\Syncfusion.Compression.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Compression.Portable, Version=32.2.7.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Compression.Net.Core.32.2.7\lib\netstandard2.0\Syncfusion.Compression.Portable.dll</HintPath>
+    <Reference Include="Syncfusion.Compression.Base, Version=32.2462.7.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.32.2.7\lib\net462\Syncfusion.Compression.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Core.WinForms, Version=32.2462.7.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Core.WinForms.32.2.7\lib\net462\Syncfusion.Core.WinForms.dll</HintPath>
@@ -217,8 +214,8 @@
       <HintPath>..\packages\Syncfusion.Licensing.32.2.7\lib\net462\Syncfusion.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Maps.Windows, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.Pdf.Portable, Version=32.2.7.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Pdf.Net.Core.32.2.7\lib\netstandard2.0\Syncfusion.Pdf.Portable.dll</HintPath>
+    <Reference Include="Syncfusion.Pdf.Base, Version=32.2462.7.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.WinForms.32.2.7\lib\net462\Syncfusion.Pdf.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Scripting.Base, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.SfInput.WinForms, Version=31.1462.17.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -332,6 +329,12 @@
     <Compile Include="OptionTile.Designer.cs">
       <DependentUpon>OptionTile.cs</DependentUpon>
     </Compile>
+    <Compile Include="PhishingSimulatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PhishingSimulatorForm.Designer.cs">
+      <DependentUpon>PhishingSimulatorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Models\AppConfig.cs" />
     <Compile Include="Contracts\Views\IShellWindow.cs" />
@@ -419,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OptionTile.resx">
       <DependentUpon>OptionTile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PhishingSimulatorForm.resx">
+      <DependentUpon>PhishingSimulatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

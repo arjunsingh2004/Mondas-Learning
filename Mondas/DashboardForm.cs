@@ -8,14 +8,18 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Mondas
 {
     public partial class DashboardForm : SfForm
     {
         private readonly string _userKey;
-        private readonly long _userId;
         private readonly string _dbPath;
+        private readonly long _userId;
+        private readonly string _reportsDir;
         private readonly DashboardStatsService _stats;
         private readonly Font _masteryHeaderFont;
         private readonly Font _masteryCellFont;
@@ -40,11 +44,22 @@ namespace Mondas
 
             _dbPath = Path.Combine(AppContext.BaseDirectory, "mondas.db");
             _stats = new DashboardStatsService(_dbPath);
+            _reportsDir = BuildReportsDirectory(_userKey);
 
             _masteryHeaderFont = CreateUiFont(14f);
             _masteryCellFont = CreateUiFont(12f);
 
             InitAdaptiveQuizHoverTip();
+
+            if (btnViewReports != null)
+            {
+                btnViewReports.Click += btnNavReports_Click;
+            }
+
+            if (lvRecentReports != null)
+            {
+                lvRecentReports.DoubleClick += (_, __) => OpenSelectedRecentReport();
+            }
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -195,12 +210,126 @@ namespace Mondas
         {
             if (lblStreak != null)
             {
-                lblStreak.Text = $"{s.CurrentStreak} STREAK";
+                lblStreak.Text = s.CurrentStreak.ToString(CultureInfo.InvariantCulture);
             }
 
             if (lblMistakes != null)
             {
-                lblMistakes.Text = $"{s.TotalMistakes} MISTAKES";
+                lblMistakes.Text = s.TotalMistakes.ToString(CultureInfo.InvariantCulture);
+            }
+
+            var files = SafeListReportFiles();
+
+            if (lblReportsCount != null)
+            {
+                lblReportsCount.Text = files.Count.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (lblLastReport != null)
+            {
+                lblLastReport.Text = files.Count == 0 ? "—" : File.GetLastWriteTime(files[0]).ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
+            }
+
+            if (lvRecentReports == null)
+            {
+                return;
+            }
+
+            lvRecentReports.BeginUpdate();
+
+            try
+            {
+                lvRecentReports.Items.Clear();
+
+                var take = Math.Min(5, files.Count);
+
+                for (int i = 0; i < take; i++)
+                {
+                    var file = files[i];
+                    var name = Path.GetFileNameWithoutExtension(file);
+                    var dt = File.GetLastWriteTime(file).ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
+
+                    var item = new ListViewItem(name);
+                    item.SubItems.Add(dt);
+                    item.Tag = file;
+
+                    lvRecentReports.Items.Add(item);
+                }
+
+                if (lvRecentReports.Columns.Count >= 2)
+                {
+                    var total = lvRecentReports.ClientSize.Width;
+
+                    var dateWidth = 120;
+                    lvRecentReports.Columns[1].Width = dateWidth;
+
+                    var reportWidth = total - dateWidth - SystemInformation.VerticalScrollBarWidth - 8;
+
+                    if (reportWidth < 140)
+                    {
+                        reportWidth = 140;
+                    }
+
+                    lvRecentReports.Columns[0].Width = reportWidth;
+                }
+            }
+
+            finally
+            {
+                lvRecentReports.EndUpdate();
+            }
+        }
+
+        private static string BuildReportsDirectory(string userKey)
+        {
+            var safe = (string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim()).Replace(":", "_").Replace("/", "_").Replace("\\", "_");
+
+            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Mondas", "reports", safe);
+
+            Directory.CreateDirectory(dir);
+            return dir;
+        }
+
+        private List<string> SafeListReportFiles()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(_reportsDir) || !Directory.Exists(_reportsDir))
+                {
+                    return new List<string>();
+                }
+
+                return Directory.GetFiles(_reportsDir, "*.html").OrderByDescending(File.GetLastWriteTimeUtc).ToList();
+            }
+
+            catch
+            {
+                return new List<string>();
+            }
+        }
+
+        private void OpenSelectedRecentReport()
+        {
+            if (lvRecentReports == null || lvRecentReports.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            var path = lvRecentReports.SelectedItems[0].Tag as string;
+
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            {
+                return;
+            }
+
+            try
+            {
+                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+            }
+
+            catch
+            {
+
             }
         }
 
