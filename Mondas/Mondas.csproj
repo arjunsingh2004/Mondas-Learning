@@ -319,6 +319,7 @@
     <Compile Include="Models\AttemptRecord.cs" />
     <Compile Include="Models\ChartModels.cs" />
     <Compile Include="Models\DashboardStats.cs" />
+    <Compile Include="Models\PhishingModels.cs" />
     <Compile Include="Models\QuestionAttempt.cs" />
     <Compile Include="Models\QuestionModels.cs" />
     <Compile Include="Models\QuizPreferences.cs" />
@@ -375,6 +376,7 @@
     <Compile Include="Services\PageService.cs" />
     <Compile Include="Services\PasswordHasher.cs" />
     <Compile Include="Services\PdfReportGenerator.cs" />
+    <Compile Include="Services\PhishingEmailRepository.cs" />
     <Compile Include="Services\QuizPreferencesStore.cs" />
     <Compile Include="Services\QuizRecommendationService.cs" />
     <Compile Include="Services\QuizSession.cs" />
@@ -463,6 +465,7 @@
     <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
+    <None Include="Resources\phishing_emails.json" />
     <None Include="Resources\questions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
