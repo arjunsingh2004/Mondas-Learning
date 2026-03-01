@@ -376,7 +376,10 @@
     <Compile Include="Services\PageService.cs" />
     <Compile Include="Services\PasswordHasher.cs" />
     <Compile Include="Services\PdfReportGenerator.cs" />
+    <Compile Include="Services\PhishingAttemptStore.cs" />
     <Compile Include="Services\PhishingEmailRepository.cs" />
+    <Compile Include="Services\PhishingEngineV1.cs" />
+    <Compile Include="Services\PhishingScoringV1.cs" />
     <Compile Include="Services\QuizPreferencesStore.cs" />
     <Compile Include="Services\QuizRecommendationService.cs" />
     <Compile Include="Services\QuizSession.cs" />

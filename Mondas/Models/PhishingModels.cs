@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Media.Animation;
-using Mondas.Models;
 
 namespace Mondas.Models
 {
@@ -67,7 +65,7 @@ namespace Mondas.Models
     {
         public long Id { get; set; }
         public string UserKey { get; set; } = "local";
-        public string EmailId { get; set; }
+        public string EmailId { get; set; } = "";
         public int Action { get; set; }
         public bool IsCorrect { get; set; }
         public int ScoreDelta { get; set; }
