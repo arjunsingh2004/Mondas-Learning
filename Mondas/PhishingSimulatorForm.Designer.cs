@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tlpPhishRoot = new System.Windows.Forms.TableLayoutPanel();
             this.pnlPhishHeader = new System.Windows.Forms.Panel();
             this.lblPhishTitle = new System.Windows.Forms.Label();
@@ -57,6 +58,25 @@
             this.tlpInboxHost = new System.Windows.Forms.TableLayoutPanel();
             this.pnlInboxFooter = new System.Windows.Forms.Panel();
             this.btnNewEmail = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnResetRun = new Syncfusion.WinForms.Controls.SfButton();
+            this.gbActions = new System.Windows.Forms.GroupBox();
+            this.tlpActions = new System.Windows.Forms.TableLayoutPanel();
+            this.lblActionPrompt = new System.Windows.Forms.Label();
+            this.btnTrust = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnReportPhish = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnOpenLink = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnOpenAtt = new Syncfusion.WinForms.Controls.SfButton();
+            this.pnlResult = new System.Windows.Forms.Panel();
+            this.lblResultTitle = new System.Windows.Forms.Label();
+            this.btnNextEmail = new Syncfusion.WinForms.Controls.SfButton();
+            this.lblResultText = new System.Windows.Forms.Label();
+            this.lblResultScoreDelta = new System.Windows.Forms.Label();
+            this.lblResultWhy = new System.Windows.Forms.Label();
+            this.tmrRun = new System.Windows.Forms.Timer(this.components);
+            this.rtbMessageBody = new System.Windows.Forms.RichTextBox();
+            this.lvSignals = new System.Windows.Forms.ListView();
+            this.colSignal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pnlMessageBody = new System.Windows.Forms.Panel();
             this.tlpPhishRoot.SuspendLayout();
             this.pnlPhishHeader.SuspendLayout();
             this.tlpPhishMain.SuspendLayout();
@@ -66,6 +86,10 @@
             this.tlpMsgMeta.SuspendLayout();
             this.tlpInboxHost.SuspendLayout();
             this.pnlInboxFooter.SuspendLayout();
+            this.gbActions.SuspendLayout();
+            this.tlpActions.SuspendLayout();
+            this.pnlResult.SuspendLayout();
+            this.pnlMessageBody.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpPhishRoot
@@ -133,6 +157,7 @@
             this.btnLogout.TabIndex = 5;
             this.btnLogout.Text = "LOG OUT";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblUser
             // 
@@ -234,6 +259,8 @@
             this.tlpMessageArea.ColumnCount = 1;
             this.tlpMessageArea.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMessageArea.Controls.Add(this.gbMessage, 0, 0);
+            this.tlpMessageArea.Controls.Add(this.gbActions, 0, 1);
+            this.tlpMessageArea.Controls.Add(this.pnlResult, 0, 2);
             this.tlpMessageArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMessageArea.Location = new System.Drawing.Point(440, 0);
             this.tlpMessageArea.Margin = new System.Windows.Forms.Padding(0);
@@ -247,20 +274,24 @@
             // 
             // gbMessage
             // 
-            this.gbMessage.Controls.Add(this.btnViewDetails);
+            this.gbMessage.Controls.Add(this.pnlMessageBody);
             this.gbMessage.Controls.Add(this.tlpMsgMeta);
+            this.gbMessage.Controls.Add(this.btnViewDetails);
             this.gbMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbMessage.Font = new System.Drawing.Font("Muro", 11F);
-            this.gbMessage.Location = new System.Drawing.Point(3, 3);
+            this.gbMessage.Location = new System.Drawing.Point(0, 0);
+            this.gbMessage.Margin = new System.Windows.Forms.Padding(0);
             this.gbMessage.Name = "gbMessage";
             this.gbMessage.Padding = new System.Windows.Forms.Padding(10);
-            this.gbMessage.Size = new System.Drawing.Size(714, 134);
+            this.gbMessage.Size = new System.Drawing.Size(720, 140);
             this.gbMessage.TabIndex = 0;
             this.gbMessage.TabStop = false;
             this.gbMessage.Text = "MESSAGE";
             // 
             // tlpMsgMeta
             // 
+            this.tlpMsgMeta.AutoSize = true;
+            this.tlpMsgMeta.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tlpMsgMeta.ColumnCount = 4;
             this.tlpMsgMeta.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tlpMsgMeta.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -274,16 +305,14 @@
             this.tlpMsgMeta.Controls.Add(this.lblSubject, 1, 1);
             this.tlpMsgMeta.Controls.Add(this.lblCapReceived, 2, 1);
             this.tlpMsgMeta.Controls.Add(this.lblReceived, 3, 1);
-            this.tlpMsgMeta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMsgMeta.Dock = System.Windows.Forms.DockStyle.Top;
             this.tlpMsgMeta.Location = new System.Drawing.Point(10, 32);
             this.tlpMsgMeta.Margin = new System.Windows.Forms.Padding(0);
             this.tlpMsgMeta.Name = "tlpMsgMeta";
-            this.tlpMsgMeta.RowCount = 4;
-            this.tlpMsgMeta.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tlpMsgMeta.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tlpMsgMeta.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tlpMsgMeta.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tlpMsgMeta.Size = new System.Drawing.Size(694, 92);
+            this.tlpMsgMeta.RowCount = 2;
+            this.tlpMsgMeta.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMsgMeta.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMsgMeta.Size = new System.Drawing.Size(700, 46);
             this.tlpMsgMeta.TabIndex = 0;
             // 
             // lblCapFrom
@@ -306,7 +335,7 @@
             this.lblFrom.Location = new System.Drawing.Point(90, 0);
             this.lblFrom.Margin = new System.Windows.Forms.Padding(0);
             this.lblFrom.Name = "lblFrom";
-            this.lblFrom.Size = new System.Drawing.Size(257, 23);
+            this.lblFrom.Size = new System.Drawing.Size(260, 23);
             this.lblFrom.TabIndex = 1;
             this.lblFrom.Text = "-";
             this.lblFrom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -315,7 +344,7 @@
             // 
             this.lblCapTo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCapTo.Font = new System.Drawing.Font("Muro", 10F);
-            this.lblCapTo.Location = new System.Drawing.Point(347, 0);
+            this.lblCapTo.Location = new System.Drawing.Point(350, 0);
             this.lblCapTo.Margin = new System.Windows.Forms.Padding(0);
             this.lblCapTo.Name = "lblCapTo";
             this.lblCapTo.Size = new System.Drawing.Size(90, 23);
@@ -328,10 +357,10 @@
             this.lblTo.AutoEllipsis = true;
             this.lblTo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTo.Font = new System.Drawing.Font("Muro", 10F);
-            this.lblTo.Location = new System.Drawing.Point(437, 0);
+            this.lblTo.Location = new System.Drawing.Point(440, 0);
             this.lblTo.Margin = new System.Windows.Forms.Padding(0);
             this.lblTo.Name = "lblTo";
-            this.lblTo.Size = new System.Drawing.Size(257, 23);
+            this.lblTo.Size = new System.Drawing.Size(260, 23);
             this.lblTo.TabIndex = 3;
             this.lblTo.Text = "-";
             this.lblTo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -356,7 +385,7 @@
             this.lblSubject.Location = new System.Drawing.Point(90, 23);
             this.lblSubject.Margin = new System.Windows.Forms.Padding(0);
             this.lblSubject.Name = "lblSubject";
-            this.lblSubject.Size = new System.Drawing.Size(257, 23);
+            this.lblSubject.Size = new System.Drawing.Size(260, 23);
             this.lblSubject.TabIndex = 5;
             this.lblSubject.Text = "-";
             this.lblSubject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -365,7 +394,7 @@
             // 
             this.lblCapReceived.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCapReceived.Font = new System.Drawing.Font("Muro", 10F);
-            this.lblCapReceived.Location = new System.Drawing.Point(347, 23);
+            this.lblCapReceived.Location = new System.Drawing.Point(350, 23);
             this.lblCapReceived.Margin = new System.Windows.Forms.Padding(0);
             this.lblCapReceived.Name = "lblCapReceived";
             this.lblCapReceived.Size = new System.Drawing.Size(90, 23);
@@ -378,10 +407,10 @@
             this.lblReceived.AutoEllipsis = true;
             this.lblReceived.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblReceived.Font = new System.Drawing.Font("Muro", 10F);
-            this.lblReceived.Location = new System.Drawing.Point(437, 23);
+            this.lblReceived.Location = new System.Drawing.Point(440, 23);
             this.lblReceived.Margin = new System.Windows.Forms.Padding(0);
             this.lblReceived.Name = "lblReceived";
-            this.lblReceived.Size = new System.Drawing.Size(257, 23);
+            this.lblReceived.Size = new System.Drawing.Size(260, 23);
             this.lblReceived.TabIndex = 7;
             this.lblReceived.Text = "-";
             this.lblReceived.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -399,6 +428,7 @@
             this.btnViewDetails.TabIndex = 1;
             this.btnViewDetails.Text = "VIEW DETAILS";
             this.btnViewDetails.UseVisualStyleBackColor = false;
+            this.btnViewDetails.Click += new System.EventHandler(this.btnViewDetails_Click);
             // 
             // tlpInboxHost
             // 
@@ -420,6 +450,7 @@
             // pnlInboxFooter
             // 
             this.pnlInboxFooter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlInboxFooter.Controls.Add(this.btnResetRun);
             this.pnlInboxFooter.Controls.Add(this.btnNewEmail);
             this.pnlInboxFooter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlInboxFooter.Location = new System.Drawing.Point(0, 395);
@@ -432,6 +463,7 @@
             // btnNewEmail
             // 
             this.btnNewEmail.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnNewEmail.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnNewEmail.Font = new System.Drawing.Font("Muro", 11F);
             this.btnNewEmail.ForeColor = System.Drawing.Color.White;
             this.btnNewEmail.Location = new System.Drawing.Point(6, 6);
@@ -442,6 +474,249 @@
             this.btnNewEmail.TabIndex = 0;
             this.btnNewEmail.Text = "NEW EMAIL";
             this.btnNewEmail.UseVisualStyleBackColor = false;
+            this.btnNewEmail.Click += new System.EventHandler(this.btnNewEmail_Click);
+            // 
+            // btnResetRun
+            // 
+            this.btnResetRun.BackColor = System.Drawing.Color.Crimson;
+            this.btnResetRun.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnResetRun.Font = new System.Drawing.Font("Muro", 11F);
+            this.btnResetRun.ForeColor = System.Drawing.Color.White;
+            this.btnResetRun.Location = new System.Drawing.Point(262, 6);
+            this.btnResetRun.Name = "btnResetRun";
+            this.btnResetRun.Size = new System.Drawing.Size(140, 30);
+            this.btnResetRun.Style.BackColor = System.Drawing.Color.Crimson;
+            this.btnResetRun.Style.ForeColor = System.Drawing.Color.White;
+            this.btnResetRun.TabIndex = 1;
+            this.btnResetRun.Text = "RESET RUN";
+            this.btnResetRun.UseVisualStyleBackColor = false;
+            this.btnResetRun.Click += new System.EventHandler(this.btnResetRun_Click);
+            // 
+            // gbActions
+            // 
+            this.gbActions.Controls.Add(this.tlpActions);
+            this.gbActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbActions.Font = new System.Drawing.Font("Muro", 11F);
+            this.gbActions.Location = new System.Drawing.Point(0, 140);
+            this.gbActions.Margin = new System.Windows.Forms.Padding(0);
+            this.gbActions.Name = "gbActions";
+            this.gbActions.Padding = new System.Windows.Forms.Padding(10);
+            this.gbActions.Size = new System.Drawing.Size(720, 121);
+            this.gbActions.TabIndex = 1;
+            this.gbActions.TabStop = false;
+            this.gbActions.Text = "ACTIONS";
+            // 
+            // tlpActions
+            // 
+            this.tlpActions.ColumnCount = 4;
+            this.tlpActions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpActions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpActions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpActions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpActions.Controls.Add(this.lblActionPrompt, 0, 0);
+            this.tlpActions.Controls.Add(this.btnTrust, 0, 1);
+            this.tlpActions.Controls.Add(this.btnReportPhish, 1, 1);
+            this.tlpActions.Controls.Add(this.btnOpenLink, 2, 1);
+            this.tlpActions.Controls.Add(this.btnOpenAtt, 3, 1);
+            this.tlpActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpActions.Location = new System.Drawing.Point(10, 32);
+            this.tlpActions.Name = "tlpActions";
+            this.tlpActions.RowCount = 2;
+            this.tlpActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tlpActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpActions.Size = new System.Drawing.Size(700, 79);
+            this.tlpActions.TabIndex = 0;
+            // 
+            // lblActionPrompt
+            // 
+            this.lblActionPrompt.AutoSize = true;
+            this.tlpActions.SetColumnSpan(this.lblActionPrompt, 4);
+            this.lblActionPrompt.Location = new System.Drawing.Point(3, 0);
+            this.lblActionPrompt.Name = "lblActionPrompt";
+            this.lblActionPrompt.Size = new System.Drawing.Size(166, 22);
+            this.lblActionPrompt.TabIndex = 0;
+            this.lblActionPrompt.Text = "WHAT DO YOU DO?";
+            this.lblActionPrompt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnTrust
+            // 
+            this.btnTrust.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnTrust.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnTrust.Location = new System.Drawing.Point(3, 31);
+            this.btnTrust.Name = "btnTrust";
+            this.btnTrust.Size = new System.Drawing.Size(169, 45);
+            this.btnTrust.TabIndex = 1;
+            this.btnTrust.Text = "TRUST/KEEP";
+            this.btnTrust.Click += new System.EventHandler(this.btnTrust_Click);
+            // 
+            // btnReportPhish
+            // 
+            this.btnReportPhish.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnReportPhish.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnReportPhish.Location = new System.Drawing.Point(178, 31);
+            this.btnReportPhish.Name = "btnReportPhish";
+            this.btnReportPhish.Size = new System.Drawing.Size(169, 45);
+            this.btnReportPhish.TabIndex = 2;
+            this.btnReportPhish.Text = "REPORT PHISHING";
+            this.btnReportPhish.Click += new System.EventHandler(this.btnReportPhish_Click);
+            // 
+            // btnOpenLink
+            // 
+            this.btnOpenLink.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOpenLink.Enabled = false;
+            this.btnOpenLink.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnOpenLink.Location = new System.Drawing.Point(353, 31);
+            this.btnOpenLink.Name = "btnOpenLink";
+            this.btnOpenLink.Size = new System.Drawing.Size(169, 45);
+            this.btnOpenLink.TabIndex = 3;
+            this.btnOpenLink.Text = "OPEN LINK";
+            this.btnOpenLink.Click += new System.EventHandler(this.btnOpenLink_Click);
+            // 
+            // btnOpenAtt
+            // 
+            this.btnOpenAtt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOpenAtt.Enabled = false;
+            this.btnOpenAtt.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnOpenAtt.Location = new System.Drawing.Point(528, 31);
+            this.btnOpenAtt.Name = "btnOpenAtt";
+            this.btnOpenAtt.Size = new System.Drawing.Size(169, 45);
+            this.btnOpenAtt.TabIndex = 4;
+            this.btnOpenAtt.Text = "OPEN ATTACHMENT";
+            this.btnOpenAtt.Click += new System.EventHandler(this.btnOpenAtt_Click);
+            // 
+            // pnlResult
+            // 
+            this.pnlResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlResult.Controls.Add(this.lvSignals);
+            this.pnlResult.Controls.Add(this.btnNextEmail);
+            this.pnlResult.Controls.Add(this.lblResultWhy);
+            this.pnlResult.Controls.Add(this.lblResultScoreDelta);
+            this.pnlResult.Controls.Add(this.lblResultText);
+            this.pnlResult.Controls.Add(this.lblResultTitle);
+            this.pnlResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlResult.Location = new System.Drawing.Point(0, 261);
+            this.pnlResult.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlResult.Name = "pnlResult";
+            this.pnlResult.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlResult.Size = new System.Drawing.Size(720, 220);
+            this.pnlResult.TabIndex = 2;
+            this.pnlResult.Visible = false;
+            // 
+            // lblResultTitle
+            // 
+            this.lblResultTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblResultTitle.Font = new System.Drawing.Font("Muro", 14F);
+            this.lblResultTitle.Location = new System.Drawing.Point(10, 10);
+            this.lblResultTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblResultTitle.Name = "lblResultTitle";
+            this.lblResultTitle.Size = new System.Drawing.Size(698, 32);
+            this.lblResultTitle.TabIndex = 0;
+            this.lblResultTitle.Text = "RESULT";
+            this.lblResultTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnNextEmail
+            // 
+            this.btnNextEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextEmail.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnNextEmail.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNextEmail.Font = new System.Drawing.Font("Muro", 12F);
+            this.btnNextEmail.ForeColor = System.Drawing.Color.White;
+            this.btnNextEmail.Location = new System.Drawing.Point(538, 167);
+            this.btnNextEmail.Name = "btnNextEmail";
+            this.btnNextEmail.Size = new System.Drawing.Size(170, 38);
+            this.btnNextEmail.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnNextEmail.Style.ForeColor = System.Drawing.Color.White;
+            this.btnNextEmail.TabIndex = 1;
+            this.btnNextEmail.Text = "NEXT EMAIL";
+            this.btnNextEmail.UseVisualStyleBackColor = false;
+            this.btnNextEmail.Click += new System.EventHandler(this.btnNextEmail_Click);
+            // 
+            // lblResultText
+            // 
+            this.lblResultText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblResultText.Font = new System.Drawing.Font("Agency", 12F);
+            this.lblResultText.Location = new System.Drawing.Point(10, 42);
+            this.lblResultText.Margin = new System.Windows.Forms.Padding(0);
+            this.lblResultText.Name = "lblResultText";
+            this.lblResultText.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.lblResultText.Size = new System.Drawing.Size(698, 52);
+            this.lblResultText.TabIndex = 2;
+            this.lblResultText.Text = "-";
+            // 
+            // lblResultScoreDelta
+            // 
+            this.lblResultScoreDelta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblResultScoreDelta.Font = new System.Drawing.Font("Muro", 11F);
+            this.lblResultScoreDelta.Location = new System.Drawing.Point(10, 94);
+            this.lblResultScoreDelta.Margin = new System.Windows.Forms.Padding(0);
+            this.lblResultScoreDelta.Name = "lblResultScoreDelta";
+            this.lblResultScoreDelta.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblResultScoreDelta.Size = new System.Drawing.Size(698, 34);
+            this.lblResultScoreDelta.TabIndex = 3;
+            this.lblResultScoreDelta.Text = "+0 SCORE | +0s";
+            this.lblResultScoreDelta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblResultWhy
+            // 
+            this.lblResultWhy.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblResultWhy.Font = new System.Drawing.Font("Agency", 11F);
+            this.lblResultWhy.ForeColor = System.Drawing.Color.DimGray;
+            this.lblResultWhy.Location = new System.Drawing.Point(10, 128);
+            this.lblResultWhy.Margin = new System.Windows.Forms.Padding(0);
+            this.lblResultWhy.Name = "lblResultWhy";
+            this.lblResultWhy.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblResultWhy.Size = new System.Drawing.Size(698, 30);
+            this.lblResultWhy.TabIndex = 4;
+            this.lblResultWhy.Text = "Signals: -";
+            this.lblResultWhy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // rtbMessageBody
+            // 
+            this.rtbMessageBody.BackColor = System.Drawing.Color.White;
+            this.rtbMessageBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbMessageBody.DetectUrls = false;
+            this.rtbMessageBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbMessageBody.Location = new System.Drawing.Point(8, 8);
+            this.rtbMessageBody.Name = "rtbMessageBody";
+            this.rtbMessageBody.ReadOnly = true;
+            this.rtbMessageBody.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtbMessageBody.Size = new System.Drawing.Size(684, 36);
+            this.rtbMessageBody.TabIndex = 2;
+            this.rtbMessageBody.TabStop = false;
+            this.rtbMessageBody.Text = "";
+            // 
+            // lvSignals
+            // 
+            this.lvSignals.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvSignals.BackColor = System.Drawing.Color.White;
+            this.lvSignals.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvSignals.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colSignal});
+            this.lvSignals.FullRowSelect = true;
+            this.lvSignals.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvSignals.HideSelection = false;
+            this.lvSignals.Location = new System.Drawing.Point(12, 165);
+            this.lvSignals.MultiSelect = false;
+            this.lvSignals.Name = "lvSignals";
+            this.lvSignals.Size = new System.Drawing.Size(520, 44);
+            this.lvSignals.TabIndex = 5;
+            this.lvSignals.UseCompatibleStateImageBehavior = false;
+            this.lvSignals.View = System.Windows.Forms.View.Details;
+            // 
+            // colSignal
+            // 
+            this.colSignal.Text = "";
+            // 
+            // pnlMessageBody
+            // 
+            this.pnlMessageBody.Controls.Add(this.rtbMessageBody);
+            this.pnlMessageBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMessageBody.Location = new System.Drawing.Point(10, 78);
+            this.pnlMessageBody.Name = "pnlMessageBody";
+            this.pnlMessageBody.Padding = new System.Windows.Forms.Padding(8);
+            this.pnlMessageBody.Size = new System.Drawing.Size(700, 52);
+            this.pnlMessageBody.TabIndex = 3;
             // 
             // PhishingSimulatorForm
             // 
@@ -465,9 +740,15 @@
             this.gbInbox.ResumeLayout(false);
             this.tlpMessageArea.ResumeLayout(false);
             this.gbMessage.ResumeLayout(false);
+            this.gbMessage.PerformLayout();
             this.tlpMsgMeta.ResumeLayout(false);
             this.tlpInboxHost.ResumeLayout(false);
             this.pnlInboxFooter.ResumeLayout(false);
+            this.gbActions.ResumeLayout(false);
+            this.tlpActions.ResumeLayout(false);
+            this.tlpActions.PerformLayout();
+            this.pnlResult.ResumeLayout(false);
+            this.pnlMessageBody.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -503,5 +784,24 @@
         private System.Windows.Forms.TableLayoutPanel tlpInboxHost;
         private System.Windows.Forms.Panel pnlInboxFooter;
         private Syncfusion.WinForms.Controls.SfButton btnNewEmail;
+        private Syncfusion.WinForms.Controls.SfButton btnResetRun;
+        private System.Windows.Forms.GroupBox gbActions;
+        private System.Windows.Forms.TableLayoutPanel tlpActions;
+        private System.Windows.Forms.Label lblActionPrompt;
+        private Syncfusion.WinForms.Controls.SfButton btnTrust;
+        private Syncfusion.WinForms.Controls.SfButton btnReportPhish;
+        private Syncfusion.WinForms.Controls.SfButton btnOpenLink;
+        private Syncfusion.WinForms.Controls.SfButton btnOpenAtt;
+        private System.Windows.Forms.Panel pnlResult;
+        private System.Windows.Forms.Label lblResultTitle;
+        private Syncfusion.WinForms.Controls.SfButton btnNextEmail;
+        private System.Windows.Forms.Label lblResultText;
+        private System.Windows.Forms.Label lblResultScoreDelta;
+        private System.Windows.Forms.Label lblResultWhy;
+        private System.Windows.Forms.Timer tmrRun;
+        private System.Windows.Forms.RichTextBox rtbMessageBody;
+        private System.Windows.Forms.ListView lvSignals;
+        private System.Windows.Forms.ColumnHeader colSignal;
+        private System.Windows.Forms.Panel pnlMessageBody;
     }
 }

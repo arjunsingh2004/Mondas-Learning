@@ -598,13 +598,13 @@
             // btnResetChart
             // 
             this.btnResetChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnResetChart.BackColor = System.Drawing.Color.Red;
+            this.btnResetChart.BackColor = System.Drawing.Color.Crimson;
             this.btnResetChart.Font = new System.Drawing.Font("Muro", 12F);
             this.btnResetChart.ForeColor = System.Drawing.SystemColors.Window;
             this.btnResetChart.Location = new System.Drawing.Point(998, 0);
             this.btnResetChart.Name = "btnResetChart";
             this.btnResetChart.Size = new System.Drawing.Size(120, 38);
-            this.btnResetChart.Style.BackColor = System.Drawing.Color.Red;
+            this.btnResetChart.Style.BackColor = System.Drawing.Color.Crimson;
             this.btnResetChart.Style.ForeColor = System.Drawing.SystemColors.Window;
             this.btnResetChart.TabIndex = 3;
             this.btnResetChart.Text = "RESET";
