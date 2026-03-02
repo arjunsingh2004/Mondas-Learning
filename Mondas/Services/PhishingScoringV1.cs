@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Security.Policy;
 using Mondas.Models;
 
 namespace Mondas.Services
@@ -160,7 +159,7 @@ namespace Mondas.Services
                 return 0.0;
             }
 
-            return over / 0.0;
+            return over / 5.0;
         }
 
         private static List<PhishingSignal> AnalyseSignals(PhishingEmail email, out int riskScore, out List<string> rulesFired)
@@ -207,7 +206,7 @@ namespace Mondas.Services
                         riskScore += 3;
                     }
 
-                    if (domain.StartWith("http://", StringComparison.OrdinalIgnoreCase) || linkUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+                    if (domain.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || linkUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                     {
                         signals.Add(new PhishingSignal { Title = "Non-HTTPS link", Detail = "HTTP links are easier to tamper with than HTTPS.", Weight = 1 });
                         rulesFired.Add("HttpLink");
@@ -264,7 +263,11 @@ namespace Mondas.Services
                     url = "http://" + url;
                 }
 
-                var u = new Url(url);
+                if (!Uri.TryCreate(url, UriKind.Absolute, out var u))
+                {
+                    return "";
+                }
+
                 return (u.Host ?? "").ToLowerInvariant();
             }
 

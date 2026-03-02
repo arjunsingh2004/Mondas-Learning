@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
 using Mondas.Models;
 
 namespace Mondas.Services
@@ -21,7 +19,7 @@ namespace Mondas.Services
             _allowDifficultyDrift = allowDifficultyDrift;
         }
 
-        public (PhishingEmail email, string reason, List<string> rulesFired) PickNext(IReadOnlyList<PhishingEmail> allEmails, IReadOnlyList<PhishingAttemptRow> history, HashSet<int> seenThisRun, Func<string, double> tagMastery01)
+        public (PhishingEmail email, string reason, List<string> rulesFired) PickNext(IReadOnlyList<PhishingEmail> allEmails, IReadOnlyList<PhishingAttemptRow> history, HashSet<int> seenThisRun, Func<string, double> tagMastery)
         {
             var trace = new List<string>();
             var candidates = allEmails.Where(e => e != null).Where(e => seenThisRun == null || !seenThisRun.Contains(e.Id)).ToList();
@@ -66,7 +64,7 @@ namespace Mondas.Services
             
                 foreach (var t in tagPool)
                 {
-                    var m = tagMastery01 == null ? 0.0 : tagMastery01(t);
+                    var m = tagMastery == null ? 0.0 : tagMastery(t);
 
                     if (m < weakestMastery)
                     {
@@ -122,8 +120,8 @@ namespace Mondas.Services
 
                 if (_focusWeakTags && weakestTag.Length > 0)
                 {
-                    var m = tagMastery01 == null ? 0.0 : tagMastery01(weakestTag);
-                    var weakness = 1.0 - Clamp01(m);
+                    var m = tagMastery == null ? 0.0 : tagMastery(weakestTag);
+                    var weakness = 1.0 - Clamp(m);
 
                     var has = tags.Any(t => string.Equals(t, weakestTag, StringComparison.OrdinalIgnoreCase));
                     w *= has ? (0.55 + 0.85 * weakness) : (0.35 + 0.50 * weakness);
@@ -145,7 +143,7 @@ namespace Mondas.Services
 
             if (_focusWeakTags && weakestTag.Length > 0)
             {
-                reasonParts.Add("Focusing on '" + weakestTag + "' (mastery " + Clamp01(weakestMastery).ToString("P0") + ").");
+                reasonParts.Add("Focusing on '" + weakestTag + "' (mastery " + Clamp(weakestMastery).ToString("P0") + ").");
             }
 
             if (targetDifficulty.HasValue)
@@ -276,7 +274,7 @@ namespace Mondas.Services
             return order[idx];
         }
 
-        private static double Clamp01(double value)
+        private static double Clamp(double value)
         {
             if (value < 0.0)
             {
