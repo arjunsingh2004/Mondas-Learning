@@ -330,6 +330,12 @@
     <Compile Include="OptionTile.Designer.cs">
       <DependentUpon>OptionTile.cs</DependentUpon>
     </Compile>
+    <Compile Include="PhishingDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PhishingDetailsForm.Designer.cs">
+      <DependentUpon>PhishingDetailsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PhishingSimulatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -427,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OptionTile.resx">
       <DependentUpon>OptionTile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PhishingDetailsForm.resx">
+      <DependentUpon>PhishingDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PhishingSimulatorForm.resx">
       <DependentUpon>PhishingSimulatorForm.cs</DependentUpon>
