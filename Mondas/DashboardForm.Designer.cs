@@ -68,8 +68,25 @@
             this.gbMastery = new System.Windows.Forms.GroupBox();
             this.tlpMastery = new System.Windows.Forms.TableLayoutPanel();
             this.gbReports = new System.Windows.Forms.GroupBox();
-            this.btnViewReports = new Syncfusion.WinForms.Controls.SfButton();
+            this.pnlReportsPreview = new System.Windows.Forms.Panel();
+            this.tblReportsPreview = new System.Windows.Forms.TableLayoutPanel();
+            this.lvRecentReports = new System.Windows.Forms.ListView();
+            this.colRecentReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colRecentDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tblReportsKpis = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlKpiStreak = new System.Windows.Forms.Panel();
+            this.lblCapStreak = new System.Windows.Forms.Label();
+            this.lblStreak = new System.Windows.Forms.Label();
+            this.pnlKpiMistakes = new System.Windows.Forms.Panel();
+            this.lblCapMistakes = new System.Windows.Forms.Label();
             this.lblMistakes = new System.Windows.Forms.Label();
+            this.pnlKpiReportsCount = new System.Windows.Forms.Panel();
+            this.lblCapReportsCount = new System.Windows.Forms.Label();
+            this.lblReportsCount = new System.Windows.Forms.Label();
+            this.pnlKpiLastReport = new System.Windows.Forms.Panel();
+            this.lblCapLastReport = new System.Windows.Forms.Label();
+            this.lblLastReport = new System.Windows.Forms.Label();
+            this.btnViewReports = new Syncfusion.WinForms.Controls.SfButton();
             this.gbMisconA = new System.Windows.Forms.GroupBox();
             this.lvMisconA = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -87,23 +104,6 @@
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lblFooterUser = new System.Windows.Forms.Label();
             this.lblFooterLeft = new System.Windows.Forms.Label();
-            this.pnlReportsPreview = new System.Windows.Forms.Panel();
-            this.tblReportsPreview = new System.Windows.Forms.TableLayoutPanel();
-            this.lvRecentReports = new System.Windows.Forms.ListView();
-            this.colRecentReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colRecentDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tblReportsKpis = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlKpiStreak = new System.Windows.Forms.Panel();
-            this.pnlKpiMistakes = new System.Windows.Forms.Panel();
-            this.pnlKpiReportsCount = new System.Windows.Forms.Panel();
-            this.pnlKpiLastReport = new System.Windows.Forms.Panel();
-            this.lblCapStreak = new System.Windows.Forms.Label();
-            this.lblStreak = new System.Windows.Forms.Label();
-            this.lblCapMistakes = new System.Windows.Forms.Label();
-            this.lblCapReportsCount = new System.Windows.Forms.Label();
-            this.lblReportsCount = new System.Windows.Forms.Label();
-            this.lblCapLastReport = new System.Windows.Forms.Label();
-            this.lblLastReport = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -121,6 +121,13 @@
             this.tlpMainGrid.SuspendLayout();
             this.gbMastery.SuspendLayout();
             this.gbReports.SuspendLayout();
+            this.pnlReportsPreview.SuspendLayout();
+            this.tblReportsPreview.SuspendLayout();
+            this.tblReportsKpis.SuspendLayout();
+            this.pnlKpiStreak.SuspendLayout();
+            this.pnlKpiMistakes.SuspendLayout();
+            this.pnlKpiReportsCount.SuspendLayout();
+            this.pnlKpiLastReport.SuspendLayout();
             this.gbMisconA.SuspendLayout();
             this.gbMiniGames.SuspendLayout();
             this.tlpMiniTiles.SuspendLayout();
@@ -129,13 +136,6 @@
             this.pnlQuizRow.SuspendLayout();
             this.tlpQuizCenter.SuspendLayout();
             this.pnlFooter.SuspendLayout();
-            this.pnlReportsPreview.SuspendLayout();
-            this.tblReportsPreview.SuspendLayout();
-            this.tblReportsKpis.SuspendLayout();
-            this.pnlKpiStreak.SuspendLayout();
-            this.pnlKpiMistakes.SuspendLayout();
-            this.pnlKpiReportsCount.SuspendLayout();
-            this.pnlKpiLastReport.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlSidebar
@@ -678,6 +678,227 @@
             this.gbReports.TabStop = false;
             this.gbReports.Text = "REPORTS AND CHARTS";
             // 
+            // pnlReportsPreview
+            // 
+            this.pnlReportsPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlReportsPreview.Controls.Add(this.tblReportsPreview);
+            this.pnlReportsPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlReportsPreview.Location = new System.Drawing.Point(3, 28);
+            this.pnlReportsPreview.Name = "pnlReportsPreview";
+            this.pnlReportsPreview.Size = new System.Drawing.Size(295, 124);
+            this.pnlReportsPreview.TabIndex = 0;
+            // 
+            // tblReportsPreview
+            // 
+            this.tblReportsPreview.ColumnCount = 1;
+            this.tblReportsPreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblReportsPreview.Controls.Add(this.lvRecentReports, 0, 0);
+            this.tblReportsPreview.Controls.Add(this.tblReportsKpis, 0, 1);
+            this.tblReportsPreview.Controls.Add(this.btnViewReports, 0, 2);
+            this.tblReportsPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblReportsPreview.Location = new System.Drawing.Point(0, 0);
+            this.tblReportsPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.tblReportsPreview.Name = "tblReportsPreview";
+            this.tblReportsPreview.RowCount = 3;
+            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tblReportsPreview.Size = new System.Drawing.Size(293, 122);
+            this.tblReportsPreview.TabIndex = 0;
+            // 
+            // lvRecentReports
+            // 
+            this.lvRecentReports.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvRecentReports.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvRecentReports.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colRecentReport,
+            this.colRecentDate});
+            this.lvRecentReports.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvRecentReports.Font = new System.Drawing.Font("Agency", 10F);
+            this.lvRecentReports.FullRowSelect = true;
+            this.lvRecentReports.GridLines = true;
+            this.lvRecentReports.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvRecentReports.HideSelection = false;
+            this.lvRecentReports.Location = new System.Drawing.Point(3, 3);
+            this.lvRecentReports.Name = "lvRecentReports";
+            this.lvRecentReports.Size = new System.Drawing.Size(287, 33);
+            this.lvRecentReports.TabIndex = 0;
+            this.lvRecentReports.UseCompatibleStateImageBehavior = false;
+            this.lvRecentReports.View = System.Windows.Forms.View.Details;
+            // 
+            // colRecentReport
+            // 
+            this.colRecentReport.Text = "REPORT";
+            this.colRecentReport.Width = 170;
+            // 
+            // colRecentDate
+            // 
+            this.colRecentDate.Text = "DATE";
+            this.colRecentDate.Width = 90;
+            // 
+            // tblReportsKpis
+            // 
+            this.tblReportsKpis.ColumnCount = 2;
+            this.tblReportsKpis.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.Controls.Add(this.pnlKpiStreak, 0, 0);
+            this.tblReportsKpis.Controls.Add(this.pnlKpiMistakes, 1, 0);
+            this.tblReportsKpis.Controls.Add(this.pnlKpiReportsCount, 0, 1);
+            this.tblReportsKpis.Controls.Add(this.pnlKpiLastReport, 1, 1);
+            this.tblReportsKpis.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblReportsKpis.Location = new System.Drawing.Point(0, 47);
+            this.tblReportsKpis.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.tblReportsKpis.Name = "tblReportsKpis";
+            this.tblReportsKpis.RowCount = 2;
+            this.tblReportsKpis.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.Size = new System.Drawing.Size(293, 31);
+            this.tblReportsKpis.TabIndex = 1;
+            // 
+            // pnlKpiStreak
+            // 
+            this.pnlKpiStreak.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiStreak.Controls.Add(this.lblCapStreak);
+            this.pnlKpiStreak.Controls.Add(this.lblStreak);
+            this.pnlKpiStreak.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiStreak.Location = new System.Drawing.Point(6, 6);
+            this.pnlKpiStreak.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiStreak.Name = "pnlKpiStreak";
+            this.pnlKpiStreak.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiStreak.Size = new System.Drawing.Size(134, 3);
+            this.pnlKpiStreak.TabIndex = 0;
+            // 
+            // lblCapStreak
+            // 
+            this.lblCapStreak.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapStreak.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapStreak.Location = new System.Drawing.Point(6, 6);
+            this.lblCapStreak.Name = "lblCapStreak";
+            this.lblCapStreak.Size = new System.Drawing.Size(120, 16);
+            this.lblCapStreak.TabIndex = 2;
+            this.lblCapStreak.Text = "STREAK";
+            this.lblCapStreak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblStreak
+            // 
+            this.lblStreak.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblStreak.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblStreak.Location = new System.Drawing.Point(6, 6);
+            this.lblStreak.Name = "lblStreak";
+            this.lblStreak.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblStreak.Size = new System.Drawing.Size(120, 0);
+            this.lblStreak.TabIndex = 2;
+            this.lblStreak.Text = "2";
+            this.lblStreak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlKpiMistakes
+            // 
+            this.pnlKpiMistakes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiMistakes.Controls.Add(this.lblCapMistakes);
+            this.pnlKpiMistakes.Controls.Add(this.lblMistakes);
+            this.pnlKpiMistakes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiMistakes.Location = new System.Drawing.Point(152, 6);
+            this.pnlKpiMistakes.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiMistakes.Name = "pnlKpiMistakes";
+            this.pnlKpiMistakes.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiMistakes.Size = new System.Drawing.Size(135, 3);
+            this.pnlKpiMistakes.TabIndex = 1;
+            // 
+            // lblCapMistakes
+            // 
+            this.lblCapMistakes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapMistakes.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapMistakes.Location = new System.Drawing.Point(6, 6);
+            this.lblCapMistakes.Name = "lblCapMistakes";
+            this.lblCapMistakes.Size = new System.Drawing.Size(121, 16);
+            this.lblCapMistakes.TabIndex = 2;
+            this.lblCapMistakes.Text = "MISTAKES";
+            this.lblCapMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblMistakes
+            // 
+            this.lblMistakes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMistakes.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblMistakes.Location = new System.Drawing.Point(6, 6);
+            this.lblMistakes.Name = "lblMistakes";
+            this.lblMistakes.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblMistakes.Size = new System.Drawing.Size(121, 0);
+            this.lblMistakes.TabIndex = 0;
+            this.lblMistakes.Text = "7";
+            this.lblMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlKpiReportsCount
+            // 
+            this.pnlKpiReportsCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiReportsCount.Controls.Add(this.lblCapReportsCount);
+            this.pnlKpiReportsCount.Controls.Add(this.lblReportsCount);
+            this.pnlKpiReportsCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiReportsCount.Location = new System.Drawing.Point(6, 21);
+            this.pnlKpiReportsCount.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiReportsCount.Name = "pnlKpiReportsCount";
+            this.pnlKpiReportsCount.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiReportsCount.Size = new System.Drawing.Size(134, 4);
+            this.pnlKpiReportsCount.TabIndex = 2;
+            // 
+            // lblCapReportsCount
+            // 
+            this.lblCapReportsCount.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapReportsCount.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapReportsCount.Location = new System.Drawing.Point(6, 6);
+            this.lblCapReportsCount.Name = "lblCapReportsCount";
+            this.lblCapReportsCount.Size = new System.Drawing.Size(120, 16);
+            this.lblCapReportsCount.TabIndex = 2;
+            this.lblCapReportsCount.Text = "REPORTS";
+            this.lblCapReportsCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblReportsCount
+            // 
+            this.lblReportsCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblReportsCount.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblReportsCount.Location = new System.Drawing.Point(6, 6);
+            this.lblReportsCount.Name = "lblReportsCount";
+            this.lblReportsCount.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblReportsCount.Size = new System.Drawing.Size(120, 0);
+            this.lblReportsCount.TabIndex = 3;
+            this.lblReportsCount.Text = "3";
+            this.lblReportsCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlKpiLastReport
+            // 
+            this.pnlKpiLastReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiLastReport.Controls.Add(this.lblCapLastReport);
+            this.pnlKpiLastReport.Controls.Add(this.lblLastReport);
+            this.pnlKpiLastReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiLastReport.Location = new System.Drawing.Point(152, 21);
+            this.pnlKpiLastReport.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiLastReport.Name = "pnlKpiLastReport";
+            this.pnlKpiLastReport.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiLastReport.Size = new System.Drawing.Size(135, 4);
+            this.pnlKpiLastReport.TabIndex = 3;
+            // 
+            // lblCapLastReport
+            // 
+            this.lblCapLastReport.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapLastReport.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapLastReport.Location = new System.Drawing.Point(6, 6);
+            this.lblCapLastReport.Name = "lblCapLastReport";
+            this.lblCapLastReport.Size = new System.Drawing.Size(121, 16);
+            this.lblCapLastReport.TabIndex = 2;
+            this.lblCapLastReport.Text = "LAST REPORT";
+            this.lblCapLastReport.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblLastReport
+            // 
+            this.lblLastReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLastReport.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblLastReport.Location = new System.Drawing.Point(6, 6);
+            this.lblLastReport.Name = "lblLastReport";
+            this.lblLastReport.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblLastReport.Size = new System.Drawing.Size(121, 0);
+            this.lblLastReport.TabIndex = 3;
+            this.lblLastReport.Text = "2";
+            this.lblLastReport.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // btnViewReports
             // 
             this.btnViewReports.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -693,18 +914,6 @@
             this.btnViewReports.TabIndex = 1;
             this.btnViewReports.Text = "VIEW REPORTS";
             this.btnViewReports.UseVisualStyleBackColor = false;
-            // 
-            // lblMistakes
-            // 
-            this.lblMistakes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMistakes.Font = new System.Drawing.Font("Muro", 16F);
-            this.lblMistakes.Location = new System.Drawing.Point(6, 6);
-            this.lblMistakes.Name = "lblMistakes";
-            this.lblMistakes.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
-            this.lblMistakes.Size = new System.Drawing.Size(121, 0);
-            this.lblMistakes.TabIndex = 0;
-            this.lblMistakes.Text = "7";
-            this.lblMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // gbMisconA
             // 
@@ -834,6 +1043,7 @@
             this.lblTilePhishTitle.TabIndex = 0;
             this.lblTilePhishTitle.Text = "Phishing Simulator";
             this.lblTilePhishTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTilePhishTitle.Click += new System.EventHandler(this.lblTilePhishTitle_Click);
             // 
             // pnlQuizRow
             // 
@@ -909,215 +1119,6 @@
             this.lblFooterLeft.Text = "© 2026 Mondas Learning";
             this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlReportsPreview
-            // 
-            this.pnlReportsPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlReportsPreview.Controls.Add(this.tblReportsPreview);
-            this.pnlReportsPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlReportsPreview.Location = new System.Drawing.Point(3, 28);
-            this.pnlReportsPreview.Name = "pnlReportsPreview";
-            this.pnlReportsPreview.Size = new System.Drawing.Size(295, 124);
-            this.pnlReportsPreview.TabIndex = 0;
-            // 
-            // tblReportsPreview
-            // 
-            this.tblReportsPreview.ColumnCount = 1;
-            this.tblReportsPreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblReportsPreview.Controls.Add(this.lvRecentReports, 0, 0);
-            this.tblReportsPreview.Controls.Add(this.tblReportsKpis, 0, 1);
-            this.tblReportsPreview.Controls.Add(this.btnViewReports, 0, 2);
-            this.tblReportsPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblReportsPreview.Location = new System.Drawing.Point(0, 0);
-            this.tblReportsPreview.Margin = new System.Windows.Forms.Padding(0);
-            this.tblReportsPreview.Name = "tblReportsPreview";
-            this.tblReportsPreview.RowCount = 3;
-            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tblReportsPreview.Size = new System.Drawing.Size(293, 122);
-            this.tblReportsPreview.TabIndex = 0;
-            // 
-            // lvRecentReports
-            // 
-            this.lvRecentReports.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.lvRecentReports.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lvRecentReports.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colRecentReport,
-            this.colRecentDate});
-            this.lvRecentReports.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvRecentReports.Font = new System.Drawing.Font("Agency", 10F);
-            this.lvRecentReports.FullRowSelect = true;
-            this.lvRecentReports.GridLines = true;
-            this.lvRecentReports.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvRecentReports.HideSelection = false;
-            this.lvRecentReports.Location = new System.Drawing.Point(3, 3);
-            this.lvRecentReports.Name = "lvRecentReports";
-            this.lvRecentReports.Size = new System.Drawing.Size(287, 33);
-            this.lvRecentReports.TabIndex = 0;
-            this.lvRecentReports.UseCompatibleStateImageBehavior = false;
-            this.lvRecentReports.View = System.Windows.Forms.View.Details;
-            // 
-            // colRecentReport
-            // 
-            this.colRecentReport.Text = "REPORT";
-            this.colRecentReport.Width = 170;
-            // 
-            // colRecentDate
-            // 
-            this.colRecentDate.Text = "DATE";
-            this.colRecentDate.Width = 90;
-            // 
-            // tblReportsKpis
-            // 
-            this.tblReportsKpis.ColumnCount = 2;
-            this.tblReportsKpis.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblReportsKpis.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblReportsKpis.Controls.Add(this.pnlKpiStreak, 0, 0);
-            this.tblReportsKpis.Controls.Add(this.pnlKpiMistakes, 1, 0);
-            this.tblReportsKpis.Controls.Add(this.pnlKpiReportsCount, 0, 1);
-            this.tblReportsKpis.Controls.Add(this.pnlKpiLastReport, 1, 1);
-            this.tblReportsKpis.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblReportsKpis.Location = new System.Drawing.Point(0, 47);
-            this.tblReportsKpis.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.tblReportsKpis.Name = "tblReportsKpis";
-            this.tblReportsKpis.RowCount = 2;
-            this.tblReportsKpis.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblReportsKpis.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblReportsKpis.Size = new System.Drawing.Size(293, 31);
-            this.tblReportsKpis.TabIndex = 1;
-            // 
-            // pnlKpiStreak
-            // 
-            this.pnlKpiStreak.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlKpiStreak.Controls.Add(this.lblCapStreak);
-            this.pnlKpiStreak.Controls.Add(this.lblStreak);
-            this.pnlKpiStreak.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlKpiStreak.Location = new System.Drawing.Point(6, 6);
-            this.pnlKpiStreak.Margin = new System.Windows.Forms.Padding(6);
-            this.pnlKpiStreak.Name = "pnlKpiStreak";
-            this.pnlKpiStreak.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlKpiStreak.Size = new System.Drawing.Size(134, 3);
-            this.pnlKpiStreak.TabIndex = 0;
-            // 
-            // pnlKpiMistakes
-            // 
-            this.pnlKpiMistakes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlKpiMistakes.Controls.Add(this.lblCapMistakes);
-            this.pnlKpiMistakes.Controls.Add(this.lblMistakes);
-            this.pnlKpiMistakes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlKpiMistakes.Location = new System.Drawing.Point(152, 6);
-            this.pnlKpiMistakes.Margin = new System.Windows.Forms.Padding(6);
-            this.pnlKpiMistakes.Name = "pnlKpiMistakes";
-            this.pnlKpiMistakes.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlKpiMistakes.Size = new System.Drawing.Size(135, 3);
-            this.pnlKpiMistakes.TabIndex = 1;
-            // 
-            // pnlKpiReportsCount
-            // 
-            this.pnlKpiReportsCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlKpiReportsCount.Controls.Add(this.lblCapReportsCount);
-            this.pnlKpiReportsCount.Controls.Add(this.lblReportsCount);
-            this.pnlKpiReportsCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlKpiReportsCount.Location = new System.Drawing.Point(6, 21);
-            this.pnlKpiReportsCount.Margin = new System.Windows.Forms.Padding(6);
-            this.pnlKpiReportsCount.Name = "pnlKpiReportsCount";
-            this.pnlKpiReportsCount.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlKpiReportsCount.Size = new System.Drawing.Size(134, 4);
-            this.pnlKpiReportsCount.TabIndex = 2;
-            // 
-            // pnlKpiLastReport
-            // 
-            this.pnlKpiLastReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlKpiLastReport.Controls.Add(this.lblCapLastReport);
-            this.pnlKpiLastReport.Controls.Add(this.lblLastReport);
-            this.pnlKpiLastReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlKpiLastReport.Location = new System.Drawing.Point(152, 21);
-            this.pnlKpiLastReport.Margin = new System.Windows.Forms.Padding(6);
-            this.pnlKpiLastReport.Name = "pnlKpiLastReport";
-            this.pnlKpiLastReport.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlKpiLastReport.Size = new System.Drawing.Size(135, 4);
-            this.pnlKpiLastReport.TabIndex = 3;
-            // 
-            // lblCapStreak
-            // 
-            this.lblCapStreak.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblCapStreak.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblCapStreak.Location = new System.Drawing.Point(6, 6);
-            this.lblCapStreak.Name = "lblCapStreak";
-            this.lblCapStreak.Size = new System.Drawing.Size(120, 16);
-            this.lblCapStreak.TabIndex = 2;
-            this.lblCapStreak.Text = "STREAK";
-            this.lblCapStreak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblStreak
-            // 
-            this.lblStreak.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblStreak.Font = new System.Drawing.Font("Muro", 16F);
-            this.lblStreak.Location = new System.Drawing.Point(6, 6);
-            this.lblStreak.Name = "lblStreak";
-            this.lblStreak.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
-            this.lblStreak.Size = new System.Drawing.Size(120, 0);
-            this.lblStreak.TabIndex = 2;
-            this.lblStreak.Text = "2";
-            this.lblStreak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblCapMistakes
-            // 
-            this.lblCapMistakes.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblCapMistakes.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblCapMistakes.Location = new System.Drawing.Point(6, 6);
-            this.lblCapMistakes.Name = "lblCapMistakes";
-            this.lblCapMistakes.Size = new System.Drawing.Size(121, 16);
-            this.lblCapMistakes.TabIndex = 2;
-            this.lblCapMistakes.Text = "MISTAKES";
-            this.lblCapMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblCapReportsCount
-            // 
-            this.lblCapReportsCount.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblCapReportsCount.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblCapReportsCount.Location = new System.Drawing.Point(6, 6);
-            this.lblCapReportsCount.Name = "lblCapReportsCount";
-            this.lblCapReportsCount.Size = new System.Drawing.Size(120, 16);
-            this.lblCapReportsCount.TabIndex = 2;
-            this.lblCapReportsCount.Text = "REPORTS";
-            this.lblCapReportsCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblReportsCount
-            // 
-            this.lblReportsCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblReportsCount.Font = new System.Drawing.Font("Muro", 16F);
-            this.lblReportsCount.Location = new System.Drawing.Point(6, 6);
-            this.lblReportsCount.Name = "lblReportsCount";
-            this.lblReportsCount.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
-            this.lblReportsCount.Size = new System.Drawing.Size(120, 0);
-            this.lblReportsCount.TabIndex = 3;
-            this.lblReportsCount.Text = "3";
-            this.lblReportsCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblCapLastReport
-            // 
-            this.lblCapLastReport.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblCapLastReport.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblCapLastReport.Location = new System.Drawing.Point(6, 6);
-            this.lblCapLastReport.Name = "lblCapLastReport";
-            this.lblCapLastReport.Size = new System.Drawing.Size(121, 16);
-            this.lblCapLastReport.TabIndex = 2;
-            this.lblCapLastReport.Text = "LAST REPORT";
-            this.lblCapLastReport.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblLastReport
-            // 
-            this.lblLastReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLastReport.Font = new System.Drawing.Font("Muro", 16F);
-            this.lblLastReport.Location = new System.Drawing.Point(6, 6);
-            this.lblLastReport.Name = "lblLastReport";
-            this.lblLastReport.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
-            this.lblLastReport.Size = new System.Drawing.Size(121, 0);
-            this.lblLastReport.TabIndex = 3;
-            this.lblLastReport.Text = "2";
-            this.lblLastReport.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // DashboardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -1156,6 +1157,13 @@
             this.tlpMainGrid.ResumeLayout(false);
             this.gbMastery.ResumeLayout(false);
             this.gbReports.ResumeLayout(false);
+            this.pnlReportsPreview.ResumeLayout(false);
+            this.tblReportsPreview.ResumeLayout(false);
+            this.tblReportsKpis.ResumeLayout(false);
+            this.pnlKpiStreak.ResumeLayout(false);
+            this.pnlKpiMistakes.ResumeLayout(false);
+            this.pnlKpiReportsCount.ResumeLayout(false);
+            this.pnlKpiLastReport.ResumeLayout(false);
             this.gbMisconA.ResumeLayout(false);
             this.gbMiniGames.ResumeLayout(false);
             this.tlpMiniTiles.ResumeLayout(false);
@@ -1165,13 +1173,6 @@
             this.tlpQuizCenter.ResumeLayout(false);
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
-            this.pnlReportsPreview.ResumeLayout(false);
-            this.tblReportsPreview.ResumeLayout(false);
-            this.tblReportsKpis.ResumeLayout(false);
-            this.pnlKpiStreak.ResumeLayout(false);
-            this.pnlKpiMistakes.ResumeLayout(false);
-            this.pnlKpiReportsCount.ResumeLayout(false);
-            this.pnlKpiLastReport.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

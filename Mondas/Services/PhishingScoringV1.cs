@@ -109,12 +109,12 @@ namespace Mondas.Services
             {
                 if (correctFinal)
                 {
-                    result.Headline = email.IsPhishing ? "GOOD CATCH" : "SAFE CALL";
+                    result.Headline = email.IsPhishing ? "GOOD CATCH!" : "SAFE CALL!";
                 }
 
                 else
                 {
-                    result.Headline = email.IsPhishing ? "YOU MISSED IT" : "FALSE ALARM";
+                    result.Headline = email.IsPhishing ? "YOU MISSED IT!" : "FALSE ALARM!";
                 }
 
                 result.Explanation = email.Explanation ?? "";

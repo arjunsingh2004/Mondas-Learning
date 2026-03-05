@@ -47,6 +47,10 @@ namespace Mondas
         private ListViewItem _currentInboxItem;
         private bool _currentEmailResolved;
 
+        private bool _runStarted;
+        private bool _runClockPaused;
+        private TimeSpan _runClockFrozen;
+
         public PhishingSimulatorForm() : this("local")
         {
 
@@ -218,28 +222,26 @@ namespace Mondas
             lvSignals.FullRowSelect = true;
             lvSignals.MultiSelect = false;
             lvSignals.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            lvSignals.Scrollable = true;
 
-            if (lvSignals.Columns.Count == 0)
+            while (lvSignals.Columns.Count < 3)
             {
-                lvSignals.Columns.Add("SIGNAL", 260, HorizontalAlignment.Left);
-                lvSignals.Columns.Add("DETAIL", 620, HorizontalAlignment.Left);
-                lvSignals.Columns.Add("W", 40, HorizontalAlignment.Center);
+                lvSignals.Columns.Add("", 100, HorizontalAlignment.Left);
             }
 
-            else
-            {
-                lvSignals.Columns[0].Text = "SIGNAL";
-                
-                if (lvSignals.Columns.Count > 1)
-                {
-                    lvSignals.Columns[1].Text = "DETAIL";
-                }
+            lvSignals.Columns[0].Text = "SIGNAL";
+            lvSignals.Columns[1].Text = "DETAIL";
+            lvSignals.Columns[2].Text = "Weight";
 
-                if (lvSignals.Columns.Count > 2)
-                {
-                    lvSignals.Columns[2].Text = "W";
-                }
-            }
+            lvSignals.Columns[0].TextAlign = HorizontalAlignment.Left;
+            lvSignals.Columns[1].TextAlign = HorizontalAlignment.Left;
+            lvSignals.Columns[2].TextAlign = HorizontalAlignment.Center;
+
+            var total = lvSignals.ClientSize.Width;
+
+            lvSignals.Columns[0].Width = 220;
+            lvSignals.Columns[1].Width = 800;
+            lvSignals.Columns[2].Width = 70;
 
             lvSignals.Items.Clear();
             lvSignals.EndUpdate();
@@ -260,6 +262,10 @@ namespace Mondas
 
             _lastReason = "";
             _lastRules = new List<string>();
+
+            _runStarted = false;
+            _runClockPaused = true;
+            _runClockFrozen = TimeSpan.Zero;
             _runStartedUtc = DateTime.UtcNow;
 
             if (lblFrom != null)
@@ -353,6 +359,11 @@ namespace Mondas
             }
 
             UpdateRunInfo();
+
+            if (pnlResult != null)
+            {
+                pnlResult.Visible = false;
+            }
         }
 
         private void UpdateRunInfo()
@@ -362,9 +373,19 @@ namespace Mondas
                 return;
             }
 
-            var elapsed = DateTime.UtcNow - _runStartedUtc;
-            var time = FormatTime(elapsed);
+            TimeSpan elapsed;
 
+            if (!_runStarted)
+            {
+                elapsed = TimeSpan.Zero;
+            }
+
+            else
+            {
+                elapsed = _runClockPaused ? _runClockFrozen : (DateTime.UtcNow - _runStartedUtc);
+            }
+
+            var time = FormatTime(elapsed);
             lblRunInfo.Text = $"SCORE: {_score} | STREAK | {_streak} | TIME: {time}";
         }
 
@@ -406,10 +427,54 @@ namespace Mondas
                 return;
             }
 
-            var rules = _lastRules == null || _lastRules.Count == 0 ? "-" : string.Join(", ", _lastRules);
-            var message = "Reason:\n" + (string.IsNullOrWhiteSpace(_lastReason) ? "-" : _lastReason) + "\n\nRules Added:\n" + rules + "\n\nExplanation:\n" + (_currentEmail.Explanation ?? "") + "\n\nTags:\n" + ((_currentEmail.Tags == null || _currentEmail.Tags.Count == 0) ? "-" : string.Join(", ", _currentEmail.Tags));
+            PhishingDecisionResult decision = null;
 
-            MessageBox.Show(this, message, "Decision Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (_currentEmailResolved)
+            {
+                try
+                {
+                    var last = _runLog.LastOrDefault(x => x != null && x.EmailId == _currentEmail.Id.ToString(CultureInfo.InvariantCulture));
+
+                    if (last != null && !string.IsNullOrWhiteSpace(last.SignalsJson))
+                    {
+                        decision = new PhishingDecisionResult
+                        {
+                            Action = (PhishingAction)last.Action,
+                            IsCorrect = last.IsCorrect,
+                            ScoreDelta = last.ScoreDelta,
+                            TimePenaltySeconds = 0.0,
+                            Headline = last.IsCorrect ? "FINAL DECISION" : "FINAL DECISION",
+                            Explanation = _currentEmail.Explanation ?? "",
+                            Signals = JsonConvert.DeserializeObject<List<PhishingSignal>>(last.SignalsJson) ?? new List<PhishingSignal>(),
+                            RulesFired = _lastRules ?? new List<string>(),
+                            ReasonString = _lastReason ?? ""};
+                    }
+                }
+
+                catch
+                {
+                    decision = null;
+                }
+            }
+
+            if (decision == null)
+            {
+                decision = new PhishingDecisionResult
+                {
+                    Action = PhishingAction.TrustKeep,
+                    IsCorrect = false,
+                    ScoreDelta = 0,
+                    TimePenaltySeconds = 0.0,
+                    Headline = "NOT SUBMITTED",
+                    Explanation = _currentEmail.Explanation ?? "",
+                    Signals = new List<PhishingSignal>(),
+                    RulesFired = _lastRules ?? new List<string>(),
+                    ReasonString = _lastReason ?? ""};
+            }
+
+            using var dlg = new PhishingDetailsForm();
+            dlg.Bind(email: _currentEmail, decision: decision, engineReason: _lastReason ?? "", rules: _lastRules ?? new List<string>(), received: DateTime.Now);
+            dlg.ShowDialog(this);
         }
 
         private void btnTrust_Click(object sender, EventArgs e)
@@ -451,6 +516,9 @@ namespace Mondas
 
         private void StartNewEmail(bool forceNewRun)
         {
+            StartRunClock();
+            ResumeRunClock();
+
             if (_allEmails == null || _allEmails.Count == 0)
             {
                 LoadData();
@@ -476,7 +544,14 @@ namespace Mondas
                     lvInbox.Items.Clear();
                     lvInbox.EndUpdate();
                 }
+
+                _runStarted = true;
+                _runClockPaused = false;
+                _runClockFrozen = TimeSpan.Zero;
+                _runStartedUtc = DateTime.UtcNow;
             }
+
+            ResumeRunClock();
 
             var pick = _engine.PickNext(allEmails: _allEmails, history: _history ?? new List<PhishingAttemptRow>(), seenThisRun: _seenRun, tagMastery: GetTagMastery);
 
@@ -643,6 +718,11 @@ namespace Mondas
                 lvSignals.Items.Clear();
                 lvSignals.EndUpdate();
             }
+
+            if (pnlResult != null)
+            {
+                pnlResult.Visible = false;
+            }
         }
 
         private void ButtonClicked(PhishingAction action)
@@ -695,6 +775,8 @@ namespace Mondas
             {
                 _currentEmailResolved = true;
 
+                PauseRunClock();
+
                 if (decision.IsCorrect)
                 {
                     _streak++;
@@ -737,6 +819,11 @@ namespace Mondas
             if (decision == null)
             {
                 return;
+            }
+
+            if (pnlResult != null)
+            {
+                pnlResult.Visible = true;
             }
 
             if (lblResultTitle != null)
@@ -801,6 +888,11 @@ namespace Mondas
 
         private void ShowResult(string title, string text, int scoreDelta, double timePenaltySeconds, List<PhishingSignal> signals)
         {
+            if (pnlResult != null)
+            {
+                pnlResult.Visible = true;
+            }
+
             if (lblResultTitle != null)
             {
                 lblResultTitle.Text = string.IsNullOrWhiteSpace(title) ? "RESULT" : title;
@@ -1075,6 +1167,52 @@ namespace Mondas
                 return null;
             }
         }
+
+        private void PauseRunClock()
+        {
+            if (_runClockPaused)
+            {
+                return;
+            }
+
+            if (!_runStarted)
+            {
+                return;
+            }
+
+            _runClockFrozen = DateTime.UtcNow - _runStartedUtc;
+            _runClockPaused = true;
+        }
+
+        private void ResumeRunClock()
+        {
+            if (!_runClockPaused)
+            {
+                return;
+            }
+
+            if (!_runStarted)
+            {
+                return;
+            }
+
+            _runStartedUtc = DateTime.UtcNow - _runClockFrozen;
+            _runClockPaused = false;
+        }
+
+        private void StartRunClock()
+        {
+            if (_runStarted)
+            {
+                return;
+            }
+
+            _runStarted = true;
+            _runClockPaused = false;
+            _runClockFrozen = TimeSpan.Zero;
+            _runStartedUtc = DateTime.UtcNow;
+        }
+
 
         private sealed class InboxRowTag
         {

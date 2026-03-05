@@ -36,27 +36,27 @@
             this.gbEmail = new System.Windows.Forms.GroupBox();
             this.tlpEmail = new System.Windows.Forms.TableLayoutPanel();
             this.tlpEmailMeta = new System.Windows.Forms.TableLayoutPanel();
+            this.lblMetaAttachmentVal = new System.Windows.Forms.Label();
+            this.lblMetaAttachmentKey = new System.Windows.Forms.Label();
+            this.lblMetaLinkKey = new System.Windows.Forms.Label();
+            this.lblMetaReplyToVal = new System.Windows.Forms.Label();
+            this.lblMetaReplyToKey = new System.Windows.Forms.Label();
+            this.lblMetaReceivedVal = new System.Windows.Forms.Label();
+            this.lblMetaReceivedKey = new System.Windows.Forms.Label();
+            this.lblMetaSubjectVal = new System.Windows.Forms.Label();
+            this.lblMetaSubjectKey = new System.Windows.Forms.Label();
+            this.lblMetaToVal = new System.Windows.Forms.Label();
+            this.lblMetaToKey = new System.Windows.Forms.Label();
             this.lblMetaFromKey = new System.Windows.Forms.Label();
             this.lblMetaFromVal = new System.Windows.Forms.Label();
-            this.lblMetaToKey = new System.Windows.Forms.Label();
-            this.lblMetaToVal = new System.Windows.Forms.Label();
-            this.lblMetaSubjectKey = new System.Windows.Forms.Label();
-            this.lblMetaSubjectVal = new System.Windows.Forms.Label();
-            this.lblMetaReceivedKey = new System.Windows.Forms.Label();
-            this.lblMetaReceivedVal = new System.Windows.Forms.Label();
-            this.lblMetaReplyToKey = new System.Windows.Forms.Label();
-            this.lblMetaReplyToVal = new System.Windows.Forms.Label();
-            this.lblMetaLinkKey = new System.Windows.Forms.Label();
-            this.lblMetaAttachmentKey = new System.Windows.Forms.Label();
-            this.lblMetaAttachmentVal = new System.Windows.Forms.Label();
             this.llMetaLinkVal = new System.Windows.Forms.LinkLabel();
             this.rtbEmailBody = new System.Windows.Forms.RichTextBox();
             this.gbDecision = new System.Windows.Forms.GroupBox();
             this.tlpDecision = new System.Windows.Forms.TableLayoutPanel();
             this.pnlDecisionSummary = new System.Windows.Forms.Panel();
-            this.lblDecisionHeadline = new System.Windows.Forms.Label();
-            this.lblDecisionOutcome = new System.Windows.Forms.Label();
             this.lblDecisionScoreTime = new System.Windows.Forms.Label();
+            this.lblDecisionOutcome = new System.Windows.Forms.Label();
+            this.lblDecisionHeadline = new System.Windows.Forms.Label();
             this.gbWhy = new System.Windows.Forms.GroupBox();
             this.tlpWhy = new System.Windows.Forms.TableLayoutPanel();
             this.txtReason = new System.Windows.Forms.TextBox();
@@ -65,11 +65,11 @@
             this.lvSignalsDetails = new System.Windows.Forms.ListView();
             this.colSignal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDetail = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colW = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colWeight = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pnlFooter = new System.Windows.Forms.Panel();
-            this.btnCopySummary = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnCopyEmail = new Syncfusion.WinForms.Controls.SfButton();
             this.btnClose = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnCopyEmail = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnCopySummary = new Syncfusion.WinForms.Controls.SfButton();
             this.tlpRoot.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.tlpBody.SuspendLayout();
@@ -212,6 +212,138 @@
             this.tlpEmailMeta.Size = new System.Drawing.Size(452, 166);
             this.tlpEmailMeta.TabIndex = 0;
             // 
+            // lblMetaAttachmentVal
+            // 
+            this.lblMetaAttachmentVal.AutoSize = true;
+            this.lblMetaAttachmentVal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaAttachmentVal.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaAttachmentVal.Location = new System.Drawing.Point(113, 144);
+            this.lblMetaAttachmentVal.Name = "lblMetaAttachmentVal";
+            this.lblMetaAttachmentVal.Size = new System.Drawing.Size(336, 24);
+            this.lblMetaAttachmentVal.TabIndex = 13;
+            this.lblMetaAttachmentVal.Text = "-";
+            this.lblMetaAttachmentVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaAttachmentKey
+            // 
+            this.lblMetaAttachmentKey.AutoSize = true;
+            this.lblMetaAttachmentKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaAttachmentKey.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaAttachmentKey.Location = new System.Drawing.Point(3, 144);
+            this.lblMetaAttachmentKey.Name = "lblMetaAttachmentKey";
+            this.lblMetaAttachmentKey.Size = new System.Drawing.Size(104, 24);
+            this.lblMetaAttachmentKey.TabIndex = 12;
+            this.lblMetaAttachmentKey.Text = "ATTACH";
+            this.lblMetaAttachmentKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaLinkKey
+            // 
+            this.lblMetaLinkKey.AutoSize = true;
+            this.lblMetaLinkKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaLinkKey.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaLinkKey.Location = new System.Drawing.Point(3, 120);
+            this.lblMetaLinkKey.Name = "lblMetaLinkKey";
+            this.lblMetaLinkKey.Size = new System.Drawing.Size(104, 24);
+            this.lblMetaLinkKey.TabIndex = 10;
+            this.lblMetaLinkKey.Text = "LINK";
+            this.lblMetaLinkKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaReplyToVal
+            // 
+            this.lblMetaReplyToVal.AutoSize = true;
+            this.lblMetaReplyToVal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaReplyToVal.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaReplyToVal.Location = new System.Drawing.Point(113, 96);
+            this.lblMetaReplyToVal.Name = "lblMetaReplyToVal";
+            this.lblMetaReplyToVal.Size = new System.Drawing.Size(336, 24);
+            this.lblMetaReplyToVal.TabIndex = 9;
+            this.lblMetaReplyToVal.Text = "-";
+            this.lblMetaReplyToVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaReplyToKey
+            // 
+            this.lblMetaReplyToKey.AutoSize = true;
+            this.lblMetaReplyToKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaReplyToKey.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaReplyToKey.Location = new System.Drawing.Point(3, 96);
+            this.lblMetaReplyToKey.Name = "lblMetaReplyToKey";
+            this.lblMetaReplyToKey.Size = new System.Drawing.Size(104, 24);
+            this.lblMetaReplyToKey.TabIndex = 8;
+            this.lblMetaReplyToKey.Text = "REPLY TO";
+            this.lblMetaReplyToKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaReceivedVal
+            // 
+            this.lblMetaReceivedVal.AutoSize = true;
+            this.lblMetaReceivedVal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaReceivedVal.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaReceivedVal.Location = new System.Drawing.Point(113, 72);
+            this.lblMetaReceivedVal.Name = "lblMetaReceivedVal";
+            this.lblMetaReceivedVal.Size = new System.Drawing.Size(336, 24);
+            this.lblMetaReceivedVal.TabIndex = 7;
+            this.lblMetaReceivedVal.Text = "-";
+            this.lblMetaReceivedVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaReceivedKey
+            // 
+            this.lblMetaReceivedKey.AutoSize = true;
+            this.lblMetaReceivedKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaReceivedKey.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaReceivedKey.Location = new System.Drawing.Point(3, 72);
+            this.lblMetaReceivedKey.Name = "lblMetaReceivedKey";
+            this.lblMetaReceivedKey.Size = new System.Drawing.Size(104, 24);
+            this.lblMetaReceivedKey.TabIndex = 6;
+            this.lblMetaReceivedKey.Text = "RECEIVED";
+            this.lblMetaReceivedKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaSubjectVal
+            // 
+            this.lblMetaSubjectVal.AutoSize = true;
+            this.lblMetaSubjectVal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaSubjectVal.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaSubjectVal.Location = new System.Drawing.Point(113, 48);
+            this.lblMetaSubjectVal.Name = "lblMetaSubjectVal";
+            this.lblMetaSubjectVal.Size = new System.Drawing.Size(336, 24);
+            this.lblMetaSubjectVal.TabIndex = 5;
+            this.lblMetaSubjectVal.Text = "-";
+            this.lblMetaSubjectVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaSubjectKey
+            // 
+            this.lblMetaSubjectKey.AutoSize = true;
+            this.lblMetaSubjectKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaSubjectKey.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaSubjectKey.Location = new System.Drawing.Point(3, 48);
+            this.lblMetaSubjectKey.Name = "lblMetaSubjectKey";
+            this.lblMetaSubjectKey.Size = new System.Drawing.Size(104, 24);
+            this.lblMetaSubjectKey.TabIndex = 4;
+            this.lblMetaSubjectKey.Text = "SUBJECT";
+            this.lblMetaSubjectKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaToVal
+            // 
+            this.lblMetaToVal.AutoSize = true;
+            this.lblMetaToVal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaToVal.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaToVal.Location = new System.Drawing.Point(113, 24);
+            this.lblMetaToVal.Name = "lblMetaToVal";
+            this.lblMetaToVal.Size = new System.Drawing.Size(336, 24);
+            this.lblMetaToVal.TabIndex = 3;
+            this.lblMetaToVal.Text = "-";
+            this.lblMetaToVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMetaToKey
+            // 
+            this.lblMetaToKey.AutoSize = true;
+            this.lblMetaToKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMetaToKey.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblMetaToKey.Location = new System.Drawing.Point(3, 24);
+            this.lblMetaToKey.Name = "lblMetaToKey";
+            this.lblMetaToKey.Size = new System.Drawing.Size(104, 24);
+            this.lblMetaToKey.TabIndex = 2;
+            this.lblMetaToKey.Text = "TO";
+            this.lblMetaToKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblMetaFromKey
             // 
             this.lblMetaFromKey.AutoSize = true;
@@ -236,138 +368,6 @@
             this.lblMetaFromVal.Text = "-";
             this.lblMetaFromVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblMetaToKey
-            // 
-            this.lblMetaToKey.AutoSize = true;
-            this.lblMetaToKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaToKey.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaToKey.Location = new System.Drawing.Point(3, 24);
-            this.lblMetaToKey.Name = "lblMetaToKey";
-            this.lblMetaToKey.Size = new System.Drawing.Size(104, 24);
-            this.lblMetaToKey.TabIndex = 2;
-            this.lblMetaToKey.Text = "TO";
-            this.lblMetaToKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaToVal
-            // 
-            this.lblMetaToVal.AutoSize = true;
-            this.lblMetaToVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaToVal.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaToVal.Location = new System.Drawing.Point(113, 24);
-            this.lblMetaToVal.Name = "lblMetaToVal";
-            this.lblMetaToVal.Size = new System.Drawing.Size(336, 24);
-            this.lblMetaToVal.TabIndex = 3;
-            this.lblMetaToVal.Text = "-";
-            this.lblMetaToVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaSubjectKey
-            // 
-            this.lblMetaSubjectKey.AutoSize = true;
-            this.lblMetaSubjectKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaSubjectKey.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaSubjectKey.Location = new System.Drawing.Point(3, 48);
-            this.lblMetaSubjectKey.Name = "lblMetaSubjectKey";
-            this.lblMetaSubjectKey.Size = new System.Drawing.Size(104, 24);
-            this.lblMetaSubjectKey.TabIndex = 4;
-            this.lblMetaSubjectKey.Text = "SUBJECT";
-            this.lblMetaSubjectKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaSubjectVal
-            // 
-            this.lblMetaSubjectVal.AutoSize = true;
-            this.lblMetaSubjectVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaSubjectVal.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaSubjectVal.Location = new System.Drawing.Point(113, 48);
-            this.lblMetaSubjectVal.Name = "lblMetaSubjectVal";
-            this.lblMetaSubjectVal.Size = new System.Drawing.Size(336, 24);
-            this.lblMetaSubjectVal.TabIndex = 5;
-            this.lblMetaSubjectVal.Text = "-";
-            this.lblMetaSubjectVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaReceivedKey
-            // 
-            this.lblMetaReceivedKey.AutoSize = true;
-            this.lblMetaReceivedKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaReceivedKey.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaReceivedKey.Location = new System.Drawing.Point(3, 72);
-            this.lblMetaReceivedKey.Name = "lblMetaReceivedKey";
-            this.lblMetaReceivedKey.Size = new System.Drawing.Size(104, 24);
-            this.lblMetaReceivedKey.TabIndex = 6;
-            this.lblMetaReceivedKey.Text = "RECEIVED";
-            this.lblMetaReceivedKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaReceivedVal
-            // 
-            this.lblMetaReceivedVal.AutoSize = true;
-            this.lblMetaReceivedVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaReceivedVal.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaReceivedVal.Location = new System.Drawing.Point(113, 72);
-            this.lblMetaReceivedVal.Name = "lblMetaReceivedVal";
-            this.lblMetaReceivedVal.Size = new System.Drawing.Size(336, 24);
-            this.lblMetaReceivedVal.TabIndex = 7;
-            this.lblMetaReceivedVal.Text = "-";
-            this.lblMetaReceivedVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaReplyToKey
-            // 
-            this.lblMetaReplyToKey.AutoSize = true;
-            this.lblMetaReplyToKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaReplyToKey.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaReplyToKey.Location = new System.Drawing.Point(3, 96);
-            this.lblMetaReplyToKey.Name = "lblMetaReplyToKey";
-            this.lblMetaReplyToKey.Size = new System.Drawing.Size(104, 24);
-            this.lblMetaReplyToKey.TabIndex = 8;
-            this.lblMetaReplyToKey.Text = "REPLY TO";
-            this.lblMetaReplyToKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaReplyToVal
-            // 
-            this.lblMetaReplyToVal.AutoSize = true;
-            this.lblMetaReplyToVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaReplyToVal.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaReplyToVal.Location = new System.Drawing.Point(113, 96);
-            this.lblMetaReplyToVal.Name = "lblMetaReplyToVal";
-            this.lblMetaReplyToVal.Size = new System.Drawing.Size(336, 24);
-            this.lblMetaReplyToVal.TabIndex = 9;
-            this.lblMetaReplyToVal.Text = "-";
-            this.lblMetaReplyToVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaLinkKey
-            // 
-            this.lblMetaLinkKey.AutoSize = true;
-            this.lblMetaLinkKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaLinkKey.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaLinkKey.Location = new System.Drawing.Point(3, 120);
-            this.lblMetaLinkKey.Name = "lblMetaLinkKey";
-            this.lblMetaLinkKey.Size = new System.Drawing.Size(104, 24);
-            this.lblMetaLinkKey.TabIndex = 10;
-            this.lblMetaLinkKey.Text = "LINK";
-            this.lblMetaLinkKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaAttachmentKey
-            // 
-            this.lblMetaAttachmentKey.AutoSize = true;
-            this.lblMetaAttachmentKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaAttachmentKey.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaAttachmentKey.Location = new System.Drawing.Point(3, 144);
-            this.lblMetaAttachmentKey.Name = "lblMetaAttachmentKey";
-            this.lblMetaAttachmentKey.Size = new System.Drawing.Size(104, 24);
-            this.lblMetaAttachmentKey.TabIndex = 12;
-            this.lblMetaAttachmentKey.Text = "ATTACH";
-            this.lblMetaAttachmentKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMetaAttachmentVal
-            // 
-            this.lblMetaAttachmentVal.AutoSize = true;
-            this.lblMetaAttachmentVal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMetaAttachmentVal.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblMetaAttachmentVal.Location = new System.Drawing.Point(113, 144);
-            this.lblMetaAttachmentVal.Name = "lblMetaAttachmentVal";
-            this.lblMetaAttachmentVal.Size = new System.Drawing.Size(336, 24);
-            this.lblMetaAttachmentVal.TabIndex = 13;
-            this.lblMetaAttachmentVal.Text = "-";
-            this.lblMetaAttachmentVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // llMetaLinkVal
             // 
             this.llMetaLinkVal.AutoSize = true;
@@ -381,6 +381,7 @@
             this.llMetaLinkVal.TabStop = true;
             this.llMetaLinkVal.Text = "-";
             this.llMetaLinkVal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.llMetaLinkVal.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llMetaLinkVal_LinkClicked);
             // 
             // rtbEmailBody
             // 
@@ -440,16 +441,16 @@
             this.pnlDecisionSummary.Size = new System.Drawing.Size(428, 80);
             this.pnlDecisionSummary.TabIndex = 0;
             // 
-            // lblDecisionHeadline
+            // lblDecisionScoreTime
             // 
-            this.lblDecisionHeadline.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblDecisionHeadline.Font = new System.Drawing.Font("Agency", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDecisionHeadline.Location = new System.Drawing.Point(6, 6);
-            this.lblDecisionHeadline.Name = "lblDecisionHeadline";
-            this.lblDecisionHeadline.Size = new System.Drawing.Size(416, 28);
-            this.lblDecisionHeadline.TabIndex = 0;
-            this.lblDecisionHeadline.Text = "-";
-            this.lblDecisionHeadline.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblDecisionScoreTime.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblDecisionScoreTime.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblDecisionScoreTime.Location = new System.Drawing.Point(6, 54);
+            this.lblDecisionScoreTime.Name = "lblDecisionScoreTime";
+            this.lblDecisionScoreTime.Size = new System.Drawing.Size(416, 20);
+            this.lblDecisionScoreTime.TabIndex = 2;
+            this.lblDecisionScoreTime.Text = "-";
+            this.lblDecisionScoreTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblDecisionOutcome
             // 
@@ -462,16 +463,16 @@
             this.lblDecisionOutcome.Text = "-";
             this.lblDecisionOutcome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblDecisionScoreTime
+            // lblDecisionHeadline
             // 
-            this.lblDecisionScoreTime.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblDecisionScoreTime.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblDecisionScoreTime.Location = new System.Drawing.Point(6, 54);
-            this.lblDecisionScoreTime.Name = "lblDecisionScoreTime";
-            this.lblDecisionScoreTime.Size = new System.Drawing.Size(416, 20);
-            this.lblDecisionScoreTime.TabIndex = 2;
-            this.lblDecisionScoreTime.Text = "-";
-            this.lblDecisionScoreTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblDecisionHeadline.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblDecisionHeadline.Font = new System.Drawing.Font("Agency", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDecisionHeadline.Location = new System.Drawing.Point(6, 6);
+            this.lblDecisionHeadline.Name = "lblDecisionHeadline";
+            this.lblDecisionHeadline.Size = new System.Drawing.Size(416, 28);
+            this.lblDecisionHeadline.TabIndex = 0;
+            this.lblDecisionHeadline.Text = "-";
+            this.lblDecisionHeadline.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gbWhy
             // 
@@ -544,7 +545,7 @@
             this.lvSignalsDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colSignal,
             this.colDetail,
-            this.colW});
+            this.colWeight});
             this.lvSignalsDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvSignalsDetails.GridLines = true;
             this.lvSignalsDetails.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -559,17 +560,17 @@
             // colSignal
             // 
             this.colSignal.Text = "SIGNAL";
-            this.colSignal.Width = 170;
+            this.colSignal.Width = 220;
             // 
             // colDetail
             // 
             this.colDetail.Text = "DETAIL";
-            this.colDetail.Width = 260;
+            this.colDetail.Width = 400;
             // 
-            // colW
+            // colWeight
             // 
-            this.colW.Text = "W";
-            this.colW.Width = 40;
+            this.colWeight.Text = "Weight";
+            this.colWeight.Width = 140;
             // 
             // pnlFooter
             // 
@@ -583,21 +584,21 @@
             this.pnlFooter.Size = new System.Drawing.Size(932, 54);
             this.pnlFooter.TabIndex = 2;
             // 
-            // btnCopySummary
+            // btnClose
             // 
-            this.btnCopySummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCopySummary.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnCopySummary.Font = new System.Drawing.Font("Muro", 12F);
-            this.btnCopySummary.ForeColor = System.Drawing.Color.White;
-            this.btnCopySummary.Location = new System.Drawing.Point(421, 3);
-            this.btnCopySummary.Name = "btnCopySummary";
-            this.btnCopySummary.Size = new System.Drawing.Size(178, 48);
-            this.btnCopySummary.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnCopySummary.Style.ForeColor = System.Drawing.Color.White;
-            this.btnCopySummary.TabIndex = 0;
-            this.btnCopySummary.Text = "COPY SUMMARY";
-            this.btnCopySummary.UseVisualStyleBackColor = false;
-            this.btnCopySummary.Click += new System.EventHandler(this.btnCopySummary_Click);
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.BackColor = System.Drawing.Color.Crimson;
+            this.btnClose.Font = new System.Drawing.Font("Muro", 12F);
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.Location = new System.Drawing.Point(787, 3);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(142, 48);
+            this.btnClose.Style.BackColor = System.Drawing.Color.Crimson;
+            this.btnClose.Style.ForeColor = System.Drawing.Color.White;
+            this.btnClose.TabIndex = 2;
+            this.btnClose.Text = "CLOSE";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnCopyEmail
             // 
@@ -615,21 +616,21 @@
             this.btnCopyEmail.UseVisualStyleBackColor = false;
             this.btnCopyEmail.Click += new System.EventHandler(this.btnCopyEmail_Click);
             // 
-            // btnClose
+            // btnCopySummary
             // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.BackColor = System.Drawing.Color.Crimson;
-            this.btnClose.Font = new System.Drawing.Font("Muro", 12F);
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(787, 3);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(142, 48);
-            this.btnClose.Style.BackColor = System.Drawing.Color.Crimson;
-            this.btnClose.Style.ForeColor = System.Drawing.Color.White;
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "CLOSE";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnCopySummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopySummary.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnCopySummary.Font = new System.Drawing.Font("Muro", 12F);
+            this.btnCopySummary.ForeColor = System.Drawing.Color.White;
+            this.btnCopySummary.Location = new System.Drawing.Point(421, 3);
+            this.btnCopySummary.Name = "btnCopySummary";
+            this.btnCopySummary.Size = new System.Drawing.Size(178, 48);
+            this.btnCopySummary.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnCopySummary.Style.ForeColor = System.Drawing.Color.White;
+            this.btnCopySummary.TabIndex = 0;
+            this.btnCopySummary.Text = "COPY SUMMARY";
+            this.btnCopySummary.UseVisualStyleBackColor = false;
+            this.btnCopySummary.Click += new System.EventHandler(this.btnCopySummary_Click);
             // 
             // PhishingDetailsForm
             // 
@@ -709,7 +710,7 @@
         private System.Windows.Forms.ListView lvSignalsDetails;
         private System.Windows.Forms.ColumnHeader colSignal;
         private System.Windows.Forms.ColumnHeader colDetail;
-        private System.Windows.Forms.ColumnHeader colW;
+        private System.Windows.Forms.ColumnHeader colWeight;
         private System.Windows.Forms.Panel pnlFooter;
         private Syncfusion.WinForms.Controls.SfButton btnClose;
         private Syncfusion.WinForms.Controls.SfButton btnCopyEmail;
