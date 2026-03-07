@@ -79,6 +79,8 @@
             this.tmrRun = new System.Windows.Forms.Timer(this.components);
             this.detailCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.wCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tlpInboxFooter = new System.Windows.Forms.TableLayoutPanel();
+            this.btnFinishRun = new Syncfusion.WinForms.Controls.SfButton();
             this.tlpPhishRoot.SuspendLayout();
             this.pnlPhishHeader.SuspendLayout();
             this.tlpPhishMain.SuspendLayout();
@@ -92,6 +94,7 @@
             this.gbActions.SuspendLayout();
             this.tlpActions.SuspendLayout();
             this.pnlResult.SuspendLayout();
+            this.tlpInboxFooter.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpPhishRoot
@@ -276,8 +279,7 @@
             // pnlInboxFooter
             // 
             this.pnlInboxFooter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlInboxFooter.Controls.Add(this.btnResetRun);
-            this.pnlInboxFooter.Controls.Add(this.btnNewEmail);
+            this.pnlInboxFooter.Controls.Add(this.tlpInboxFooter);
             this.pnlInboxFooter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlInboxFooter.Location = new System.Drawing.Point(0, 425);
             this.pnlInboxFooter.Margin = new System.Windows.Forms.Padding(0);
@@ -289,12 +291,12 @@
             // btnResetRun
             // 
             this.btnResetRun.BackColor = System.Drawing.Color.Crimson;
-            this.btnResetRun.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnResetRun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnResetRun.Font = new System.Drawing.Font("Muro", 11F);
             this.btnResetRun.ForeColor = System.Drawing.Color.White;
-            this.btnResetRun.Location = new System.Drawing.Point(262, 6);
+            this.btnResetRun.Location = new System.Drawing.Point(265, 3);
             this.btnResetRun.Name = "btnResetRun";
-            this.btnResetRun.Size = new System.Drawing.Size(140, 30);
+            this.btnResetRun.Size = new System.Drawing.Size(128, 24);
             this.btnResetRun.Style.BackColor = System.Drawing.Color.Crimson;
             this.btnResetRun.Style.ForeColor = System.Drawing.Color.White;
             this.btnResetRun.TabIndex = 1;
@@ -305,12 +307,12 @@
             // btnNewEmail
             // 
             this.btnNewEmail.BackColor = System.Drawing.Color.SeaGreen;
-            this.btnNewEmail.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnNewEmail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNewEmail.Font = new System.Drawing.Font("Muro", 11F);
             this.btnNewEmail.ForeColor = System.Drawing.Color.White;
-            this.btnNewEmail.Location = new System.Drawing.Point(6, 6);
+            this.btnNewEmail.Location = new System.Drawing.Point(3, 3);
             this.btnNewEmail.Name = "btnNewEmail";
-            this.btnNewEmail.Size = new System.Drawing.Size(140, 30);
+            this.btnNewEmail.Size = new System.Drawing.Size(125, 24);
             this.btnNewEmail.Style.BackColor = System.Drawing.Color.SeaGreen;
             this.btnNewEmail.Style.ForeColor = System.Drawing.Color.White;
             this.btnNewEmail.TabIndex = 0;
@@ -728,6 +730,40 @@
             // 
             this.wCol.Width = 120;
             // 
+            // tlpInboxFooter
+            // 
+            this.tlpInboxFooter.ColumnCount = 3;
+            this.tlpInboxFooter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpInboxFooter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpInboxFooter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpInboxFooter.Controls.Add(this.btnResetRun, 2, 0);
+            this.tlpInboxFooter.Controls.Add(this.btnFinishRun, 1, 0);
+            this.tlpInboxFooter.Controls.Add(this.btnNewEmail, 0, 0);
+            this.tlpInboxFooter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpInboxFooter.Location = new System.Drawing.Point(6, 6);
+            this.tlpInboxFooter.Name = "tlpInboxFooter";
+            this.tlpInboxFooter.RowCount = 1;
+            this.tlpInboxFooter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpInboxFooter.Size = new System.Drawing.Size(396, 30);
+            this.tlpInboxFooter.TabIndex = 2;
+            // 
+            // btnFinishRun
+            // 
+            this.btnFinishRun.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnFinishRun.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnFinishRun.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFinishRun.Font = new System.Drawing.Font("Muro", 11F);
+            this.btnFinishRun.ForeColor = System.Drawing.Color.White;
+            this.btnFinishRun.Location = new System.Drawing.Point(134, 3);
+            this.btnFinishRun.Name = "btnFinishRun";
+            this.btnFinishRun.Size = new System.Drawing.Size(125, 24);
+            this.btnFinishRun.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnFinishRun.Style.ForeColor = System.Drawing.Color.White;
+            this.btnFinishRun.TabIndex = 0;
+            this.btnFinishRun.Text = "FINISH RUN";
+            this.btnFinishRun.UseVisualStyleBackColor = false;
+            this.btnFinishRun.Click += new System.EventHandler(this.btnFinishRun_Click);
+            // 
             // PhishingSimulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -759,6 +795,7 @@
             this.tlpActions.ResumeLayout(false);
             this.tlpActions.PerformLayout();
             this.pnlResult.ResumeLayout(false);
+            this.tlpInboxFooter.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -815,5 +852,7 @@
         private System.Windows.Forms.Panel pnlMessageBody;
         private System.Windows.Forms.ColumnHeader detailCol;
         private System.Windows.Forms.ColumnHeader wCol;
+        private System.Windows.Forms.TableLayoutPanel tlpInboxFooter;
+        private Syncfusion.WinForms.Controls.SfButton btnFinishRun;
     }
 }

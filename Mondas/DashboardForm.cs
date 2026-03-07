@@ -123,7 +123,8 @@ namespace Mondas
 
             try
             {
-                s = _stats.Load(_userId, _userKey);
+                s = _stats.Load(_userId, _userKey, minTopicAttempts: 3, misconceptionLimit: 20);
+
             }
 
             catch (Exception ex)
@@ -484,6 +485,7 @@ namespace Mondas
             lvMisconA.FullRowSelect = true;
             lvMisconA.MultiSelect = false;
             lvMisconA.Scrollable = true;
+            lvMisconA.Sorting = SortOrder.None;
             lvMisconA.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 
             if (lvMisconA.Columns.Count == 0)

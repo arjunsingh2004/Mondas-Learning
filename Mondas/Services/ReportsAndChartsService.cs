@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Resources;
 using Microsoft.Data.Sqlite;
 using Mondas.Models;
+using Newtonsoft.Json;
 using Syncfusion.DataSource.Extensions;
 
 namespace Mondas.Services
@@ -28,10 +26,10 @@ namespace Mondas.Services
         public List<AttemptViewRow> LoadAttempts(string userKey)
         {
             userKey = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
-            var raw = _attemptRepo.GetForUser(userKey) ?? new List<AttemptRecord>();
-            var rows = new List<AttemptViewRow>(raw.Count);
+            var rows = new List<AttemptViewRow>();
+            var quizAttempts = _attemptRepo.GetForUser(userKey) ?? new List<AttemptRecord>();
 
-            foreach (var a in raw)
+            foreach (var a in quizAttempts)
             {
                 if (!_questionById.TryGetValue(a.QuestionId, out var q))
                 {
@@ -49,7 +47,77 @@ namespace Mondas.Services
                 });
             }
 
-            return rows;
+            using var conn = new SqliteConnection($"Data Source={_dbPath}");
+            conn.Open();
+
+            if (!TableExists(conn, "PhishingAttempts"))
+            {
+                return rows.OrderBy(x => x.SubmittedAtUtc).ToList();
+            }
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT EmailId, IsCorrect, SecondsTaken, SubmittedAt, EmailSnapshotJson
+                                FROM PhishingAttempts
+                                WHERE UserKey = $uk
+                                AND Action IN ($a1, $a2)
+                                ORDER BY SubmittedAt DESC;";
+
+            cmd.Parameters.AddWithValue("$uk", userKey);
+            cmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
+            cmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
+
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
+            {
+                var emailIdText = r.IsDBNull(0) ? "0" : (r.GetString(0) ?? "0");
+                bool isCorrect = !r.IsDBNull(1) && r.GetInt32(1) == 1;
+                double secondsTaken = r.IsDBNull(2) ? 0.0 : r.GetDouble(2);
+
+                DateTime submittedAtUtc = DateTime.UtcNow;
+
+                if (!r.IsDBNull(3))
+                {
+                    submittedAtUtc = DateTime.Parse(r.GetString(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                }
+
+                PhishingEmail email = null;
+
+                if (!r.IsDBNull(4))
+                {
+                    try
+                    {
+                        email = JsonConvert.DeserializeObject<PhishingEmail>(r.GetString(4));
+                    }
+
+                    catch
+                    {
+                        email = null;
+                    }
+                }
+
+                rows.Add(new AttemptViewRow
+                {
+                    QuestionId = int.TryParse(emailIdText, out var emailId) ? emailId : 0,
+                    SubmittedAtUtc = submittedAtUtc,
+                    IsCorrect = isCorrect,
+                    SecondsTaken = secondsTaken,
+                    Topic = Topic.Phishing,
+                    Difficulty = email?.Difficulty ?? DifficultyBand.Medium
+                });
+            }
+
+            return rows.OrderBy(x => x.SubmittedAtUtc).ToList();
+        }
+
+        private static bool TableExists(SqliteConnection conn, string tableName)
+        {
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = $name LIMIT 1;";
+            cmd.Parameters.AddWithValue("$name", tableName);
+
+            var obj = cmd.ExecuteScalar();
+            return obj != null && obj != DBNull.Value;
         }
 
         public List<AttemptViewRow> ApplyFilters(List<AttemptViewRow> all, ChartFilters filters)
@@ -236,47 +304,132 @@ namespace Mondas.Services
             conn.Open();
 
             DateTime? sinceUtc = RangeToSinceUtc(range);
+            var combined = new Dictionary<string, (int Count, DateTime? LastUtc)>(StringComparer.OrdinalIgnoreCase);
 
-            using var cmd = conn.CreateCommand();
-
-            cmd.CommandText = @"
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
                 SELECT mt.Tag, COUNT(1) AS Cnt, MAX(a.SubmittedAt) AS LastUtc
                 FROM Attempts a
                 JOIN QuestionMisconceptionTags qmt ON qmt.QuestionId = a.QuestionId
                 JOIN MisconceptionTags mt ON mt.Id = qmt.TagId
-                WHERE a.UserKey = $uk AND a.IsCorrect = 0" + (sinceUtc.HasValue ? " AND a.SubmiittedAt >= $since " : "") + @"
-                GROUP BY mt.Tag
-                ORDER BY Cnt DESC
-                LIMIT $limit;";
+                WHERE a.UserKey = $uk AND a.IsCorrect = 0" + (sinceUtc.HasValue ? " AND a.SubmittedAt >= $since" : "") + @"
+                GROUP BY mt.Tag;";
 
-            cmd.Parameters.AddWithValue("$uk", userKey);
-            cmd.Parameters.AddWithValue("$limit", Math.Max(1, limit));
+                cmd.Parameters.AddWithValue("$uk", userKey);
 
-            if (sinceUtc.HasValue)
-            {
-                cmd.Parameters.AddWithValue("$since", sinceUtc.Value.ToString("o", CultureInfo.InvariantCulture));
-            }
-
-            var list = new List<MisconceptionRow>();
-
-            using var r = cmd.ExecuteReader();
-
-            while (r.Read())
-            {
-                var tag = r.IsDBNull(0) ? "" : r.GetString(0);
-                int count = Convert.ToInt32(r.GetInt64(1));
-
-                DateTime lastUtc = DateTime.UtcNow;
-
-                if (!r.IsDBNull(2))
+                if (sinceUtc.HasValue)
                 {
-                    lastUtc = DateTime.Parse(r.GetString(2), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    cmd.Parameters.AddWithValue("$since", sinceUtc.Value.ToString("o", CultureInfo.InvariantCulture));
                 }
 
-                list.Add(new MisconceptionRow { Tag = tag, Count = count, LastSeenUtc = lastUtc });
+                using var r = cmd.ExecuteReader();
+
+                while (r.Read())
+                {
+                    var tag = r.IsDBNull(0) ? "" : (r.GetString(0) ?? "").Trim();
+
+                    if (tag.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    int count = r.IsDBNull(1) ? 0 : Convert.ToInt32(r.GetInt64(1));
+                    DateTime lastUtc = DateTime.UtcNow;
+
+                    if (!r.IsDBNull(2))
+                    {
+                        lastUtc = DateTime.Parse(r.GetString(2), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    }
+
+                    if (combined.TryGetValue(tag, out var existing))
+                    {
+                        var latest = existing.LastUtc > lastUtc ? existing.LastUtc : lastUtc;
+                        combined[tag] = (existing.Count + count, latest);
+                    }
+
+                    else
+                    {
+                        combined[tag] = (count, lastUtc);
+                    }
+                }
+            }
+            if (TableExists(conn, "PhishingAttempts"))
+            {
+                using var cmd = conn.CreateCommand();
+                cmd.CommandText = @"SELECT EmailSnapshotJson, SubmittedAt FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND IsCorrect = 0" + (sinceUtc.HasValue ? " AND SubmittedAt >= $since" : "") + @" ORDER BY SubmittedAt DESC;";
+
+                cmd.Parameters.AddWithValue("$uk", userKey);
+                cmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
+                cmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
+
+                if (sinceUtc.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("$since", sinceUtc.Value.ToString("o", CultureInfo.InvariantCulture));
+                }
+
+                using var r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    var snapJson = r.IsDBNull(0) ? "" : (r.GetString(0) ?? "");
+
+                    if (string.IsNullOrWhiteSpace(snapJson))
+                    {
+                        continue;
+                    }
+
+                    DateTime submittedUtc = DateTime.UtcNow;
+
+                    if (!r.IsDBNull(1))
+                    {
+                        submittedUtc = DateTime.Parse(r.GetString(1), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    }
+
+                    PhishingEmail email = null;
+
+                    try
+                    {
+                        email = JsonConvert.DeserializeObject<PhishingEmail>(snapJson);
+                    }
+
+                    catch
+                    {
+                        email = null;
+                    }
+
+                    var tags = email?.Tags ?? new List<string>();
+
+                    if (tags.Count == 0)
+                    {
+                        tags = new List<string> { "phishing-general" };
+                    }
+
+                    for (int i = 0; i < tags.Count; i++)
+                    {
+                        var tag = (tags[i] ?? "").Trim();
+
+                        if (tag.Length == 0)
+                        {
+                            continue;
+                        }
+
+                        if (combined.TryGetValue(tag, out var existing))
+                        {
+                            var latest = existing.LastUtc > submittedUtc ? existing.LastUtc : submittedUtc;
+                            combined[tag] = (existing.Count + 1, latest);
+                        }
+
+                        else
+                        {
+                            combined[tag] = (1, submittedUtc);
+                        }
+
+                    }
+                }
             }
 
-            return list;
+            return combined.Select(x => new MisconceptionRow { Tag = x.Key, Count = x.Value.Count, LastSeenUtc = (DateTime)x.Value.LastUtc })
+                            .OrderByDescending(x => x.LastSeenUtc).ThenByDescending(x => x.Count).ThenBy(x => x.Tag, StringComparer.OrdinalIgnoreCase).Take(Math.Max(1, limit)).ToList();
         }
 
         private static DateTime? RangeToSinceUtc(ChartRange range)

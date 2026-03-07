@@ -1213,6 +1213,62 @@ namespace Mondas
             _runStartedUtc = DateTime.UtcNow;
         }
 
+        private string RunSummary()
+        {
+            int total = 0;
+            int correct = 0;
+            double totalSeconds = 0.0;
+            int timed = 0;
+
+            for (int i = 0; i < _runLog.Count; i++)
+            {
+                var row = _runLog[i];
+
+                if (row == null)
+                {
+                    continue;
+                }
+
+                var isFinal = row.Action == (int)PhishingAction.TrustKeep || row.Action == (int)PhishingAction.ReportPhishing;
+
+                if (!isFinal)
+                {
+                    continue;
+                }
+
+                total++;
+
+                if (row.IsCorrect)
+                {
+                    correct++;
+                }
+
+                if (row.SecondsTaken > 0)
+                {
+                    totalSeconds += row.SecondsTaken;
+                    timed++;
+                }
+            }
+
+            var percent = total == 0 ? 0.0 : (correct * 100.0 / total);
+            var avg = timed == 0 ? 0.0 : (totalSeconds / timed);
+
+            TimeSpan elapsed;
+
+            if (!_runStarted)
+            {
+                elapsed = TimeSpan.Zero;
+            }
+            else
+            {
+                elapsed = _runClockPaused ? _runClockFrozen : (DateTime.UtcNow - _runStartedUtc);
+            }
+
+            var time = FormatTime(elapsed);
+            var avgText = avg <= 0 ? "—" : $"{avg:0.0}s";
+
+            return $"Run complete!\n\nCorrect: {correct}/{total} ({percent:0}%)\nScore: {_score}\nTime: {time}\nAvg decision time: {avgText}";
+        }
 
         private sealed class InboxRowTag
         {
@@ -1220,6 +1276,27 @@ namespace Mondas
             public PhishingEmail Email { get; set; }
             public bool IsResolved { get; set; }
             public string DisplayType { get; set; }
+        }
+
+        private void btnFinishRun_Click(object sender, EventArgs e)
+        {
+            if (!_runStarted || _seenRun.Count == 0)
+            {
+                Close();
+                return;
+            }
+
+            var ok = MessageBox.Show(this, "Finish this run and show your summary?", "Mondas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (ok != DialogResult.OK)
+            {
+                return;
+            }
+
+            PauseRunClock();
+            var summary = RunSummary();
+            MessageBox.Show(this, summary, "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
         }
     }
 }

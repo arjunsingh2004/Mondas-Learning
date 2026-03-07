@@ -100,6 +100,26 @@ namespace Mondas.Services
             RulesFiredJson TEXT NOT NULL
             );
 
+            CREATE TABLE IF NOT EXISTS PhishingAttempts (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            UserKey TEXT NOT NULL,
+            EmailId TEXT NOT NULL,
+            Action INTEGER NOT NULL,
+            IsCorrect INTEGER NOT NULL,
+            ScoreDelta INTEGER NOT NULL,
+            SecondsTaken REAL NOT NULL DEFAULT 0,
+            SubmittedAt TEXT NOT NULL,
+            ReasonString TEXT NOT NULL,
+            SignalsJson TEXT NOT NULL,
+            EmailSnapshotJson TEXT NOT NULL
+            );
+
+            CREATE INDEX IF NOT EXISTS IX_PhishingAttempts_User_Submitted
+            ON PhishingAttempts(UserKey, SubmittedAt);
+
+            CREATE INDEX IF NOT EXISTS IX_PhishingAttempts_User_Email
+            ON PhishingAttempts(UserKey, EmailId);
+
             CREATE INDEX IF NOT EXISTS IX_Questions_Topic_Difficulty
             ON Questions(Topic, Difficulty);
 
