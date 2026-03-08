@@ -22,7 +22,7 @@ namespace Mondas.Services
             _dbPath = dbPath;
         }
 
-        public DashboardStats Load(long userId, string userKey, int minTopicAttempts = 3, int misconceptionLimit = 20)
+        public DashboardStats Load(long userId, string userKey, StatsSource source = StatsSource.All, int minTopicAttempts = 3, int misconceptionLimit = 20)
         {
             var uk = NormaliseUserKey(userKey);
             var stats = new DashboardStats { UserId = userId, UserKey = uk, FullName = "USER" };
@@ -48,12 +48,18 @@ namespace Mondas.Services
                 }
             }
 
-            int quizTotal = ScalarInt(conn, "SELECT COUNT(1) FROM Attempts WHERE UserKey = $uk;", ("$uk", uk));
-            int quizCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM Attempts WHERE UserKey = $uk AND IsCorrect = 1;", ("$uk", uk));
+            int quizTotal = 0;
+            int quizCorrect = 0;
             int phishTotal = 0;
             int phishCorrect = 0;
 
-            if (TableExists(conn, "PhishingAttempts"))
+            if (source == StatsSource.All || source == StatsSource.Quiz)
+            {
+                quizTotal = ScalarInt(conn, "SELECT COUNT(1) FROM Attempts WHERE UserKey = $uk;", ("$uk", uk));
+                quizCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM Attempts WHERE UserKey = $uk AND IsCorrect = 1;", ("$uk", uk));
+            }
+
+            if ((source == StatsSource.All || source == StatsSource.PhishingSimulator) && TableExists(conn, "PhishingAttempts"))
             {
                 phishTotal = ScalarInt(conn, "SELECT COUNT(1) FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2);", ("$uk", uk), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
                 phishCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND IsCorrect = 1;", ("$uk", uk), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
@@ -61,12 +67,12 @@ namespace Mondas.Services
 
             stats.TotalAttempts = quizTotal + phishTotal;
             stats.CorrectAttempts = quizCorrect + phishCorrect;
-            stats.AvgSeconds = LoadAvgSeconds(conn, uk);
-            stats.CurrentStreak = ComputeStreak(conn, uk, take: 250);
+            stats.AvgSeconds = LoadAvgSeconds(conn, uk, source);
+            stats.CurrentStreak = ComputeStreak(conn, uk, source, take: 250);
 
-            LoadTopicMastery(conn, uk, stats);
+            LoadTopicMastery(conn, uk, stats, source);
             ComputeWeakStrong(stats, minTopicAttempts);
-            LoadTopMisconceptions(conn, uk, stats, misconceptionLimit);
+            LoadTopMisconceptions(conn, uk, stats, source, misconceptionLimit);
 
             return stats;
         }
@@ -137,8 +143,28 @@ namespace Mondas.Services
             return Convert.ToDouble(obj, CultureInfo.InvariantCulture);
         }
 
-        private static double LoadAvgSeconds(SqliteConnection conn, string userKey)
+        private static double LoadAvgSeconds(SqliteConnection conn, string userKey, StatsSource source)
         {
+            if (source == StatsSource.PasswordWorkshop)
+            {
+                return 0.0;
+            }
+
+            if (source == StatsSource.Quiz)
+            {
+                return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0;", ("$uk", userKey));
+            }
+
+            if (source == StatsSource.PhishingSimulator)
+            {
+                if (!TableExists(conn, "PhishingAttempts"))
+                {
+                    return 0.0;
+                }
+
+                return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND SecondsTaken > 0;", ("$uk", userKey), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
+            }
+
             if (!TableExists(conn, "PhishingAttempts"))
             {
                 return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0;", ("$uk", userKey));
@@ -147,12 +173,27 @@ namespace Mondas.Services
             var sql = @"SELECT AVG(t.SecondsTaken) FROM (SELECT SecondsTaken FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0
                         UNION ALL
                         SELECT SecondsTaken FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND SecondsTaken > 0) AS t;";
-           
+
             return ScalarDouble(conn, sql, ("$uk", userKey), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
         }
 
-        private static int ComputeStreak(SqliteConnection conn, string userKey, int take)
+        private static int ComputeStreak(SqliteConnection conn, string userKey, StatsSource source, int take)
         {
+            if (source == StatsSource.PasswordWorkshop)
+            {
+                return 0;
+            }
+
+            if (source == StatsSource.Quiz)
+            {
+                return ComputeQuizStreak(conn, userKey, take);
+            }
+
+            if (source == StatsSource.PhishingSimulator)
+            {
+                return ComputePhishStreak(conn, userKey, take);
+            }
+
             if (!TableExists(conn, "PhishingAttempts"))
             {
                 return ComputeQuizStreak(conn, userKey, take);
@@ -161,7 +202,9 @@ namespace Mondas.Services
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"SELECT IsCorrect FROM (SELECT IsCorrect, SubmittedAt FROM Attempts WHERE UserKey = $uk
                                 UNION ALL
-                                SELECT IsCorrect, SubmittedAt FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2)) ORDER BY SubmittedAt DESC LIMIT $take;";
+                                SELECT IsCorrect, SubmittedAt FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2))
+                                ORDER BY SubmittedAt DESC
+                                LIMIT $take;";
 
             cmd.Parameters.AddWithValue("$uk", userKey);
             cmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
@@ -212,19 +255,48 @@ namespace Mondas.Services
             return streak;
         }
 
-        private static void LoadTopicMastery(SqliteConnection conn, string userKey, DashboardStats stats)
+        private static int ComputePhishStreak(SqliteConnection conn, string userKey, int take)
+        {
+            if (!TableExists(conn, "PhishingAttempts"))
+            {
+                return 0;
+            }
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT IsCorrect FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) ORDER BY SubmittedAt DESC LIMIT $take;";
+
+            cmd.Parameters.AddWithValue("$uk", userKey);
+            cmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
+            cmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
+            cmd.Parameters.AddWithValue("$take", take);
+
+            int streak = 0;
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
+            {
+                bool isCorrect = r.GetInt32(0) == 1;
+
+                if (!isCorrect)
+                {
+                    break;
+                }
+
+                streak++;
+            }
+
+            return streak;
+        }
+
+        private static void LoadTopicMastery(SqliteConnection conn, string userKey, DashboardStats stats, StatsSource source)
         {
             stats.MasteryByTopic.Clear();
 
-            using (var cmd = conn.CreateCommand())
+            if (source == StatsSource.All || source == StatsSource.Quiz)
             {
-                cmd.CommandText = @"SELECT q.Topic, COUNT(1) AS Seen, SUM(a.IsCorrect) AS Correct
-                                FROM Attempts a
-                                JOIN Questions q ON q.Id = a.QuestionId
-                                WHERE a.UserKey = $uk
-                                GROUP BY q.Topic
-                                ORDER BY Seen DESC;";
+                using var cmd = conn.CreateCommand();
 
+                cmd.CommandText = @"SELECT q.Topic, COUNT(1) AS Seen, SUM(a.IsCorrect) AS Correct FROM Attempts a JOIN Questions q ON q.Id = a.QuestionId WHERE a.UserKey = $uk GROUP BY q.Topic ORDER BY Seen DESC;";
                 cmd.Parameters.AddWithValue("$uk", userKey);
                 using var r = cmd.ExecuteReader();
 
@@ -238,27 +310,27 @@ namespace Mondas.Services
                 }
             }
 
-            if (!TableExists(conn, "PhishingAttempts"))
+
+
+            if ((source == StatsSource.All || source == StatsSource.PhishingSimulator) && TableExists(conn, "PhishingAttempts"))
             {
-                return;
-            }
+                using var phishCmd = conn.CreateCommand();
+                phishCmd.CommandText = @"SELECT COUNT(1) AS Seen, SUM(IsCorrect) AS Correct FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2);";
+                phishCmd.Parameters.AddWithValue("$uk", userKey);
+                phishCmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
+                phishCmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
 
-            using var phishCmd = conn.CreateCommand();
-            phishCmd.CommandText = @"SELECT COUNT(1) AS Seen, SUM(IsCorrect) AS Correct FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2);";
-            phishCmd.Parameters.AddWithValue("$uk", userKey);
-            phishCmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
-            phishCmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
+                using var phishReader = phishCmd.ExecuteReader();
 
-            using var phishReader = phishCmd.ExecuteReader();
-
-            if (phishReader.Read())
-            {
-                int seen = phishReader.IsDBNull(0) ? 0 : Convert.ToInt32(phishReader.GetInt64(0));
-                int correct = phishReader.IsDBNull(1) ? 0 : Convert.ToInt32(phishReader.GetInt64(1));
-
-                if (seen > 0)
+                if (phishReader.Read())
                 {
-                    AddTopic(stats, Topic.Phishing, seen, correct);
+                    int seen = phishReader.IsDBNull(0) ? 0 : Convert.ToInt32(phishReader.GetInt64(0));
+                    int correct = phishReader.IsDBNull(1) ? 0 : Convert.ToInt32(phishReader.GetInt64(1));
+
+                    if (seen > 0)
+                    {
+                        AddTopic(stats, Topic.Phishing, seen, correct);
+                    }
                 }
             }
 
@@ -315,12 +387,16 @@ namespace Mondas.Services
             }
         }
 
-        private static void LoadTopMisconceptions(SqliteConnection conn, string userKey, DashboardStats stats, int limit)
+        private static void LoadTopMisconceptions(SqliteConnection conn, string userKey, DashboardStats stats, StatsSource source, int limit)
         {
             var combined = new Dictionary<string, (int Count, DateTime LastUtc)>(StringComparer.OrdinalIgnoreCase);
-            LoadQuizMisconceptions(conn, userKey, combined);
 
-            if (TableExists(conn, "PhishingAttempts"))
+            if (source == StatsSource.All || source == StatsSource.Quiz)
+            {
+                LoadQuizMisconceptions(conn, userKey, combined);
+            }
+
+            if ((source == StatsSource.All || source == StatsSource.PhishingSimulator) && TableExists(conn, "PhishingAttempts"))
             {
                 LoadPhishingMistakeTags(conn, userKey, combined);
             }

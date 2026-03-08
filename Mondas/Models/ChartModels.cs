@@ -38,6 +38,14 @@ namespace Mondas.Models
         Difficulty
     }
 
+    public enum StatsSource
+    {
+        All,
+        Quiz,
+        PhishingSimulator,
+        PasswordWorkshop
+    }
+
     public sealed class ChartFilters
     {
         public ChartRange Range { get; set; } = ChartRange.Last30Attempts;

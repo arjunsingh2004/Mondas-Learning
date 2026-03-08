@@ -93,6 +93,8 @@
             this.lblSelectedReport = new System.Windows.Forms.Label();
             this.btnDownloadPdf = new Syncfusion.WinForms.Controls.SfButton();
             this.btnOpenExternal = new Syncfusion.WinForms.Controls.SfButton();
+            this.cmbSource = new System.Windows.Forms.ComboBox();
+            this.lblSource = new System.Windows.Forms.Label();
             this.tlpRoot.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -387,6 +389,8 @@
             // 
             // pnlFilters
             // 
+            this.pnlFilters.Controls.Add(this.lblSource);
+            this.pnlFilters.Controls.Add(this.cmbSource);
             this.pnlFilters.Controls.Add(this.lblGroupBy);
             this.pnlFilters.Controls.Add(this.lblXAxis);
             this.pnlFilters.Controls.Add(this.lblMetric);
@@ -410,7 +414,7 @@
             // 
             this.lblGroupBy.AutoSize = true;
             this.lblGroupBy.ForeColor = System.Drawing.Color.DimGray;
-            this.lblGroupBy.Location = new System.Drawing.Point(792, 10);
+            this.lblGroupBy.Location = new System.Drawing.Point(724, 10);
             this.lblGroupBy.Name = "lblGroupBy";
             this.lblGroupBy.Size = new System.Drawing.Size(122, 18);
             this.lblGroupBy.TabIndex = 12;
@@ -420,7 +424,7 @@
             // 
             this.lblXAxis.AutoSize = true;
             this.lblXAxis.ForeColor = System.Drawing.Color.DimGray;
-            this.lblXAxis.Location = new System.Drawing.Point(678, 10);
+            this.lblXAxis.Location = new System.Drawing.Point(608, 10);
             this.lblXAxis.Name = "lblXAxis";
             this.lblXAxis.Size = new System.Drawing.Size(79, 18);
             this.lblXAxis.TabIndex = 11;
@@ -430,7 +434,7 @@
             // 
             this.lblMetric.AutoSize = true;
             this.lblMetric.ForeColor = System.Drawing.Color.DimGray;
-            this.lblMetric.Location = new System.Drawing.Point(532, 10);
+            this.lblMetric.Location = new System.Drawing.Point(459, 10);
             this.lblMetric.Name = "lblMetric";
             this.lblMetric.Size = new System.Drawing.Size(92, 18);
             this.lblMetric.TabIndex = 10;
@@ -440,7 +444,7 @@
             // 
             this.lblDifficulty.AutoSize = true;
             this.lblDifficulty.ForeColor = System.Drawing.Color.DimGray;
-            this.lblDifficulty.Location = new System.Drawing.Point(353, 10);
+            this.lblDifficulty.Location = new System.Drawing.Point(294, 10);
             this.lblDifficulty.Name = "lblDifficulty";
             this.lblDifficulty.Size = new System.Drawing.Size(136, 18);
             this.lblDifficulty.TabIndex = 9;
@@ -450,7 +454,7 @@
             // 
             this.lblTopic.AutoSize = true;
             this.lblTopic.ForeColor = System.Drawing.Color.DimGray;
-            this.lblTopic.Location = new System.Drawing.Point(202, 10);
+            this.lblTopic.Location = new System.Drawing.Point(181, 10);
             this.lblTopic.Name = "lblTopic";
             this.lblTopic.Size = new System.Drawing.Size(74, 18);
             this.lblTopic.TabIndex = 8;
@@ -475,7 +479,7 @@
             "By Topic",
             "By Difficulty",
             "By Week"});
-            this.cmbGroupBy.Location = new System.Drawing.Point(793, 33);
+            this.cmbGroupBy.Location = new System.Drawing.Point(725, 33);
             this.cmbGroupBy.Name = "cmbGroupBy";
             this.cmbGroupBy.Size = new System.Drawing.Size(121, 26);
             this.cmbGroupBy.TabIndex = 6;
@@ -489,7 +493,7 @@
             "Date",
             "Question difficulty",
             "Topic"});
-            this.cmbXAxis.Location = new System.Drawing.Point(654, 33);
+            this.cmbXAxis.Location = new System.Drawing.Point(585, 33);
             this.cmbXAxis.Name = "cmbXAxis";
             this.cmbXAxis.Size = new System.Drawing.Size(121, 26);
             this.cmbXAxis.TabIndex = 5;
@@ -505,20 +509,19 @@
             "Streak trend",
             "Topic mastery %",
             "Mistakes by tag"});
-            this.cmbMetric.Location = new System.Drawing.Point(516, 33);
+            this.cmbMetric.Location = new System.Drawing.Point(448, 33);
             this.cmbMetric.Name = "cmbMetric";
             this.cmbMetric.Size = new System.Drawing.Size(121, 26);
             this.cmbMetric.TabIndex = 4;
             // 
             // btnRefreshCharts
             // 
-            this.btnRefreshCharts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefreshCharts.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnRefreshCharts.Font = new System.Drawing.Font("Muro", 12F);
             this.btnRefreshCharts.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshCharts.Location = new System.Drawing.Point(933, 0);
+            this.btnRefreshCharts.Location = new System.Drawing.Point(857, 19);
             this.btnRefreshCharts.Name = "btnRefreshCharts";
-            this.btnRefreshCharts.Size = new System.Drawing.Size(179, 44);
+            this.btnRefreshCharts.Size = new System.Drawing.Size(120, 40);
             this.btnRefreshCharts.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnRefreshCharts.Style.ForeColor = System.Drawing.Color.White;
             this.btnRefreshCharts.TabIndex = 3;
@@ -535,9 +538,9 @@
             "Easy",
             "Medium",
             "Hard"});
-            this.cmbDifficulty.Location = new System.Drawing.Point(348, 33);
+            this.cmbDifficulty.Location = new System.Drawing.Point(297, 33);
             this.cmbDifficulty.Name = "cmbDifficulty";
-            this.cmbDifficulty.Size = new System.Drawing.Size(150, 26);
+            this.cmbDifficulty.Size = new System.Drawing.Size(133, 26);
             this.cmbDifficulty.TabIndex = 2;
             // 
             // cmbTopic
@@ -548,7 +551,7 @@
             "ALL"});
             this.cmbTopic.Location = new System.Drawing.Point(153, 33);
             this.cmbTopic.Name = "cmbTopic";
-            this.cmbTopic.Size = new System.Drawing.Size(180, 26);
+            this.cmbTopic.Size = new System.Drawing.Size(123, 26);
             this.cmbTopic.TabIndex = 1;
             // 
             // cmbRange
@@ -912,6 +915,34 @@
             this.btnOpenExternal.UseVisualStyleBackColor = false;
             this.btnOpenExternal.Click += new System.EventHandler(this.btnOpenExternal_Click);
             // 
+            // cmbSource
+            // 
+            this.cmbSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSource.FormattingEnabled = true;
+            this.cmbSource.Items.AddRange(new object[] {
+            "ALL",
+            "QUIZ",
+            "PHISHING SIMULATOR",
+            "PASSWORD WORKSHOP"});
+            this.cmbSource.Location = new System.Drawing.Point(988, 33);
+            this.cmbSource.Name = "cmbSource";
+            this.cmbSource.Size = new System.Drawing.Size(121, 26);
+            this.cmbSource.TabIndex = 13;
+            this.cmbSource.SelectedIndexChanged += new System.EventHandler(this.cmbSource_SelectedIndexChanged);
+            // 
+            // lblSource
+            // 
+            this.lblSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSource.AutoSize = true;
+            this.lblSource.ForeColor = System.Drawing.Color.DimGray;
+            this.lblSource.Location = new System.Drawing.Point(998, 10);
+            this.lblSource.Name = "lblSource";
+            this.lblSource.Size = new System.Drawing.Size(99, 18);
+            this.lblSource.TabIndex = 14;
+            this.lblSource.Text = "SOURCE";
+            this.lblSource.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ReportsAndChartsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 18F);
@@ -1024,5 +1055,7 @@
         private Syncfusion.WinForms.Controls.SfButton btnDownloadPdf;
         private Syncfusion.WinForms.Controls.SfButton btnOpenExternal;
         private System.Windows.Forms.WebBrowser wPdf;
+        private System.Windows.Forms.ComboBox cmbSource;
+        private System.Windows.Forms.Label lblSource;
     }
 }

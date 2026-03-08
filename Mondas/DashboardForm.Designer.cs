@@ -101,9 +101,11 @@
             this.pnlQuizRow = new System.Windows.Forms.Panel();
             this.tlpQuizCenter = new System.Windows.Forms.TableLayoutPanel();
             this.btnStartQuiz = new Syncfusion.WinForms.Controls.SfButton();
+            this.cmbStatsSource = new System.Windows.Forms.ComboBox();
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lblFooterUser = new System.Windows.Forms.Label();
             this.lblFooterLeft = new System.Windows.Forms.Label();
+            this.lblStatsSource = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -308,6 +310,7 @@
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpPage.Size = new System.Drawing.Size(908, 578);
             this.tlpPage.TabIndex = 0;
             // 
@@ -412,6 +415,7 @@
             this.tlpStats.Name = "tlpStats";
             this.tlpStats.RowCount = 1;
             this.tlpStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tlpStats.Size = new System.Drawing.Size(902, 89);
             this.tlpStats.TabIndex = 1;
             // 
@@ -1056,34 +1060,53 @@
             // 
             // tlpQuizCenter
             // 
-            this.tlpQuizCenter.ColumnCount = 1;
+            this.tlpQuizCenter.ColumnCount = 3;
             this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuizCenter.Controls.Add(this.btnStartQuiz, 0, 0);
-            this.tlpQuizCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 584F));
+            this.tlpQuizCenter.Controls.Add(this.btnStartQuiz, 2, 0);
+            this.tlpQuizCenter.Controls.Add(this.cmbStatsSource, 1, 0);
+            this.tlpQuizCenter.Controls.Add(this.lblStatsSource, 0, 0);
             this.tlpQuizCenter.Location = new System.Drawing.Point(0, 0);
             this.tlpQuizCenter.Name = "tlpQuizCenter";
             this.tlpQuizCenter.RowCount = 1;
             this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpQuizCenter.Size = new System.Drawing.Size(902, 80);
             this.tlpQuizCenter.TabIndex = 0;
             // 
             // btnStartQuiz
             // 
-            this.btnStartQuiz.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnStartQuiz.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnStartQuiz.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStartQuiz.Font = new System.Drawing.Font("Muro", 13F);
             this.btnStartQuiz.ForeColor = System.Drawing.Color.White;
-            this.btnStartQuiz.Location = new System.Drawing.Point(321, 15);
+            this.btnStartQuiz.Location = new System.Drawing.Point(649, 21);
             this.btnStartQuiz.Name = "btnStartQuiz";
-            this.btnStartQuiz.Size = new System.Drawing.Size(260, 50);
+            this.btnStartQuiz.Size = new System.Drawing.Size(250, 38);
             this.btnStartQuiz.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStartQuiz.Style.ForeColor = System.Drawing.Color.White;
             this.btnStartQuiz.TabIndex = 0;
             this.btnStartQuiz.Text = "START ADAPTIVE QUIZ";
             this.btnStartQuiz.UseVisualStyleBackColor = false;
             this.btnStartQuiz.Click += new System.EventHandler(this.btnStartQuiz_Click);
+            // 
+            // cmbStatsSource
+            // 
+            this.cmbStatsSource.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbStatsSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStatsSource.FormattingEnabled = true;
+            this.cmbStatsSource.Items.AddRange(new object[] {
+            "ALL",
+            "QUIZ",
+            "PHISHING SIMULATOR",
+            "PASSWORD WORKSHOP"});
+            this.cmbStatsSource.Location = new System.Drawing.Point(162, 27);
+            this.cmbStatsSource.Name = "cmbStatsSource";
+            this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
+            this.cmbStatsSource.TabIndex = 2;
+            this.cmbStatsSource.SelectedIndexChanged += new System.EventHandler(this.cmbStatsSource_SelectedIndexChanged);
             // 
             // pnlFooter
             // 
@@ -1118,6 +1141,16 @@
             this.lblFooterLeft.TabIndex = 0;
             this.lblFooterLeft.Text = "© 2026 Mondas Learning";
             this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblStatsSource
+            // 
+            this.lblStatsSource.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblStatsSource.AutoSize = true;
+            this.lblStatsSource.Location = new System.Drawing.Point(33, 31);
+            this.lblStatsSource.Name = "lblStatsSource";
+            this.lblStatsSource.Size = new System.Drawing.Size(123, 18);
+            this.lblStatsSource.TabIndex = 3;
+            this.lblStatsSource.Text = "Filter stats by:";
             // 
             // DashboardForm
             // 
@@ -1171,6 +1204,7 @@
             this.pnlTilePhish.ResumeLayout(false);
             this.pnlQuizRow.ResumeLayout(false);
             this.tlpQuizCenter.ResumeLayout(false);
+            this.tlpQuizCenter.PerformLayout();
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             this.ResumeLayout(false);
@@ -1255,5 +1289,7 @@
         private System.Windows.Forms.Label lblReportsCount;
         private System.Windows.Forms.Label lblCapLastReport;
         private System.Windows.Forms.Label lblLastReport;
+        private System.Windows.Forms.ComboBox cmbStatsSource;
+        private System.Windows.Forms.Label lblStatsSource;
     }
 }

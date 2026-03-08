@@ -389,7 +389,6 @@
     <Compile Include="Services\QuizPreferencesStore.cs" />
     <Compile Include="Services\QuizRecommendationService.cs" />
     <Compile Include="Services\QuizSession.cs" />
-    <Compile Include="Services\ReportsAndChartsService.cs" />
     <Compile Include="Services\ReportStore.cs" />
     <Compile Include="Services\RuleEngineV1.cs" />
     <Compile Include="Services\SqliteAttemptRepository.cs" />

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Mondas.Models;
 using Mondas.Services;
+using Newtonsoft.Json;
 using Syncfusion.Windows.Forms.Chart;
 using Syncfusion.WinForms.Controls;
 using System;
@@ -100,6 +101,7 @@ namespace Mondas
             SetDefaultSelection(cmbMetric);
             SetDefaultSelection(cmbXAxis);
             SetDefaultSelection(cmbGroupBy);
+            SetDefaultSelection(cmbSource);
         }
 
         private static void SetDefaultSelection(ComboBox cmb)
@@ -122,16 +124,16 @@ namespace Mondas
 
         private void RefreshAll()
         {
-            var stats = SafeLoadDashboardStats();
+            var stats = SafeLoadDashboardStats(ReadStatsSource());
             ApplyHeader(stats);
             RefreshChart();
         }
 
-        private DashboardStats SafeLoadDashboardStats()
+        private DashboardStats SafeLoadDashboardStats(StatsSource source)
         {
             try
             {
-                return _statsService.Load(_userId, _userKey);
+                return _statsService.Load(_userId, _userKey, source);
             }
 
             catch
@@ -155,29 +157,6 @@ namespace Mondas
             }
         }
 
-        private void ApplyKpis(DashboardStats stats)
-        {
-            if (lblKpiAttemptsValue != null)
-            {
-                lblKpiAttemptsValue.Text = stats.TotalAttempts.ToString(CultureInfo.InvariantCulture);
-            }
-
-            if (lblKpiAccuracyValue != null)
-            {
-                lblKpiAccuracyValue.Text = $"{(stats.Accuracy01 * 100.0):0}%";
-            }
-
-            if (lblKpiAvgTimeValue != null)
-            {
-                lblKpiAvgTimeValue.Text = stats.AvgSeconds <= 0 ? "—" : $"{stats.AvgSeconds:0.0}s";
-            }
-
-            if (lblKpiStreakValue != null)
-            {
-                lblKpiStreakValue.Text = stats.CurrentStreak.ToString(CultureInfo.InvariantCulture);
-            }
-        }
-
         private void chartControl1_Click(object sender, EventArgs e)
         {
 
@@ -185,7 +164,6 @@ namespace Mondas
 
         private void btnRefreshCharts_Click(object sender, EventArgs e)
         {
-            FilterDefaults();
             RefreshAll();
         }
 
@@ -223,6 +201,7 @@ namespace Mondas
             ResetCombo(cmbMetric);
             ResetCombo(cmbXAxis);
             ResetCombo(cmbGroupBy);
+            ResetCombo(cmbSource);
 
             RefreshAll();
         }
@@ -293,6 +272,7 @@ namespace Mondas
             public string MetricText = "";
             public string XAxisText = "";
             public string GroupByText = "";
+            public string SourceText = "";
 
             public int? LastNAttempts;
             public int? LastNDays;
@@ -303,6 +283,7 @@ namespace Mondas
             public Metric MetricValue;
             public AxisX AxisXValue;
             public Grouping GroupingValue;
+            public StatsSource SourceValue = StatsSource.All;
 
             public enum Metric { Accuracy, AvgTime, Attempts, Mistakes, Streak, TopicMastery };
             public enum AxisX { AttemptIndex, Date, Question, Topic };
@@ -318,7 +299,8 @@ namespace Mondas
                 DifficultyText = ReadComboText(cmbDifficulty),
                 MetricText = ReadComboText(cmbMetric),
                 XAxisText = ReadComboText(cmbXAxis),
-                GroupByText = ReadComboText(cmbGroupBy)
+                GroupByText = ReadComboText(cmbGroupBy),
+                SourceText = ReadComboText(cmbSource)
             };
 
             f.LastNAttempts = TryParseLastN(f.RangeText);
@@ -328,6 +310,7 @@ namespace Mondas
             f.MetricValue = ParseMetric(f.MetricText);
             f.AxisXValue = ParseAxisX(f.XAxisText);
             f.GroupingValue = ParseGrouping(f.GroupByText);
+            f.SourceValue = ParseStatsSource(f.SourceText);
 
             if (f.GroupingValue != ChartFilter.Grouping.Attempt && f.AxisXValue == ChartFilter.AxisX.AttemptIndex)
             {
@@ -358,6 +341,33 @@ namespace Mondas
             }
 
             return f;
+        }
+
+        private static StatsSource ParseStatsSource(string sourceText)
+        {
+            var text = (sourceText ?? "").Trim().ToUpperInvariant();
+
+            if (text.Contains("PHISH"))
+            {
+                return StatsSource.PhishingSimulator;
+            }
+
+            if (text.Contains("PASSWORD"))
+            {
+                return StatsSource.PasswordWorkshop;
+            }
+
+            if (text.Contains("QUIZ"))
+            {
+                return StatsSource.Quiz;
+            }
+
+            return StatsSource.All;
+        }
+
+        private StatsSource ReadStatsSource()
+        {
+            return ParseStatsSource(ReadComboText(cmbSource));
         }
 
         private static string ReadComboText(ComboBox cmb)
@@ -577,64 +587,112 @@ namespace Mondas
         {
             var rows = new List<AttemptRow>();
 
+            bool includeQuiz = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.Quiz;
+            bool includePhish = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.PhishingSimulator;
+
             using var conn = Open();
-            using var cmd = conn.CreateCommand();
 
-            var where = new StringBuilder();
-            where.Append("WHERE a.UserKey = $uk ");
-            cmd.Parameters.AddWithValue("$uk", _userKey);
-
-            if (f.Topic.HasValue)
+            if (includeQuiz)
             {
-                where.Append("AND q.Topic = $topic ");
-                cmd.Parameters.AddWithValue("$topic", (int)f.Topic.Value);
+                using var cmd = conn.CreateCommand();
+
+                var where = new StringBuilder();
+                where.Append("WHERE a.UserKey = $uk ");
+                cmd.Parameters.AddWithValue("$uk", _userKey);
+
+                if (f.Topic.HasValue)
+                {
+                    where.Append("AND q.Topic = $topic ");
+                    cmd.Parameters.AddWithValue("$topic", (int)f.Topic.Value);
+                }
+
+                if (f.Difficulty.HasValue)
+                {
+                    where.Append("AND q.Difficulty = $diff ");
+                    cmd.Parameters.AddWithValue("$diff", (int)f.Difficulty.Value);
+                }
+
+                cmd.CommandText = $@"SELECT a.SubmittedAt, a.IsCorrect, a.SecondsTaken, a.QuestionId, q.Topic, q.Difficulty FROM Attempts a JOIN Questions q ON q.Id = a.QuestionId {where} ORDER BY a.SubmittedAt DESC;";
+
+                using var r = cmd.ExecuteReader();
+
+                while (r.Read())
+                {
+                    var submitted = DateTime.Parse(r.GetString(0), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    var isCorrect = r.GetInt32(1) == 1;
+                    var seconds = r.IsDBNull(2) ? 0.0 : r.GetDouble(2);
+                    var qid = r.GetInt64(3);
+                    var topic = (Topic)r.GetInt32(4);
+                    var diff = (DifficultyBand)r.GetInt32(5);
+
+                    rows.Add(new AttemptRow { SubmittedUtc = submitted, IsCorrect = isCorrect, SecondsTaken = seconds, QuestionId = qid, Topic = topic, Difficulty = diff });
+                }
             }
 
-            if (f.Difficulty.HasValue)
+            if (includePhish && TableExists(conn, "PhishingAttempts") && (!f.Topic.HasValue || f.Topic.Value == Topic.Phishing))
             {
-                where.Append("AND q.Difficulty = $diff ");
-                cmd.Parameters.AddWithValue("$diff", (int)f.Difficulty.Value);
+                using var cmd = conn.CreateCommand();
+                cmd.CommandText = @"SELECT EmailId, IsCorrect, SecondsTaken, SubmittedAt, EmailSnapshotJson FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) ORDER BY SubmittedAt DESC;";
+
+                cmd.Parameters.AddWithValue("$uk", _userKey);
+                cmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
+                cmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
+
+                using var r = cmd.ExecuteReader();
+
+                while (r.Read())
+                {
+                    var emailIdText = r.IsDBNull(0) ? "0" : (r.GetString(0) ?? "0");
+                    bool isCorrect = !r.IsDBNull(1) && r.GetInt32(1) == 1;
+                    double secondsTaken = r.IsDBNull(2) ? 0.0 : r.GetDouble(2);
+
+                    DateTime submittedAtUtc = DateTime.UtcNow;
+
+                    if (!r.IsDBNull(3))
+                    {
+                        submittedAtUtc = DateTime.Parse(r.GetString(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    }
+
+                    PhishingEmail email = null;
+
+                    if (!r.IsDBNull(4))
+                    {
+                        try
+                        {
+                            email = JsonConvert.DeserializeObject<PhishingEmail>(r.GetString(4));
+                        }
+
+                        catch
+                        {
+                            email = null;
+                        }
+                    }
+
+                    var difficulty = email?.Difficulty ?? DifficultyBand.Medium;
+
+                    if (f.Difficulty.HasValue && difficulty != f.Difficulty.Value)
+                    {
+                        continue;
+                    }
+
+                    rows.Add(new AttemptRow { SubmittedUtc = submittedAtUtc, IsCorrect = isCorrect, SecondsTaken = secondsTaken, QuestionId = long.TryParse(emailIdText, out var emailId) ? emailId : 0, Topic = Topic.Phishing, Difficulty = difficulty });
+                }
             }
+
+            var ordered = rows.OrderBy(x => x.SubmittedUtc).ToList();
 
             if (f.LastNDays.HasValue)
             {
                 var fromUtc = DateTime.UtcNow.AddDays(-Math.Max(1, f.LastNDays.Value));
-                where.Append("AND a.SubmittedAt >= $from ");
-                cmd.Parameters.AddWithValue("$from", fromUtc.ToString("o"));
+                ordered = ordered.Where(x => x.SubmittedUtc >= fromUtc).ToList();
             }
-
-            var limitSql = "";
 
             if (f.LastNAttempts.HasValue)
             {
-                limitSql = "LIMIT $lim";
-                cmd.Parameters.AddWithValue("$lim", Math.Max(1, f.LastNAttempts.Value));
+                ordered = ordered.OrderByDescending(x => x.SubmittedUtc).Take(Math.Max(1, f.LastNAttempts.Value)).OrderBy(x => x.SubmittedUtc).ToList();
             }
 
-            cmd.CommandText = $@"SELECT a.SubmittedAt, a.IsCorrect, a.SecondsTaken, a.QuestionId, q.Topic, q.Difficulty
-                                 FROM Attempts a
-                                 JOIN Questions q ON q.Id = a.QuestionId
-                                 {where}
-                                 ORDER BY a.SubmittedAt DESC
-                                 {limitSql};";
-
-            using var r = cmd.ExecuteReader();
-
-            while (r.Read())
-            {
-                var submitted = DateTime.Parse(r.GetString(0), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
-                var isCorrect = r.GetInt32(1) == 1;
-                var seconds = r.IsDBNull(2) ? 0.0 : r.GetDouble(2);
-
-                var qid = r.GetInt64(3);
-                var topic = (Topic)r.GetInt32(4);
-                var diff = (DifficultyBand)r.GetInt32(5);
-
-                rows.Add(new AttemptRow { SubmittedUtc = submitted, IsCorrect = isCorrect, SecondsTaken = seconds, QuestionId = qid, Topic = topic, Difficulty = diff });
-            }
-
-            rows.Reverse();
-            return rows;
+            return ordered;
         }
 
         private List<ChartPointRow> LoadChartPoints(ChartFilter f, List<AttemptRow> attempts)
@@ -848,8 +906,9 @@ namespace Mondas
 
             var topic = f.Topic.HasValue ? f.Topic.Value.ToString().ToUpperInvariant() : "ANY TOPIC";
             var diff = f.Difficulty.HasValue ? f.Difficulty.Value.ToString().ToUpperInvariant() : "ANY DIFFICULTY";
+            var source = string.IsNullOrWhiteSpace(f.SourceText) ? "ALL" : f.SourceText.ToUpperInvariant();
 
-            return $"{range} · {group} · {topic} · {diff} · {points} POINTS";
+            return $"{range} · {source} · {group} · {topic} · {diff} · {points} POINTS";
         }
 
         private void RenderChart(List<ChartPointRow> points, ChartFilter f)
@@ -1169,7 +1228,7 @@ namespace Mondas
         {
             try
             {
-                var stats = SafeLoadDashboardStats();
+                var stats = SafeLoadDashboardStats(ReadStatsSource());
                 var stamp = DateTime.UtcNow.ToString("yyyyMMdd_HHmmss", CultureInfo.InvariantCulture);
                 var reportPath = Path.Combine(_reportsDir, $"report_{stamp}.html");
                 var chartPngPath = Path.Combine(_reportsDir, $"chart_{stamp}.png");
@@ -1388,6 +1447,16 @@ namespace Mondas
             }
         }
 
+        private static bool TableExists(SqliteConnection conn, string tableName)
+        {
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = $name LIMIT 1;";
+            cmd.Parameters.AddWithValue("$name", tableName);
+            var obj = cmd.ExecuteScalar();
+
+            return obj != null && obj != DBNull.Value;
+        }
+
         private void lvReports_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lvReports == null || lvReports.SelectedItems.Count == 0)
@@ -1398,6 +1467,11 @@ namespace Mondas
 
             var path = lvReports.SelectedItems[0].Tag as string;
             SetSelectedReport(path);
+        }
+
+        private void cmbSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshAll();
         }
     }
 }

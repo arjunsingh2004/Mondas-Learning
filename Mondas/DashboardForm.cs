@@ -114,6 +114,11 @@ namespace Mondas
                 return;
             }
 
+            if (cmbStatsSource != null && cmbStatsSource.SelectedIndex < 0 && cmbStatsSource.Items.Count > 0)
+            {
+                cmbStatsSource.SelectedIndex = 0;
+            }
+
             RefreshDashboard();
         }
 
@@ -123,7 +128,7 @@ namespace Mondas
 
             try
             {
-                s = _stats.Load(_userId, _userKey, minTopicAttempts: 3, misconceptionLimit: 20);
+                s = _stats.Load(_userId, _userKey, ReadStatsSource(), minTopicAttempts: 3, misconceptionLimit: 20);
 
             }
 
@@ -279,6 +284,28 @@ namespace Mondas
             {
                 lvRecentReports.EndUpdate();
             }
+        }
+
+        private StatsSource ReadStatsSource()
+        {
+            var text = (cmbStatsSource?.SelectedItem?.ToString() ?? cmbStatsSource?.Text ?? "").Trim().ToUpperInvariant();
+        
+            if (text.Contains("PHISH"))
+            {
+                return StatsSource.PhishingSimulator;
+            }
+
+            if (text.Contains("PASSWORD"))
+            {
+                return StatsSource.PasswordWorkshop;
+            }
+
+            if (text.Contains("QUIZ"))
+            {
+                return StatsSource.Quiz;
+            }
+
+            return StatsSource.All;
         }
 
         private static string BuildReportsDirectory(string userKey)
@@ -685,6 +712,11 @@ namespace Mondas
 
             f.Show();
             Hide();
+        }
+
+        private void cmbStatsSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshDashboard();
         }
     }
 }
