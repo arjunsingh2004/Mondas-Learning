@@ -1,0 +1,122 @@
+[
+  {
+    "id": "phish-link-checking",
+    "title": "How to Inspect Links Before Clicking",
+    "topic": "Phishing",
+    "type": "Guide",
+    "overview": "Learn how to inspect URLs, recognise suspicious domains, and slow down before clicking links in emails or messages.",
+    "estimatedMinutes": 8,
+    "openUrl": "https://www.cisa.gov/",
+    "previewUrl": "",
+    "appliesToSources": [ "Phishing Simulator", "Quiz" ],
+    "misconceptionTags": [ "link", "lookalike-domain", "credential-harvest", "legit-link" ],
+    "resources": [
+      {
+        "title": "CISA cyber guidance",
+        "type": "Article",
+        "source": "CISA",
+        "url": "https://www.cisa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "phish-urgency-pressure",
+    "title": "Spotting Urgency and Pressure Tactics",
+    "topic": "Phishing",
+    "type": "Article",
+    "overview": "Understand how attackers use fear, urgency, and pressure to force rushed decisions.",
+    "estimatedMinutes": 6,
+    "openUrl": "https://www.ncsc.gov.uk/",
+    "previewUrl": "",
+    "appliesToSources": [ "Phishing Simulator", "Quiz" ],
+    "misconceptionTags": [ "urgency", "pressure", "social-engineering", "billing" ],
+    "resources": [
+      {
+        "title": "NCSC cyber security advice",
+        "type": "Article",
+        "source": "NCSC",
+        "url": "https://www.ncsc.gov.uk/"
+      }
+    ]
+  },
+  {
+    "id": "phish-attachments-macros",
+    "title": "Attachments, Macros and Safe Opening Habits",
+    "topic": "Phishing",
+    "type": "Guide",
+    "overview": "Covers risky attachments, fake invoices, and why macro-enabled files are dangerous.",
+    "estimatedMinutes": 10,
+    "openUrl": "https://www.cisa.gov/",
+    "previewUrl": "",
+    "appliesToSources": [ "Phishing Simulator", "Quiz" ],
+    "misconceptionTags": [ "attachment", "macro", "invoice", "billing" ],
+    "resources": [
+      {
+        "title": "Attachment safety guidance",
+        "type": "Article",
+        "source": "CISA",
+        "url": "https://www.cisa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "password-basics",
+    "title": "Building Strong Password Habits",
+    "topic": "Passwords",
+    "type": "Guide",
+    "overview": "Learn what makes a password strong, how reuse creates risk, and how to create better credentials.",
+    "estimatedMinutes": 9,
+    "openUrl": "https://www.ncsc.gov.uk/",
+    "previewUrl": "",
+    "appliesToSources": [ "Quiz", "Password Workshop" ],
+    "misconceptionTags": [],
+    "resources": [
+      {
+        "title": "NCSC password advice",
+        "type": "Article",
+        "source": "NCSC",
+        "url": "https://www.ncsc.gov.uk/"
+      }
+    ]
+  },
+  {
+    "id": "password-managers",
+    "title": "Using a Password Manager Properly",
+    "topic": "Passwords",
+    "type": "Article",
+    "overview": "Explains what password managers do, why they help, and what good password manager behaviour looks like.",
+    "estimatedMinutes": 7,
+    "openUrl": "https://www.cisa.gov/",
+    "previewUrl": "",
+    "appliesToSources": [ "Quiz", "Password Workshop" ],
+    "misconceptionTags": [],
+    "resources": [
+      {
+        "title": "Password manager guidance",
+        "type": "Article",
+        "source": "CISA",
+        "url": "https://www.cisa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "social-engineering-basics",
+    "title": "Social Engineering Fundamentals",
+    "topic": "SocialEngineering",
+    "type": "Article",
+    "overview": "Covers impersonation, authority abuse, urgency tactics, and how attackers manipulate trust.",
+    "estimatedMinutes": 8,
+    "openUrl": "https://www.ncsc.gov.uk/",
+    "previewUrl": "",
+    "appliesToSources": [ "Quiz", "Phishing Simulator" ],
+    "misconceptionTags": [ "social-engineering", "pressure", "urgency", "reply-to-mismatch" ],
+    "resources": [
+      {
+        "title": "NCSC guidance",
+        "type": "Article",
+        "source": "NCSC",
+        "url": "https://www.ncsc.gov.uk/"
+      }
+    ]
+  }
+]

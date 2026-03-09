@@ -36,7 +36,7 @@
             this.btnNavMiniGames = new System.Windows.Forms.Button();
             this.btnNavReports = new System.Windows.Forms.Button();
             this.btnNavLeaderboard = new System.Windows.Forms.Button();
-            this.btnNavCommunity = new System.Windows.Forms.Button();
+            this.btnNavModules = new System.Windows.Forms.Button();
             this.btnNavSettings = new System.Windows.Forms.Button();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tlpPage = new System.Windows.Forms.TableLayoutPanel();
@@ -102,10 +102,10 @@
             this.tlpQuizCenter = new System.Windows.Forms.TableLayoutPanel();
             this.btnStartQuiz = new Syncfusion.WinForms.Controls.SfButton();
             this.cmbStatsSource = new System.Windows.Forms.ComboBox();
+            this.lblStatsSource = new System.Windows.Forms.Label();
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lblFooterUser = new System.Windows.Forms.Label();
             this.lblFooterLeft = new System.Windows.Forms.Label();
-            this.lblStatsSource = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -172,7 +172,7 @@
             this.flpNav.Controls.Add(this.btnNavMiniGames);
             this.flpNav.Controls.Add(this.btnNavReports);
             this.flpNav.Controls.Add(this.btnNavLeaderboard);
-            this.flpNav.Controls.Add(this.btnNavCommunity);
+            this.flpNav.Controls.Add(this.btnNavModules);
             this.flpNav.Controls.Add(this.btnNavSettings);
             this.flpNav.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpNav.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -256,19 +256,19 @@
             this.btnNavLeaderboard.Text = "LEADERBOARD";
             this.btnNavLeaderboard.UseVisualStyleBackColor = false;
             // 
-            // btnNavCommunity
+            // btnNavModules
             // 
-            this.btnNavCommunity.FlatAppearance.BorderSize = 0;
-            this.btnNavCommunity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNavCommunity.Font = new System.Drawing.Font("Agency", 10F);
-            this.btnNavCommunity.ForeColor = System.Drawing.Color.White;
-            this.btnNavCommunity.Location = new System.Drawing.Point(0, 360);
-            this.btnNavCommunity.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNavCommunity.Name = "btnNavCommunity";
-            this.btnNavCommunity.Size = new System.Drawing.Size(240, 52);
-            this.btnNavCommunity.TabIndex = 5;
-            this.btnNavCommunity.Text = "COMMUNITY";
-            this.btnNavCommunity.UseVisualStyleBackColor = false;
+            this.btnNavModules.FlatAppearance.BorderSize = 0;
+            this.btnNavModules.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNavModules.Font = new System.Drawing.Font("Agency", 10F);
+            this.btnNavModules.ForeColor = System.Drawing.Color.White;
+            this.btnNavModules.Location = new System.Drawing.Point(0, 360);
+            this.btnNavModules.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNavModules.Name = "btnNavModules";
+            this.btnNavModules.Size = new System.Drawing.Size(240, 52);
+            this.btnNavModules.TabIndex = 5;
+            this.btnNavModules.Text = "Learning Modules";
+            this.btnNavModules.UseVisualStyleBackColor = false;
             // 
             // btnNavSettings
             // 
@@ -1072,7 +1072,7 @@
             this.tlpQuizCenter.RowCount = 1;
             this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tlpQuizCenter.Size = new System.Drawing.Size(902, 80);
             this.tlpQuizCenter.TabIndex = 0;
             // 
@@ -1102,11 +1102,21 @@
             "QUIZ",
             "PHISHING SIMULATOR",
             "PASSWORD WORKSHOP"});
-            this.cmbStatsSource.Location = new System.Drawing.Point(162, 27);
+            this.cmbStatsSource.Location = new System.Drawing.Point(162, 26);
             this.cmbStatsSource.Name = "cmbStatsSource";
             this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
             this.cmbStatsSource.TabIndex = 2;
             this.cmbStatsSource.SelectedIndexChanged += new System.EventHandler(this.cmbStatsSource_SelectedIndexChanged);
+            // 
+            // lblStatsSource
+            // 
+            this.lblStatsSource.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblStatsSource.AutoSize = true;
+            this.lblStatsSource.Location = new System.Drawing.Point(33, 31);
+            this.lblStatsSource.Name = "lblStatsSource";
+            this.lblStatsSource.Size = new System.Drawing.Size(123, 18);
+            this.lblStatsSource.TabIndex = 3;
+            this.lblStatsSource.Text = "Filter stats by:";
             // 
             // pnlFooter
             // 
@@ -1141,16 +1151,6 @@
             this.lblFooterLeft.TabIndex = 0;
             this.lblFooterLeft.Text = "© 2026 Mondas Learning";
             this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblStatsSource
-            // 
-            this.lblStatsSource.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblStatsSource.AutoSize = true;
-            this.lblStatsSource.Location = new System.Drawing.Point(33, 31);
-            this.lblStatsSource.Name = "lblStatsSource";
-            this.lblStatsSource.Size = new System.Drawing.Size(123, 18);
-            this.lblStatsSource.TabIndex = 3;
-            this.lblStatsSource.Text = "Filter stats by:";
             // 
             // DashboardForm
             // 
@@ -1222,7 +1222,7 @@
         private System.Windows.Forms.Button btnNavMiniGames;
         private System.Windows.Forms.Button btnNavReports;
         private System.Windows.Forms.Button btnNavLeaderboard;
-        private System.Windows.Forms.Button btnNavCommunity;
+        private System.Windows.Forms.Button btnNavModules;
         private System.Windows.Forms.Button btnNavSettings;
         private System.Windows.Forms.TableLayoutPanel tlpPage;
         private System.Windows.Forms.TableLayoutPanel tlpHeader;
