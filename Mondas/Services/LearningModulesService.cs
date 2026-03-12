@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Net.Http.Headers;
-using Syncfusion.Windows.Forms.Tools;
+using Microsoft.Data.Sqlite;
 
 namespace Mondas.Services
 {
     public sealed class LearningModulesService
     {
         private readonly string _modulesPath;
+        private readonly string _dbPath;
         private readonly JsonSerializerOptions _json = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, WriteIndented = true };
 
-        public LearningModulesService(string modulesPath)
+        public LearningModulesService(string modulesPath, string dbPath)
         {
             _modulesPath = modulesPath ?? throw new ArgumentNullException(nameof(modulesPath));
+            _dbPath = dbPath ?? throw new ArgumentNullException(nameof(dbPath));
         }
 
         public List<LearningModule> LoadModules()
@@ -40,93 +41,93 @@ namespace Mondas.Services
 
         public LearningModuleState LoadState(string userKey)
         {
-            var path = GetStatePath(userKey);
+            var state = new LearningModuleState { UserKey = NormaliseUserKey(userKey), CompletedModuleIds = new List<string>(), BookmarkedModuleIds = new List<string>(), PassedCheckModuleIds = new List<string>() };
 
-            try
+            using var conn = Open();
+
+            if (!TableExists(conn, "LearningModuleProgress"))
             {
-                if (!File.Exists(path))
-                {
-                    return new LearningModuleState { UserKey = NormaliseUserKey(userKey) };
-                }
-
-                var json = File.ReadAllText(path);
-                var state = JsonSerializer.Deserialize<LearningModuleState>(json, _json) ?? new LearningModuleState();
-                state.UserKey = NormaliseUserKey(userKey);
-                state.CompletedModuleIds ??= new List<string>();
-                state.BookmarkedModuleIds ??= new List<string>();
                 return state;
             }
 
-            catch
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT ModuleId, IsCompleted, IsBookmarked, CheckPassed FROM LearningModuleProgress WHERE UserKey = $uk;";
+            cmd.Parameters.AddWithValue("$uk", state.UserKey);
+
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
             {
-                return new LearningModuleState { UserKey = NormaliseUserKey(userKey) };
+                var moduleId = r.IsDBNull(0) ? "" : (r.GetString(0) ?? "").Trim();
+
+                if (moduleId.Length == 0)
+                {
+                    continue;
+                }
+
+                if (!r.IsDBNull(1) && r.GetInt32(1) == 1)
+                {
+                    state.CompletedModuleIds.Add(moduleId);
+                }
+
+                if (!r.IsDBNull(2) && r.GetInt32(2) == 1)
+                {
+                    state.BookmarkedModuleIds.Add(moduleId);
+                }
+
+                if (!r.IsDBNull(3) && r.GetInt32(3) == 1)
+                {
+                    state.PassedCheckModuleIds.Add(moduleId);
+                }
             }
-        }
 
-        public void SaveState(LearningModuleState state)
-        {
-            if (state == null)
-            {
-                return;
-            }
-
-            state.UserKey = NormaliseUserKey(state.UserKey);
-            state.CompletedModuleIds ??= new List<string>();
-            state.BookmarkedModuleIds ??= new List<string>();
-
-            var path = GetStatePath(state.UserKey);
-            Directory.CreateDirectory(Path.GetDirectoryName(path) ?? AppContext.BaseDirectory);
-
-            var json = JsonSerializer.Serialize(state, _json);
-            File.WriteAllText(path, json);
+            return state;
         }
 
         public bool ToggleComplete(string userKey, string moduleId)
         {
-            var state = LoadState(userKey);
-            var id = (moduleId ?? "").Trim();
-
-            if (id.Length == 0)
-            {
-                return false;
-            }
-
-            if (state.CompletedModuleIds.Any(x => string.Equals(x, id, StringComparison.OrdinalIgnoreCase)))
-            {
-                state.CompletedModuleIds = state.CompletedModuleIds.Where(x => !string.Equals(x, id, StringComparison.OrdinalIgnoreCase)).ToList();
-                SaveState(state);
-
-                return false;
-            }
-
-            state.CompletedModuleIds.Add(id);
-            SaveState(state);
-
-            return true;
+            return ToggleFlag(userKey, moduleId, "IsCompleted", "CompletedAt");
         }
 
         public bool ToggleBookmark(string userKey, string moduleId)
         {
-            var state = LoadState(userKey);
-            var id = (moduleId ?? "").Trim();
+            return ToggleFlag(userKey, moduleId, "IsBookmarked", "BookmarkedAt");
+        }
 
-            if (id.Length == 0)
+        public void MarkCheckPassed(string userKey, string moduleId)
+        {
+            SetFlag(userKey, moduleId, "CheckPassed", "CheckPassedAt", true);
+        }
+
+        public void SaveCheckAttempt(string userKey, LearningModule module, int questionIndex, bool isCorrect, double secondsTaken)
+        {
+            if (module == null)
             {
-                return false;
+                return;
             }
 
-            if (state.BookmarkedModuleIds.Any(x => string.Equals(x, id, StringComparison.OrdinalIgnoreCase)))
-            {
-                state.BookmarkedModuleIds = state.BookmarkedModuleIds.Where(x => !string.Equals(x, id, StringComparison.OrdinalIgnoreCase)).ToList();
-                SaveState(state);
+            using var conn = Open();
 
-                return false;
+            if (!TableExists(conn, "LearningModuleAttempts"))
+            {
+                return;
             }
 
-            state.BookmarkedModuleIds.Add(id);
-            SaveState(state);
+            using var cmd = conn.CreateCommand();
 
-            return true;
+            cmd.CommandText = @"INSERT INTO LearningModuleAttempts (UserKey, ModuleId, Topic, Difficulty, QuestionIndex, IsCorrect, SecondsTaken, SubmittedAt, MisconceptionTagsJson) VALUES ($uk, $mid, $topic, $difficulty, $qidx, $ok, $secs, $ts, $tags);";
+
+            cmd.Parameters.AddWithValue("$uk", NormaliseUserKey(userKey));
+            cmd.Parameters.AddWithValue("$mid", (module.Id ?? "").Trim());
+            cmd.Parameters.AddWithValue("$topic", (int)ParseTopic(module.Topic));
+            cmd.Parameters.AddWithValue("$difficulty", (int)DifficultyBand.Medium);
+            cmd.Parameters.AddWithValue("$qidx", questionIndex);
+            cmd.Parameters.AddWithValue("$ok", isCorrect ? 1 : 0);
+            cmd.Parameters.AddWithValue("$secs", Math.Max(0.0, secondsTaken));
+            cmd.Parameters.AddWithValue("$ts", DateTime.UtcNow.ToString("o"));
+            cmd.Parameters.AddWithValue("$tags", JsonSerializer.Serialize(module.MisconceptionTags ?? new List<string>(), _json));
+            
+            cmd.ExecuteNonQuery();
         }
 
         public bool AppliesToSource(LearningModule module, StatsSource source)
@@ -205,7 +206,7 @@ namespace Mondas.Services
         {
             if (module == null)
             {
-                return "Recommended modules will appear here based on your weak areas and isconceptions.";
+                return "Recommended modules will show here based on your weak areas and misconceptions.";
             }
 
             var reasons = new List<string>();
@@ -300,11 +301,99 @@ namespace Mondas.Services
             return result;
         }
 
+        private bool ToggleFlag(string userKey, string moduleId, string flagColumn, string timeColumn)
+        {
+            var next = !ReadFlag(userKey, moduleId, flagColumn);
+            SetFlag(userKey, moduleId, flagColumn, timeColumn, next);
+
+            return next;
+        }
+
+        private bool ReadFlag(string userKey, string moduleId, string flagColumn)
+        {
+            using var conn = Open();
+
+            if (!TableExists(conn, "LearningModuleProgress"))
+            {
+                return false;
+            }
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = $"SELECT {flagColumn} FROM LearningModuleProgress WHERE UserKey = $uk AND ModuleId = $mid LIMIT 1;";
+            cmd.Parameters.AddWithValue("$uk", NormaliseUserKey(userKey));
+            cmd.Parameters.AddWithValue("$mid", (moduleId ?? "").Trim());
+
+            var obj = cmd.ExecuteScalar();
+
+            if (obj == null || obj == DBNull.Value)
+            {
+                return false;
+            }
+
+            return Convert.ToInt32(obj) == 1;
+        }
+
+        private void SetFlag(string userKey, string moduleId, string flagColumn, string timeColumn, bool value)
+        {
+            var id = (moduleId ?? "").Trim();
+
+            if (id.Length == 0)
+            {
+                return;
+            }
+
+            using var conn = Open();
+
+            if (!TableExists(conn, "LearningModuleProgress"))
+            {
+                return;
+            }
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = $@"INSERT INTO LearningModuleProgress (UserKey, ModuleId, {flagColumn}, {timeColumn}) VALUES ($uk, $mid, $value, $at) ON CONFLICT(UserKey, ModuleId) DO UPDATE SET {flagColumn} = excluded.{flagColumn}, {timeColumn} = excluded.{timeColumn};";
+        
+            cmd.Parameters.AddWithValue("$uk", NormaliseUserKey(userKey));
+            cmd.Parameters.AddWithValue("$mid", id);
+            cmd.Parameters.AddWithValue("$value", value ? 1 : 0);
+            cmd.Parameters.AddWithValue("$at", value ? DateTime.UtcNow.ToString("o") : (object)DBNull.Value);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        private SqliteConnection Open()
+        {
+            var conn = new SqliteConnection($"Data Source={_dbPath}");
+            conn.Open();
+
+            using var pragma = conn.CreateCommand();
+            pragma.CommandText = "PRAGMA foreign_keys = ON;";
+            pragma.ExecuteNonQuery();
+
+            return conn;
+        }
+
+        private static bool TableExists(SqliteConnection conn, string tableName)
+        {
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = $name LIMIT 1;";
+            cmd.Parameters.AddWithValue("$name", tableName);
+
+            var obj = cmd.ExecuteScalar();
+            return obj != null && obj != DBNull.Value;
+        }
+
+        private static Topic ParseTopic(string value)
+        {
+            var text = Normalise(value);
+
+            return text switch { "PHISHING" => Topic.Phishing, "PASSWORD" => Topic.Passwords, "PASSWORDS" => Topic.Passwords, "DEVICESECURITY" => Topic.DeviceSecurity, "SOCIALENGINEERING" => Topic.SocialEngineering, _ => Topic.Other };
+        }
+
         private static bool SourceMatches(string raw, StatsSource source)
         {
             var text = Normalise(raw);
 
-            return source switch { StatsSource.Quiz => text == "QUIZ", StatsSource.PhishingSimulator => text == "PHISHINGSIMULATOR" || text == "PHISHING", StatsSource.PasswordWorkshop => text == "PASSWORDWORKSHOP" || text == "PASSWORDS", _ => text == "ALL" };
+            return source switch { StatsSource.Quiz => text == "QUIZ", StatsSource.PhishingSimulator => text == "PHISHINGSIMULATOR" || text == "PHISHING", StatsSource.PasswordWorkshop => text == "PASSWORDWORKSHOP" || text == "PASSWORDS", StatsSource.LearningModules => text == "LEARNINGMODULES", _ => text == "ALL" };
         }
 
         private static string Normalise(string value)
@@ -315,17 +404,6 @@ namespace Mondas.Services
         private static string NormaliseUserKey(string userKey)
         {
             return string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
-        }
-
-        private static string GetSafeUserKey(string userKey)
-        {
-            return NormaliseUserKey(userKey).Replace(":", "_").Replace("/", "_").Replace("\\", "_");
-        }
-
-        private static string GetStatePath(string userKey)
-        {
-            var safe = GetSafeUserKey(userKey);
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Mondas", "learning", safe + ".json");
         }
     }
 }

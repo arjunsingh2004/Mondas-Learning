@@ -43,7 +43,8 @@ namespace Mondas.Models
         All,
         Quiz,
         PhishingSimulator,
-        PasswordWorkshop
+        PasswordWorkshop,
+        LearningModules
     }
 
     public sealed class ChartFilters

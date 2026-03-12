@@ -39,6 +39,9 @@
             this.btnNavSettings = new System.Windows.Forms.Button();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tlpPage = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlFooter = new System.Windows.Forms.Panel();
+            this.lblFooterUser = new System.Windows.Forms.Label();
+            this.lblFooterLeft = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.tlpHeader = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeaderRight = new System.Windows.Forms.Panel();
@@ -88,12 +91,18 @@
             this.btnBookmark = new Syncfusion.WinForms.Controls.SfButton();
             this.btnMarkComplete = new Syncfusion.WinForms.Controls.SfButton();
             this.btnOpenResource = new Syncfusion.WinForms.Controls.SfButton();
-            this.pnlFooter = new System.Windows.Forms.Panel();
-            this.lblFooterUser = new System.Windows.Forms.Label();
-            this.lblFooterLeft = new System.Windows.Forms.Label();
+            this.tabCheck = new System.Windows.Forms.TabPage();
+            this.tlpCheck = new System.Windows.Forms.TableLayoutPanel();
+            this.lblCheckQuestion = new System.Windows.Forms.Label();
+            this.flpCheckOptions = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblCheckFeedback = new System.Windows.Forms.Label();
+            this.pnlCheckActions = new System.Windows.Forms.Panel();
+            this.btnSubmitCheck = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnNextCheck = new Syncfusion.WinForms.Controls.SfButton();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.tlpPage.SuspendLayout();
+            this.pnlFooter.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.tlpHeader.SuspendLayout();
             this.pnlHeaderRight.SuspendLayout();
@@ -112,7 +121,9 @@
             this.tabPreview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wvPreview)).BeginInit();
             this.pnlActions.SuspendLayout();
-            this.pnlFooter.SuspendLayout();
+            this.tabCheck.SuspendLayout();
+            this.tlpCheck.SuspendLayout();
+            this.pnlCheckActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // flpNav
@@ -277,6 +288,40 @@
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tlpPage.Size = new System.Drawing.Size(1104, 775);
             this.tlpPage.TabIndex = 0;
+            // 
+            // pnlFooter
+            // 
+            this.pnlFooter.Controls.Add(this.lblFooterUser);
+            this.pnlFooter.Controls.Add(this.lblFooterLeft);
+            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFooter.Location = new System.Drawing.Point(3, 734);
+            this.pnlFooter.Name = "pnlFooter";
+            this.pnlFooter.Size = new System.Drawing.Size(1098, 38);
+            this.pnlFooter.TabIndex = 4;
+            // 
+            // lblFooterUser
+            // 
+            this.lblFooterUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFooterUser.AutoSize = true;
+            this.lblFooterUser.ForeColor = System.Drawing.Color.Gray;
+            this.lblFooterUser.Location = new System.Drawing.Point(936, 15);
+            this.lblFooterUser.Name = "lblFooterUser";
+            this.lblFooterUser.Size = new System.Drawing.Size(153, 13);
+            this.lblFooterUser.TabIndex = 1;
+            this.lblFooterUser.Text = "User: Arjun Singh";
+            this.lblFooterUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblFooterLeft
+            // 
+            this.lblFooterLeft.AutoSize = true;
+            this.lblFooterLeft.Font = new System.Drawing.Font("Muro", 9F);
+            this.lblFooterLeft.ForeColor = System.Drawing.Color.Gray;
+            this.lblFooterLeft.Location = new System.Drawing.Point(10, 10);
+            this.lblFooterLeft.Name = "lblFooterLeft";
+            this.lblFooterLeft.Size = new System.Drawing.Size(195, 18);
+            this.lblFooterLeft.TabIndex = 0;
+            this.lblFooterLeft.Text = "© 2026 Mondas Learning";
+            this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pnlHeader
             // 
@@ -578,6 +623,7 @@
             this.lvRecommended.TabIndex = 0;
             this.lvRecommended.UseCompatibleStateImageBehavior = false;
             this.lvRecommended.View = System.Windows.Forms.View.Details;
+            this.lvRecommended.SelectedIndexChanged += new System.EventHandler(this.lvRecommended_SelectedIndexChanged);
             // 
             // colTitle
             // 
@@ -623,6 +669,7 @@
             this.lvModules.TabIndex = 0;
             this.lvModules.UseCompatibleStateImageBehavior = false;
             this.lvModules.View = System.Windows.Forms.View.Details;
+            this.lvModules.SelectedIndexChanged += new System.EventHandler(this.lvModules_SelectedIndexChanged);
             // 
             // columnTitle
             // 
@@ -708,6 +755,7 @@
             this.tabLearning.Controls.Add(this.tabOverview);
             this.tabLearning.Controls.Add(this.tabResources);
             this.tabLearning.Controls.Add(this.tabPreview);
+            this.tabLearning.Controls.Add(this.tabCheck);
             this.tabLearning.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabLearning.Location = new System.Drawing.Point(3, 95);
             this.tabLearning.Name = "tabLearning";
@@ -731,6 +779,7 @@
             this.rtbOverview.BackColor = System.Drawing.Color.White;
             this.rtbOverview.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbOverview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbOverview.Font = new System.Drawing.Font("Agency", 12F);
             this.rtbOverview.Location = new System.Drawing.Point(3, 3);
             this.rtbOverview.Name = "rtbOverview";
             this.rtbOverview.ReadOnly = true;
@@ -822,9 +871,10 @@
             // 
             this.lblProgressInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProgressInfo.AutoSize = true;
-            this.lblProgressInfo.Location = new System.Drawing.Point(493, 18);
+            this.lblProgressInfo.Font = new System.Drawing.Font("Agency", 6F);
+            this.lblProgressInfo.Location = new System.Drawing.Point(487, 30);
             this.lblProgressInfo.Name = "lblProgressInfo";
-            this.lblProgressInfo.Size = new System.Drawing.Size(231, 13);
+            this.lblProgressInfo.Size = new System.Drawing.Size(175, 10);
             this.lblProgressInfo.TabIndex = 3;
             this.lblProgressInfo.Text = "0 COMPLETED · 0 BOOKMARKED";
             // 
@@ -875,39 +925,113 @@
             this.btnOpenResource.UseVisualStyleBackColor = false;
             this.btnOpenResource.Click += new System.EventHandler(this.btnOpenResource_Click);
             // 
-            // pnlFooter
+            // tabCheck
             // 
-            this.pnlFooter.Controls.Add(this.lblFooterUser);
-            this.pnlFooter.Controls.Add(this.lblFooterLeft);
-            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFooter.Location = new System.Drawing.Point(3, 734);
-            this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(1098, 38);
-            this.pnlFooter.TabIndex = 4;
+            this.tabCheck.Controls.Add(this.tlpCheck);
+            this.tabCheck.Location = new System.Drawing.Point(4, 22);
+            this.tabCheck.Name = "tabCheck";
+            this.tabCheck.Size = new System.Drawing.Size(658, 365);
+            this.tabCheck.TabIndex = 3;
+            this.tabCheck.Text = "CHECK";
+            this.tabCheck.UseVisualStyleBackColor = true;
             // 
-            // lblFooterUser
+            // tlpCheck
             // 
-            this.lblFooterUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFooterUser.AutoSize = true;
-            this.lblFooterUser.ForeColor = System.Drawing.Color.Gray;
-            this.lblFooterUser.Location = new System.Drawing.Point(936, 15);
-            this.lblFooterUser.Name = "lblFooterUser";
-            this.lblFooterUser.Size = new System.Drawing.Size(153, 13);
-            this.lblFooterUser.TabIndex = 1;
-            this.lblFooterUser.Text = "User: Arjun Singh";
-            this.lblFooterUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tlpCheck.ColumnCount = 1;
+            this.tlpCheck.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCheck.Controls.Add(this.lblCheckQuestion, 0, 0);
+            this.tlpCheck.Controls.Add(this.flpCheckOptions, 0, 1);
+            this.tlpCheck.Controls.Add(this.lblCheckFeedback, 0, 2);
+            this.tlpCheck.Controls.Add(this.pnlCheckActions, 0, 3);
+            this.tlpCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpCheck.Location = new System.Drawing.Point(0, 0);
+            this.tlpCheck.Name = "tlpCheck";
+            this.tlpCheck.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.tlpCheck.RowCount = 4;
+            this.tlpCheck.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCheck.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCheck.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCheck.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCheck.Size = new System.Drawing.Size(658, 365);
+            this.tlpCheck.TabIndex = 0;
             // 
-            // lblFooterLeft
+            // lblCheckQuestion
             // 
-            this.lblFooterLeft.AutoSize = true;
-            this.lblFooterLeft.Font = new System.Drawing.Font("Muro", 9F);
-            this.lblFooterLeft.ForeColor = System.Drawing.Color.Gray;
-            this.lblFooterLeft.Location = new System.Drawing.Point(10, 10);
-            this.lblFooterLeft.Name = "lblFooterLeft";
-            this.lblFooterLeft.Size = new System.Drawing.Size(195, 18);
-            this.lblFooterLeft.TabIndex = 0;
-            this.lblFooterLeft.Text = "© 2026 Mondas Learning";
-            this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCheckQuestion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCheckQuestion.Font = new System.Drawing.Font("Muro", 15F);
+            this.lblCheckQuestion.Location = new System.Drawing.Point(0, 4);
+            this.lblCheckQuestion.Margin = new System.Windows.Forms.Padding(0);
+            this.lblCheckQuestion.Name = "lblCheckQuestion";
+            this.lblCheckQuestion.Padding = new System.Windows.Forms.Padding(8);
+            this.lblCheckQuestion.Size = new System.Drawing.Size(658, 78);
+            this.lblCheckQuestion.TabIndex = 0;
+            this.lblCheckQuestion.Text = "SELECT A MODULE TO START THE KNOWLEDGE CHECK";
+            this.lblCheckQuestion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // flpCheckOptions
+            // 
+            this.flpCheckOptions.AutoScroll = true;
+            this.flpCheckOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpCheckOptions.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpCheckOptions.Location = new System.Drawing.Point(3, 85);
+            this.flpCheckOptions.Name = "flpCheckOptions";
+            this.flpCheckOptions.Padding = new System.Windows.Forms.Padding(16, 16, 16, 8);
+            this.flpCheckOptions.Size = new System.Drawing.Size(652, 195);
+            this.flpCheckOptions.TabIndex = 1;
+            this.flpCheckOptions.WrapContents = false;
+            // 
+            // lblCheckFeedback
+            // 
+            this.lblCheckFeedback.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblCheckFeedback.Font = new System.Drawing.Font("Agency", 12F);
+            this.lblCheckFeedback.Location = new System.Drawing.Point(3, 283);
+            this.lblCheckFeedback.Name = "lblCheckFeedback";
+            this.lblCheckFeedback.Size = new System.Drawing.Size(652, 40);
+            this.lblCheckFeedback.TabIndex = 2;
+            this.lblCheckFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlCheckActions
+            // 
+            this.pnlCheckActions.Controls.Add(this.btnNextCheck);
+            this.pnlCheckActions.Controls.Add(this.btnSubmitCheck);
+            this.pnlCheckActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCheckActions.Location = new System.Drawing.Point(3, 326);
+            this.pnlCheckActions.Name = "pnlCheckActions";
+            this.pnlCheckActions.Size = new System.Drawing.Size(652, 36);
+            this.pnlCheckActions.TabIndex = 3;
+            // 
+            // btnSubmitCheck
+            // 
+            this.btnSubmitCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSubmitCheck.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnSubmitCheck.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnSubmitCheck.ForeColor = System.Drawing.Color.White;
+            this.btnSubmitCheck.Location = new System.Drawing.Point(343, -3);
+            this.btnSubmitCheck.Name = "btnSubmitCheck";
+            this.btnSubmitCheck.Size = new System.Drawing.Size(143, 36);
+            this.btnSubmitCheck.Style.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnSubmitCheck.Style.ForeColor = System.Drawing.Color.White;
+            this.btnSubmitCheck.TabIndex = 0;
+            this.btnSubmitCheck.Text = "SUBMIT ANSWER";
+            this.btnSubmitCheck.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSubmitCheck.UseVisualStyleBackColor = false;
+            this.btnSubmitCheck.Click += new System.EventHandler(this.btnSubmitCheck_Click);
+            // 
+            // btnNextCheck
+            // 
+            this.btnNextCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextCheck.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnNextCheck.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnNextCheck.ForeColor = System.Drawing.Color.White;
+            this.btnNextCheck.Location = new System.Drawing.Point(501, -3);
+            this.btnNextCheck.Name = "btnNextCheck";
+            this.btnNextCheck.Size = new System.Drawing.Size(143, 36);
+            this.btnNextCheck.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnNextCheck.Style.ForeColor = System.Drawing.Color.White;
+            this.btnNextCheck.TabIndex = 1;
+            this.btnNextCheck.Text = "NEXT QUESTION";
+            this.btnNextCheck.UseVisualStyleBackColor = false;
+            this.btnNextCheck.Click += new System.EventHandler(this.btnNextCheck_Click);
             // 
             // LearningModulesForm
             // 
@@ -931,6 +1055,8 @@
             this.flpNav.ResumeLayout(false);
             this.pnlContent.ResumeLayout(false);
             this.tlpPage.ResumeLayout(false);
+            this.pnlFooter.ResumeLayout(false);
+            this.pnlFooter.PerformLayout();
             this.pnlHeader.ResumeLayout(false);
             this.tlpHeader.ResumeLayout(false);
             this.pnlHeaderRight.ResumeLayout(false);
@@ -955,8 +1081,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.wvPreview)).EndInit();
             this.pnlActions.ResumeLayout(false);
             this.pnlActions.PerformLayout();
-            this.pnlFooter.ResumeLayout(false);
-            this.pnlFooter.PerformLayout();
+            this.tabCheck.ResumeLayout(false);
+            this.tlpCheck.ResumeLayout(false);
+            this.pnlCheckActions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1026,5 +1153,13 @@
         private System.Windows.Forms.Panel pnlFooter;
         private System.Windows.Forms.Label lblFooterUser;
         private System.Windows.Forms.Label lblFooterLeft;
+        private System.Windows.Forms.TabPage tabCheck;
+        private System.Windows.Forms.TableLayoutPanel tlpCheck;
+        private System.Windows.Forms.Label lblCheckQuestion;
+        private System.Windows.Forms.FlowLayoutPanel flpCheckOptions;
+        private System.Windows.Forms.Label lblCheckFeedback;
+        private System.Windows.Forms.Panel pnlCheckActions;
+        private Syncfusion.WinForms.Controls.SfButton btnSubmitCheck;
+        private Syncfusion.WinForms.Controls.SfButton btnNextCheck;
     }
 }

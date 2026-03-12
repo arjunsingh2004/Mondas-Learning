@@ -58,6 +58,8 @@
             this.lblKpiStreakValue = new System.Windows.Forms.Label();
             this.lblKpiStreakTitle = new System.Windows.Forms.Label();
             this.pnlFilters = new System.Windows.Forms.Panel();
+            this.lblSource = new System.Windows.Forms.Label();
+            this.cmbSource = new System.Windows.Forms.ComboBox();
             this.lblGroupBy = new System.Windows.Forms.Label();
             this.lblXAxis = new System.Windows.Forms.Label();
             this.lblMetric = new System.Windows.Forms.Label();
@@ -93,8 +95,6 @@
             this.lblSelectedReport = new System.Windows.Forms.Label();
             this.btnDownloadPdf = new Syncfusion.WinForms.Controls.SfButton();
             this.btnOpenExternal = new Syncfusion.WinForms.Controls.SfButton();
-            this.cmbSource = new System.Windows.Forms.ComboBox();
-            this.lblSource = new System.Windows.Forms.Label();
             this.tlpRoot.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -409,6 +409,35 @@
             this.pnlFilters.Name = "pnlFilters";
             this.pnlFilters.Size = new System.Drawing.Size(1112, 70);
             this.pnlFilters.TabIndex = 0;
+            // 
+            // lblSource
+            // 
+            this.lblSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSource.AutoSize = true;
+            this.lblSource.ForeColor = System.Drawing.Color.DimGray;
+            this.lblSource.Location = new System.Drawing.Point(998, 10);
+            this.lblSource.Name = "lblSource";
+            this.lblSource.Size = new System.Drawing.Size(99, 18);
+            this.lblSource.TabIndex = 14;
+            this.lblSource.Text = "SOURCE";
+            this.lblSource.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cmbSource
+            // 
+            this.cmbSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSource.FormattingEnabled = true;
+            this.cmbSource.Items.AddRange(new object[] {
+            "ALL",
+            "QUIZ",
+            "PHISHING SIMULATOR",
+            "PASSWORD WORKSHOP",
+            "LEARNING MODULES"});
+            this.cmbSource.Location = new System.Drawing.Point(988, 33);
+            this.cmbSource.Name = "cmbSource";
+            this.cmbSource.Size = new System.Drawing.Size(121, 26);
+            this.cmbSource.TabIndex = 13;
+            this.cmbSource.SelectedIndexChanged += new System.EventHandler(this.cmbSource_SelectedIndexChanged);
             // 
             // lblGroupBy
             // 
@@ -914,34 +943,6 @@
             this.btnOpenExternal.Text = "OPEN";
             this.btnOpenExternal.UseVisualStyleBackColor = false;
             this.btnOpenExternal.Click += new System.EventHandler(this.btnOpenExternal_Click);
-            // 
-            // cmbSource
-            // 
-            this.cmbSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSource.FormattingEnabled = true;
-            this.cmbSource.Items.AddRange(new object[] {
-            "ALL",
-            "QUIZ",
-            "PHISHING SIMULATOR",
-            "PASSWORD WORKSHOP"});
-            this.cmbSource.Location = new System.Drawing.Point(988, 33);
-            this.cmbSource.Name = "cmbSource";
-            this.cmbSource.Size = new System.Drawing.Size(121, 26);
-            this.cmbSource.TabIndex = 13;
-            this.cmbSource.SelectedIndexChanged += new System.EventHandler(this.cmbSource_SelectedIndexChanged);
-            // 
-            // lblSource
-            // 
-            this.lblSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSource.AutoSize = true;
-            this.lblSource.ForeColor = System.Drawing.Color.DimGray;
-            this.lblSource.Location = new System.Drawing.Point(998, 10);
-            this.lblSource.Name = "lblSource";
-            this.lblSource.Size = new System.Drawing.Size(99, 18);
-            this.lblSource.TabIndex = 14;
-            this.lblSource.Text = "SOURCE";
-            this.lblSource.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ReportsAndChartsForm
             // 

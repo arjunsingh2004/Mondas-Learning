@@ -10,6 +10,80 @@
     "previewUrl": "",
     "appliesToSources": [ "Phishing Simulator", "Quiz" ],
     "misconceptionTags": [ "link", "lookalike-domain", "credential-harvest", "legit-link" ],
+    "objectives": [
+      "Inspect a link before clicking it",
+      "Spot lookalike domains and suspicious URL patterns",
+      "Use a simple check process before trusting login links"
+    ],
+    "keyPoints": [
+      "Display text can be misleading",
+      "The real destination URL matters more than the button text",
+      "Unexpected login prompts should always be treated carefully"
+    ],
+    "redFlags": [
+      "Lookalike domains",
+      "Unexpected sign-in requests",
+      "Rushed wording pushing you to click quickly"
+    ],
+    "checklist": [
+      "Hover or inspect the link target",
+      "Check the root domain carefully",
+      "Ask whether the message was expected",
+      "Avoid signing in through unsolicited links"
+    ],
+    "examples": [
+      {
+        "title": "Fake account verification email",
+        "scenario": "An email asks you to verify your account immediately using a button that looks genuine.",
+        "takeaway": "Always inspect the real destination before trusting the button."
+      }
+    ],
+    "reflectionQuestions": [
+      "What clue would make you stop before clicking?",
+      "How would you verify a login request safely?"
+    ],
+    "checkQuestions": [
+      {
+        "prompt": "What is the best first step before clicking a link in an email?",
+        "options": [
+          {
+            "text": "Check the real destination URL",
+            "isCorrect": true,
+            "feedback": "Correct. The destination URL is one of the strongest phishing checks."
+          },
+          {
+            "text": "Trust it if the button looks professional",
+            "isCorrect": false,
+            "feedback": "Button styling is easy to fake."
+          },
+          {
+            "text": "Click it first and decide after the page loads",
+            "isCorrect": false,
+            "feedback": "That is too late. The check should happen before clicking."
+          }
+        ]
+      },
+      {
+        "prompt": "Which of these is the stronger phishing clue?",
+        "options": [
+          {
+            "text": "A message using your name",
+            "isCorrect": false,
+            "feedback": "Personalisation is easy for attackers to fake."
+          },
+          {
+            "text": "A lookalike domain in the link",
+            "isCorrect": true,
+            "feedback": "Correct. A suspicious domain is a major warning sign."
+          },
+          {
+            "text": "A blue sign-in button",
+            "isCorrect": false,
+            "feedback": "Visual design tells you very little by itself."
+          }
+        ]
+      }
+    ],
     "resources": [
       {
         "title": "CISA cyber guidance",
@@ -30,6 +104,80 @@
     "previewUrl": "",
     "appliesToSources": [ "Phishing Simulator", "Quiz" ],
     "misconceptionTags": [ "urgency", "pressure", "social-engineering", "billing" ],
+    "objectives": [
+      "Recognise urgency as a manipulation tactic",
+      "Slow down when a message tries to create panic",
+      "Choose a safer response instead of reacting instantly"
+    ],
+    "keyPoints": [
+      "Pressure is used to reduce careful thinking",
+      "Urgency does not prove legitimacy",
+      "Independent verification breaks the attacker’s momentum"
+    ],
+    "redFlags": [
+      "Immediate action demands",
+      "Threats of account closure or penalty",
+      "Language designed to trigger fear"
+    ],
+    "checklist": [
+      "Pause before acting",
+      "Check whether the request is expected",
+      "Verify through a trusted channel",
+      "Do not let countdown language rush you"
+    ],
+    "examples": [
+      {
+        "title": "Invoice due now",
+        "scenario": "A message says payment must be made within the hour or service will be suspended.",
+        "takeaway": "Urgency should make you verify the request, not obey it immediately."
+      }
+    ],
+    "reflectionQuestions": [
+      "What type of message pressures you most?",
+      "How can you slow yourself down when a message feels urgent?"
+    ],
+    "checkQuestions": [
+      {
+        "prompt": "Why do attackers use urgency in phishing messages?",
+        "options": [
+          {
+            "text": "To help users make informed decisions",
+            "isCorrect": false,
+            "feedback": "Urgency is meant to reduce careful thinking, not improve it."
+          },
+          {
+            "text": "To pressure users into acting before checking",
+            "isCorrect": true,
+            "feedback": "Correct. Pressure is used to force rushed decisions."
+          },
+          {
+            "text": "Because legitimate organisations always use threats",
+            "isCorrect": false,
+            "feedback": "Threatening language is not proof of legitimacy."
+          }
+        ]
+      },
+      {
+        "prompt": "What is the safest response to a highly urgent payment email?",
+        "options": [
+          {
+            "text": "Pay immediately to stay safe",
+            "isCorrect": false,
+            "feedback": "That is exactly what the attacker wants."
+          },
+          {
+            "text": "Forward it to everyone for advice",
+            "isCorrect": false,
+            "feedback": "That does not verify the request safely."
+          },
+          {
+            "text": "Verify it through a trusted and separate channel",
+            "isCorrect": true,
+            "feedback": "Correct. Independent verification is the safest response."
+          }
+        ]
+      }
+    ],
     "resources": [
       {
         "title": "NCSC cyber security advice",
@@ -50,6 +198,80 @@
     "previewUrl": "",
     "appliesToSources": [ "Phishing Simulator", "Quiz" ],
     "misconceptionTags": [ "attachment", "macro", "invoice", "billing" ],
+    "objectives": [
+      "Recognise risky attachment scenarios",
+      "Understand why macros are dangerous",
+      "Use safer habits when opening files"
+    ],
+    "keyPoints": [
+      "Attachments can contain malicious code",
+      "Macro prompts are a serious warning sign",
+      "Unexpected invoices and documents should be verified first"
+    ],
+    "redFlags": [
+      "Unexpected attachments",
+      "Requests to enable macros or editing",
+      "Invoice messages that create pressure"
+    ],
+    "checklist": [
+      "Check whether the attachment was expected",
+      "Verify the sender and request",
+      "Do not enable macros unless fully trusted",
+      "Treat invoice attachments cautiously"
+    ],
+    "examples": [
+      {
+        "title": "Fake invoice spreadsheet",
+        "scenario": "An email includes an invoice spreadsheet and tells you to enable content to view it properly.",
+        "takeaway": "Requests to enable content or macros are a major risk signal."
+      }
+    ],
+    "reflectionQuestions": [
+      "What type of attachment would make you stop and verify first?",
+      "Why are macro prompts such a strong warning sign?"
+    ],
+    "checkQuestions": [
+      {
+        "prompt": "What should you do if a document asks you to enable macros?",
+        "options": [
+          {
+            "text": "Enable them so the file works properly",
+            "isCorrect": false,
+            "feedback": "That can activate malicious code."
+          },
+          {
+            "text": "Treat it as suspicious and verify before doing anything",
+            "isCorrect": true,
+            "feedback": "Correct. Macro prompts are a major red flag."
+          },
+          {
+            "text": "Ignore the warning if the sender seems busy",
+            "isCorrect": false,
+            "feedback": "Pressure from the message should not override safety checks."
+          }
+        ]
+      },
+      {
+        "prompt": "Which attachment scenario is more suspicious?",
+        "options": [
+          {
+            "text": "An expected file from a known colleague",
+            "isCorrect": false,
+            "feedback": "This can still be risky, but it is less suspicious than an unexpected invoice."
+          },
+          {
+            "text": "An unexpected invoice attachment demanding urgent review",
+            "isCorrect": true,
+            "feedback": "Correct. Unexpected invoices plus urgency are strong phishing signals."
+          },
+          {
+            "text": "A file sent after you requested it through a trusted channel",
+            "isCorrect": false,
+            "feedback": "Expected files are not automatically safe, but the context is stronger."
+          }
+        ]
+      }
+    ],
     "resources": [
       {
         "title": "Attachment safety guidance",
@@ -70,6 +292,80 @@
     "previewUrl": "",
     "appliesToSources": [ "Quiz", "Password Workshop" ],
     "misconceptionTags": [],
+    "objectives": [
+      "Understand what makes a password stronger",
+      "See why password reuse increases risk",
+      "Build safer password habits for everyday use"
+    ],
+    "keyPoints": [
+      "Length matters a lot",
+      "Reused passwords spread damage across accounts",
+      "A strong password habit is more important than one perfect password"
+    ],
+    "redFlags": [
+      "Using the same password across services",
+      "Using predictable personal information",
+      "Using very short or common passwords"
+    ],
+    "checklist": [
+      "Use longer passwords or passphrases",
+      "Avoid reusing passwords",
+      "Do not build passwords around obvious personal details",
+      "Store strong unique passwords safely"
+    ],
+    "examples": [
+      {
+        "title": "Password reuse problem",
+        "scenario": "A breached shopping site exposes a password that is also used on email and banking accounts.",
+        "takeaway": "Reuse turns one breach into a much bigger problem."
+      }
+    ],
+    "reflectionQuestions": [
+      "Where might you still be reusing passwords?",
+      "What small habit change would improve your password security most?"
+    ],
+    "checkQuestions": [
+      {
+        "prompt": "Why is password reuse risky?",
+        "options": [
+          {
+            "text": "Because it makes typing slightly slower",
+            "isCorrect": false,
+            "feedback": "That is not the real issue."
+          },
+          {
+            "text": "Because one breach can affect multiple accounts",
+            "isCorrect": true,
+            "feedback": "Correct. Reuse allows one compromise to spread."
+          },
+          {
+            "text": "Because websites dislike repeated passwords",
+            "isCorrect": false,
+            "feedback": "The real risk is account compromise, not preference."
+          }
+        ]
+      },
+      {
+        "prompt": "Which password habit is stronger?",
+        "options": [
+          {
+            "text": "A unique long password for each account",
+            "isCorrect": true,
+            "feedback": "Correct. Uniqueness plus length is much safer."
+          },
+          {
+            "text": "One memorable password used everywhere",
+            "isCorrect": false,
+            "feedback": "That creates widespread risk if it is exposed."
+          },
+          {
+            "text": "A short password changed every year",
+            "isCorrect": false,
+            "feedback": "Short and predictable passwords are still weak."
+          }
+        ]
+      }
+    ],
     "resources": [
       {
         "title": "NCSC password advice",
@@ -90,6 +386,80 @@
     "previewUrl": "",
     "appliesToSources": [ "Quiz", "Password Workshop" ],
     "misconceptionTags": [],
+    "objectives": [
+      "Understand why password managers help",
+      "Know what a password manager should and should not be used for",
+      "Adopt better credential storage habits"
+    ],
+    "keyPoints": [
+      "Password managers support unique passwords at scale",
+      "The master password matters a lot",
+      "Convenience can improve security when used properly"
+    ],
+    "redFlags": [
+      "Saving sensitive passwords in insecure notes",
+      "Weak master passwords",
+      "Avoiding password managers due to myths"
+    ],
+    "checklist": [
+      "Use a strong master password",
+      "Store account passwords in the manager instead of reusing them",
+      "Review saved credentials periodically",
+      "Do not share your manager access casually"
+    ],
+    "examples": [
+      {
+        "title": "From reuse to unique passwords",
+        "scenario": "A user replaces reused passwords with unique generated ones stored in a password manager.",
+        "takeaway": "Password managers make strong unique credentials much more practical."
+      }
+    ],
+    "reflectionQuestions": [
+      "What has stopped you from using a password manager fully?",
+      "How would a manager reduce your reuse risk?"
+    ],
+    "checkQuestions": [
+      {
+        "prompt": "What is one of the main benefits of a password manager?",
+        "options": [
+          {
+            "text": "It encourages password reuse",
+            "isCorrect": false,
+            "feedback": "It should reduce reuse, not encourage it."
+          },
+          {
+            "text": "It makes unique passwords easier to manage",
+            "isCorrect": true,
+            "feedback": "Correct. That is one of its biggest security benefits."
+          },
+          {
+            "text": "It removes the need for any security habits",
+            "isCorrect": false,
+            "feedback": "A password manager helps, but it does not replace good habits."
+          }
+        ]
+      },
+      {
+        "prompt": "What should be especially strong when using a password manager?",
+        "options": [
+          {
+            "text": "The master password",
+            "isCorrect": true,
+            "feedback": "Correct. The master password protects access to the vault."
+          },
+          {
+            "text": "Only your least important account password",
+            "isCorrect": false,
+            "feedback": "The master password is the critical one here."
+          },
+          {
+            "text": "The website colour theme",
+            "isCorrect": false,
+            "feedback": "That has nothing to do with credential security."
+          }
+        ]
+      }
+    ],
     "resources": [
       {
         "title": "Password manager guidance",
@@ -110,6 +480,80 @@
     "previewUrl": "",
     "appliesToSources": [ "Quiz", "Phishing Simulator" ],
     "misconceptionTags": [ "social-engineering", "pressure", "urgency", "reply-to-mismatch" ],
+    "objectives": [
+      "Understand how social engineering manipulates trust",
+      "Recognise impersonation and authority abuse",
+      "Respond more carefully when human pressure is used"
+    ],
+    "keyPoints": [
+      "Attackers target judgement as much as technology",
+      "Authority, urgency and familiarity are common manipulation tools",
+      "A separate verification step reduces risk"
+    ],
+    "redFlags": [
+      "Pressure from someone claiming authority",
+      "Unexpected requests for urgent help",
+      "Mismatch between claimed identity and message details"
+    ],
+    "checklist": [
+      "Pause before complying",
+      "Check whether the identity claim makes sense",
+      "Verify through another channel",
+      "Do not rely only on tone or familiarity"
+    ],
+    "examples": [
+      {
+        "title": "Fake senior leader request",
+        "scenario": "A message claims to be from a senior leader and asks for urgent action outside normal process.",
+        "takeaway": "Authority claims should be verified, especially when they bypass normal checks."
+      }
+    ],
+    "reflectionQuestions": [
+      "Which influence tactic affects you most: authority, urgency or familiarity?",
+      "What independent check would you use before responding?"
+    ],
+    "checkQuestions": [
+      {
+        "prompt": "What is social engineering mainly trying to exploit?",
+        "options": [
+          {
+            "text": "Human judgement and behaviour",
+            "isCorrect": true,
+            "feedback": "Correct. Social engineering attacks people and decisions."
+          },
+          {
+            "text": "Only weak Wi-Fi signals",
+            "isCorrect": false,
+            "feedback": "That is unrelated to the main idea here."
+          },
+          {
+            "text": "Only outdated hardware",
+            "isCorrect": false,
+            "feedback": "Social engineering focuses on people first."
+          }
+        ]
+      },
+      {
+        "prompt": "What is the safest response to an urgent request from apparent authority?",
+        "options": [
+          {
+            "text": "Comply immediately to avoid trouble",
+            "isCorrect": false,
+            "feedback": "That is the rushed response an attacker wants."
+          },
+          {
+            "text": "Verify through a trusted separate channel",
+            "isCorrect": true,
+            "feedback": "Correct. Independent verification helps break the manipulation."
+          },
+          {
+            "text": "Assume it is safe if the tone sounds confident",
+            "isCorrect": false,
+            "feedback": "Confident tone is easy to fake."
+          }
+        ]
+      }
+    ],
     "resources": [
       {
         "title": "NCSC guidance",

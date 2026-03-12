@@ -471,11 +471,11 @@
             // 
             this.lblStatus.AutoSize = true;
             this.lblStatus.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblStatus.Font = new System.Drawing.Font("Agency", 11F);
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblStatus.ForeColor = System.Drawing.Color.DimGray;
             this.lblStatus.Location = new System.Drawing.Point(0, 0);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblStatus.Size = new System.Drawing.Size(0, 26);
             this.lblStatus.TabIndex = 0;
             // 
             // LoginForm

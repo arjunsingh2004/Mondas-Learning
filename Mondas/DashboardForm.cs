@@ -718,5 +718,27 @@ namespace Mondas
         {
             RefreshDashboard();
         }
+
+        private void btnNavModules_Click(object sender, EventArgs e)
+        {
+            var f = new LearningModulesForm(_userKey);
+
+            f.FormClosed += (_, __) =>
+            {
+                try
+                {
+                    Show();
+                    RefreshDashboard();
+                }
+
+                catch
+                {
+
+                }
+            };
+
+            f.Show();
+            Hide();
+        }
     }
 }

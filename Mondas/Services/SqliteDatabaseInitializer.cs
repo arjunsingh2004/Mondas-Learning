@@ -114,6 +114,40 @@ namespace Mondas.Services
             EmailSnapshotJson TEXT NOT NULL
             );
 
+            CREATE TABLE IF NOT EXISTS LearningModuleProgress (
+            UserKey TEXT NOT NULL,
+            ModuleId TEXT NOT NULL,
+            IsCompleted INTEGER NOT NULL DEFAULT 0,
+            IsBookmarked INTEGER NOT NULL DEFAULT 0,
+            CheckPassed INTEGER NOT NULL DEFAULT 0,
+            CompletedAt TEXT,
+            BookmarkedAt TEXT,
+            CheckPassedAt TEXT,
+            PRIMARY KEY (UserKey, ModuleId)
+            );
+
+            CREATE TABLE IF NOT EXISTS LearningModuleAttempts (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            UserKey TEXT NOT NULL,
+            ModuleId TEXT NOT NULL,
+            Topic INTEGER NOT NULL,
+            Difficulty INTEGER NOT NULL DEFAULT 1,
+            QuestionIndex INTEGER NOT NULL,
+            IsCorrect INTEGER NOT NULL,
+            SecondsTaken REAL NOT NULL DEFAULT 0,
+            SubmittedAt TEXT NOT NULL,
+            MisconceptionTagsJson TEXT NOT NULL DEFAULT '[]'
+            );
+
+            CREATE INDEX IF NOT EXISTS IX_LearningModuleProgress_User_Module
+            ON LearningModuleProgress(UserKey, ModuleId);
+
+            CREATE INDEX IF NOT EXISTS IX_LearningModuleAttempts_User_Submitted
+            ON LearningModuleAttempts(UserKey, SubmittedAt);
+
+            CREATE INDEX IF NOT EXISTS IX_LearningModuleAttempts_User_Module
+            ON LearningModuleAttempts(UserKey, ModuleId);
+
             CREATE INDEX IF NOT EXISTS IX_PhishingAttempts_User_Submitted
             ON PhishingAttempts(UserKey, SubmittedAt);
 

@@ -269,6 +269,7 @@
             this.btnNavModules.TabIndex = 5;
             this.btnNavModules.Text = "Learning Modules";
             this.btnNavModules.UseVisualStyleBackColor = false;
+            this.btnNavModules.Click += new System.EventHandler(this.btnNavModules_Click);
             // 
             // btnNavSettings
             // 
@@ -1101,7 +1102,8 @@
             "ALL",
             "QUIZ",
             "PHISHING SIMULATOR",
-            "PASSWORD WORKSHOP"});
+            "PASSWORD WORKSHOP",
+            "LEARNING MODULES"});
             this.cmbStatsSource.Location = new System.Drawing.Point(162, 26);
             this.cmbStatsSource.Name = "cmbStatsSource";
             this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
