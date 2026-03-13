@@ -242,9 +242,10 @@ namespace Mondas
             {
                 return;
             }
+
             tb.Text = placeholder;
             tb.ForeColor = Color.Gray;
-            tb.UseSystemPasswordChar = false;
+            tb.PasswordChar = '\0';
 
             tb.GotFocus += (s, e) =>
             {
@@ -252,18 +253,23 @@ namespace Mondas
                 {
                     tb.Text = "";
                     tb.ForeColor = Color.Black;
-                    tb.UseSystemPasswordChar = isPassword;
                 }
+
+                tb.PasswordChar = isPassword ? '●' : '\0';
             };
 
             tb.LostFocus += (s, e) =>
             {
                 if (string.IsNullOrWhiteSpace(tb.Text))
                 {
-                    tb.UseSystemPasswordChar = false;
+                    tb.PasswordChar = '\0';
                     tb.Text = placeholder;
                     tb.ForeColor = Color.Gray;
+
+                    return;
                 }
+
+                tb.PasswordChar = isPassword ? '●' : '\0';
             };
         }
     

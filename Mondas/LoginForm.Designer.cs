@@ -325,7 +325,6 @@
             this.txtPassword.Size = new System.Drawing.Size(440, 29);
             this.txtPassword.TabIndex = 0;
             this.txtPassword.Text = "Password";
-            this.txtPassword.UseSystemPasswordChar = true;
             // 
             // tlpRememberRow
             // 

@@ -357,6 +357,11 @@ namespace Mondas
                 return StatsSource.PasswordWorkshop;
             }
 
+            if (text.Contains("LEARNING"))
+            {
+                return StatsSource.LearningModules;
+            }
+
             if (text.Contains("QUIZ"))
             {
                 return StatsSource.Quiz;
@@ -589,6 +594,7 @@ namespace Mondas
 
             bool includeQuiz = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.Quiz;
             bool includePhish = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.PhishingSimulator;
+            bool includeLearning = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.LearningModules;
 
             using var conn = Open();
 
@@ -676,6 +682,50 @@ namespace Mondas
                     }
 
                     rows.Add(new AttemptRow { SubmittedUtc = submittedAtUtc, IsCorrect = isCorrect, SecondsTaken = secondsTaken, QuestionId = long.TryParse(emailIdText, out var emailId) ? emailId : 0, Topic = Topic.Phishing, Difficulty = difficulty });
+                }
+            }
+
+            if (includeLearning && TableExists(conn, "LearningModuleAttempts"))
+            {
+                using var cmd = conn.CreateCommand();
+
+                var where = new StringBuilder();
+                where.Append("WHERE UserKey = $uk ");
+                cmd.Parameters.AddWithValue("$uk", _userKey);
+
+                if (f.Topic.HasValue)
+                {
+                    where.Append("AND Topic = $topic ");
+                    cmd.Parameters.AddWithValue("$topic", (int)f.Topic.Value);
+                }
+
+                if (f.Difficulty.HasValue)
+                {
+                    where.Append("AND Difficulty = $diff ");
+                    cmd.Parameters.AddWithValue("$diff", (int)f.Difficulty.Value);
+                }
+
+                cmd.CommandText = $@"SELECT Id, IsCorrect, SecondsTaken, SubmittedAt, Topic, Difficulty FROM LearningModuleAttempts {where} ORDER BY SubmittedAt DESC;";
+
+                using var r = cmd.ExecuteReader();
+
+                while (r.Read())
+                {
+                    var attemptId = r.GetInt64(0);
+                    var isCorrect = !r.IsDBNull(1) && r.GetInt32(1) == 1;
+                    var secondsTaken = r.IsDBNull(2) ? 0.0 : r.GetDouble(2);
+
+                    DateTime submittedAtUtc = DateTime.UtcNow;
+
+                    if (!r.IsDBNull(3))
+                    {
+                        submittedAtUtc = DateTime.Parse(r.GetString(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    }
+
+                    var topic = r.IsDBNull(4) ? Topic.Other : (Topic)r.GetInt32(4);
+                    var difficulty = r.IsDBNull(5) ? DifficultyBand.Medium : (DifficultyBand)r.GetInt32(5);
+
+                    rows.Add(new AttemptRow { SubmittedUtc = submittedAtUtc, IsCorrect = isCorrect, SecondsTaken = secondsTaken, QuestionId = attemptId, Topic = topic, Difficulty = difficulty });
                 }
             }
 

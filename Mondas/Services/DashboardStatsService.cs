@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 using Mondas.Models;
 using Newtonsoft.Json;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace Mondas.Services
 {
@@ -52,6 +54,8 @@ namespace Mondas.Services
             int quizCorrect = 0;
             int phishTotal = 0;
             int phishCorrect = 0;
+            int learningTotal = 0;
+            int learningCorrect = 0;
 
             if (source == StatsSource.All || source == StatsSource.Quiz)
             {
@@ -65,8 +69,14 @@ namespace Mondas.Services
                 phishCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND IsCorrect = 1;", ("$uk", uk), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
             }
 
-            stats.TotalAttempts = quizTotal + phishTotal;
-            stats.CorrectAttempts = quizCorrect + phishCorrect;
+            if ((source == StatsSource.All || source == StatsSource.LearningModules) && TableExists(conn, "LearningModuleAttempts"))
+            {
+                learningTotal = ScalarInt(conn, "SELECT COUNT(1) FROM LearningModuleAttempts WHERE UserKey = $uk;", ("$uk", uk));
+                learningCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM LearningModuleAttempts WHERE UserKey = $uk AND IsCorrect = 1;", ("$uk", uk));
+            }
+
+            stats.TotalAttempts = quizTotal + phishTotal + learningTotal;
+            stats.CorrectAttempts = quizCorrect + phishCorrect + learningCorrect;
             stats.AvgSeconds = LoadAvgSeconds(conn, uk, source);
             stats.CurrentStreak = ComputeStreak(conn, uk, source, take: 250);
 
@@ -165,14 +175,29 @@ namespace Mondas.Services
                 return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND SecondsTaken > 0;", ("$uk", userKey), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
             }
 
-            if (!TableExists(conn, "PhishingAttempts"))
+            if (source == StatsSource.LearningModules)
             {
-                return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0;", ("$uk", userKey));
+                if (!TableExists(conn, "LearningModuleAttempts"))
+                {
+                    return 0.0;
+                }
+
+                return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM LearningModuleAttempts WHERE UserKey = $uk AND SecondsTaken > 0;", ("$uk", userKey));
             }
 
-            var sql = @"SELECT AVG(t.SecondsTaken) FROM (SELECT SecondsTaken FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0
-                        UNION ALL
-                        SELECT SecondsTaken FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND SecondsTaken > 0) AS t;";
+            var parts = new List<string> { "SELECT SecondsTaken FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0" };
+
+            if (TableExists(conn, "PhishingAttempts"))
+            {
+                parts.Add("SELECT SecondsTaken FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2) AND SecondsTaken > 0");
+            }
+
+            if (TableExists(conn, "LearningModuleAttempts"))
+            {
+                parts.Add("SELECT SecondsTaken FROM LearningModuleAttempts WHERE UserKey = $uk AND SecondsTaken > 0");
+            }
+
+            var sql = "SELECT AVG(t.SecondsTaken) FROM (" + string.Join(" UNION ALL ", parts) + ") AS t;";
 
             return ScalarDouble(conn, sql, ("$uk", userKey), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
         }
@@ -194,29 +219,43 @@ namespace Mondas.Services
                 return ComputePhishStreak(conn, userKey, take);
             }
 
-            if (!TableExists(conn, "PhishingAttempts"))
+            if (source == StatsSource.LearningModules)
             {
-                return ComputeQuizStreak(conn, userKey, take);
+                return ComputeLearningStreak(conn, userKey, take);
+            }
+
+            var parts = new List<string>{"SELECT IsCorrect, SubmittedAt FROM Attempts WHERE UserKey = $uk"};
+
+            var hasPhish = TableExists(conn, "PhishingAttempts");
+            var hasLearning = TableExists(conn, "LearningModuleAttempts");
+
+            if (hasPhish)
+            {
+                parts.Add("SELECT IsCorrect, SubmittedAt FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2)");
+            }
+
+            if (hasLearning)
+            {
+                parts.Add("SELECT IsCorrect, SubmittedAt FROM LearningModuleAttempts WHERE UserKey = $uk");
             }
 
             using var cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT IsCorrect FROM (SELECT IsCorrect, SubmittedAt FROM Attempts WHERE UserKey = $uk
-                                UNION ALL
-                                SELECT IsCorrect, SubmittedAt FROM PhishingAttempts WHERE UserKey = $uk AND Action IN ($a1, $a2))
-                                ORDER BY SubmittedAt DESC
-                                LIMIT $take;";
-
+            cmd.CommandText = "SELECT IsCorrect FROM (" + string.Join(" UNION ALL ", parts) + ") ORDER BY SubmittedAt DESC LIMIT $take;";
             cmd.Parameters.AddWithValue("$uk", userKey);
-            cmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
-            cmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
             cmd.Parameters.AddWithValue("$take", take);
+
+            if (hasPhish)
+            {
+                cmd.Parameters.AddWithValue("$a1", (int)PhishingAction.TrustKeep);
+                cmd.Parameters.AddWithValue("$a2", (int)PhishingAction.ReportPhishing);
+            }
 
             int streak = 0;
             using var r = cmd.ExecuteReader();
 
             while (r.Read())
             {
-                bool isCorrect = r.GetInt32(0) == 1;
+                var isCorrect = r.GetInt32(0) == 1;
 
                 if (!isCorrect)
                 {
@@ -288,6 +327,37 @@ namespace Mondas.Services
             return streak;
         }
 
+        private static int ComputeLearningStreak(SqliteConnection conn, string userKey, int take)
+        {
+            if (!TableExists(conn, "LearningModuleAttempts"))
+            {
+                return 0;
+            }
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT IsCorrect FROM LearningModuleAttempts WHERE UserKey = $uk ORDER BY SubmittedAt DESC LIMIT $take;";
+
+            cmd.Parameters.AddWithValue("$uk", userKey);
+            cmd.Parameters.AddWithValue("$take", take);
+
+            int streak = 0;
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
+            {
+                var isCorrect = r.GetInt32(0) == 1;
+
+                if (!isCorrect)
+                {
+                    break;
+                }
+
+                streak++;
+            }
+
+            return streak;
+        }
+
         private static void LoadTopicMastery(SqliteConnection conn, string userKey, DashboardStats stats, StatsSource source)
         {
             stats.MasteryByTopic.Clear();
@@ -310,7 +380,23 @@ namespace Mondas.Services
                 }
             }
 
+            if ((source == StatsSource.All || source == StatsSource.LearningModules) && TableExists(conn, "LearningModuleAttempts"))
+            {
+                using var learningCmd = conn.CreateCommand();
+                learningCmd.CommandText = @"SELECT Topic, COUNT(1) AS Seen, SUM(IsCorrect) AS Correct FROM LearningModuleAttempts WHERE UserKey = $uk GROUP BY Topic ORDER BY Seen DESC;";
+                learningCmd.Parameters.AddWithValue("$uk", userKey);
 
+                using var learningReader = learningCmd.ExecuteReader();
+
+                while (learningReader.Read())
+                {
+                    int topicInt = learningReader.GetInt32(0);
+                    int seen = Convert.ToInt32(learningReader.GetInt64(1));
+                    int correct = learningReader.IsDBNull(2) ? 0 : Convert.ToInt32(learningReader.GetInt64(2));
+
+                    AddTopic(stats, (Topic)topicInt, seen, correct);
+                }
+            }
 
             if ((source == StatsSource.All || source == StatsSource.PhishingSimulator) && TableExists(conn, "PhishingAttempts"))
             {
@@ -401,6 +487,11 @@ namespace Mondas.Services
                 LoadPhishingMistakeTags(conn, userKey, combined);
             }
 
+            if ((source == StatsSource.All || source == StatsSource.LearningModules) && TableExists(conn, "LearningModuleAttempts"))
+            {
+                LoadLearningMisconceptions(conn, userKey, combined);
+            }
+
             var rows = new List<MisconceptionRow>();
 
             foreach (var kvp in combined)
@@ -447,6 +538,74 @@ namespace Mondas.Services
                 }
 
                 combined[tag] = combined.TryGetValue(tag, out var existing) ? (existing.Count + count, existing.LastUtc > lastUtc ? existing.LastUtc : lastUtc) : (count, lastUtc);
+            }
+        }
+
+        private static void LoadLearningMisconceptions(SqliteConnection conn, string userKey, Dictionary<string, (int Count, DateTime LastUtc)> combined)
+        {
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT MisconceptionTagsJson, SubmittedAt FROM LearningModuleAttempts WHERE UserKey = $uk AND IsCorrect = 0 ORDER BY SubmittedAt DESC LIMIT 800;";
+            cmd.Parameters.AddWithValue("$uk", userKey);
+
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
+            {
+                var tagsJson = r.IsDBNull(0) ? "[]" : (r.GetString(0) ?? "[]");
+                var submittedAtText = r.IsDBNull(1) ? "" : (r.GetString(1) ?? "");
+
+                List<string> tags;
+
+                try
+                {
+                    tags = JsonConvert.DeserializeObject<List<string>>(tagsJson) ?? new List<string>();
+                }
+
+                catch
+                {
+                    tags = new List<string>();
+                }
+
+                if (tags.Count == 0)
+                {
+                    continue;
+                }
+
+                DateTime submittedUtc = DateTime.UtcNow;
+
+                if (!string.IsNullOrWhiteSpace(submittedAtText))
+                {
+                    try
+                    {
+                        submittedUtc = DateTime.Parse(submittedAtText, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    }
+
+                    catch
+                    {
+                        submittedUtc = DateTime.UtcNow;
+                    }
+                }
+
+                foreach (var raw in tags)
+                {
+                    var tag = (raw ?? "").Trim();
+
+                    if (tag.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    if (combined.TryGetValue(tag, out var existing))
+                    {
+                        var last = existing.LastUtc > submittedUtc ? existing.LastUtc : submittedUtc;
+                        combined[tag] = (existing.Count + 1, last);
+                    }
+
+                    else
+                    {
+                        combined[tag] = (1, submittedUtc);
+                    }
+                }
             }
         }
 

@@ -300,6 +300,11 @@ namespace Mondas
                 return StatsSource.PasswordWorkshop;
             }
 
+            if (text.Contains("LEARNING"))
+            {
+                return StatsSource.LearningModules;
+            }
+
             if (text.Contains("QUIZ"))
             {
                 return StatsSource.Quiz;

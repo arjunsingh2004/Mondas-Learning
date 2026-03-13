@@ -1104,7 +1104,7 @@
             "PHISHING SIMULATOR",
             "PASSWORD WORKSHOP",
             "LEARNING MODULES"});
-            this.cmbStatsSource.Location = new System.Drawing.Point(162, 26);
+            this.cmbStatsSource.Location = new System.Drawing.Point(162, 27);
             this.cmbStatsSource.Name = "cmbStatsSource";
             this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
             this.cmbStatsSource.TabIndex = 2;

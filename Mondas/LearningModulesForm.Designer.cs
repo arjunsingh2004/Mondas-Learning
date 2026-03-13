@@ -86,19 +86,19 @@
             this.colSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPreview = new System.Windows.Forms.TabPage();
             this.wvPreview = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.pnlActions = new System.Windows.Forms.Panel();
-            this.lblProgressInfo = new System.Windows.Forms.Label();
-            this.btnBookmark = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnMarkComplete = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnOpenResource = new Syncfusion.WinForms.Controls.SfButton();
             this.tabCheck = new System.Windows.Forms.TabPage();
             this.tlpCheck = new System.Windows.Forms.TableLayoutPanel();
             this.lblCheckQuestion = new System.Windows.Forms.Label();
             this.flpCheckOptions = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCheckFeedback = new System.Windows.Forms.Label();
             this.pnlCheckActions = new System.Windows.Forms.Panel();
-            this.btnSubmitCheck = new Syncfusion.WinForms.Controls.SfButton();
             this.btnNextCheck = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnSubmitCheck = new Syncfusion.WinForms.Controls.SfButton();
+            this.pnlActions = new System.Windows.Forms.Panel();
+            this.lblProgressInfo = new System.Windows.Forms.Label();
+            this.btnBookmark = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnMarkComplete = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnOpenResource = new Syncfusion.WinForms.Controls.SfButton();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.tlpPage.SuspendLayout();
@@ -120,10 +120,10 @@
             this.tabResources.SuspendLayout();
             this.tabPreview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wvPreview)).BeginInit();
-            this.pnlActions.SuspendLayout();
             this.tabCheck.SuspendLayout();
             this.tlpCheck.SuspendLayout();
             this.pnlCheckActions.SuspendLayout();
+            this.pnlActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // flpNav
@@ -762,6 +762,7 @@
             this.tabLearning.SelectedIndex = 0;
             this.tabLearning.Size = new System.Drawing.Size(666, 391);
             this.tabLearning.TabIndex = 1;
+            this.tabLearning.SelectedIndexChanged += new System.EventHandler(this.tabLearning_SelectedIndexChanged);
             // 
             // tabOverview
             // 
@@ -853,78 +854,6 @@
             this.wvPreview.TabIndex = 0;
             this.wvPreview.ZoomFactor = 1D;
             // 
-            // pnlActions
-            // 
-            this.pnlActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlActions.Controls.Add(this.lblProgressInfo);
-            this.pnlActions.Controls.Add(this.btnBookmark);
-            this.pnlActions.Controls.Add(this.btnMarkComplete);
-            this.pnlActions.Controls.Add(this.btnOpenResource);
-            this.pnlActions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlActions.Location = new System.Drawing.Point(3, 492);
-            this.pnlActions.Name = "pnlActions";
-            this.pnlActions.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.pnlActions.Size = new System.Drawing.Size(666, 50);
-            this.pnlActions.TabIndex = 2;
-            // 
-            // lblProgressInfo
-            // 
-            this.lblProgressInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblProgressInfo.AutoSize = true;
-            this.lblProgressInfo.Font = new System.Drawing.Font("Agency", 6F);
-            this.lblProgressInfo.Location = new System.Drawing.Point(487, 30);
-            this.lblProgressInfo.Name = "lblProgressInfo";
-            this.lblProgressInfo.Size = new System.Drawing.Size(175, 10);
-            this.lblProgressInfo.TabIndex = 3;
-            this.lblProgressInfo.Text = "0 COMPLETED · 0 BOOKMARKED";
-            // 
-            // btnBookmark
-            // 
-            this.btnBookmark.BackColor = System.Drawing.Color.Crimson;
-            this.btnBookmark.Font = new System.Drawing.Font("Muro", 11F);
-            this.btnBookmark.ForeColor = System.Drawing.Color.White;
-            this.btnBookmark.Location = new System.Drawing.Point(358, 8);
-            this.btnBookmark.Name = "btnBookmark";
-            this.btnBookmark.Size = new System.Drawing.Size(120, 34);
-            this.btnBookmark.Style.BackColor = System.Drawing.Color.Crimson;
-            this.btnBookmark.Style.ForeColor = System.Drawing.Color.White;
-            this.btnBookmark.TabIndex = 2;
-            this.btnBookmark.Text = "BOOKMARK";
-            this.btnBookmark.UseVisualStyleBackColor = false;
-            this.btnBookmark.Click += new System.EventHandler(this.btnBookmark_Click);
-            // 
-            // btnMarkComplete
-            // 
-            this.btnMarkComplete.BackColor = System.Drawing.Color.White;
-            this.btnMarkComplete.Font = new System.Drawing.Font("Muro", 11F);
-            this.btnMarkComplete.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.btnMarkComplete.Location = new System.Drawing.Point(184, 8);
-            this.btnMarkComplete.Name = "btnMarkComplete";
-            this.btnMarkComplete.Size = new System.Drawing.Size(150, 34);
-            this.btnMarkComplete.Style.BackColor = System.Drawing.Color.White;
-            this.btnMarkComplete.Style.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.btnMarkComplete.TabIndex = 1;
-            this.btnMarkComplete.Text = "MARK COMPLETE";
-            this.btnMarkComplete.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMarkComplete.UseVisualStyleBackColor = false;
-            this.btnMarkComplete.Click += new System.EventHandler(this.btnMarkComplete_Click);
-            // 
-            // btnOpenResource
-            // 
-            this.btnOpenResource.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnOpenResource.Font = new System.Drawing.Font("Muro", 11F);
-            this.btnOpenResource.ForeColor = System.Drawing.Color.White;
-            this.btnOpenResource.Location = new System.Drawing.Point(13, 8);
-            this.btnOpenResource.Name = "btnOpenResource";
-            this.btnOpenResource.Size = new System.Drawing.Size(150, 34);
-            this.btnOpenResource.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnOpenResource.Style.ForeColor = System.Drawing.Color.White;
-            this.btnOpenResource.TabIndex = 0;
-            this.btnOpenResource.Text = "OPEN RESOURCE";
-            this.btnOpenResource.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOpenResource.UseVisualStyleBackColor = false;
-            this.btnOpenResource.Click += new System.EventHandler(this.btnOpenResource_Click);
-            // 
             // tabCheck
             // 
             this.tabCheck.Controls.Add(this.tlpCheck);
@@ -1000,6 +929,22 @@
             this.pnlCheckActions.Size = new System.Drawing.Size(652, 36);
             this.pnlCheckActions.TabIndex = 3;
             // 
+            // btnNextCheck
+            // 
+            this.btnNextCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextCheck.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnNextCheck.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnNextCheck.ForeColor = System.Drawing.Color.White;
+            this.btnNextCheck.Location = new System.Drawing.Point(501, -3);
+            this.btnNextCheck.Name = "btnNextCheck";
+            this.btnNextCheck.Size = new System.Drawing.Size(143, 36);
+            this.btnNextCheck.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnNextCheck.Style.ForeColor = System.Drawing.Color.White;
+            this.btnNextCheck.TabIndex = 1;
+            this.btnNextCheck.Text = "NEXT QUESTION";
+            this.btnNextCheck.UseVisualStyleBackColor = false;
+            this.btnNextCheck.Click += new System.EventHandler(this.btnNextCheck_Click);
+            // 
             // btnSubmitCheck
             // 
             this.btnSubmitCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1017,21 +962,77 @@
             this.btnSubmitCheck.UseVisualStyleBackColor = false;
             this.btnSubmitCheck.Click += new System.EventHandler(this.btnSubmitCheck_Click);
             // 
-            // btnNextCheck
+            // pnlActions
             // 
-            this.btnNextCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextCheck.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnNextCheck.Font = new System.Drawing.Font("Muro", 10F);
-            this.btnNextCheck.ForeColor = System.Drawing.Color.White;
-            this.btnNextCheck.Location = new System.Drawing.Point(501, -3);
-            this.btnNextCheck.Name = "btnNextCheck";
-            this.btnNextCheck.Size = new System.Drawing.Size(143, 36);
-            this.btnNextCheck.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnNextCheck.Style.ForeColor = System.Drawing.Color.White;
-            this.btnNextCheck.TabIndex = 1;
-            this.btnNextCheck.Text = "NEXT QUESTION";
-            this.btnNextCheck.UseVisualStyleBackColor = false;
-            this.btnNextCheck.Click += new System.EventHandler(this.btnNextCheck_Click);
+            this.pnlActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlActions.Controls.Add(this.lblProgressInfo);
+            this.pnlActions.Controls.Add(this.btnBookmark);
+            this.pnlActions.Controls.Add(this.btnMarkComplete);
+            this.pnlActions.Controls.Add(this.btnOpenResource);
+            this.pnlActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlActions.Location = new System.Drawing.Point(3, 492);
+            this.pnlActions.Name = "pnlActions";
+            this.pnlActions.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.pnlActions.Size = new System.Drawing.Size(666, 50);
+            this.pnlActions.TabIndex = 2;
+            // 
+            // lblProgressInfo
+            // 
+            this.lblProgressInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblProgressInfo.AutoSize = true;
+            this.lblProgressInfo.Font = new System.Drawing.Font("Agency", 6F);
+            this.lblProgressInfo.Location = new System.Drawing.Point(487, 30);
+            this.lblProgressInfo.Name = "lblProgressInfo";
+            this.lblProgressInfo.Size = new System.Drawing.Size(175, 10);
+            this.lblProgressInfo.TabIndex = 3;
+            this.lblProgressInfo.Text = "0 COMPLETED · 0 BOOKMARKED";
+            // 
+            // btnBookmark
+            // 
+            this.btnBookmark.BackColor = System.Drawing.Color.Crimson;
+            this.btnBookmark.Font = new System.Drawing.Font("Muro", 11F);
+            this.btnBookmark.ForeColor = System.Drawing.Color.White;
+            this.btnBookmark.Location = new System.Drawing.Point(358, 8);
+            this.btnBookmark.Name = "btnBookmark";
+            this.btnBookmark.Size = new System.Drawing.Size(120, 34);
+            this.btnBookmark.Style.BackColor = System.Drawing.Color.Crimson;
+            this.btnBookmark.Style.ForeColor = System.Drawing.Color.White;
+            this.btnBookmark.TabIndex = 2;
+            this.btnBookmark.Text = "BOOKMARK";
+            this.btnBookmark.UseVisualStyleBackColor = false;
+            this.btnBookmark.Click += new System.EventHandler(this.btnBookmark_Click);
+            // 
+            // btnMarkComplete
+            // 
+            this.btnMarkComplete.BackColor = System.Drawing.Color.White;
+            this.btnMarkComplete.Font = new System.Drawing.Font("Muro", 11F);
+            this.btnMarkComplete.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.btnMarkComplete.Location = new System.Drawing.Point(184, 8);
+            this.btnMarkComplete.Name = "btnMarkComplete";
+            this.btnMarkComplete.Size = new System.Drawing.Size(150, 34);
+            this.btnMarkComplete.Style.BackColor = System.Drawing.Color.White;
+            this.btnMarkComplete.Style.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.btnMarkComplete.TabIndex = 1;
+            this.btnMarkComplete.Text = "MARK COMPLETE";
+            this.btnMarkComplete.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMarkComplete.UseVisualStyleBackColor = false;
+            this.btnMarkComplete.Click += new System.EventHandler(this.btnMarkComplete_Click);
+            // 
+            // btnOpenResource
+            // 
+            this.btnOpenResource.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnOpenResource.Font = new System.Drawing.Font("Muro", 11F);
+            this.btnOpenResource.ForeColor = System.Drawing.Color.White;
+            this.btnOpenResource.Location = new System.Drawing.Point(13, 8);
+            this.btnOpenResource.Name = "btnOpenResource";
+            this.btnOpenResource.Size = new System.Drawing.Size(150, 34);
+            this.btnOpenResource.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnOpenResource.Style.ForeColor = System.Drawing.Color.White;
+            this.btnOpenResource.TabIndex = 0;
+            this.btnOpenResource.Text = "OPEN RESOURCE";
+            this.btnOpenResource.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpenResource.UseVisualStyleBackColor = false;
+            this.btnOpenResource.Click += new System.EventHandler(this.btnOpenResource_Click);
             // 
             // LearningModulesForm
             // 
@@ -1079,11 +1080,11 @@
             this.tabResources.ResumeLayout(false);
             this.tabPreview.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.wvPreview)).EndInit();
-            this.pnlActions.ResumeLayout(false);
-            this.pnlActions.PerformLayout();
             this.tabCheck.ResumeLayout(false);
             this.tlpCheck.ResumeLayout(false);
             this.pnlCheckActions.ResumeLayout(false);
+            this.pnlActions.ResumeLayout(false);
+            this.pnlActions.PerformLayout();
             this.ResumeLayout(false);
 
         }

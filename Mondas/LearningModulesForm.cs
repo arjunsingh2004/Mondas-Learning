@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace Mondas
 {
@@ -27,6 +28,9 @@ namespace Mondas
         private LearningModule _selectedModule;
         private bool _busy;
         private int _checkIndex = -1;
+        private bool _checkSubmitted;
+        private int _checkCorrectCount;
+        private DateTime? _questionShownUtc;
 
         public LearningModulesForm() : this("local")
         {
@@ -44,7 +48,7 @@ namespace Mondas
             var modulesPath = Path.Combine(AppContext.BaseDirectory, "Resources", "learning_modules.json");
 
             _statsService = new DashboardStatsService(_dbPath);
-            _moduleService = new LearningModulesService(modulesPath);
+            _moduleService = new LearningModulesService(modulesPath, _dbPath);
         }
 
         private void LearningModulesForm_Load(object sender, EventArgs e)
@@ -321,8 +325,20 @@ namespace Mondas
         {
             _selectedModule = module;
             _checkIndex = 0;
+            _checkSubmitted = false;
+            _checkCorrectCount = 0;
             SyncListSelections(module?.Id ?? "");
             ShowModuleDetail(module);
+
+            if (IsCheckTabOpen())
+            {
+                StartCheckTiming();
+            }
+
+            else
+            {
+                ResetCheckTiming();
+            }
         }
 
         private void SyncListSelections(string moduleId)
@@ -389,7 +405,7 @@ namespace Mondas
 
             if (overview != null)
             {
-                overview.Text = module == null ? "" : BuildLessonText(module);
+                ShowOverview(module);
             }
 
             if (resources != null)
@@ -413,48 +429,47 @@ namespace Mondas
                 resources.EndUpdate();
             }
 
-            ShowPreview(module);
+            _ = ShowPreview(module);
             ShowKnowledgeCheck(module);
             UpdateButtons();
         }
 
-        private void ClearModuleDetail()
+        private void ShowOverview(LearningModule module)
         {
-            _selectedModule = null;
-            ShowModuleDetail(null);
-        }
+            if (rtbOverview == null)
+            {
+                return;
+            }
 
-        private string BuildLessonText(LearningModule module)
-        {
-            var lines = new List<string>();
+            rtbOverview.Clear();
+            rtbOverview.ReadOnly = false;
+            rtbOverview.BackColor = Color.White;
+            rtbOverview.ForeColor = Color.Black;
 
             if (module == null)
             {
-                return "";
+                rtbOverview.ReadOnly = true;
+                return;
             }
 
-            lines.Add(module.Title);
-            lines.Add("");
-            lines.Add("TOPIC: " + (module.Topic ?? "").ToUpperInvariant());
-            lines.Add("TYPE: " + (module.Type ?? "").ToUpperInvariant());
-            lines.Add("ESTIMATED TIME: " + module.EstimatedMinutes.ToString(CultureInfo.InvariantCulture) + " MINS");
+            AddOverviewLine((module.Title ?? "").ToUpperInvariant(), true);
+            AddOverviewLine($"{(module.Topic ?? "").ToUpperInvariant()} · {(module.Type ?? "").ToUpperInvariant()} · {module.EstimatedMinutes} MINS", true);
 
-            AddSection(lines, "OVERVIEW", module.Overview);
-            AddBulletSection(lines, "OBJECTIVES", module.Objectives);
-            AddBulletSection(lines, "KEY POINTS", module.KeyPoints);
-            AddBulletSection(lines, "RED FLAGS", module.RedFlags);
-            AddBulletSection(lines, "CHECKLIST", module.Checklist);
-            AddExamplesSection(lines, module.Examples);
-            AddBulletSection(lines, "REFLECTION QUESTIONS", module.ReflectionQuestions);
+            AddOverviewSection("OVERVIEW", module.Overview);
+            AddOverviewBulletSection("OBJECTIVES", module.Objectives);
+            AddOverviewBulletSection("KEY POINTS", module.KeyPoints);
+            AddOverviewBulletSection("RED FLAGS", module.RedFlags);
+            AddOverviewBulletSection("CHECKLIST", module.Checklist);
+            AddOverviewExamples(module.Examples);
+            AddOverviewBulletSection("REFLECTION QUESTIONS", module.ReflectionQuestions);
+            AddOverviewSection("WHY THIS WAS PICKED", _moduleService.BuildMatchReason(module, _stats, ReadStatsSource()));
 
-            lines.Add("");
-            lines.Add("WHY THIS WAS PICKED");
-            lines.Add(_moduleService.BuildMatchReason(module, _stats, ReadStatsSource()));
-
-            return string.Join(Environment.NewLine, lines);
+            rtbOverview.SelectionStart = 0;
+            rtbOverview.SelectionLength = 0;
+            rtbOverview.ReadOnly = true;
         }
 
-        private static void AddSection(List<string> lines, string heading, string text)
+        private void AddOverviewSection(string heading, string text)
         {
             var value = (text ?? "").Trim();
 
@@ -463,12 +478,12 @@ namespace Mondas
                 return;
             }
 
-            lines.Add("");
-            lines.Add(heading);
-            lines.Add(value);
+            AddOverviewLine("", false);
+            AddOverviewLine(heading, false);
+            AddOverviewLine(value, true);
         }
 
-        private static void AddBulletSection(List<string> lines, string heading, IEnumerable<string> values)
+        private void AddOverviewBulletSection(string heading, IEnumerable<string> values)
         {
             var items = (values ?? Enumerable.Empty<string>()).Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToList();
         
@@ -477,16 +492,18 @@ namespace Mondas
                 return;
             }
 
-            lines.Add("");
-            lines.Add(heading);
+            AddOverviewLine("", false);
+            AddOverviewLine(heading, false);
 
             foreach (var item in items)
             {
-                lines.Add("• " + item);
+                AddOverviewLine("• " + item, false);
             }
+
+            AddOverviewLine("", false);
         }
 
-        private static void AddExamplesSection(List<string> lines, IEnumerable<LearningExample> examples)
+        private void AddOverviewExamples(IEnumerable<LearningExample> examples)
         {
             var items = (examples ?? Enumerable.Empty<LearningExample>()).Where(x => x != null).ToList();
 
@@ -495,24 +512,44 @@ namespace Mondas
                 return;
             }
 
-            lines.Add("");
-            lines.Add("EXAMPLES");
+            AddOverviewLine("", false);
+            AddOverviewLine("EXAMPLES", false);
 
-            foreach (var example in items)
+            foreach (var item in items)
             {
-                lines.Add("");
-                lines.Add((example.Title ?? "").Trim());
-
-                if (!string.IsNullOrWhiteSpace(example.Scenario))
+                if (!string.IsNullOrWhiteSpace(item.Title))
                 {
-                    lines.Add(example.Scenario.Trim());
+                    AddOverviewLine(item.Title.Trim(), false);
                 }
 
-                if (!string.IsNullOrWhiteSpace(example.Takeaway))
+                if (!string.IsNullOrWhiteSpace(item.Scenario))
                 {
-                    lines.Add("Takeaway: " + example.Takeaway.Trim());
+                    AddOverviewLine(item.Scenario.Trim(), false);
                 }
+
+                if (!string.IsNullOrWhiteSpace(item.Takeaway))
+                {
+                    AddOverviewLine("Takeaway: " + item.Takeaway.Trim(), false);
+                }
+
+                AddOverviewLine("", false);
             }
+        }
+
+        private void AddOverviewLine(string text,bool addGapAfter)
+        {
+            rtbOverview.AppendText(text + Environment.NewLine);
+
+            if (addGapAfter)
+            {
+                rtbOverview.AppendText(Environment.NewLine);
+            }
+        }
+
+        private void ClearModuleDetail()
+        {
+            _selectedModule = null;
+            ShowModuleDetail(null);
         }
 
         private void ShowKnowledgeCheck(LearningModule module)
@@ -522,8 +559,10 @@ namespace Mondas
                 return;
             }
 
+            flpCheckOptions.SuspendLayout();
             flpCheckOptions.Controls.Clear();
             lblCheckFeedback.Text = "";
+            lblCheckFeedback.ForeColor = Color.FromArgb(80, 80, 80);
 
             var questions = module?.CheckQuestions ?? new List<LearningCheckQuestion>();
 
@@ -532,6 +571,8 @@ namespace Mondas
                 lblCheckQuestion.Text = "NO KNOWLEDGE CHECK FOR THIS MODULE";
                 btnSubmitCheck.Enabled = false;
                 btnNextCheck.Enabled = false;
+                btnNextCheck.Text = "NEXT QUESTION";
+                flpCheckOptions.ResumeLayout();
 
                 return;
             }
@@ -542,23 +583,107 @@ namespace Mondas
             }
 
             var question = questions[_checkIndex];
-            lblCheckQuestion.Text = $"QUESTION {_checkIndex + 1} OF {questions.Count} · {question.Prompt}";
+            lblCheckQuestion.Text = $"QUESTION {_checkIndex + 1} OF {questions.Count}{Environment.NewLine}{question.Prompt}";
 
             foreach (var option in question.Options ?? new List<LearningCheckOption>())
             {
-                var radio = new RadioButton { AutoSize = true, Text = option.Text ?? "", Tag = option, Margin = new Padding(0, 0, 0, 10) };
+                var radio = new RadioButton { AutoSize = false, Width = Math.Max(320, flpCheckOptions.ClientSize.Width - 28), Height = 42, Text = option.Text ?? "", Tag = option, Margin = new Padding(0, 0, 0, 18), TextAlign = ContentAlignment.MiddleLeft, UseVisualStyleBackColor = true};
                 flpCheckOptions.Controls.Add(radio);
             }
 
+            _checkSubmitted = false;
             btnSubmitCheck.Enabled = flpCheckOptions.Controls.Count > 0;
-            btnNextCheck.Enabled = questions.Count > 1;
+            btnNextCheck.Enabled = false;
+            btnNextCheck.Text = _checkIndex == questions.Count - 1 ? "FINISH CHECK" : "NEXT QUESTION";
+
+            flpCheckOptions.ResumeLayout();
         }
 
-        private void ShowPreview(LearningModule module)
+        private static TabControl FindTabControl(Control parent)
         {
-            var preview = FindAny<Control>("wvPreview", "webView2Preview", "webPreview");
+            if (parent == null)
+            {
+                return null;
+            }
 
-            if (preview == null)
+            foreach (Control child in parent.Controls)
+            {
+                if (child is TabControl tabs)
+                {
+                    return tabs;
+                }
+
+                var nested = FindTabControl(child);
+
+                if (nested != null)
+                {
+                    return nested;
+                }
+            }
+
+            return null;
+        }
+
+        private bool IsCheckTabOpen()
+        {
+            var tabs = FindTabControl(this);
+
+            if (tabs?.SelectedTab == null)
+            {
+                return false;
+            }
+
+            return tabs.SelectedTab.Text.IndexOf("CHECK", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private void StartCheckTiming()
+        {
+            if (_selectedModule == null)
+            {
+                return;
+            }
+
+            if (_checkSubmitted)
+            {
+                return;
+            }
+
+            _questionShownUtc = DateTime.UtcNow;
+        }
+
+        private void ResetCheckTiming()
+        {
+            _questionShownUtc = null;
+
+            if (_checkSubmitted)
+            {
+                return;
+            }
+
+            lblCheckFeedback.Text = "";
+
+            foreach (var radio in flpCheckOptions.Controls.OfType<RadioButton>())
+            {
+                radio.Checked = false;
+            }
+
+            btnSubmitCheck.Enabled = flpCheckOptions.Controls.OfType<RadioButton>().Any();
+            btnNextCheck.Enabled = false;
+        }
+
+        private async Task ShowPreview(LearningModule module)
+        {
+            if (wvPreview == null)
+            {
+                return;
+            }
+
+            try
+            {
+                await wvPreview.EnsureCoreWebView2Async(null);
+            }
+
+            catch
             {
                 return;
             }
@@ -567,33 +692,24 @@ namespace Mondas
 
             if (string.IsNullOrWhiteSpace(url))
             {
-                NavPreviewHtml(preview, "<html><body style='font-family:Agency; padding:24px; color:#444;'><h3>Preview unavailable</h3><p>Select a module with a preview URL or use Open Resource.</p></body></html>");
+                wvPreview.NavigateToString(BuildPreviewHtml("No video available for this module.", "Use Open Resource to open the full lesson."));
                 return;
             }
 
             try
             {
-                var sourceProp = preview.GetType().GetProperty("Source");
-
-                if (sourceProp != null)
-                {
-                    sourceProp.SetValue(preview, new Uri(url));
-                    return;
-                }
-
-                var navigateMethod = preview.GetType().GetMethod("Navigate", new[] { typeof(string) });
-
-                if (navigateMethod != null)
-                {
-                    navigateMethod.Invoke(preview, new object[] { url });
-                    return;
-                }
+                wvPreview.Source = new Uri(url);
             }
 
             catch
             {
-                NavPreviewHtml(preview, "<html><body style='font-family:Agency; padding:24px; color:#444;'><h3>Preview failed</h3><p>Use Open Resource instead.</p></body></html>");
+                wvPreview.NavigateToString(BuildPreviewHtml("Preview unavailable.", "Use Open Resource to view the content."));
             }
+        }
+
+        private static string BuildPreviewHtml(string title, string text)
+        {
+            return "<html><body style='font-family:Agency; padding:24px; color:#222;'>" + $"<h2 style='margin-top:0;'>{title}</h2>" + $"<p>{text}</p>" + "</body></html>";
         }
 
         private static void NavPreviewHtml(Control preview, string html)
@@ -628,12 +744,17 @@ namespace Mondas
                 return "";
             }
 
+            if (previewUrl.Contains("youtube.com/embed/", StringComparison.OrdinalIgnoreCase))
+            {
+                return previewUrl;
+            }
+
             if (previewUrl.Contains("youtube.com/watch?v=", StringComparison.OrdinalIgnoreCase))
             {
                 var id = previewUrl.Split(new[] { "watch?v=" }, StringSplitOptions.None).LastOrDefault() ?? "";
                 var amp = id.IndexOf('&');
 
-                if (amp >= 0)
+                if (amp  >= 0)
                 {
                     id = id.Substring(0, amp);
                 }
@@ -922,6 +1043,11 @@ namespace Mondas
                 return;
             }
 
+            if (_checkSubmitted)
+            {
+                return;
+            }
+
             var questions = _selectedModule.CheckQuestions ?? new List<LearningCheckQuestion>();
 
             if (_checkIndex < 0 || _checkIndex >= questions.Count)
@@ -933,6 +1059,7 @@ namespace Mondas
         
             if (selected == null)
             {
+                lblCheckFeedback.ForeColor = Color.Firebrick;
                 lblCheckFeedback.Text = "Select an answer before continuing.";
                 return;
             }
@@ -944,14 +1071,32 @@ namespace Mondas
                 return;
             }
 
-            lblCheckFeedback.Text = option.IsCorrect ? "Correct. " + (option.Feedback ?? "").Trim() : "Not quite. " + (option.Feedback ?? "").Trim();
+            var secondsTaken = _questionShownUtc.HasValue ? Math.Max(0.0, (DateTime.UtcNow - _questionShownUtc.Value).TotalSeconds) : 0.0; 
+
+            _moduleService.SaveCheckAttempt(_userKey, _selectedModule, _checkIndex, option.IsCorrect, secondsTaken);
 
             if (option.IsCorrect)
             {
-                _moduleService.MarkCheckPassed(_userKey, _selectedModule.Id);
-                _state = _moduleService.LoadState(_userKey);
-                UpdateStatus();
+                _checkCorrectCount++;
+                lblCheckFeedback.ForeColor = Color.DarkGreen;
+                lblCheckFeedback.Text = "Correct! " + (option.Feedback ?? "").Trim();
             }
+
+            else
+            {
+                lblCheckFeedback.ForeColor = Color.Firebrick;
+                lblCheckFeedback.Text = "Not quite. " + (option.Feedback ?? "").Trim();
+            }
+
+            foreach (var radio in flpCheckOptions.Controls.OfType<RadioButton>())
+            {
+                radio.Enabled = false;
+            }
+
+            _checkSubmitted = true;
+            btnSubmitCheck.Enabled = false;
+            btnNextCheck.Enabled = true;
+            _questionShownUtc = null;
         }
 
         private void btnNextCheck_Click(object sender, EventArgs e)
@@ -968,8 +1113,50 @@ namespace Mondas
                 return;
             }
 
-            _checkIndex = (_checkIndex + 1) % questions.Count;
+            if (!_checkSubmitted)
+            {
+                lblCheckFeedback.ForeColor = Color.Firebrick;
+                lblCheckFeedback.Text = "Submit an answer before continuing.";
+
+                return;
+            }
+
+            if (_checkIndex == questions.Count - 1)
+            {
+                var passMark = Math.Max(1, (int)Math.Ceiling(questions.Count * 0.7));
+                var passed = _checkCorrectCount >= passMark;
+
+                if (passed)
+                {
+                    _moduleService.MarkCheckPassed(_userKey, _selectedModule.Id);
+                }
+
+                _state = _moduleService.LoadState(_userKey);
+                UpdateStatus();
+                ShowRecommended();
+                ShowAllModules();
+
+                MessageBox.Show(this, passed ? $"Checked passed. Score: {_checkCorrectCount}/{questions.Count}" : $"Check finished. Score, {_checkCorrectCount}/{questions.Count}", "Mondas", MessageBoxButtons.OK, passed ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+                SelectModule(_selectedModule);
+                return;
+            }
+
+            _checkIndex++;
             ShowKnowledgeCheck(_selectedModule);
+            StartCheckTiming();
+        }
+
+        private void tabLearning_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (IsCheckTabOpen())
+            {
+                StartCheckTiming();
+            }
+
+            else
+            {
+                ResetCheckTiming();
+            }
         }
     }
 }
