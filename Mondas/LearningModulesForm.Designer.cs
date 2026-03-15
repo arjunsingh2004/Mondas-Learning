@@ -989,12 +989,14 @@
             // 
             // btnBookmark
             // 
+            this.btnBookmark.AutoSize = true;
             this.btnBookmark.BackColor = System.Drawing.Color.Crimson;
             this.btnBookmark.Font = new System.Drawing.Font("Muro", 11F);
             this.btnBookmark.ForeColor = System.Drawing.Color.White;
             this.btnBookmark.Location = new System.Drawing.Point(358, 8);
             this.btnBookmark.Name = "btnBookmark";
-            this.btnBookmark.Size = new System.Drawing.Size(120, 34);
+            this.btnBookmark.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.btnBookmark.Size = new System.Drawing.Size(127, 35);
             this.btnBookmark.Style.BackColor = System.Drawing.Color.Crimson;
             this.btnBookmark.Style.ForeColor = System.Drawing.Color.White;
             this.btnBookmark.TabIndex = 2;
@@ -1004,12 +1006,14 @@
             // 
             // btnMarkComplete
             // 
+            this.btnMarkComplete.AutoSize = true;
             this.btnMarkComplete.BackColor = System.Drawing.Color.White;
             this.btnMarkComplete.Font = new System.Drawing.Font("Muro", 11F);
             this.btnMarkComplete.ForeColor = System.Drawing.Color.RoyalBlue;
             this.btnMarkComplete.Location = new System.Drawing.Point(184, 8);
             this.btnMarkComplete.Name = "btnMarkComplete";
-            this.btnMarkComplete.Size = new System.Drawing.Size(150, 34);
+            this.btnMarkComplete.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.btnMarkComplete.Size = new System.Drawing.Size(172, 35);
             this.btnMarkComplete.Style.BackColor = System.Drawing.Color.White;
             this.btnMarkComplete.Style.ForeColor = System.Drawing.Color.RoyalBlue;
             this.btnMarkComplete.TabIndex = 1;
@@ -1020,12 +1024,14 @@
             // 
             // btnOpenResource
             // 
+            this.btnOpenResource.AutoSize = true;
             this.btnOpenResource.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnOpenResource.Font = new System.Drawing.Font("Muro", 11F);
             this.btnOpenResource.ForeColor = System.Drawing.Color.White;
             this.btnOpenResource.Location = new System.Drawing.Point(13, 8);
             this.btnOpenResource.Name = "btnOpenResource";
-            this.btnOpenResource.Size = new System.Drawing.Size(150, 34);
+            this.btnOpenResource.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.btnOpenResource.Size = new System.Drawing.Size(168, 35);
             this.btnOpenResource.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnOpenResource.Style.ForeColor = System.Drawing.Color.White;
             this.btnOpenResource.TabIndex = 0;

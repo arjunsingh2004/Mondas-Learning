@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -51,18 +49,27 @@ namespace Mondas
         private bool _runClockPaused;
         private TimeSpan _runClockFrozen;
 
-        public PhishingSimulatorForm() : this("local")
-        {
+        private readonly MiniGamePreferences _prefs;
+        private int _resolvedFinalCount;
+        private int _targetEmails;
 
+        public PhishingSimulatorForm() : this("local", MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator))
+        {
         }
 
-        public PhishingSimulatorForm(string userKey)
+        public PhishingSimulatorForm(string userKey) : this(userKey, MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator))
+        { 
+        }
+
+        public PhishingSimulatorForm(string userKey, MiniGamePreferences prefs)
         {
             InitializeComponent();
 
             _userKey = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
             _dbPath = Path.Combine(AppContext.BaseDirectory, "mondas.db");
             _emailsJsonPath = ResolveEmailsJsonPath();
+            _prefs = MiniGamePreferences.Normalise(prefs);
+            _targetEmails = Math.Max(1, _prefs.PhishingEmailCount > 0 ? _prefs.PhishingEmailCount : _prefs.RoundCount);
         }
 
         private string ResolveEmailsJsonPath()
@@ -105,7 +112,7 @@ namespace Mondas
             _emailsRepo = new PhishingEmailRepository(_emailsJsonPath);
             _attemptStore = new PhishingAttemptStore(_dbPath);
 
-            _engine = new PhishingEngineV1(focusWeakTags: true, preferredDifficulty: DifficultyBand.Medium, allowDifficultyDrift: true);
+            _engine = new PhishingEngineV1(focusWeakTags: true, preferredDifficulty: _prefs.Difficulty ?? DifficultyBand.Medium, allowDifficultyDrift: true);
             _scoring = new PhishingScoringV1();
 
             CreateInboxList();
@@ -119,7 +126,9 @@ namespace Mondas
         {
             try
             {
-                _allEmails = _emailsRepo.LoadAll() ?? Array.Empty<PhishingEmail>();
+                var raw = _emailsRepo.LoadAll() ?? Array.Empty<PhishingEmail>();
+                var filtered = raw.Where(MatchesPreferences).ToList();
+                _allEmails = filtered.Count > 0 ? filtered : raw;
             }
 
             catch
@@ -136,6 +145,44 @@ namespace Mondas
             {
                 _history = new List<PhishingAttemptRow>();
             }
+        }
+
+        private bool MatchesPreferences(PhishingEmail email)
+        {
+            if (email == null)
+            {
+                return false;
+            }
+
+            if (_prefs.Difficulty.HasValue && email.Difficulty != _prefs.Difficulty.Value)
+            {
+                return false;
+            }
+
+            if (!_prefs.IncludeLinks && email.HasLink)
+            {
+                return false;
+            }
+
+            if (!_prefs.IncludeAttachments && email.HasAttachment)
+            {
+                return false;
+            }
+
+            if (!_prefs.IncludeUrgency && LooksUrgent(email))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool LooksUrgent(PhishingEmail email)
+        {
+            var subject = (email?.Subject ?? "").ToUpperInvariant();
+            var body = (email?.Body ?? "").ToUpperInvariant();
+
+            return subject.Contains("URGENT") || subject.Contains("IMMEDIATE") || subject.Contains("ACTION REQUIRED") || body.Contains("URGENT") || body.Contains("IMMEDIATE") || body.Contains("ACTION REQUIRED") || body.Contains("SUSPEND") || body.Contains("LOCK");
         }
 
         private void EnsureTimer()
@@ -259,9 +306,11 @@ namespace Mondas
             _score = 0;
             _streak = 0;
             _shownCount = 0;
+            _resolvedFinalCount = 0;
 
             _lastReason = "";
             _lastRules = new List<string>();
+            _targetEmails = Math.Max(1, _prefs.PhishingEmailCount > 0 ? _prefs.PhishingEmailCount : _prefs.RoundCount);
 
             _runStarted = false;
             _runClockPaused = true;
@@ -329,6 +378,7 @@ namespace Mondas
             if (btnNextEmail != null)
             {
                 btnNextEmail.Enabled = false;
+                btnNextEmail.Text = "NEXT EMAIL";
             }
 
             if (lblResultTitle != null)
@@ -373,6 +423,14 @@ namespace Mondas
                 return;
             }
 
+            var progress = $"{_resolvedFinalCount}/{_targetEmails}";
+
+            if (!_prefs.TimerEnabled)
+            {
+                lblRunInfo.Text = $"SCORE: {_score} | STREAK: {_streak} | EMAILS: {progress}";
+                return;
+            }
+
             TimeSpan elapsed;
 
             if (!_runStarted)
@@ -385,8 +443,7 @@ namespace Mondas
                 elapsed = _runClockPaused ? _runClockFrozen : (DateTime.UtcNow - _runStartedUtc);
             }
 
-            var time = FormatTime(elapsed);
-            lblRunInfo.Text = $"SCORE: {_score} | STREAK | {_streak} | TIME: {time}";
+            lblRunInfo.Text = $"SCORE: {_score} | STREAK: {_streak} | EMAILS: {progress} | TIME: {FormatTime(elapsed)}";
         }
 
         private static string FormatTime(TimeSpan timespan)
@@ -399,6 +456,12 @@ namespace Mondas
 
         private void btnNewEmail_Click(object sender, EventArgs e)
         {
+            if (_resolvedFinalCount >= _targetEmails)
+            {
+                btnFinishRun_Click(sender, e);
+                return;
+            }
+
             StartNewEmail(forceNewRun: false);
         }
 
@@ -511,6 +574,12 @@ namespace Mondas
                 return;
             }
 
+            if (_resolvedFinalCount >= _targetEmails)
+            {
+                btnFinishRun_Click(sender, e);
+                return;
+            }
+
             StartNewEmail(forceNewRun: false);
         }
 
@@ -588,6 +657,7 @@ namespace Mondas
             if (btnNextEmail != null)
             {
                 btnNextEmail.Enabled = false;
+                btnNextEmail.Text = "NEXT EMAIL";
             }
 
             UpdateRunInfo();
@@ -774,6 +844,7 @@ namespace Mondas
             if (isFinal)
             {
                 _currentEmailResolved = true;
+                _resolvedFinalCount++;
 
                 PauseRunClock();
 
@@ -794,6 +865,7 @@ namespace Mondas
                 if (btnNextEmail != null)
                 {
                     btnNextEmail.Enabled = true;
+                    btnNextEmail.Text = _resolvedFinalCount >= _targetEmails ? "FINISH RUN" : "NEXT EMAIL";
                 }
 
                 SetButtonsEnabled(enabled: false);
@@ -806,6 +878,7 @@ namespace Mondas
                 if (btnNextEmail != null)
                 {
                     btnNextEmail.Enabled = false;
+                    btnNextEmail.Text = "NEXT EMAIL";
                 }
 
                 ApplyActionToEmail(_currentEmail);

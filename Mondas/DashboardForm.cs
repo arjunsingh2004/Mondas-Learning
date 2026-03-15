@@ -745,5 +745,13 @@ namespace Mondas
             f.Show();
             Hide();
         }
+
+        private void btnNavMiniGames_Click(object sender, EventArgs e)
+        {
+            var f = new MiniGameSelectionForm(_userKey);
+            f.Show();
+            Hide();
+
+        }
     }
 }

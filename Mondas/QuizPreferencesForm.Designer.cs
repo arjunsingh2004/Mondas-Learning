@@ -34,6 +34,10 @@
             this.lblPrefsTitle = new System.Windows.Forms.Label();
             this.pnlPrefsBody = new System.Windows.Forms.Panel();
             this.tlpPrefsSections = new System.Windows.Forms.TableLayoutPanel();
+            this.gbMode = new System.Windows.Forms.GroupBox();
+            this.pnlMode = new System.Windows.Forms.Panel();
+            this.rbCustom = new System.Windows.Forms.RadioButton();
+            this.rbDefault = new System.Windows.Forms.RadioButton();
             this.gbBasics = new System.Windows.Forms.GroupBox();
             this.tlpBasics = new System.Windows.Forms.TableLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
@@ -56,18 +60,16 @@
             this.lblThreatVector = new System.Windows.Forms.Label();
             this.cmbThreatVector = new System.Windows.Forms.ComboBox();
             this.pnlPrefsButtons = new System.Windows.Forms.Panel();
-            this.flpButtonsRight = new System.Windows.Forms.FlowLayoutPanel();
             this.btnUseDefaults = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnCancel = new Syncfusion.WinForms.Controls.SfButton();
+            this.flpButtonsRight = new System.Windows.Forms.FlowLayoutPanel();
             this.btnApply = new Syncfusion.WinForms.Controls.SfButton();
-            this.gbMode = new System.Windows.Forms.GroupBox();
-            this.pnlMode = new System.Windows.Forms.Panel();
-            this.rbDefault = new System.Windows.Forms.RadioButton();
-            this.rbCustom = new System.Windows.Forms.RadioButton();
+            this.btnCancel = new Syncfusion.WinForms.Controls.SfButton();
             this.tlpPrefsRoot.SuspendLayout();
             this.pnlPrefsHeader.SuspendLayout();
             this.pnlPrefsBody.SuspendLayout();
             this.tlpPrefsSections.SuspendLayout();
+            this.gbMode.SuspendLayout();
+            this.pnlMode.SuspendLayout();
             this.gbBasics.SuspendLayout();
             this.tlpBasics.SuspendLayout();
             this.gbTopics.SuspendLayout();
@@ -78,8 +80,6 @@
             this.tlpAdvanced.SuspendLayout();
             this.pnlPrefsButtons.SuspendLayout();
             this.flpButtonsRight.SuspendLayout();
-            this.gbMode.SuspendLayout();
-            this.pnlMode.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpPrefsRoot
@@ -140,7 +140,7 @@
             this.pnlPrefsBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlPrefsBody.Location = new System.Drawing.Point(3, 73);
             this.pnlPrefsBody.Name = "pnlPrefsBody";
-            this.pnlPrefsBody.Padding = new System.Windows.Forms.Padding(16);
+            this.pnlPrefsBody.Padding = new System.Windows.Forms.Padding(12);
             this.pnlPrefsBody.Size = new System.Drawing.Size(514, 371);
             this.pnlPrefsBody.TabIndex = 1;
             // 
@@ -157,7 +157,7 @@
             this.tlpPrefsSections.Controls.Add(this.gbTypes, 0, 4);
             this.tlpPrefsSections.Controls.Add(this.gbAdvanced, 0, 5);
             this.tlpPrefsSections.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tlpPrefsSections.Location = new System.Drawing.Point(16, 16);
+            this.tlpPrefsSections.Location = new System.Drawing.Point(12, 12);
             this.tlpPrefsSections.Name = "tlpPrefsSections";
             this.tlpPrefsSections.RowCount = 6;
             this.tlpPrefsSections.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -166,8 +166,63 @@
             this.tlpPrefsSections.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPrefsSections.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPrefsSections.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpPrefsSections.Size = new System.Drawing.Size(456, 914);
+            this.tlpPrefsSections.Size = new System.Drawing.Size(464, 914);
             this.tlpPrefsSections.TabIndex = 0;
+            // 
+            // gbMode
+            // 
+            this.gbMode.AutoSize = true;
+            this.gbMode.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbMode.BackColor = System.Drawing.Color.White;
+            this.gbMode.Controls.Add(this.pnlMode);
+            this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbMode.Font = new System.Drawing.Font("Agency", 11F);
+            this.gbMode.Location = new System.Drawing.Point(0, 0);
+            this.gbMode.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.gbMode.Name = "gbMode";
+            this.gbMode.Padding = new System.Windows.Forms.Padding(12);
+            this.gbMode.Size = new System.Drawing.Size(464, 102);
+            this.gbMode.TabIndex = 0;
+            this.gbMode.TabStop = false;
+            this.gbMode.Text = "MODE";
+            // 
+            // pnlMode
+            // 
+            this.pnlMode.Controls.Add(this.rbCustom);
+            this.pnlMode.Controls.Add(this.rbDefault);
+            this.pnlMode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlMode.Location = new System.Drawing.Point(12, 35);
+            this.pnlMode.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlMode.Name = "pnlMode";
+            this.pnlMode.Size = new System.Drawing.Size(440, 55);
+            this.pnlMode.TabIndex = 0;
+            // 
+            // rbCustom
+            // 
+            this.rbCustom.AutoSize = true;
+            this.rbCustom.Font = new System.Drawing.Font("Agency", 8F);
+            this.rbCustom.Location = new System.Drawing.Point(12, 32);
+            this.rbCustom.Name = "rbCustom";
+            this.rbCustom.Size = new System.Drawing.Size(205, 20);
+            this.rbCustom.TabIndex = 1;
+            this.rbCustom.TabStop = true;
+            this.rbCustom.Text = "Custom preferences";
+            this.rbCustom.UseVisualStyleBackColor = true;
+            this.rbCustom.CheckedChanged += new System.EventHandler(this.rbCustom_CheckedChanged);
+            // 
+            // rbDefault
+            // 
+            this.rbDefault.AutoSize = true;
+            this.rbDefault.Checked = true;
+            this.rbDefault.Font = new System.Drawing.Font("Agency", 8F);
+            this.rbDefault.Location = new System.Drawing.Point(12, 4);
+            this.rbDefault.Name = "rbDefault";
+            this.rbDefault.Size = new System.Drawing.Size(262, 20);
+            this.rbDefault.TabIndex = 0;
+            this.rbDefault.TabStop = true;
+            this.rbDefault.Text = "Use recommended defaults";
+            this.rbDefault.UseVisualStyleBackColor = true;
+            this.rbDefault.CheckedChanged += new System.EventHandler(this.rbDefault_CheckedChanged);
             // 
             // gbBasics
             // 
@@ -179,7 +234,7 @@
             this.gbBasics.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.gbBasics.Name = "gbBasics";
             this.gbBasics.Padding = new System.Windows.Forms.Padding(12);
-            this.gbBasics.Size = new System.Drawing.Size(456, 140);
+            this.gbBasics.Size = new System.Drawing.Size(464, 140);
             this.gbBasics.TabIndex = 1;
             this.gbBasics.TabStop = false;
             this.gbBasics.Text = "BASICS";
@@ -200,7 +255,7 @@
             this.tlpBasics.RowCount = 2;
             this.tlpBasics.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpBasics.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpBasics.Size = new System.Drawing.Size(432, 93);
+            this.tlpBasics.Size = new System.Drawing.Size(440, 93);
             this.tlpBasics.TabIndex = 0;
             // 
             // lblCount
@@ -272,7 +327,7 @@
             this.gbTopics.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.gbTopics.Name = "gbTopics";
             this.gbTopics.Padding = new System.Windows.Forms.Padding(12);
-            this.gbTopics.Size = new System.Drawing.Size(456, 200);
+            this.gbTopics.Size = new System.Drawing.Size(464, 200);
             this.gbTopics.TabIndex = 1;
             this.gbTopics.TabStop = false;
             this.gbTopics.Text = "TOPICS";
@@ -290,7 +345,7 @@
             "Social Engineering"});
             this.clbTopics.Location = new System.Drawing.Point(12, 61);
             this.clbTopics.Name = "clbTopics";
-            this.clbTopics.Size = new System.Drawing.Size(432, 127);
+            this.clbTopics.Size = new System.Drawing.Size(440, 127);
             this.clbTopics.TabIndex = 1;
             // 
             // chkPrioritiseWeak
@@ -299,7 +354,7 @@
             this.chkPrioritiseWeak.Font = new System.Drawing.Font("Agency", 9F);
             this.chkPrioritiseWeak.Location = new System.Drawing.Point(12, 35);
             this.chkPrioritiseWeak.Name = "chkPrioritiseWeak";
-            this.chkPrioritiseWeak.Size = new System.Drawing.Size(432, 26);
+            this.chkPrioritiseWeak.Size = new System.Drawing.Size(440, 26);
             this.chkPrioritiseWeak.TabIndex = 0;
             this.chkPrioritiseWeak.Text = "Prioritise weak topics (recommended)";
             this.chkPrioritiseWeak.UseVisualStyleBackColor = true;
@@ -314,7 +369,7 @@
             this.gbDifficulty.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.gbDifficulty.Name = "gbDifficulty";
             this.gbDifficulty.Padding = new System.Windows.Forms.Padding(12);
-            this.gbDifficulty.Size = new System.Drawing.Size(456, 95);
+            this.gbDifficulty.Size = new System.Drawing.Size(464, 95);
             this.gbDifficulty.TabIndex = 2;
             this.gbDifficulty.TabStop = false;
             this.gbDifficulty.Text = "DIFFICULTY";
@@ -330,8 +385,8 @@
             this.tlpDifficulty.Location = new System.Drawing.Point(12, 35);
             this.tlpDifficulty.Name = "tlpDifficulty";
             this.tlpDifficulty.RowCount = 1;
-            this.tlpDifficulty.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpDifficulty.Size = new System.Drawing.Size(432, 48);
+            this.tlpDifficulty.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tlpDifficulty.Size = new System.Drawing.Size(440, 48);
             this.tlpDifficulty.TabIndex = 0;
             // 
             // lblDifficulty
@@ -373,7 +428,7 @@
             this.gbTypes.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.gbTypes.Name = "gbTypes";
             this.gbTypes.Padding = new System.Windows.Forms.Padding(12);
-            this.gbTypes.Size = new System.Drawing.Size(456, 160);
+            this.gbTypes.Size = new System.Drawing.Size(464, 160);
             this.gbTypes.TabIndex = 3;
             this.gbTypes.TabStop = false;
             this.gbTypes.Text = "QUESTION TYPES";
@@ -391,7 +446,7 @@
             "Scenario"});
             this.clbQuestionTypes.Location = new System.Drawing.Point(12, 35);
             this.clbQuestionTypes.Name = "clbQuestionTypes";
-            this.clbQuestionTypes.Size = new System.Drawing.Size(432, 113);
+            this.clbQuestionTypes.Size = new System.Drawing.Size(440, 113);
             this.clbQuestionTypes.TabIndex = 0;
             this.clbQuestionTypes.SelectedIndexChanged += new System.EventHandler(this.clbQuestionTypes_SelectedIndexChanged);
             // 
@@ -405,7 +460,7 @@
             this.gbAdvanced.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.gbAdvanced.Name = "gbAdvanced";
             this.gbAdvanced.Padding = new System.Windows.Forms.Padding(12);
-            this.gbAdvanced.Size = new System.Drawing.Size(456, 145);
+            this.gbAdvanced.Size = new System.Drawing.Size(464, 145);
             this.gbAdvanced.TabIndex = 4;
             this.gbAdvanced.TabStop = false;
             this.gbAdvanced.Text = "ADVANCED (OPTIONAL)";
@@ -425,7 +480,7 @@
             this.tlpAdvanced.RowCount = 2;
             this.tlpAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpAdvanced.Size = new System.Drawing.Size(432, 98);
+            this.tlpAdvanced.Size = new System.Drawing.Size(440, 98);
             this.tlpAdvanced.TabIndex = 0;
             // 
             // lblBloom
@@ -496,19 +551,6 @@
             this.pnlPrefsButtons.Size = new System.Drawing.Size(514, 64);
             this.pnlPrefsButtons.TabIndex = 2;
             // 
-            // flpButtonsRight
-            // 
-            this.flpButtonsRight.AutoSize = true;
-            this.flpButtonsRight.Controls.Add(this.btnApply);
-            this.flpButtonsRight.Controls.Add(this.btnCancel);
-            this.flpButtonsRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.flpButtonsRight.Location = new System.Drawing.Point(266, 10);
-            this.flpButtonsRight.Margin = new System.Windows.Forms.Padding(0);
-            this.flpButtonsRight.Name = "flpButtonsRight";
-            this.flpButtonsRight.Size = new System.Drawing.Size(232, 44);
-            this.flpButtonsRight.TabIndex = 0;
-            this.flpButtonsRight.WrapContents = false;
-            // 
             // btnUseDefaults
             // 
             this.btnUseDefaults.BackColor = System.Drawing.Color.Gainsboro;
@@ -522,18 +564,18 @@
             this.btnUseDefaults.UseVisualStyleBackColor = false;
             this.btnUseDefaults.Click += new System.EventHandler(this.btnUseDefaults_Click);
             // 
-            // btnCancel
+            // flpButtonsRight
             // 
-            this.btnCancel.BackColor = System.Drawing.Color.Gainsboro;
-            this.btnCancel.Font = new System.Drawing.Font("Muro", 10F);
-            this.btnCancel.Location = new System.Drawing.Point(119, 3);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(110, 40);
-            this.btnCancel.Style.BackColor = System.Drawing.Color.Gainsboro;
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "CANCEL";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.flpButtonsRight.AutoSize = true;
+            this.flpButtonsRight.Controls.Add(this.btnApply);
+            this.flpButtonsRight.Controls.Add(this.btnCancel);
+            this.flpButtonsRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.flpButtonsRight.Location = new System.Drawing.Point(266, 10);
+            this.flpButtonsRight.Margin = new System.Windows.Forms.Padding(0);
+            this.flpButtonsRight.Name = "flpButtonsRight";
+            this.flpButtonsRight.Size = new System.Drawing.Size(232, 44);
+            this.flpButtonsRight.TabIndex = 0;
+            this.flpButtonsRight.WrapContents = false;
             // 
             // btnApply
             // 
@@ -550,60 +592,18 @@
             this.btnApply.UseVisualStyleBackColor = false;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
-            // gbMode
+            // btnCancel
             // 
-            this.gbMode.AutoSize = true;
-            this.gbMode.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.gbMode.BackColor = System.Drawing.Color.White;
-            this.gbMode.Controls.Add(this.pnlMode);
-            this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbMode.Font = new System.Drawing.Font("Agency", 11F);
-            this.gbMode.Location = new System.Drawing.Point(0, 0);
-            this.gbMode.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
-            this.gbMode.Name = "gbMode";
-            this.gbMode.Padding = new System.Windows.Forms.Padding(12);
-            this.gbMode.Size = new System.Drawing.Size(456, 102);
-            this.gbMode.TabIndex = 0;
-            this.gbMode.TabStop = false;
-            this.gbMode.Text = "MODE";
-            // 
-            // pnlMode
-            // 
-            this.pnlMode.Controls.Add(this.rbCustom);
-            this.pnlMode.Controls.Add(this.rbDefault);
-            this.pnlMode.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlMode.Location = new System.Drawing.Point(12, 35);
-            this.pnlMode.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlMode.Name = "pnlMode";
-            this.pnlMode.Size = new System.Drawing.Size(432, 55);
-            this.pnlMode.TabIndex = 0;
-            // 
-            // rbDefault
-            // 
-            this.rbDefault.AutoSize = true;
-            this.rbDefault.Checked = true;
-            this.rbDefault.Font = new System.Drawing.Font("Agency", 8F);
-            this.rbDefault.Location = new System.Drawing.Point(12, 4);
-            this.rbDefault.Name = "rbDefault";
-            this.rbDefault.Size = new System.Drawing.Size(262, 20);
-            this.rbDefault.TabIndex = 0;
-            this.rbDefault.TabStop = true;
-            this.rbDefault.Text = "Use recommended defaults";
-            this.rbDefault.UseVisualStyleBackColor = true;
-            this.rbDefault.CheckedChanged += new System.EventHandler(this.rbDefault_CheckedChanged);
-            // 
-            // rbCustom
-            // 
-            this.rbCustom.AutoSize = true;
-            this.rbCustom.Font = new System.Drawing.Font("Agency", 8F);
-            this.rbCustom.Location = new System.Drawing.Point(12, 32);
-            this.rbCustom.Name = "rbCustom";
-            this.rbCustom.Size = new System.Drawing.Size(205, 20);
-            this.rbCustom.TabIndex = 1;
-            this.rbCustom.TabStop = true;
-            this.rbCustom.Text = "Custom preferences";
-            this.rbCustom.UseVisualStyleBackColor = true;
-            this.rbCustom.CheckedChanged += new System.EventHandler(this.rbCustom_CheckedChanged);
+            this.btnCancel.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnCancel.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnCancel.Location = new System.Drawing.Point(119, 3);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(110, 40);
+            this.btnCancel.Style.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "CANCEL";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // QuizPreferencesForm
             // 
@@ -630,6 +630,9 @@
             this.pnlPrefsBody.PerformLayout();
             this.tlpPrefsSections.ResumeLayout(false);
             this.tlpPrefsSections.PerformLayout();
+            this.gbMode.ResumeLayout(false);
+            this.pnlMode.ResumeLayout(false);
+            this.pnlMode.PerformLayout();
             this.gbBasics.ResumeLayout(false);
             this.tlpBasics.ResumeLayout(false);
             this.tlpBasics.PerformLayout();
@@ -644,9 +647,6 @@
             this.pnlPrefsButtons.ResumeLayout(false);
             this.pnlPrefsButtons.PerformLayout();
             this.flpButtonsRight.ResumeLayout(false);
-            this.gbMode.ResumeLayout(false);
-            this.pnlMode.ResumeLayout(false);
-            this.pnlMode.PerformLayout();
             this.ResumeLayout(false);
 
         }

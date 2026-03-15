@@ -280,20 +280,20 @@
             // lblSub
             // 
             this.lblSub.AutoSize = true;
-            this.lblSub.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblSub.Font = new System.Drawing.Font("Agency", 12F);
             this.lblSub.Location = new System.Drawing.Point(8, 54);
             this.lblSub.Name = "lblSub";
-            this.lblSub.Size = new System.Drawing.Size(473, 14);
+            this.lblSub.Size = new System.Drawing.Size(620, 18);
             this.lblSub.TabIndex = 1;
             this.lblSub.Text = "CHOOSE A QUIZ MODE AND START TESTING YOUR SKILLS";
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Muro", 22F);
-            this.lblTitle.Location = new System.Drawing.Point(3, 0);
+            this.lblTitle.Font = new System.Drawing.Font("Muro", 26F);
+            this.lblTitle.Location = new System.Drawing.Point(2, -7);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(284, 44);
+            this.lblTitle.Size = new System.Drawing.Size(332, 52);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "QUIZ SELECTION";
             // 
@@ -364,7 +364,7 @@
             this.lnkChangePreferences.ActiveLinkColor = System.Drawing.Color.RoyalBlue;
             this.lnkChangePreferences.Font = new System.Drawing.Font("Muro", 10F);
             this.lnkChangePreferences.LinkColor = System.Drawing.Color.Gray;
-            this.lnkChangePreferences.Location = new System.Drawing.Point(207, 80);
+            this.lnkChangePreferences.Location = new System.Drawing.Point(218, 80);
             this.lnkChangePreferences.Name = "lnkChangePreferences";
             this.lnkChangePreferences.Size = new System.Drawing.Size(301, 83);
             this.lnkChangePreferences.TabIndex = 3;
@@ -376,12 +376,12 @@
             // 
             this.btnStartRecommended.AutoSize = true;
             this.btnStartRecommended.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnStartRecommended.Font = new System.Drawing.Font("Muro", 9F);
+            this.btnStartRecommended.Font = new System.Drawing.Font("Muro", 10F);
             this.btnStartRecommended.ForeColor = System.Drawing.Color.White;
             this.btnStartRecommended.Location = new System.Drawing.Point(0, 70);
             this.btnStartRecommended.Name = "btnStartRecommended";
             this.btnStartRecommended.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.btnStartRecommended.Size = new System.Drawing.Size(182, 49);
+            this.btnStartRecommended.Size = new System.Drawing.Size(200, 49);
             this.btnStartRecommended.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStartRecommended.Style.ForeColor = System.Drawing.Color.White;
             this.btnStartRecommended.TabIndex = 2;
