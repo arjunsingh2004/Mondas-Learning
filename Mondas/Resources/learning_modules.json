@@ -291,7 +291,7 @@
     "estimatedMinutes": 9,
     "openUrl": "https://www.ncsc.gov.uk/",
     "previewUrl": "https://www.youtube.com/embed/0Wd3JoUHXno?si=vmgulsnoBCE_5L55",
-    "appliesToSources": [ "Quiz", "Password Workshop" ],
+    "appliesToSources": [ "Quiz" ],
     "misconceptionTags": [],
     "objectives": [
       "Understand what makes a password stronger",
@@ -385,7 +385,7 @@
     "estimatedMinutes": 7,
     "openUrl": "https://www.cisa.gov/",
     "previewUrl": "",
-    "appliesToSources": [ "Quiz", "Password Workshop" ],
+    "appliesToSources": [ "Quiz" ],
     "misconceptionTags": [],
     "objectives": [
       "Understand why password managers help",

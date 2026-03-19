@@ -19,13 +19,13 @@ namespace Mondas
         public MiniGamePreferencesForm(MiniGamePreferences initial)
         {
             InitializeComponent();
-            Preferences = Close(MiniGamePreferences.Normalise(initial));            
+            Preferences = Clone(MiniGamePreferences.Normalise(initial));            
         }
 
         private void MiniGamePreferencesForm_Load(object sender, EventArgs e)
         {
             FillUiLists();
-            ApplyToUI(Preferences);
+            ApplyToUi(Preferences);
             ApplyMode(Preferences.UseDefaults);
             UpdateSummary();
         }
@@ -33,7 +33,7 @@ namespace Mondas
         private void FillUiLists()
         {
             cmbMiniGameType.Items.Clear();
-            cmbMiniGameType.Items.AddRange(new object[] { "Phishing Simulator", "Password Workshop" });
+            cmbMiniGameType.Items.AddRange(new object[] { "Phishing Simulator", "Authentication Defense" });
 
             cmbRoundCount.Items.Clear();
             cmbRoundCount.Items.AddRange(new object[] { 5, 10, 15, 29 });
@@ -60,7 +60,7 @@ namespace Mondas
             _loading = true;
             prefs = MiniGamePreferences.Normalise(prefs);
 
-            cmbMiniGameType.SelectedItem = prefs.GameType == MiniGameType.PasswordWorkshop ? "Password Workshop" : "Phishing Simulator";
+            cmbMiniGameType.SelectedItem = prefs.GameType == MiniGameType.AuthenticationDefense ? "Authentication Defense" : "Phishing Simulator";
 
             rbDefault.Checked = prefs.UseDefaults;
             rbCustom.Checked = !prefs.UseDefaults;
@@ -105,7 +105,7 @@ namespace Mondas
         {
             gbBasics.Enabled = !useDefaults;
             gbPhishing.Enabled = !useDefaults && ReadGameType() == MiniGameType.PhishingSimulator;
-            gbPassword.Enabled = !useDefaults && ReadGameType() == MiniGameType.PasswordWorkshop;
+            gbAuthentication.Enabled = !useDefaults && ReadGameType() == MiniGameType.AuthenticationDefense;
             gbAdvanced.Enabled = !useDefaults;
         }
 
@@ -114,13 +114,13 @@ namespace Mondas
             var isPhishing = ReadGameType() == MiniGameType.PhishingSimulator;
 
             gbPhishing.Visible = isPhishing;
-            gbPassword.Visible = !isPhishing;
+            gbAuthentication.Visible = !isPhishing;
         }
 
         private MiniGameType ReadGameType()
         {
             var text = (cmbMiniGameType.SelectedItem?.ToString() ?? cmbMiniGameType.Text ?? "").Trim().ToUpperInvariant();
-            return text.Contains("PASSWORD") ? MiniGameType.PasswordWorkshop : MiniGameType.PhishingSimulator;
+            return text.Contains("AUTHENTICATION") ? MiniGameType.AuthenticationDefense : MiniGameType.PhishingSimulator;
         }
 
         private MiniGamePreferences ReadFromUi()
@@ -207,7 +207,7 @@ namespace Mondas
                 return;
             }
 
-            lblSummary.Text = $"GAME: PASSWORD WORKSHOP · ROUNDS: {prefs.RoundCount} · DIFFICULTY: {(prefs.Difficulty.HasValue ? prefs.Difficulty.Value.ToString().ToUpperInvariant() : "ANY")} · TIMER: {(prefs.TimerEnabled ? "ON" : "OFF")}\r\nTOPICS: STRENTH {(prefs.IncludeStrength ? "ON" : "OFF")} · REUSE {(prefs.IncludeReuse ? "ON" : "OFF")} · MANAGER {(prefs.IncludeManager ? "ON" : "OFF")} · PATTERNS {(prefs.IncludePatterns ? "ON" : "OFF")}\r\nHINTS: {prefs.HintMode.ToString().ToUpperInvariant()} · FEEDBACK: {(prefs.FeedbackMode == MiniGameFeedbackMode.Instant ? "INSTANT" : "END OF ROUND")}";
+            lblSummary.Text = $"GAME: AUTHENTICATION DEFENSE · ROUNDS: {prefs.RoundCount} · DIFFICULTY: {(prefs.Difficulty.HasValue ? prefs.Difficulty.Value.ToString().ToUpperInvariant() : "ANY")} · TIMER: {(prefs.TimerEnabled ? "ON" : "OFF")}\r\nTOPICS: STRENTH {(prefs.IncludeStrength ? "ON" : "OFF")} · REUSE {(prefs.IncludeReuse ? "ON" : "OFF")} · MANAGER {(prefs.IncludeManager ? "ON" : "OFF")} · PATTERNS {(prefs.IncludePatterns ? "ON" : "OFF")}\r\nHINTS: {prefs.HintMode.ToString().ToUpperInvariant()} · FEEDBACK: {(prefs.FeedbackMode == MiniGameFeedbackMode.Instant ? "INSTANT" : "END OF ROUND")}";
         }
 
         private static MiniGamePreferences Clone(MiniGamePreferences prefs)

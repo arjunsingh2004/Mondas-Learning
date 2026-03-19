@@ -57,8 +57,8 @@
             this.chkIncludeAttachments = new System.Windows.Forms.CheckBox();
             this.chkIncludeLinks = new System.Windows.Forms.CheckBox();
             this.chkIncludeUrgency = new System.Windows.Forms.CheckBox();
-            this.gbPassword = new System.Windows.Forms.GroupBox();
-            this.tlpPassword = new System.Windows.Forms.TableLayoutPanel();
+            this.gbAuthentication = new System.Windows.Forms.GroupBox();
+            this.tlpAuthentication = new System.Windows.Forms.TableLayoutPanel();
             this.chkIncludeStrength = new System.Windows.Forms.CheckBox();
             this.chkIncludeReuse = new System.Windows.Forms.CheckBox();
             this.chkIncludeManager = new System.Windows.Forms.CheckBox();
@@ -87,8 +87,8 @@
             this.tlpBasics.SuspendLayout();
             this.gbPhishing.SuspendLayout();
             this.tlpPhishing.SuspendLayout();
-            this.gbPassword.SuspendLayout();
-            this.tlpPassword.SuspendLayout();
+            this.gbAuthentication.SuspendLayout();
+            this.tlpAuthentication.SuspendLayout();
             this.gbAdvanced.SuspendLayout();
             this.tlpAdvanced.SuspendLayout();
             this.gbSummary.SuspendLayout();
@@ -167,7 +167,7 @@
             this.tlpPrefsSections.Controls.Add(this.gbMode, 0, 1);
             this.tlpPrefsSections.Controls.Add(this.gbBasics, 0, 2);
             this.tlpPrefsSections.Controls.Add(this.gbPhishing, 0, 3);
-            this.tlpPrefsSections.Controls.Add(this.gbPassword, 0, 4);
+            this.tlpPrefsSections.Controls.Add(this.gbAuthentication, 0, 4);
             this.tlpPrefsSections.Controls.Add(this.gbAdvanced, 0, 5);
             this.tlpPrefsSections.Controls.Add(this.gbSummary, 0, 6);
             this.tlpPrefsSections.Dock = System.Windows.Forms.DockStyle.Top;
@@ -485,40 +485,40 @@
             this.chkIncludeUrgency.UseVisualStyleBackColor = true;
             this.chkIncludeUrgency.CheckedChanged += new System.EventHandler(this.chkIncludeUrgency_CheckedChanged);
             // 
-            // gbPassword
+            // gbAuthentication
             // 
-            this.gbPassword.AutoSize = true;
-            this.gbPassword.BackColor = System.Drawing.Color.White;
-            this.gbPassword.Controls.Add(this.tlpPassword);
-            this.gbPassword.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbPassword.Font = new System.Drawing.Font("Agency", 11F);
-            this.gbPassword.Location = new System.Drawing.Point(15, 525);
-            this.gbPassword.Name = "gbPassword";
-            this.gbPassword.Size = new System.Drawing.Size(514, 153);
-            this.gbPassword.TabIndex = 4;
-            this.gbPassword.TabStop = false;
-            this.gbPassword.Text = "PASSWORD WORKSHOP";
+            this.gbAuthentication.AutoSize = true;
+            this.gbAuthentication.BackColor = System.Drawing.Color.White;
+            this.gbAuthentication.Controls.Add(this.tlpAuthentication);
+            this.gbAuthentication.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbAuthentication.Font = new System.Drawing.Font("Agency", 11F);
+            this.gbAuthentication.Location = new System.Drawing.Point(15, 525);
+            this.gbAuthentication.Name = "gbAuthentication";
+            this.gbAuthentication.Size = new System.Drawing.Size(514, 153);
+            this.gbAuthentication.TabIndex = 4;
+            this.gbAuthentication.TabStop = false;
+            this.gbAuthentication.Text = "PASSWORD WORKSHOP";
             // 
-            // tlpPassword
+            // tlpAuthentication
             // 
-            this.tlpPassword.AutoSize = true;
-            this.tlpPassword.ColumnCount = 1;
-            this.tlpPassword.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpPassword.Controls.Add(this.chkIncludeStrength, 0, 0);
-            this.tlpPassword.Controls.Add(this.chkIncludeReuse, 0, 1);
-            this.tlpPassword.Controls.Add(this.chkIncludeManager, 0, 2);
-            this.tlpPassword.Controls.Add(this.chkIncludePatterns, 0, 3);
-            this.tlpPassword.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tlpPassword.Location = new System.Drawing.Point(3, 26);
-            this.tlpPassword.Name = "tlpPassword";
-            this.tlpPassword.Padding = new System.Windows.Forms.Padding(8);
-            this.tlpPassword.RowCount = 4;
-            this.tlpPassword.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpPassword.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpPassword.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpPassword.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpPassword.Size = new System.Drawing.Size(508, 124);
-            this.tlpPassword.TabIndex = 0;
+            this.tlpAuthentication.AutoSize = true;
+            this.tlpAuthentication.ColumnCount = 1;
+            this.tlpAuthentication.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpAuthentication.Controls.Add(this.chkIncludeStrength, 0, 0);
+            this.tlpAuthentication.Controls.Add(this.chkIncludeReuse, 0, 1);
+            this.tlpAuthentication.Controls.Add(this.chkIncludeManager, 0, 2);
+            this.tlpAuthentication.Controls.Add(this.chkIncludePatterns, 0, 3);
+            this.tlpAuthentication.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tlpAuthentication.Location = new System.Drawing.Point(3, 26);
+            this.tlpAuthentication.Name = "tlpAuthentication";
+            this.tlpAuthentication.Padding = new System.Windows.Forms.Padding(8);
+            this.tlpAuthentication.RowCount = 4;
+            this.tlpAuthentication.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpAuthentication.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpAuthentication.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpAuthentication.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpAuthentication.Size = new System.Drawing.Size(508, 124);
+            this.tlpAuthentication.TabIndex = 0;
             // 
             // chkIncludeStrength
             // 
@@ -676,7 +676,7 @@
             this.tlpPrefsButtons.ColumnCount = 3;
             this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.0597F));
             this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.9403F));
-            this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
+            this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.tlpPrefsButtons.Controls.Add(this.btnCancel, 2, 0);
             this.tlpPrefsButtons.Controls.Add(this.btnUseDefaults, 0, 0);
             this.tlpPrefsButtons.Controls.Add(this.btnApply, 1, 0);
@@ -696,7 +696,7 @@
             this.btnCancel.BackColor = System.Drawing.Color.Crimson;
             this.btnCancel.Font = new System.Drawing.Font("Muro", 10F);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(449, 9);
+            this.btnCancel.Location = new System.Drawing.Point(447, 9);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnCancel.Size = new System.Drawing.Size(91, 40);
@@ -732,7 +732,7 @@
             this.btnApply.BackColor = System.Drawing.Color.SeaGreen;
             this.btnApply.Font = new System.Drawing.Font("Muro", 10F);
             this.btnApply.ForeColor = System.Drawing.Color.White;
-            this.btnApply.Location = new System.Drawing.Point(362, 9);
+            this.btnApply.Location = new System.Drawing.Point(360, 9);
             this.btnApply.Name = "btnApply";
             this.btnApply.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnApply.Size = new System.Drawing.Size(81, 40);
@@ -781,10 +781,10 @@
             this.gbPhishing.PerformLayout();
             this.tlpPhishing.ResumeLayout(false);
             this.tlpPhishing.PerformLayout();
-            this.gbPassword.ResumeLayout(false);
-            this.gbPassword.PerformLayout();
-            this.tlpPassword.ResumeLayout(false);
-            this.tlpPassword.PerformLayout();
+            this.gbAuthentication.ResumeLayout(false);
+            this.gbAuthentication.PerformLayout();
+            this.tlpAuthentication.ResumeLayout(false);
+            this.tlpAuthentication.PerformLayout();
             this.gbAdvanced.ResumeLayout(false);
             this.gbAdvanced.PerformLayout();
             this.tlpAdvanced.ResumeLayout(false);
@@ -829,8 +829,8 @@
         private System.Windows.Forms.CheckBox chkIncludeAttachments;
         private System.Windows.Forms.CheckBox chkIncludeLinks;
         private System.Windows.Forms.CheckBox chkIncludeUrgency;
-        private System.Windows.Forms.GroupBox gbPassword;
-        private System.Windows.Forms.TableLayoutPanel tlpPassword;
+        private System.Windows.Forms.GroupBox gbAuthentication;
+        private System.Windows.Forms.TableLayoutPanel tlpAuthentication;
         private System.Windows.Forms.CheckBox chkIncludeStrength;
         private System.Windows.Forms.CheckBox chkIncludeReuse;
         private System.Windows.Forms.CheckBox chkIncludeManager;

@@ -431,7 +431,7 @@
             "ALL",
             "QUIZ",
             "PHISHING SIMULATOR",
-            "PASSWORD WORKSHOP",
+            "AUTHENTICATION DEFENSE",
             "LEARNING MODULES"});
             this.cmbSource.Location = new System.Drawing.Point(988, 33);
             this.cmbSource.Name = "cmbSource";

@@ -1,0 +1,171 @@
+﻿using System;
+using System.Collections.Generic;
+using Mondas.Models;
+
+namespace Mondas.Services
+{
+    public sealed class AuthenticationDefenseScoringV1
+    {
+        public AuthenticationDefenseResult Evaluate(AuthenticationDefenseScenario scenario, AuthenticationDefenseSelection selection, double secondsTaken)
+        {
+            var result = new AuthenticationDefenseResult();
+
+            if (scenario == null)
+            {
+                result.IsCorrect = false;
+                result.ScoreDelta = -8;
+                result.Headline = "NO SCENARIO";
+                result.Explanation = "No scenario has been loaded.";
+                return result;
+            }
+
+            var findings = new List<AuthenticationDefenseFinding>();
+
+            int checks = 0;
+            int matched = 0;
+            int bigMisses = 0;
+
+            CompareDropdown("Auth method mismatch", selection.AuthMethod, scenario.RecommendedAuthMethod, "The sign-in method does not match what this threat needs.", FindingImpactType.High);
+            CompareDropdown("Password policy mismatch", selection.PasswordPolicy, scenario.RecommendedPasswordPolicy, "The password policy is too weak for this attack path.", FindingImpactType.Medium);
+            CompareDropdown("Recovery path mismatch", selection.Recovery, scenario.RecommendedRecovery, "The recovery flow could be abused if the attacker pivots through account recovery.", FindingImpactType.High);
+            CompareDropdown("Monitoring gap", selection.Monitoring, scenario.RecommendedMonitoring, "The monitoring level is too weak to catch this attack quickly.", FindingImpactType.Medium);
+            CompareDropdown("Rate limiting gap", selection.RateLimit, scenario.RecommendedRateLimit, "The rate limiting choice is not strong enough for this scenario.", FindingImpactType.Medium);
+            CompareDropdown("Session control gap", selection.SessionControl, scenario.RecommendedSessionControl, "The session control does not properly contain this threat.", FindingImpactType.Medium);
+
+            ToggleNeeded("MFA missing", selection.RequireMfa, scenario.RequireMfa, "This scenario needs MFA to stop single-factor compromise.", FindingImpactType.High);
+            ToggleNeeded("Phishing-resistant MFA missing", selection.RequirePhishingResistant, scenario.RequirePhishingResistant, "Standard MFA is not strong enough here; phishing-resistant MFA is needed.", FindingImpactType.High);
+            ToggleNeeded("Device binding missing", selection.RequireDeviceBinding, scenario.RequireDeviceBinding, "This attack is safer to contain with device-bound access.", FindingImpactType.Medium);
+            ToggleNeeded("Risk-based step-up missing", selection.RequireRiskBasedStepUp, scenario.RequireRiskBasedStepUp, "The flow should re-check identity when risk increases.", FindingImpactType.Medium);
+            ToggleNeeded("Legacy auth still allowed", selection.RequireBlockLegacyAuth, scenario.RequireBlockLegacyAuth, "Legacy authentication paths stay open to bypasses.", FindingImpactType.High);
+            ToggleNeeded("Alerting missing", selection.RequireAlertOnSuspicious, scenario.RequireAlertOnSuspicious, "Suspicious behaviour should trigger an alert in this scenario.", FindingImpactType.Medium);
+        
+            if (findings.Count == 0)
+            {
+                findings.Add(new AuthenticationDefenseFinding { Title = "Strong coverage", Detail = "This build covers the main attack path cleanly.", Impact = FindingImpactType.Low });
+            }
+
+            var accuracy = checks <= 0 ? 0.0 : (double)matched / checks;
+            var timePenalty = CalcTimePenalty(secondsTaken, scenario.Difficulty);
+            var timePenaltyPoints = (int)Math.Round(Math.Min(5.0, timePenalty));
+
+            result.IsCorrect = bigMisses == 0 && accuracy >= 0.70;
+            result.Accuracy01 = accuracy;
+            result.TimePenaltySeconds = timePenalty;
+            result.Findings = findings;
+
+            if (result.IsCorrect)
+            {
+                result.ScoreDelta = Math.Max(2, 10 + (int)Math.Round(accuracy * 6.0) - timePenaltyPoints);
+                result.Headline = "STRONG DEFENSE";
+                result.Explanation = "Your setup blocks the main attack route and applies the right controls for this scenario.";
+            }
+
+            else
+            {
+                result.ScoreDelta = Math.Min(-2, -8 - (bigMisses * 2) - timePenaltyPoints);
+                result.Headline = "DEFENSE GAPS FOUND";
+                result.Explanation = FailureExplanation(scenario, findings);
+            }
+
+            return result;
+
+            void CompareDropdown<T>(string title, T chosen, T expected, string detail, FindingImpactType impact) where T : struct, Enum
+            {
+                checks++;
+
+                if (EqualityComparer<T>.Default.Equals(chosen, expected))
+                {
+                    matched++;
+                    return;
+                }
+
+                findings.Add(new AuthenticationDefenseFinding { Title = title, Detail = detail + " Recommended: " + ToUiText(expected) + ".", Impact = impact });
+
+                if (impact == FindingImpactType.High)
+                {
+                    bigMisses++;
+                }
+            }
+
+            void ToggleNeeded(string title, bool chosen, bool required, string detail, FindingImpactType impact)
+            {
+                if (!required)
+                {
+                    return;
+                }
+
+                checks++;
+
+                if (chosen)
+                {
+                    matched++;
+                    return;
+                }
+
+                findings.Add(new AuthenticationDefenseFinding { Title = title, Detail = detail, Impact = impact });
+
+                if (impact == FindingImpactType.High)
+                {
+                    bigMisses++;
+                }
+            }
+        }
+
+        private static double CalcTimePenalty(double secondsTaken, DifficultyBand difficulty)
+        {
+            if (secondsTaken <= 0)
+            {
+                return 0.0;
+            }
+
+            var softCap = difficulty == DifficultyBand.Easy ? 20.0 : difficulty == DifficultyBand.Medium ? 30.0 : 45.0;
+            var over = secondsTaken - softCap;
+
+            if (over <= 0)
+            {
+                return 0.0;
+            }
+
+            return over / 10.0;
+        }
+
+        private static string FailureExplanation(AuthenticationDefenseScenario scenario, List<AuthenticationDefenseFinding> findings)
+        {
+            if (findings == null || findings.Count == 0)
+            {
+                return "The build does not cover the scenario strongly enough.";
+            }
+
+            var first = findings[0].Title;
+            var second = findings.Count > 1 ? " " + findings[1].Title + "." : "";
+
+            return "Main issue: " + first + "." + second + " Tighten the controls around " + ToUiText(scenario.ThreatType) + " and " + ToUiText(scenario.GoalType) + ".";
+        }
+
+        private static string ToUiText(Enum value)
+        {
+            var raw = value.ToString();
+
+            if (string.IsNullOrWhiteSpace(raw))
+            {
+                return "";
+            }
+
+            var chars = new List<char>(raw.Length + 8);
+
+            for (int i = 0; i < raw.Length; i++)
+            {
+                var c = raw[i];
+
+                if (i > 0 && char.IsUpper(c) && !char.IsUpper(raw[i - 1]))
+                {
+                    chars.Add(' ');
+                }
+
+                chars.Add(c);
+            }
+
+            return new string(chars.ToArray()).ToUpperInvariant();
+        }
+    }
+}

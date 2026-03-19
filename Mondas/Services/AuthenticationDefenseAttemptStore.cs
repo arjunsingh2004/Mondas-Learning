@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Microsoft.Data.Sqlite;
+using Mondas.Models;
+
+namespace Mondas.Services
+{
+    public sealed class AuthenticationDefenseAttemptStore
+    {
+        private readonly string _dbPath;
+
+        public AuthenticationDefenseAttemptStore(string dbPath)
+        {
+            _dbPath = dbPath;
+            EnsureSchema();
+        }
+
+        public void Add(AuthenticationDefenseAttemptRow row)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using var conn = Open();
+            using var cmd = conn.CreateCommand();
+
+            cmd.CommandText = "INSERT INTO AuthenticationDefenseAttempts(UserKey, ScenarioId, IsCorrect, ScoreDelta, SecondsTaken, SubmittedAt, TagsJson, FindingsJson, ScenarioSnapshotJson) VALUES($uk, $sid, $ok, $score, $secs, $ts, $tags, $findings, $snap);";
+            cmd.Parameters.AddWithValue("$uk", string.IsNullOrWhiteSpace(row.UserKey) ? "local" : row.UserKey.Trim());
+            cmd.Parameters.AddWithValue("$sid", row.ScenarioId ?? "");
+            cmd.Parameters.AddWithValue("$ok", row.IsCorrect ? 1 : 0);
+            cmd.Parameters.AddWithValue("$score", row.ScoreDelta);
+            cmd.Parameters.AddWithValue("$secs", row.SecondsTaken > 0 ? row.SecondsTaken : 0.0);
+            cmd.Parameters.AddWithValue("$ts", row.SubmittedUtc.Kind == DateTimeKind.Utc ? row.SubmittedUtc.ToString("o") : row.SubmittedUtc.ToUniversalTime().ToString("o"));
+            cmd.Parameters.AddWithValue("$tags", row.TagsJson ?? "[]");
+            cmd.Parameters.AddWithValue("$findings", row.FindingsJson ?? "[]");
+            cmd.Parameters.AddWithValue("$snap", row.ScenarioSnapshotJson ?? "{}");
+            cmd.ExecuteNonQuery();
+        }
+
+        public List<AuthenticationDefenseAttemptRow> GetForUser(string userKey, int limit = 2000)
+        {
+            var rows = new List<AuthenticationDefenseAttemptRow>();
+            var uk = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
+
+            using var conn = Open();
+            using var cmd = conn.CreateCommand();
+
+            cmd.CommandText = "SELECT Id, UserKey, ScenarioId, IsCorrect, ScoreDelta, SecondsTaken, SubmittedAt, TagsJson, FindingsJson, ScenarioSnapshotJson FROM AuthenticationDefenseAttempts WHERE UserKey = $uk ORDER BY SubmittedAt DESC LIMIT $lim;";
+            cmd.Parameters.AddWithValue("$uk", uk);
+            cmd.Parameters.AddWithValue("$lim", limit <= 0 ? 2000 : limit);
+
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
+            {
+                rows.Add(new AuthenticationDefenseAttemptRow
+                {
+                    Id = r.GetInt64(0),
+                    UserKey = r.IsDBNull(1) ? uk : r.GetString(1),
+                    ScenarioId = r.IsDBNull(2) ? "" : r.GetString(2),
+                    IsCorrect = !r.IsDBNull(3) && r.GetInt32(3) == 1,
+                    ScoreDelta = r.IsDBNull(4) ? 0 : r.GetInt32(4),
+                    SecondsTaken = r.IsDBNull(5) ? 0.0 : r.GetDouble(5),
+                    SubmittedUtc = r.IsDBNull(6) ? DateTime.UtcNow : DateTime.Parse(r.GetString(6), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime(),
+                    TagsJson = r.IsDBNull(7) ? "[]" : r.GetString(7),
+                    FindingsJson = r.IsDBNull(8) ? "[]" : r.GetString(8),
+                    ScenarioSnapshotJson = r.IsDBNull(9) ? "{}" : r.GetString(9)
+                });
+            }
+
+            return rows;
+        }
+
+        private void EnsureSchema()
+        {
+            using var conn = Open();
+            using var cmd = conn.CreateCommand();
+
+            cmd.CommandText = "CREATE TABLE IF NOT EXISTS AuthenticationDefenseAttempts (Id INTEGER PRIMARY KEY AUTOINCREMENT, UserKey TEXT NOT NULL, ScenarioId TEXT NOT NULL, IsCorrect INTEGER NOT NULL, ScoreDelta INTEGER NOT NULL, SecondsTaken REAL NOT NULL, SubmittedAt TEXT NOT NULL, TagsJson TEXT NOT NULL DEFAULT '[]', FindingsJson TEXT NOT NULL DEFAULT '[]', ScenarioSnapshotJson TEXT NOT NULL DEFAULT '{}'); CREATE INDEX IF NOT EXISTS IX_AuthenticationDefenseAttempts_User_Submitted ON AuthenticationDefenseAttempts(UserKey, SubmittedAt DESC);";
+            cmd.ExecuteNonQuery();
+        }
+
+        private SqliteConnection Open()
+        {
+            var conn = new SqliteConnection("Data Source=" + _dbPath);
+            conn.Open();
+
+            using var pragma = conn.CreateCommand();
+            pragma.CommandText = "PRAGMA foreign_keys = ON;";
+            pragma.ExecuteNonQuery();
+
+            return conn;
+        }
+    }
+}

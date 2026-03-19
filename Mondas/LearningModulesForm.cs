@@ -87,7 +87,7 @@ namespace Mondas
 
             if (cmbSource != null && cmbSource.Items.Count == 0)
             {
-                cmbSource.Items.AddRange(new object[] { "All", "Quiz", "Phishing Simulator", "Password Workshop" });
+                cmbSource.Items.AddRange(new object[] { "All", "Quiz", "Phishing Simulator", "Authentication Defense", "Learning Modules" });
             }
 
             if (cmbSource != null && cmbSource.SelectedIndex < 0 && cmbSource.Items.Count > 0)
@@ -870,9 +870,9 @@ namespace Mondas
                 return StatsSource.PhishingSimulator;
             }
 
-            if (text.Contains("PASSWORD"))
+            if (text.Contains("AUTHENTICATION"))
             {
-                return StatsSource.PasswordWorkshop;
+                return StatsSource.AuthenticationDefense;
             }
 
             if (text.Contains("QUIZ"))

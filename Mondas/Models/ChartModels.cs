@@ -43,7 +43,7 @@ namespace Mondas.Models
         All,
         Quiz,
         PhishingSimulator,
-        PasswordWorkshop,
+        AuthenticationDefense,
         LearningModules
     }
 

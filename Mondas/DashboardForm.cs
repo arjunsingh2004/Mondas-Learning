@@ -295,9 +295,9 @@ namespace Mondas
                 return StatsSource.PhishingSimulator;
             }
 
-            if (text.Contains("PASSWORD"))
+            if (text.Contains("AUTHENTICATION"))
             {
-                return StatsSource.PasswordWorkshop;
+                return StatsSource.AuthenticationDefense;
             }
 
             if (text.Contains("LEARNING"))
@@ -752,6 +752,28 @@ namespace Mondas
             f.Show();
             Hide();
 
+        }
+
+        private void lblTileAuthTitle_Click(object sender, EventArgs e)
+        {
+            var f = new AuthenticationDefenseForm(_userKey);
+
+            f.FormClosed += (_, __) =>
+            {
+                try
+                {
+                    Show();
+                    RefreshDashboard();
+                }
+
+                catch
+                {
+
+                }
+            };
+
+            f.Show();
+            Hide();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Mondas.Models
     public enum MiniGameType
     {
         PhishingSimulator = 1,
-        PasswordWorkshop = 2
+        AuthenticationDefense = 2
     }
 
     public enum MiniGameHintMode

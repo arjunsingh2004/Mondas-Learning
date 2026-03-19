@@ -393,7 +393,7 @@ namespace Mondas.Services
         {
             var text = Normalise(raw);
 
-            return source switch { StatsSource.Quiz => text == "QUIZ", StatsSource.PhishingSimulator => text == "PHISHINGSIMULATOR" || text == "PHISHING", StatsSource.PasswordWorkshop => text == "PASSWORDWORKSHOP" || text == "PASSWORDS", StatsSource.LearningModules => text == "LEARNINGMODULES", _ => text == "ALL" };
+            return source switch { StatsSource.Quiz => text == "QUIZ", StatsSource.PhishingSimulator => text == "PHISHINGSIMULATOR" || text == "PHISHING", StatsSource.AuthenticationDefense => text == "AUTHENTICATIONDEFENSE" || text == "PASSWORDS", StatsSource.LearningModules => text == "LEARNINGMODULES", _ => text == "ALL" };
         }
 
         private static string Normalise(string value)

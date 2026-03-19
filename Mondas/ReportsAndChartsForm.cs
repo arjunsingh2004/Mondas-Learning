@@ -352,9 +352,9 @@ namespace Mondas
                 return StatsSource.PhishingSimulator;
             }
 
-            if (text.Contains("PASSWORD"))
+            if (text.Contains("AUTHENTICATION"))
             {
-                return StatsSource.PasswordWorkshop;
+                return StatsSource.AuthenticationDefense;
             }
 
             if (text.Contains("LEARNING"))

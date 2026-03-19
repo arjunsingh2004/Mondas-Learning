@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 using Mondas.Models;
 using Newtonsoft.Json;
-using Syncfusion.Windows.Forms.Tools;
 
 namespace Mondas.Services
 {
@@ -56,6 +54,8 @@ namespace Mondas.Services
             int phishCorrect = 0;
             int learningTotal = 0;
             int learningCorrect = 0;
+            int authTotal = 0;
+            int authCorrect = 0;
 
             if (source == StatsSource.All || source == StatsSource.Quiz)
             {
@@ -75,13 +75,19 @@ namespace Mondas.Services
                 learningCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM LearningModuleAttempts WHERE UserKey = $uk AND IsCorrect = 1;", ("$uk", uk));
             }
 
-            stats.TotalAttempts = quizTotal + phishTotal + learningTotal;
-            stats.CorrectAttempts = quizCorrect + phishCorrect + learningCorrect;
+            if ((source == StatsSource.All || source == StatsSource.AuthenticationDefense) && TableExists(conn, "AuthenticationDefenseAttempts"))
+            {
+                authTotal = ScalarInt(conn, "SELECT COUNT(1) FROM AuthenticationDefenseAttempts WHERE UserKey = $uk;", ("$uk;", uk));
+                authCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM AuthenticationDefenseAttempts WHERE UserKey = $uk AND IsCorrect = 1;", ("$uk", uk));
+            }
+
+            stats.TotalAttempts = quizTotal + phishTotal + learningTotal + authTotal;
+            stats.CorrectAttempts = quizCorrect + phishCorrect + learningCorrect + authTotal;
             stats.AvgSeconds = LoadAvgSeconds(conn, uk, source);
-            stats.CurrentStreak = ComputeStreak(conn, uk, source, take: 250);
+            stats.CurrentStreak = CalcStreak(conn, uk, source, take: 250);
 
             LoadTopicMastery(conn, uk, stats, source);
-            ComputeWeakStrong(stats, minTopicAttempts);
+            CalcWeakStrong(stats, minTopicAttempts);
             LoadTopMisconceptions(conn, uk, stats, source, misconceptionLimit);
 
             return stats;
@@ -155,11 +161,6 @@ namespace Mondas.Services
 
         private static double LoadAvgSeconds(SqliteConnection conn, string userKey, StatsSource source)
         {
-            if (source == StatsSource.PasswordWorkshop)
-            {
-                return 0.0;
-            }
-
             if (source == StatsSource.Quiz)
             {
                 return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0;", ("$uk", userKey));
@@ -185,6 +186,16 @@ namespace Mondas.Services
                 return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM LearningModuleAttempts WHERE UserKey = $uk AND SecondsTaken > 0;", ("$uk", userKey));
             }
 
+            if (source == StatsSource.AuthenticationDefense)
+            {
+                if (!TableExists(conn, "AuthenticationDefenseAttempts"))
+                {
+                    return 0.0;
+                }
+
+                return ScalarDouble(conn, "SELECT AVG(SecondsTaken) FROM AuthenticationDefenseAttempts WHERE UserKey = $uk AND SecondsTaken > 0;", ("$uk", userKey));
+            }
+
             var parts = new List<string> { "SELECT SecondsTaken FROM Attempts WHERE UserKey = $uk AND SecondsTaken > 0" };
 
             if (TableExists(conn, "PhishingAttempts"))
@@ -197,37 +208,43 @@ namespace Mondas.Services
                 parts.Add("SELECT SecondsTaken FROM LearningModuleAttempts WHERE UserKey = $uk AND SecondsTaken > 0");
             }
 
+            if (TableExists(conn, "AuthenticationDefenseAttempts"))
+            {
+                parts.Add("SELECT SecondsTaken FROM AuthenticationDefenseAttempts WHERE UserKey = $uk AND SecondsTaken > 0");
+            }
+
             var sql = "SELECT AVG(t.SecondsTaken) FROM (" + string.Join(" UNION ALL ", parts) + ") AS t;";
 
             return ScalarDouble(conn, sql, ("$uk", userKey), ("$a1", (int)PhishingAction.TrustKeep), ("$a2", (int)PhishingAction.ReportPhishing));
         }
 
-        private static int ComputeStreak(SqliteConnection conn, string userKey, StatsSource source, int take)
-        {
-            if (source == StatsSource.PasswordWorkshop)
-            {
-                return 0;
-            }
-
+        private static int CalcStreak(SqliteConnection conn, string userKey, StatsSource source, int take)
+        {            
             if (source == StatsSource.Quiz)
             {
-                return ComputeQuizStreak(conn, userKey, take);
+                return CalcQuizStreak(conn, userKey, take);
             }
 
             if (source == StatsSource.PhishingSimulator)
             {
-                return ComputePhishStreak(conn, userKey, take);
+                return CalcPhishStreak(conn, userKey, take);
             }
 
             if (source == StatsSource.LearningModules)
             {
-                return ComputeLearningStreak(conn, userKey, take);
+                return CalcLearningStreak(conn, userKey, take);
+            }
+
+            if (source == StatsSource.AuthenticationDefense)
+            {
+                return CalcAuthenticationStreak(conn, userKey, take);
             }
 
             var parts = new List<string>{"SELECT IsCorrect, SubmittedAt FROM Attempts WHERE UserKey = $uk"};
 
             var hasPhish = TableExists(conn, "PhishingAttempts");
             var hasLearning = TableExists(conn, "LearningModuleAttempts");
+            var hasAuth = TableExists(conn, "AuthenticationDefenseAttempts");
 
             if (hasPhish)
             {
@@ -237,6 +254,11 @@ namespace Mondas.Services
             if (hasLearning)
             {
                 parts.Add("SELECT IsCorrect, SubmittedAt FROM LearningModuleAttempts WHERE UserKey = $uk");
+            }
+
+            if (hasAuth)
+            {
+                parts.Add("SELECT IsCorrect, SubmittedAt FROM AuthenticationDefenseAttempts WHERE UserKey = $uk");
             }
 
             using var cmd = conn.CreateCommand();
@@ -268,7 +290,7 @@ namespace Mondas.Services
             return streak;
         }
 
-        private static int ComputeQuizStreak(SqliteConnection conn, string userKey, int take)
+        private static int CalcQuizStreak(SqliteConnection conn, string userKey, int take)
         {
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"SELECT IsCorrect FROM Attempts WHERE UserKey = $uk ORDER BY SubmittedAt DESC LIMIT $take;";
@@ -294,7 +316,7 @@ namespace Mondas.Services
             return streak;
         }
 
-        private static int ComputePhishStreak(SqliteConnection conn, string userKey, int take)
+        private static int CalcPhishStreak(SqliteConnection conn, string userKey, int take)
         {
             if (!TableExists(conn, "PhishingAttempts"))
             {
@@ -327,7 +349,7 @@ namespace Mondas.Services
             return streak;
         }
 
-        private static int ComputeLearningStreak(SqliteConnection conn, string userKey, int take)
+        private static int CalcLearningStreak(SqliteConnection conn, string userKey, int take)
         {
             if (!TableExists(conn, "LearningModuleAttempts"))
             {
@@ -337,6 +359,36 @@ namespace Mondas.Services
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"SELECT IsCorrect FROM LearningModuleAttempts WHERE UserKey = $uk ORDER BY SubmittedAt DESC LIMIT $take;";
 
+            cmd.Parameters.AddWithValue("$uk", userKey);
+            cmd.Parameters.AddWithValue("$take", take);
+
+            int streak = 0;
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
+            {
+                var isCorrect = r.GetInt32(0) == 1;
+
+                if (!isCorrect)
+                {
+                    break;
+                }
+
+                streak++;
+            }
+
+            return streak;
+        }
+
+        private static int ComputeAuthenticationStreak(SqliteConnection conn, string userKey, int take)
+        {
+            if (!TableExists(conn, "AuthenticationDefenseAttempts"))
+            {
+                return 0;
+            }
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT IsCorrect FROM AuthenticationDefenseAttempts WHERE UserKey = $uk ORDER BY SubmittedAt DESC LIMIT $take;";
             cmd.Parameters.AddWithValue("$uk", userKey);
             cmd.Parameters.AddWithValue("$take", take);
 
@@ -420,6 +472,25 @@ namespace Mondas.Services
                 }
             }
 
+            if ((source == StatsSource.All || source == StatsSource.AuthenticationDefense) && TableExists(conn, "AuthenticationDefenseAttempts"))
+            {
+                using var authCmd = conn.CreateCommand();
+                authCmd.CommandText = "SELECT IsCorrect, ScenarioSnapshotJson FROM AuthenticationDefenseAttempts WHERE UserKey = $uk;";
+                authCmd.Parameters.AddWithValue("$uk", userKey);
+
+                using var authReader = authCmd.ExecuteReader();
+
+                while (authReader.Read())
+                {
+                    var isCorrect = !authReader.IsDBNull(0) && authReader.GetInt32(0) == 1;
+                    var scenarioJson = authReader.IsDBNull(1) ? "" : authReader.GetString(1);
+                    var scenario = ReadAuthScenario(scenarioJson);
+                    var topic = MapAuthTopic(scenario);
+
+                    AddTopic(stats, topic, 1, isCorrect ? 1 : 0);
+                }
+            }
+
             stats.MasteryByTopic.Sort((a, b) => b.Seen.CompareTo(a.Seen));
         }
 
@@ -437,7 +508,42 @@ namespace Mondas.Services
             existing.Correct += correct;
         }
 
-        private static void ComputeWeakStrong(DashboardStats stats, int minTopicAttempts)
+        private static AuthenticationDefenseScenario ReadAuthScenario(string json)
+        {
+            try
+            {
+                return string.IsNullOrWhiteSpace(json) ? null : JsonConvert.DeserializeObject<AuthenticationDefenseScenario>(json);
+            }
+
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static Topic MapAuthTopic(AuthenticationDefenseScenario scenario)
+        {
+            if (scenario == null)
+            {
+                return Topic.Passwords;
+            }
+
+            switch (scenario.ThreatType)
+            {
+                case AuthThreatType.HelpdeskTakeover:
+                case AuthThreatType.MfaFatigue:
+                    return Topic.SocialEngineering;
+
+                case AuthThreatType.SessionHijack:
+                case AuthThreatType.TokenReplay:
+                    return Topic.DeviceSecurity;
+
+                default:
+                    return Topic.Passwords;
+            }
+        }
+
+        private static void CalcWeakStrong(DashboardStats stats, int minTopicAttempts)
         {
             TopicMasteryRow weakest = null;
             TopicMasteryRow strongest = null;
@@ -490,6 +596,11 @@ namespace Mondas.Services
             if ((source == StatsSource.All || source == StatsSource.LearningModules) && TableExists(conn, "LearningModuleAttempts"))
             {
                 LoadLearningMisconceptions(conn, userKey, combined);
+            }
+
+            if ((source == StatsSource.All || source == StatsSource.AuthenticationDefense) && TableExists(conn, "AuthenticationDefenseAttempts"))
+            {
+                LoadAuthenticationMisconceptions(conn, userKey, combined);
             }
 
             var rows = new List<MisconceptionRow>();
@@ -608,6 +719,8 @@ namespace Mondas.Services
                 }
             }
         }
+
+
 
         private static void LoadPhishingMistakeTags(SqliteConnection conn, string userKey, Dictionary<string, (int Count, DateTime LastUtc)> combined)
         {

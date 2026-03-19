@@ -24,7 +24,7 @@ namespace Mondas.Services
                 var data = JsonSerializer.Deserialize<MiniGamePrefsData>(json, _json) ?? CreateDefaultData();
 
                 data.Phishing = MiniGamePreferences.Normalise(data.Phishing);
-                data.Password = MiniGamePreferences.Normalise(data.Password);
+                data.Authentication = MiniGamePreferences.Normalise(data.Authentication);
 
                 if (data.RecommendedOverride != null)
                 {
@@ -45,7 +45,7 @@ namespace Mondas.Services
             data ??= CreateDefaultData();
 
             data.Phishing = MiniGamePreferences.Normalise(data.Phishing);
-            data.Password = MiniGamePreferences.Normalise(data.Password);
+            data.Authentication = MiniGamePreferences.Normalise(data.Authentication);
 
             if (data.RecommendedOverride != null)
             {
@@ -67,13 +67,13 @@ namespace Mondas.Services
 
         private static MiniGamePrefsData CreateDefaultData()
         {
-            return new MiniGamePrefsData { Phishing = MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator), Password = MiniGamePreferences.CreateDefault(MiniGameType.PasswordWorkshop), RecommendedOverride = null };
+            return new MiniGamePrefsData { Phishing = MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator), Authentication = MiniGamePreferences.CreateDefault(MiniGameType.AuthenticationDefense), RecommendedOverride = null };
         }
 
         public sealed class MiniGamePrefsData
         {
             public MiniGamePreferences Phishing { get; set; } = MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator);
-            public MiniGamePreferences Password { get; set; } = MiniGamePreferences.CreateDefault(MiniGameType.PasswordWorkshop);
+            public MiniGamePreferences Authentication { get; set; } = MiniGamePreferences.CreateDefault(MiniGameType.AuthenticationDefense);
             public MiniGamePreferences RecommendedOverride { get; set; }
         }
     }

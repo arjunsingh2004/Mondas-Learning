@@ -94,8 +94,8 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbMiniGames = new System.Windows.Forms.GroupBox();
             this.tlpMiniTiles = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlTilePass = new System.Windows.Forms.Panel();
-            this.lblTilePassTitle = new System.Windows.Forms.Label();
+            this.pnlTileAuth = new System.Windows.Forms.Panel();
+            this.lblTileAuthTitle = new System.Windows.Forms.Label();
             this.pnlTilePhish = new System.Windows.Forms.Panel();
             this.lblTilePhishTitle = new System.Windows.Forms.Label();
             this.pnlQuizRow = new System.Windows.Forms.Panel();
@@ -133,7 +133,7 @@
             this.gbMisconA.SuspendLayout();
             this.gbMiniGames.SuspendLayout();
             this.tlpMiniTiles.SuspendLayout();
-            this.pnlTilePass.SuspendLayout();
+            this.pnlTileAuth.SuspendLayout();
             this.pnlTilePhish.SuspendLayout();
             this.pnlQuizRow.SuspendLayout();
             this.tlpQuizCenter.SuspendLayout();
@@ -985,7 +985,7 @@
             this.tlpMiniTiles.ColumnCount = 2;
             this.tlpMiniTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpMiniTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpMiniTiles.Controls.Add(this.pnlTilePass, 1, 0);
+            this.tlpMiniTiles.Controls.Add(this.pnlTileAuth, 1, 0);
             this.tlpMiniTiles.Controls.Add(this.pnlTilePhish, 0, 0);
             this.tlpMiniTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMiniTiles.Location = new System.Drawing.Point(3, 28);
@@ -997,31 +997,32 @@
             this.tlpMiniTiles.Size = new System.Drawing.Size(295, 63);
             this.tlpMiniTiles.TabIndex = 0;
             // 
-            // pnlTilePass
+            // pnlTileAuth
             // 
-            this.pnlTilePass.BackColor = System.Drawing.Color.RoyalBlue;
-            this.pnlTilePass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlTilePass.Controls.Add(this.lblTilePassTitle);
-            this.pnlTilePass.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlTilePass.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTilePass.Location = new System.Drawing.Point(147, 6);
-            this.pnlTilePass.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlTilePass.Name = "pnlTilePass";
-            this.pnlTilePass.Padding = new System.Windows.Forms.Padding(12);
-            this.pnlTilePass.Size = new System.Drawing.Size(142, 51);
-            this.pnlTilePass.TabIndex = 1;
+            this.pnlTileAuth.BackColor = System.Drawing.Color.RoyalBlue;
+            this.pnlTileAuth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTileAuth.Controls.Add(this.lblTileAuthTitle);
+            this.pnlTileAuth.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlTileAuth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTileAuth.Location = new System.Drawing.Point(147, 6);
+            this.pnlTileAuth.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTileAuth.Name = "pnlTileAuth";
+            this.pnlTileAuth.Padding = new System.Windows.Forms.Padding(12);
+            this.pnlTileAuth.Size = new System.Drawing.Size(142, 51);
+            this.pnlTileAuth.TabIndex = 1;
             // 
-            // lblTilePassTitle
+            // lblTileAuthTitle
             // 
-            this.lblTilePassTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTilePassTitle.Font = new System.Drawing.Font("Muro", 7F);
-            this.lblTilePassTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTilePassTitle.Location = new System.Drawing.Point(12, 12);
-            this.lblTilePassTitle.Name = "lblTilePassTitle";
-            this.lblTilePassTitle.Size = new System.Drawing.Size(116, 25);
-            this.lblTilePassTitle.TabIndex = 0;
-            this.lblTilePassTitle.Text = "Password Workshop";
-            this.lblTilePassTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTileAuthTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTileAuthTitle.Font = new System.Drawing.Font("Muro", 10F);
+            this.lblTileAuthTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTileAuthTitle.Location = new System.Drawing.Point(12, 12);
+            this.lblTileAuthTitle.Name = "lblTileAuthTitle";
+            this.lblTileAuthTitle.Size = new System.Drawing.Size(116, 25);
+            this.lblTileAuthTitle.TabIndex = 0;
+            this.lblTileAuthTitle.Text = "AUTHENTICATION DEFENSE";
+            this.lblTileAuthTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTileAuthTitle.Click += new System.EventHandler(this.lblTileAuthTitle_Click);
             // 
             // pnlTilePhish
             // 
@@ -1040,14 +1041,14 @@
             // lblTilePhishTitle
             // 
             this.lblTilePhishTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTilePhishTitle.Font = new System.Drawing.Font("Muro", 7.5F);
+            this.lblTilePhishTitle.Font = new System.Drawing.Font("Muro", 10F);
             this.lblTilePhishTitle.ForeColor = System.Drawing.Color.White;
             this.lblTilePhishTitle.Location = new System.Drawing.Point(12, 12);
             this.lblTilePhishTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTilePhishTitle.Name = "lblTilePhishTitle";
             this.lblTilePhishTitle.Size = new System.Drawing.Size(115, 25);
             this.lblTilePhishTitle.TabIndex = 0;
-            this.lblTilePhishTitle.Text = "Phishing Simulator";
+            this.lblTilePhishTitle.Text = "PHISHING SIMULATION";
             this.lblTilePhishTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTilePhishTitle.Click += new System.EventHandler(this.lblTilePhishTitle_Click);
             // 
@@ -1103,9 +1104,9 @@
             "ALL",
             "QUIZ",
             "PHISHING SIMULATOR",
-            "PASSWORD WORKSHOP",
+            "AUTHENTICATION DEFENSE",
             "LEARNING MODULES"});
-            this.cmbStatsSource.Location = new System.Drawing.Point(162, 26);
+            this.cmbStatsSource.Location = new System.Drawing.Point(162, 27);
             this.cmbStatsSource.Name = "cmbStatsSource";
             this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
             this.cmbStatsSource.TabIndex = 2;
@@ -1203,7 +1204,7 @@
             this.gbMisconA.ResumeLayout(false);
             this.gbMiniGames.ResumeLayout(false);
             this.tlpMiniTiles.ResumeLayout(false);
-            this.pnlTilePass.ResumeLayout(false);
+            this.pnlTileAuth.ResumeLayout(false);
             this.pnlTilePhish.ResumeLayout(false);
             this.pnlQuizRow.ResumeLayout(false);
             this.tlpQuizCenter.ResumeLayout(false);
@@ -1270,8 +1271,8 @@
         private System.Windows.Forms.TableLayoutPanel tlpMiniTiles;
         private System.Windows.Forms.Panel pnlTilePhish;
         private System.Windows.Forms.Label lblTilePhishTitle;
-        private System.Windows.Forms.Panel pnlTilePass;
-        private System.Windows.Forms.Label lblTilePassTitle;
+        private System.Windows.Forms.Panel pnlTileAuth;
+        private System.Windows.Forms.Label lblTileAuthTitle;
         private System.Windows.Forms.Panel pnlFooter;
         private System.Windows.Forms.Label lblFooterLeft;
         private System.Windows.Forms.Label lblFooterUser;

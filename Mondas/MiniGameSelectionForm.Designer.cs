@@ -68,11 +68,11 @@
             this.btnStartPhishing = new Syncfusion.WinForms.Controls.SfButton();
             this.lblPhishingDesc = new System.Windows.Forms.Label();
             this.lblPhishingTitle = new System.Windows.Forms.Label();
-            this.pnlPasswordMode = new System.Windows.Forms.Panel();
-            this.btnPasswordPreferences = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnStartPassword = new Syncfusion.WinForms.Controls.SfButton();
-            this.lblPasswordDesc = new System.Windows.Forms.Label();
-            this.lblPasswordTitle = new System.Windows.Forms.Label();
+            this.pnlAuthenticationMode = new System.Windows.Forms.Panel();
+            this.btnAuthenticationPreferences = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnStartAuthentication = new Syncfusion.WinForms.Controls.SfButton();
+            this.lblAuthenticationDesc = new System.Windows.Forms.Label();
+            this.lblAuthenticationTitle = new System.Windows.Forms.Label();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.tlpMiniGamePage.SuspendLayout();
@@ -86,7 +86,7 @@
             this.gbModes.SuspendLayout();
             this.tlpModes.SuspendLayout();
             this.pnlPhishingMode.SuspendLayout();
-            this.pnlPasswordMode.SuspendLayout();
+            this.pnlAuthenticationMode.SuspendLayout();
             this.SuspendLayout();
             // 
             // flpNav
@@ -300,7 +300,7 @@
             // Date
             // 
             this.Date.Text = "Date";
-            this.Date.Width = 180;
+            this.Date.Width = 200;
             // 
             // pnlPerfFilters
             // 
@@ -318,7 +318,7 @@
             this.cmbPerfSource.Items.AddRange(new object[] {
             "All",
             "Phishing Simulator",
-            "Password Workshop"});
+            "Authentication Defense"});
             this.cmbPerfSource.Location = new System.Drawing.Point(105, 9);
             this.cmbPerfSource.Name = "cmbPerfSource";
             this.cmbPerfSource.Size = new System.Drawing.Size(121, 26);
@@ -511,7 +511,7 @@
             this.tlpModes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpModes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpModes.Controls.Add(this.pnlPhishingMode, 0, 0);
-            this.tlpModes.Controls.Add(this.pnlPasswordMode, 1, 0);
+            this.tlpModes.Controls.Add(this.pnlAuthenticationMode, 1, 0);
             this.tlpModes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpModes.Location = new System.Drawing.Point(3, 28);
             this.tlpModes.Name = "tlpModes";
@@ -523,6 +523,7 @@
             // 
             // pnlPhishingMode
             // 
+            this.pnlPhishingMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlPhishingMode.Controls.Add(this.btnPhishingPreferences);
             this.pnlPhishingMode.Controls.Add(this.btnStartPhishing);
             this.pnlPhishingMode.Controls.Add(this.lblPhishingDesc);
@@ -535,10 +536,10 @@
             // 
             // btnPhishingPreferences
             // 
-            this.btnPhishingPreferences.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnPhishingPreferences.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnPhishingPreferences.AutoSize = true;
             this.btnPhishingPreferences.Font = new System.Drawing.Font("Muro", 10F);
-            this.btnPhishingPreferences.Location = new System.Drawing.Point(285, 102);
+            this.btnPhishingPreferences.Location = new System.Drawing.Point(283, 101);
             this.btnPhishingPreferences.Name = "btnPhishingPreferences";
             this.btnPhishingPreferences.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnPhishingPreferences.Size = new System.Drawing.Size(133, 33);
@@ -548,12 +549,12 @@
             // 
             // btnStartPhishing
             // 
-            this.btnStartPhishing.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnStartPhishing.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnStartPhishing.AutoSize = true;
             this.btnStartPhishing.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStartPhishing.Font = new System.Drawing.Font("Muro", 10F);
             this.btnStartPhishing.ForeColor = System.Drawing.Color.White;
-            this.btnStartPhishing.Location = new System.Drawing.Point(17, 102);
+            this.btnStartPhishing.Location = new System.Drawing.Point(17, 101);
             this.btnStartPhishing.Name = "btnStartPhishing";
             this.btnStartPhishing.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnStartPhishing.Size = new System.Drawing.Size(252, 33);
@@ -566,8 +567,9 @@
             // 
             // lblPhishingDesc
             // 
-            this.lblPhishingDesc.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblPhishingDesc.Location = new System.Drawing.Point(3, 36);
+            this.lblPhishingDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblPhishingDesc.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblPhishingDesc.Location = new System.Drawing.Point(2, 36);
             this.lblPhishingDesc.Name = "lblPhishingDesc";
             this.lblPhishingDesc.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.lblPhishingDesc.Size = new System.Drawing.Size(435, 63);
@@ -577,77 +579,82 @@
             // 
             // lblPhishingTitle
             // 
+            this.lblPhishingTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblPhishingTitle.AutoSize = true;
             this.lblPhishingTitle.Font = new System.Drawing.Font("Muro", 18F);
-            this.lblPhishingTitle.Location = new System.Drawing.Point(80, -3);
+            this.lblPhishingTitle.Location = new System.Drawing.Point(79, -3);
             this.lblPhishingTitle.Name = "lblPhishingTitle";
             this.lblPhishingTitle.Size = new System.Drawing.Size(296, 36);
             this.lblPhishingTitle.TabIndex = 0;
             this.lblPhishingTitle.Text = "PHISHING SIMULATOR";
             // 
-            // pnlPasswordMode
+            // pnlAuthenticationMode
             // 
-            this.pnlPasswordMode.Controls.Add(this.btnPasswordPreferences);
-            this.pnlPasswordMode.Controls.Add(this.btnStartPassword);
-            this.pnlPasswordMode.Controls.Add(this.lblPasswordDesc);
-            this.pnlPasswordMode.Controls.Add(this.lblPasswordTitle);
-            this.pnlPasswordMode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPasswordMode.Location = new System.Drawing.Point(451, 3);
-            this.pnlPasswordMode.Name = "pnlPasswordMode";
-            this.pnlPasswordMode.Size = new System.Drawing.Size(442, 147);
-            this.pnlPasswordMode.TabIndex = 1;
+            this.pnlAuthenticationMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlAuthenticationMode.Controls.Add(this.btnAuthenticationPreferences);
+            this.pnlAuthenticationMode.Controls.Add(this.btnStartAuthentication);
+            this.pnlAuthenticationMode.Controls.Add(this.lblAuthenticationDesc);
+            this.pnlAuthenticationMode.Controls.Add(this.lblAuthenticationTitle);
+            this.pnlAuthenticationMode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlAuthenticationMode.Location = new System.Drawing.Point(451, 3);
+            this.pnlAuthenticationMode.Name = "pnlAuthenticationMode";
+            this.pnlAuthenticationMode.Size = new System.Drawing.Size(442, 147);
+            this.pnlAuthenticationMode.TabIndex = 1;
             // 
-            // btnPasswordPreferences
+            // btnAuthenticationPreferences
             // 
-            this.btnPasswordPreferences.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnPasswordPreferences.AutoSize = true;
-            this.btnPasswordPreferences.Font = new System.Drawing.Font("Muro", 10F);
-            this.btnPasswordPreferences.Location = new System.Drawing.Point(286, 102);
-            this.btnPasswordPreferences.Name = "btnPasswordPreferences";
-            this.btnPasswordPreferences.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.btnPasswordPreferences.Size = new System.Drawing.Size(133, 33);
-            this.btnPasswordPreferences.TabIndex = 7;
-            this.btnPasswordPreferences.Text = "PREFERENCES";
-            this.btnPasswordPreferences.Click += new System.EventHandler(this.btnPasswordPreferences_Click);
+            this.btnAuthenticationPreferences.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnAuthenticationPreferences.AutoSize = true;
+            this.btnAuthenticationPreferences.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnAuthenticationPreferences.Location = new System.Drawing.Point(302, 102);
+            this.btnAuthenticationPreferences.Name = "btnAuthenticationPreferences";
+            this.btnAuthenticationPreferences.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.btnAuthenticationPreferences.Size = new System.Drawing.Size(133, 33);
+            this.btnAuthenticationPreferences.TabIndex = 7;
+            this.btnAuthenticationPreferences.Text = "PREFERENCES";
+            this.btnAuthenticationPreferences.Click += new System.EventHandler(this.btnPasswordPreferences_Click);
             // 
-            // btnStartPassword
+            // btnStartAuthentication
             // 
-            this.btnStartPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnStartPassword.AutoSize = true;
-            this.btnStartPassword.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnStartPassword.Font = new System.Drawing.Font("Muro", 10F);
-            this.btnStartPassword.ForeColor = System.Drawing.Color.White;
-            this.btnStartPassword.Location = new System.Drawing.Point(18, 102);
-            this.btnStartPassword.Name = "btnStartPassword";
-            this.btnStartPassword.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.btnStartPassword.Size = new System.Drawing.Size(223, 33);
-            this.btnStartPassword.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnStartPassword.Style.ForeColor = System.Drawing.Color.White;
-            this.btnStartPassword.TabIndex = 6;
-            this.btnStartPassword.Text = "START PASSWORD SHOP";
-            this.btnStartPassword.UseVisualStyleBackColor = false;
-            this.btnStartPassword.Click += new System.EventHandler(this.btnStartPassword_Click);
+            this.btnStartAuthentication.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnStartAuthentication.AutoSize = true;
+            this.btnStartAuthentication.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnStartAuthentication.Font = new System.Drawing.Font("Muro", 10F);
+            this.btnStartAuthentication.ForeColor = System.Drawing.Color.White;
+            this.btnStartAuthentication.Location = new System.Drawing.Point(3, 102);
+            this.btnStartAuthentication.Name = "btnStartAuthentication";
+            this.btnStartAuthentication.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.btnStartAuthentication.Size = new System.Drawing.Size(293, 33);
+            this.btnStartAuthentication.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnStartAuthentication.Style.ForeColor = System.Drawing.Color.White;
+            this.btnStartAuthentication.TabIndex = 6;
+            this.btnStartAuthentication.Text = "START AUTHENTICATION DEFENSE";
+            this.btnStartAuthentication.UseVisualStyleBackColor = false;
+            this.btnStartAuthentication.Click += new System.EventHandler(this.btnStartPassword_Click);
             // 
-            // lblPasswordDesc
+            // lblAuthenticationDesc
             // 
-            this.lblPasswordDesc.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblPasswordDesc.Location = new System.Drawing.Point(-9, 36);
-            this.lblPasswordDesc.Name = "lblPasswordDesc";
-            this.lblPasswordDesc.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblPasswordDesc.Size = new System.Drawing.Size(460, 63);
-            this.lblPasswordDesc.TabIndex = 5;
-            this.lblPasswordDesc.Text = "PRACTISE PASSWORD STRENGTH, REUSE AWARENESS, AND BETTER CREDENTIAL HABITS.";
-            this.lblPasswordDesc.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblAuthenticationDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblAuthenticationDesc.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblAuthenticationDesc.Location = new System.Drawing.Point(-10, 36);
+            this.lblAuthenticationDesc.Name = "lblAuthenticationDesc";
+            this.lblAuthenticationDesc.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.lblAuthenticationDesc.Size = new System.Drawing.Size(460, 63);
+            this.lblAuthenticationDesc.TabIndex = 5;
+            this.lblAuthenticationDesc.Text = "Strengthen authentication practices, defuce credential risk, and build MFA awaren" +
+    "ess";
+            this.lblAuthenticationDesc.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // lblPasswordTitle
+            // lblAuthenticationTitle
             // 
-            this.lblPasswordTitle.AutoSize = true;
-            this.lblPasswordTitle.Font = new System.Drawing.Font("Muro", 18F);
-            this.lblPasswordTitle.Location = new System.Drawing.Point(60, -3);
-            this.lblPasswordTitle.Name = "lblPasswordTitle";
-            this.lblPasswordTitle.Size = new System.Drawing.Size(328, 36);
-            this.lblPasswordTitle.TabIndex = 4;
-            this.lblPasswordTitle.Text = "PASSWORD WORKSHOP";
+            this.lblAuthenticationTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblAuthenticationTitle.AutoSize = true;
+            this.lblAuthenticationTitle.Font = new System.Drawing.Font("Muro", 18F);
+            this.lblAuthenticationTitle.Location = new System.Drawing.Point(40, 0);
+            this.lblAuthenticationTitle.Name = "lblAuthenticationTitle";
+            this.lblAuthenticationTitle.Size = new System.Drawing.Size(368, 36);
+            this.lblAuthenticationTitle.TabIndex = 4;
+            this.lblAuthenticationTitle.Text = "AUTHENTICATION DEFENSE";
             // 
             // MiniGameSelectionForm
             // 
@@ -684,8 +691,8 @@
             this.tlpModes.ResumeLayout(false);
             this.pnlPhishingMode.ResumeLayout(false);
             this.pnlPhishingMode.PerformLayout();
-            this.pnlPasswordMode.ResumeLayout(false);
-            this.pnlPasswordMode.PerformLayout();
+            this.pnlAuthenticationMode.ResumeLayout(false);
+            this.pnlAuthenticationMode.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -723,11 +730,11 @@
         private System.Windows.Forms.Label lblPhishingTitle;
         private Syncfusion.WinForms.Controls.SfButton btnStartPhishing;
         private Syncfusion.WinForms.Controls.SfButton btnPhishingPreferences;
-        private System.Windows.Forms.Panel pnlPasswordMode;
-        private Syncfusion.WinForms.Controls.SfButton btnPasswordPreferences;
-        private Syncfusion.WinForms.Controls.SfButton btnStartPassword;
-        private System.Windows.Forms.Label lblPasswordDesc;
-        private System.Windows.Forms.Label lblPasswordTitle;
+        private System.Windows.Forms.Panel pnlAuthenticationMode;
+        private Syncfusion.WinForms.Controls.SfButton btnAuthenticationPreferences;
+        private Syncfusion.WinForms.Controls.SfButton btnStartAuthentication;
+        private System.Windows.Forms.Label lblAuthenticationDesc;
+        private System.Windows.Forms.Label lblAuthenticationTitle;
         private System.Windows.Forms.GroupBox gbPerformance;
         private System.Windows.Forms.Panel pnlPerfFilters;
         private System.Windows.Forms.ComboBox cmbPerfSource;

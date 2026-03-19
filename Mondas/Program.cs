@@ -57,7 +57,7 @@ namespace Mondas
 
             _host.Start();
 
-            Application.Run(new MiniGamePreferencesForm());
+            Application.Run(new LoginForm());
 
             _host.StopAsync().GetAwaiter().GetResult();
             _host.Dispose();
