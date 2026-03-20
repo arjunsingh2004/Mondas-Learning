@@ -148,6 +148,7 @@ namespace Mondas.Models
         public bool IsCorrect { get; set; }
         public int ScoreDelta { get; set; }
         public double SecondsTaken { get; set; }
+        public double? Accuracy01 { get; set; }
         public DateTime SubmittedUtc { get; set; }
         public string TagsJson { get; set; } = "[]";
         public string FindingsJson { get; set; } = "[]";

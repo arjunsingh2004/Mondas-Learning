@@ -367,7 +367,25 @@ namespace Mondas
         }
 
         private static string ToTileTopic(Topic topic)
-        => topic.ToString().Replace('_', ' ').ToUpperInvariant();
+        {
+            var raw = topic.ToString().Replace('_', ' ');
+
+            var parts = new System.Text.StringBuilder(raw.Length + 8);
+
+            for (int i = 0; i < raw.Length; i++)
+            {
+                var c = raw[i];
+
+                if (i > 0 && char.IsUpper(c) && raw[i - 1] != ' ' && !char.IsUpper(raw[i - 1]))
+                {
+                    parts.Append(' ');
+                }
+
+                parts.Append(c);
+            }
+
+            return parts.ToString().ToUpperInvariant();
+        }
 
         private void RenderMasteryByTopic(DashboardStats s)
         {
@@ -411,7 +429,7 @@ namespace Mondas
                 tlpMastery.RowCount++;
                 tlpMastery.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-                var topicLbl = new Label { Text = row.Topic.ToString().Replace('_', ' '), AutoSize = true, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft, Font = _masteryCellFont };
+                var topicLbl = new Label { Text = ToTileTopic(row.Topic), AutoSize = true, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft, Font = _masteryCellFont };
                 var bar = CreateMasteryBar(row.Accuracy01);
                 var seenLbl = new Label { Text = row.Seen.ToString(), AutoSize = true, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleCenter, Font = _masteryCellFont };
                 var pctLbl = new Label { Text = $"{row.Accuracy01 * 100.0:0}%", AutoSize = true, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleCenter, Font = _masteryCellFont };
@@ -749,6 +767,21 @@ namespace Mondas
         private void btnNavMiniGames_Click(object sender, EventArgs e)
         {
             var f = new MiniGameSelectionForm(_userKey);
+
+            f.FormClosed += (_, __) =>
+            {
+                try
+                {
+                    Show();
+                    RefreshDashboard();
+                }
+
+                catch
+                {
+
+                }
+            };
+            
             f.Show();
             Hide();
 

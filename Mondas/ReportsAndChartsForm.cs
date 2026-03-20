@@ -588,6 +588,41 @@ namespace Mondas
             public string XLabel;
         }
 
+        private static AuthenticationDefenseScenario ReadAuthenticationScenario(string json)
+        {
+            try
+            {
+                return string.IsNullOrWhiteSpace(json) ? null : JsonConvert.DeserializeObject<AuthenticationDefenseScenario>(json);
+            }
+
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static Topic MapAuthenticationTopic(AuthenticationDefenseScenario scenario)
+        {
+            if (scenario == null)
+            {
+                return Topic.Passwords;
+            }
+
+            switch (scenario.ThreatType)
+            {
+                case AuthThreatType.HelpdeskTakeover:
+                case AuthThreatType.MfaFatigue:
+                    return Topic.SocialEngineering;
+
+                case AuthThreatType.SessionHijack:
+                case AuthThreatType.TokenReplay:
+                    return Topic.DeviceSecurity;
+
+                default:
+                    return Topic.Passwords;
+            }
+        }
+
         private List<AttemptRow> LoadAttemptRows(ChartFilter f)
         {
             var rows = new List<AttemptRow>();
@@ -595,6 +630,7 @@ namespace Mondas
             bool includeQuiz = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.Quiz;
             bool includePhish = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.PhishingSimulator;
             bool includeLearning = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.LearningModules;
+            bool includeAuth = f.SourceValue == StatsSource.All || f.SourceValue == StatsSource.AuthenticationDefense;
 
             using var conn = Open();
 
@@ -724,6 +760,46 @@ namespace Mondas
 
                     var topic = r.IsDBNull(4) ? Topic.Other : (Topic)r.GetInt32(4);
                     var difficulty = r.IsDBNull(5) ? DifficultyBand.Medium : (DifficultyBand)r.GetInt32(5);
+
+                    rows.Add(new AttemptRow { SubmittedUtc = submittedAtUtc, IsCorrect = isCorrect, SecondsTaken = secondsTaken, QuestionId = attemptId, Topic = topic, Difficulty = difficulty });
+                }
+            }
+
+            if (includeAuth && TableExists(conn, "AuthenticationDefenseAttempts"))
+            {
+                using var cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT Id, IsCorrect, SecondsTaken, SubmittedAt, ScenarioSnapshotJson FROM AuthenticationDefenseAttempts WHERE UserKey = $uk ORDER BY SubmittedAt DESC;";
+                cmd.Parameters.AddWithValue("$uk", _userKey);
+
+                using var r = cmd.ExecuteReader();
+
+                while (r.Read())
+                {
+                    var attemptId = r.GetInt64(0);
+                    var isCorrect = !r.IsDBNull(1) && r.GetInt32(1) == 1;
+                    var secondsTaken = r.IsDBNull(2) ? 0.0 : r.GetDouble(2);
+
+                    DateTime submittedAtUtc = DateTime.UtcNow;
+
+                    if (!r.IsDBNull(3))
+                    {
+                        submittedAtUtc = DateTime.Parse(r.GetString(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    }
+
+                    var scenarioJson = r.IsDBNull(4) ? "" : r.GetString(4);
+                    var scenario = ReadAuthenticationScenario(scenarioJson);
+                    var topic = MapAuthenticationTopic(scenario);
+                    var difficulty = scenario?.Difficulty ?? DifficultyBand.Medium;
+
+                    if (f.Topic.HasValue && topic != f.Topic.Value)
+                    {
+                        continue;
+                    }
+
+                    if (f.Difficulty.HasValue && difficulty != f.Difficulty.Value)
+                    {
+                        continue;
+                    }
 
                     rows.Add(new AttemptRow { SubmittedUtc = submittedAtUtc, IsCorrect = isCorrect, SecondsTaken = secondsTaken, QuestionId = attemptId, Topic = topic, Difficulty = difficulty });
                 }

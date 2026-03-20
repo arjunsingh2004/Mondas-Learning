@@ -13,7 +13,8 @@ namespace Mondas.Services
             if (scenario == null)
             {
                 result.IsCorrect = false;
-                result.ScoreDelta = -8;
+                result.ScoreDelta = -5;
+                result.Accuracy01 = 0.0;
                 result.Headline = "NO SCENARIO";
                 result.Explanation = "No scenario has been loaded.";
                 return result;
@@ -46,23 +47,33 @@ namespace Mondas.Services
 
             var accuracy = checks <= 0 ? 0.0 : (double)matched / checks;
             var timePenalty = CalcTimePenalty(secondsTaken, scenario.Difficulty);
-            var timePenaltyPoints = (int)Math.Round(Math.Min(5.0, timePenalty));
+            var timePenaltyPoints = (int)Math.Round(Math.Min(3.0, timePenalty));
 
-            result.IsCorrect = bigMisses == 0 && accuracy >= 0.70;
             result.Accuracy01 = accuracy;
             result.TimePenaltySeconds = timePenalty;
             result.Findings = findings;
 
+            var nearMiss = accuracy >= 0.50 && bigMisses <= 1;
+            result.IsCorrect = bigMisses == 0 && accuracy >= 0.65;
+
             if (result.IsCorrect)
             {
-                result.ScoreDelta = Math.Max(2, 10 + (int)Math.Round(accuracy * 6.0) - timePenaltyPoints);
-                result.Headline = "STRONG DEFENSE";
+                result.ScoreDelta = Math.Max(4, 8 + (int)Math.Round(accuracy * 4.0) - timePenaltyPoints);
+                result.Headline = accuracy >= 0.85 ? "STRONG DEFENSE" : "DEFENSE HOLDS";
                 result.Explanation = "Your setup blocks the main attack route and applies the right controls for this scenario.";
+            }
+
+            else if (nearMiss)
+            {
+
+                result.ScoreDelta = Math.Min(-1, -2 - timePenaltyPoints);
+                result.Headline = "PARTIAL COVERAGE";
+                result.Explanation = "You got some important controls right, but one or two gaps still leave this scenario exposed.";
             }
 
             else
             {
-                result.ScoreDelta = Math.Min(-2, -8 - (bigMisses * 2) - timePenaltyPoints);
+                result.ScoreDelta = Math.Min(-3, -4 - bigMisses - timePenaltyPoints);
                 result.Headline = "DEFENSE GAPS FOUND";
                 result.Explanation = FailureExplanation(scenario, findings);
             }

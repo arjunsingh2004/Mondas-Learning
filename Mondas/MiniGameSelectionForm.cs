@@ -235,7 +235,7 @@ namespace Mondas
 
             if (btnAuthenticationPreferences != null)
             {
-                btnAuthenticationPreferences.Enabled = false;
+                btnAuthenticationPreferences.Enabled = true;
             }
         }
 
@@ -248,7 +248,7 @@ namespace Mondas
                 return $"GAME: AUTHENTICATION DEFENSE · ROUNDS: {prefs.RoundCount} · DIFFICULTY: {(prefs.Difficulty.HasValue ? prefs.Difficulty.Value.ToString().ToUpperInvariant() : "ANY")} · TIMER: {(prefs.TimerEnabled ? "ON" : "OFF")}";
             }
 
-            return $"GAME : PHISHING SIMULATOR · EMAILS: {prefs.PhishingEmailCount} · DIFFICULTY {(prefs.Difficulty.HasValue ? prefs.Difficulty.Value.ToString().ToUpperInvariant() : "ANY")} · TIMER: {(prefs.TimerEnabled ? "ON" : "OFF")}";
+            return $"GAME: PHISHING SIMULATOR · EMAILS: {prefs.PhishingEmailCount} · DIFFICULTY: {(prefs.Difficulty.HasValue ? prefs.Difficulty.Value.ToString().ToUpperInvariant() : "ANY")} · TIMER: {(prefs.TimerEnabled ? "ON" : "OFF")}";
         }
 
         private void LoadRecentPerformance()
@@ -279,7 +279,7 @@ namespace Mondas
             {
                 try
                 {
-                    var authRows = _authenticationStore.GetForUser(_userKey, 100).Select(x => ("AUTH DEFENSE", BuildResultText(x), x.IsCorrect ? "100%" : "0%", x.SubmittedUtc)).ToList();
+                    var authRows = _authenticationStore.GetForUser(_userKey, 100).Select(x => ("AUTH DEFENSE", BuildResultText(x), BuildAccuracyText(x), x.SubmittedUtc)).ToList(); 
                     rows.AddRange(authRows);
                 }
 
@@ -323,12 +323,61 @@ namespace Mondas
 
         private static string BuildResultText(AuthenticationDefenseAttemptRow row)
         {
-            return row.IsCorrect ? "PASS" : "MISS";
+            if (!row.Accuracy01.HasValue)
+            {
+                return row.IsCorrect ? "PASS" : "MISS";
+            }
+
+            var accuracy = row.Accuracy01.Value;
+
+            if (accuracy < 0)
+            {
+                accuracy = 0;
+            }
+
+            if (accuracy > 1)
+            {
+                accuracy = 1;
+            }
+
+            if (row.IsCorrect)
+            {
+                return "PASS";
+            }
+
+            if (accuracy >= 0.40)
+            {
+                return "PARTIAL";
+            }
+
+            return "MISS";
+        }
+
+        private static string BuildAccuracyText(AuthenticationDefenseAttemptRow row)
+        {
+            if (!row.Accuracy01.HasValue)
+            {
+                return "-";
+            }
+
+            var accuracy = row.Accuracy01.Value;
+
+            if (accuracy < 0)
+            {
+                accuracy = 0;
+            }
+
+            if (accuracy > 1)
+            {
+                accuracy = 1;
+            }
+
+            return (accuracy * 100.0).ToString("0", CultureInfo.InvariantCulture) + "%";
         }
 
         private void OpenPhishingPreferences()
         {
-            using var dlg = new MiniGamePreferencesForm(_phishingPrefs);
+            using var dlg = new MiniGamePreferencesForm(_phishingPrefs, true);
             
             if (dlg.ShowDialog(this) != DialogResult.OK)
             {
@@ -344,7 +393,7 @@ namespace Mondas
 
         private void OpenAuthenticationPreferences()
         {
-            using var dlg = new MiniGamePreferencesForm(_authenticationPrefs);
+            using var dlg = new MiniGamePreferencesForm(_authenticationPrefs, true);
 
             if (dlg.ShowDialog(this) != DialogResult.OK)
             {
@@ -356,27 +405,6 @@ namespace Mondas
 
             SavePrefs();
             RefreshPage(false);
-        }
-
-
-        private void OpenRecommendedPreferences()
-        {
-            var seed = _recommendedOverride ?? _recommendedPrefs ?? MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator);
-
-            using var dlg = new MiniGamePreferencesForm(seed);
-            
-            if (dlg.ShowDialog(this) != DialogResult.OK)
-            {
-                return;
-            }
-
-            var picked = MiniGamePreferences.Normalise(dlg.Preferences);
-            picked.UseDefaults = false;
-
-            _recommendedOverride = picked;
-
-            SavePrefs();
-            RefreshPage(true);
         }
 
         private void StartMiniGame(MiniGamePreferences prefs)
@@ -434,11 +462,6 @@ namespace Mondas
         private void btnStartRecommended_Click(object sender, EventArgs e)
         {
             StartMiniGame(_recommendedPrefs);
-        }
-
-        private void lnkChangePreferences_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            OpenRecommendedPreferences();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)

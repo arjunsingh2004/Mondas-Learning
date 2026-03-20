@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Windows.Forms;
 using Mondas.Models;
 using Mondas.Services;
+using System.Globalization;
 
 namespace Mondas
 {
@@ -53,7 +54,7 @@ namespace Mondas
             LoadAdaptivePrefsFromDisk();
 
             RefreshCards(recomputeRecommended: true);
-
+            LoadRecentPerformance();
             BeginInvoke(new Action(TidyLabels));
             SizeChanged += (s, _) => TidyLabels();
         }
@@ -163,6 +164,69 @@ namespace Mondas
 
             UpdateRecommendedCard();
             UpdateAdaptiveCard();
+            LoadRecentPerformance();
+        }
+
+        private void LoadRecentPerformance()
+        {
+            if (lvRecentPerformance == null || _attemptRepo == null)
+            {
+                return;
+            }
+
+            List<AttemptRecord> history;
+
+            try
+            {
+                history = _attemptRepo.GetForUser(_userKey)?.OrderByDescending(x => x.SubmittedAt).Take(20).ToList() ?? new List<AttemptRecord>();
+            }
+
+            catch
+            {
+                history = new List<AttemptRecord>();
+            }
+
+            lvRecentPerformance.BeginUpdate();
+            lvRecentPerformance.Items.Clear();
+
+            foreach (var rec in history)
+            {
+                _questionById.TryGetValue(rec.QuestionId, out var question);
+
+                var topic = GetTopicText(question);
+                var result = rec.IsCorrect ? "CORRECT" : "INCORRECT";
+                var difficulty = GetDifficultyText(question);
+                var date = rec.SubmittedAt.ToLocalTime().ToString("dd MMM yyyy : HH:mm", CultureInfo.InvariantCulture);
+
+                var item = new ListViewItem(topic);
+                item.SubItems.Add(result);
+                item.SubItems.Add(difficulty);
+                item.SubItems.Add(date);
+
+                lvRecentPerformance.Items.Add(item);
+            }
+
+            lvRecentPerformance.EndUpdate();
+        }
+
+        private static string GetTopicText(Question question)
+        {
+            if (question == null)
+            {
+                return "UNKNOWN";
+            }
+
+            return question.Metadata.Topic.ToString().Replace("_", " ").ToUpperInvariant();
+        }
+
+        private static string GetDifficultyText(Question question)
+        {
+            if (question == null)
+            {
+                return "-";
+            }
+
+            return question.Metadata.Difficulty.ToString().ToUpperInvariant();
         }
 
         private void UpdateRecommendedCard()
@@ -308,7 +372,7 @@ namespace Mondas
                 userModel.UpdateFromAttempt(q, attempt);
             }
 
-            var topicsAvailable = _allQuestions.Select(q => q.Metadata.Topic).Where(t => t != Topic.Other).Distinct().ToList();
+            var topicsAvailable = _allQuestions.Select(q => q.Metadata.Topic).Where(t => t != Mondas.Models.Topic.Other).Distinct().ToList();
 
             Topic? weakest = null;
             double weakestMastery = double.MaxValue;

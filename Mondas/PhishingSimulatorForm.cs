@@ -454,6 +454,11 @@ namespace Mondas
             return mins.ToString("00") + "." + secs.ToString("00");
         }
 
+        private bool UseDeferredFeedback()
+        {
+            return _prefs != null && _prefs.FeedbackMode == MiniGameFeedbackMode.EndOfRound;
+        }
+
         private void btnNewEmail_Click(object sender, EventArgs e)
         {
             if (_resolvedFinalCount >= _targetEmails)
@@ -487,6 +492,12 @@ namespace Mondas
         {
             if (_currentEmail == null)
             {
+                return;
+            }
+
+            if (UseDeferredFeedback() && _currentEmailResolved && _resolvedFinalCount < _targetEmails)
+            {
+                MessageBox.Show(this, "Detailed feedback is hidden until the run ends.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -899,6 +910,38 @@ namespace Mondas
                 pnlResult.Visible = true;
             }
 
+            if (UseDeferredFeedback())
+            {
+                if (lblResultTitle != null)
+                {
+                    lblResultTitle.Text = "DECISION RECORDED";
+                }
+
+                if (lblResultText != null)
+                {
+                    lblResultText.Text = "Detailed feedback will be shown at the end of the run.";
+                }
+
+                if (lblResultScoreDelta != null)
+                {
+                    lblResultScoreDelta.Text = "DETAILS HIDDEN";
+                }
+
+                if (lblResultWhy != null)
+                {
+                    lblResultWhy.Text = "SIGNALS: HIDDEN";
+                }
+
+                if (lvSignals != null)
+                {
+                    lvSignals.BeginUpdate();
+                    lvSignals.Items.Clear();
+                    lvSignals.EndUpdate();
+                }
+
+                return;
+            }
+
             if (lblResultTitle != null)
             {
                 lblResultTitle.Text = string.IsNullOrWhiteSpace(decision.Headline) ? "RESULT" : decision.Headline;
@@ -919,15 +962,7 @@ namespace Mondas
 
             if (lblResultWhy != null)
             {
-                if (decision.Signals == null || decision.Signals.Count == 0)
-                {
-                    lblResultWhy.Text = "SIGNALS: -";
-                }
-
-                else
-                {
-                    lblResultWhy.Text = "SIGNALS: " + decision.Signals.Count.ToString();
-                }
+                lblResultWhy.Text = decision.Signals == null || decision.Signals.Count == 0 ? "SIGNALS: =" : "SIGNALS: " + decision.Signals.Count.ToString();
             }
 
             RenderSignals(decision.Signals);
@@ -1165,14 +1200,14 @@ namespace Mondas
             }
 
             tag = tag.Trim();
-            var his = _history ?? new List<PhishingAttemptRow>();
+            var history = _history ?? new List<PhishingAttemptRow>();
 
             int seen = 0;
             int correct = 0;
 
-            for (int i = 0; i < his.Count; i++)
+            for (int i = 0; i < history.Count; i++)
             {
-                var row = his[i];
+                var row = history[i];
 
                 if (row == null)
                 {

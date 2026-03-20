@@ -59,10 +59,10 @@
             this.chkIncludeUrgency = new System.Windows.Forms.CheckBox();
             this.gbAuthentication = new System.Windows.Forms.GroupBox();
             this.tlpAuthentication = new System.Windows.Forms.TableLayoutPanel();
-            this.chkIncludeStrength = new System.Windows.Forms.CheckBox();
-            this.chkIncludeReuse = new System.Windows.Forms.CheckBox();
-            this.chkIncludeManager = new System.Windows.Forms.CheckBox();
-            this.chkIncludePatterns = new System.Windows.Forms.CheckBox();
+            this.chkIncludeCredentialAttacks = new System.Windows.Forms.CheckBox();
+            this.chkIncludeMfaScenarios = new System.Windows.Forms.CheckBox();
+            this.chkIncludeRecoveryScenarios = new System.Windows.Forms.CheckBox();
+            this.chkIncludeSessionScenarios = new System.Windows.Forms.CheckBox();
             this.gbAdvanced = new System.Windows.Forms.GroupBox();
             this.tlpAdvanced = new System.Windows.Forms.TableLayoutPanel();
             this.lblHints = new System.Windows.Forms.Label();
@@ -497,17 +497,17 @@
             this.gbAuthentication.Size = new System.Drawing.Size(514, 153);
             this.gbAuthentication.TabIndex = 4;
             this.gbAuthentication.TabStop = false;
-            this.gbAuthentication.Text = "PASSWORD WORKSHOP";
+            this.gbAuthentication.Text = "AUTHENTICATION DEFENSE";
             // 
             // tlpAuthentication
             // 
             this.tlpAuthentication.AutoSize = true;
             this.tlpAuthentication.ColumnCount = 1;
             this.tlpAuthentication.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpAuthentication.Controls.Add(this.chkIncludeStrength, 0, 0);
-            this.tlpAuthentication.Controls.Add(this.chkIncludeReuse, 0, 1);
-            this.tlpAuthentication.Controls.Add(this.chkIncludeManager, 0, 2);
-            this.tlpAuthentication.Controls.Add(this.chkIncludePatterns, 0, 3);
+            this.tlpAuthentication.Controls.Add(this.chkIncludeCredentialAttacks, 0, 0);
+            this.tlpAuthentication.Controls.Add(this.chkIncludeMfaScenarios, 0, 1);
+            this.tlpAuthentication.Controls.Add(this.chkIncludeRecoveryScenarios, 0, 2);
+            this.tlpAuthentication.Controls.Add(this.chkIncludeSessionScenarios, 0, 3);
             this.tlpAuthentication.Dock = System.Windows.Forms.DockStyle.Top;
             this.tlpAuthentication.Location = new System.Drawing.Point(3, 26);
             this.tlpAuthentication.Name = "tlpAuthentication";
@@ -520,53 +520,55 @@
             this.tlpAuthentication.Size = new System.Drawing.Size(508, 124);
             this.tlpAuthentication.TabIndex = 0;
             // 
-            // chkIncludeStrength
+            // chkIncludeCredentialAttacks
             // 
-            this.chkIncludeStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkIncludeStrength.AutoSize = true;
-            this.chkIncludeStrength.Location = new System.Drawing.Point(11, 11);
-            this.chkIncludeStrength.Name = "chkIncludeStrength";
-            this.chkIncludeStrength.Size = new System.Drawing.Size(437, 21);
-            this.chkIncludeStrength.TabIndex = 0;
-            this.chkIncludeStrength.Text = "INCLUDE PASSWORD STRENGTH TASKS";
-            this.chkIncludeStrength.UseVisualStyleBackColor = true;
-            this.chkIncludeStrength.CheckedChanged += new System.EventHandler(this.chkIncludeStrength_CheckedChanged);
+            this.chkIncludeCredentialAttacks.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkIncludeCredentialAttacks.AutoSize = true;
+            this.chkIncludeCredentialAttacks.Location = new System.Drawing.Point(11, 11);
+            this.chkIncludeCredentialAttacks.Name = "chkIncludeCredentialAttacks";
+            this.chkIncludeCredentialAttacks.Size = new System.Drawing.Size(467, 21);
+            this.chkIncludeCredentialAttacks.TabIndex = 0;
+            this.chkIncludeCredentialAttacks.Text = "INCLUDE CREDENTIAL ATTACK SCENARIOS";
+            this.chkIncludeCredentialAttacks.UseVisualStyleBackColor = true;
+            this.chkIncludeCredentialAttacks.CheckedChanged += new System.EventHandler(this.chkIncludeStrength_CheckedChanged);
             // 
-            // chkIncludeReuse
+            // chkIncludeMfaScenarios
             // 
-            this.chkIncludeReuse.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkIncludeReuse.AutoSize = true;
-            this.chkIncludeReuse.Location = new System.Drawing.Point(11, 38);
-            this.chkIncludeReuse.Name = "chkIncludeReuse";
-            this.chkIncludeReuse.Size = new System.Drawing.Size(396, 21);
-            this.chkIncludeReuse.TabIndex = 1;
-            this.chkIncludeReuse.Text = "INCLUDE PASSWORD REUSE TASKS";
-            this.chkIncludeReuse.UseVisualStyleBackColor = true;
-            this.chkIncludeReuse.CheckedChanged += new System.EventHandler(this.chkIncludeReuse_CheckedChanged);
+            this.chkIncludeMfaScenarios.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkIncludeMfaScenarios.AutoSize = true;
+            this.chkIncludeMfaScenarios.Location = new System.Drawing.Point(11, 38);
+            this.chkIncludeMfaScenarios.Name = "chkIncludeMfaScenarios";
+            this.chkIncludeMfaScenarios.Size = new System.Drawing.Size(398, 21);
+            this.chkIncludeMfaScenarios.TabIndex = 1;
+            this.chkIncludeMfaScenarios.Text = "INCLUDE MFA / STEP-UP SCENARIOS";
+            this.chkIncludeMfaScenarios.UseVisualStyleBackColor = true;
+            this.chkIncludeMfaScenarios.CheckedChanged += new System.EventHandler(this.chkIncludeReuse_CheckedChanged);
             // 
-            // chkIncludeManager
+            // chkIncludeRecoveryScenarios
             // 
-            this.chkIncludeManager.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkIncludeManager.AutoSize = true;
-            this.chkIncludeManager.Location = new System.Drawing.Point(11, 65);
-            this.chkIncludeManager.Name = "chkIncludeManager";
-            this.chkIncludeManager.Size = new System.Drawing.Size(433, 21);
-            this.chkIncludeManager.TabIndex = 2;
-            this.chkIncludeManager.Text = "INCLUDE PASSWORD MANAGER TASKS";
-            this.chkIncludeManager.UseVisualStyleBackColor = true;
-            this.chkIncludeManager.CheckedChanged += new System.EventHandler(this.chkIncludeManager_CheckedChanged);
+            this.chkIncludeRecoveryScenarios.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkIncludeRecoveryScenarios.AutoSize = true;
+            this.chkIncludeRecoveryScenarios.Font = new System.Drawing.Font("Agency", 10.5F);
+            this.chkIncludeRecoveryScenarios.Location = new System.Drawing.Point(11, 65);
+            this.chkIncludeRecoveryScenarios.Name = "chkIncludeRecoveryScenarios";
+            this.chkIncludeRecoveryScenarios.Size = new System.Drawing.Size(458, 21);
+            this.chkIncludeRecoveryScenarios.TabIndex = 2;
+            this.chkIncludeRecoveryScenarios.Text = "INCLUDE RECOVERY / HELPDESK SCENARIOS";
+            this.chkIncludeRecoveryScenarios.UseVisualStyleBackColor = true;
+            this.chkIncludeRecoveryScenarios.CheckedChanged += new System.EventHandler(this.chkIncludeManager_CheckedChanged);
             // 
-            // chkIncludePatterns
+            // chkIncludeSessionScenarios
             // 
-            this.chkIncludePatterns.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkIncludePatterns.AutoSize = true;
-            this.chkIncludePatterns.Location = new System.Drawing.Point(11, 92);
-            this.chkIncludePatterns.Name = "chkIncludePatterns";
-            this.chkIncludePatterns.Size = new System.Drawing.Size(462, 21);
-            this.chkIncludePatterns.TabIndex = 3;
-            this.chkIncludePatterns.Text = "INCLUDE PATTERN / WEAKNESS SPOTTING";
-            this.chkIncludePatterns.UseVisualStyleBackColor = true;
-            this.chkIncludePatterns.CheckedChanged += new System.EventHandler(this.chkIncludePatterns_CheckedChanged);
+            this.chkIncludeSessionScenarios.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkIncludeSessionScenarios.AutoSize = true;
+            this.chkIncludeSessionScenarios.Font = new System.Drawing.Font("Agency", 10.5F);
+            this.chkIncludeSessionScenarios.Location = new System.Drawing.Point(11, 92);
+            this.chkIncludeSessionScenarios.Name = "chkIncludeSessionScenarios";
+            this.chkIncludeSessionScenarios.Size = new System.Drawing.Size(470, 21);
+            this.chkIncludeSessionScenarios.TabIndex = 3;
+            this.chkIncludeSessionScenarios.Text = "INCLUDE SESSION / LEGACY AUTH SCENARIOS";
+            this.chkIncludeSessionScenarios.UseVisualStyleBackColor = true;
+            this.chkIncludeSessionScenarios.CheckedChanged += new System.EventHandler(this.chkIncludePatterns_CheckedChanged);
             // 
             // gbAdvanced
             // 
@@ -676,7 +678,7 @@
             this.tlpPrefsButtons.ColumnCount = 3;
             this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.0597F));
             this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.9403F));
-            this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
             this.tlpPrefsButtons.Controls.Add(this.btnCancel, 2, 0);
             this.tlpPrefsButtons.Controls.Add(this.btnUseDefaults, 0, 0);
             this.tlpPrefsButtons.Controls.Add(this.btnApply, 1, 0);
@@ -696,7 +698,7 @@
             this.btnCancel.BackColor = System.Drawing.Color.Crimson;
             this.btnCancel.Font = new System.Drawing.Font("Muro", 10F);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(447, 9);
+            this.btnCancel.Location = new System.Drawing.Point(441, 9);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnCancel.Size = new System.Drawing.Size(91, 40);
@@ -732,7 +734,7 @@
             this.btnApply.BackColor = System.Drawing.Color.SeaGreen;
             this.btnApply.Font = new System.Drawing.Font("Muro", 10F);
             this.btnApply.ForeColor = System.Drawing.Color.White;
-            this.btnApply.Location = new System.Drawing.Point(360, 9);
+            this.btnApply.Location = new System.Drawing.Point(354, 9);
             this.btnApply.Name = "btnApply";
             this.btnApply.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnApply.Size = new System.Drawing.Size(81, 40);
@@ -831,10 +833,10 @@
         private System.Windows.Forms.CheckBox chkIncludeUrgency;
         private System.Windows.Forms.GroupBox gbAuthentication;
         private System.Windows.Forms.TableLayoutPanel tlpAuthentication;
-        private System.Windows.Forms.CheckBox chkIncludeStrength;
-        private System.Windows.Forms.CheckBox chkIncludeReuse;
-        private System.Windows.Forms.CheckBox chkIncludeManager;
-        private System.Windows.Forms.CheckBox chkIncludePatterns;
+        private System.Windows.Forms.CheckBox chkIncludeCredentialAttacks;
+        private System.Windows.Forms.CheckBox chkIncludeMfaScenarios;
+        private System.Windows.Forms.CheckBox chkIncludeRecoveryScenarios;
+        private System.Windows.Forms.CheckBox chkIncludeSessionScenarios;
         private System.Windows.Forms.GroupBox gbAdvanced;
         private System.Windows.Forms.TableLayoutPanel tlpAdvanced;
         private System.Windows.Forms.Label lblHints;

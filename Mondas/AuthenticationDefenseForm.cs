@@ -497,6 +497,13 @@ namespace Mondas
                 return null;
             }
 
+            candidates = ApplyPreferenceFilters(candidates);
+
+            if (candidates.Count == 0)
+            {
+                candidates = _allScenarios.Where(x => x != null && !_seenRun.Contains(x.Id ?? "")).ToList();
+            }
+
             if (_prefs != null && _prefs.Difficulty.HasValue)
             {
                 var filtered = candidates.Where(x => x.Difficulty == _prefs.Difficulty.Value).ToList();
@@ -524,6 +531,76 @@ namespace Mondas
             }
 
             return PickWeighted(weighted);
+        }
+
+        private List<AuthenticationDefenseScenario> ApplyPreferenceFilters(List<AuthenticationDefenseScenario> candidates)
+        {
+            if (_prefs == null || candidates == null || candidates.Count == 0)
+            {
+                return candidates ?? new List<AuthenticationDefenseScenario>();
+            }
+
+            var wantedTags = CreateWantedScenarioTags();
+
+            if (wantedTags.Count == 0)
+            {
+                return candidates;
+            }
+
+            var filtered = candidates.Where(ScenarioMatchesWantedTags).ToList();
+            return filtered.Count > 0 ? filtered : candidates;
+
+            bool ScenarioMatchesWantedTags(AuthenticationDefenseScenario scenario)
+            {
+                var tags = scenario?.Tags ?? new List<string>();
+
+                if (tags.Count == 0)
+                {
+                    return false;
+                }
+
+                return tags.Any(t => wantedTags.Contains((t ?? "").Trim(), StringComparer.OrdinalIgnoreCase));
+            }
+        }
+
+        private List<string> CreateWantedScenarioTags()
+        {
+            var tags = new List<string>();
+
+            if (_prefs.IncludeStrength)
+            {
+                tags.Add("credential-stuffing");
+                tags.Add("password-reuse");
+                tags.Add("rate-limit");
+                tags.Add("admin-access");
+            }
+
+            if (_prefs.IncludeReuse)
+            {
+                tags.Add("mfa");
+                tags.Add("mfa-fatigue");
+                tags.Add("push");
+                tags.Add("user-signin");
+            }
+
+            if (_prefs.IncludeManager)
+            {
+                tags.Add("recovery");
+                tags.Add("helpdesk");
+                tags.Add("social-engineering");
+            }
+
+            if (_prefs.IncludePatterns)
+            {
+                tags.Add("session");
+                tags.Add("token");
+                tags.Add("high-risk-action");
+                tags.Add("legacy-auth");
+                tags.Add("bypass");
+                tags.Add("remote-access");
+            }
+
+            return tags.Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         }
 
         private AuthenticationDefenseScenario PickWeighted(List<(AuthenticationDefenseScenario scenario, double weight)> items)
@@ -750,6 +827,33 @@ namespace Mondas
                 return;
             }
 
+            if (UseDeferredFeedback())
+            { 
+                if (lblResultsText != null)
+                {
+                    lblResultsText.Text = "DECISION RECORDED";
+                }
+
+                if (lblResultScoreDelta != null)
+                {
+                    lblResultScoreDelta.Text = "DETAILS SHOWN AT END OF ROUND";
+                }
+
+                if (lblResultWhy != null)
+                {
+                    lblResultWhy.Text = "FINDINGS: HIDDEN";
+                }
+
+                if (lvFindings != null)
+                {
+                    lvFindings.BeginUpdate();
+                    lvFindings.Items.Clear();
+                    lvFindings.EndUpdate();
+                }
+
+                return;
+            }
+
             if (lblResultsText != null)
             {
                 lblResultsText.Text = string.IsNullOrWhiteSpace(result.Headline) ? "RESULT" : result.Headline;
@@ -807,6 +911,7 @@ namespace Mondas
                 IsCorrect = result.IsCorrect,
                 ScoreDelta = result.ScoreDelta,
                 SecondsTaken = secondsTaken,
+                Accuracy01 = result.Accuracy01,
                 SubmittedUtc = DateTime.UtcNow,
                 TagsJson = JsonConvert.SerializeObject(_currentScenario.Tags ?? new List<string>()),
                 FindingsJson = JsonConvert.SerializeObject(result.Findings ?? new List<AuthenticationDefenseFinding>()),
@@ -901,7 +1006,35 @@ namespace Mondas
 
             if (tag.Result != null)
             {
-                ApplyResult(tag.Result, 0.0);
+                if (UseDeferredFeedback())
+                {
+                    if (lblResultsText != null)
+                    {
+                        lblResultsText.Text = "DECISION RECORDED";
+                    }
+
+                    if (lblResultScoreDelta != null)
+                    {
+                        lblResultScoreDelta.Text = "DETAILS SHOWN AT END OF ROUND";
+                    }
+
+                    if (lblResultWhy != null)
+                    {
+                        lblResultWhy.Text = "FINDINGS: HIDDEN";
+                    }
+
+                    if (lvFindings != null)
+                    {
+                        lvFindings.BeginUpdate();
+                        lvFindings.Items.Clear();
+                        lvFindings.EndUpdate();
+                    }
+                }
+
+                else
+                {
+                    ApplyResult(tag.Result, 0.0);
+                }
             }
 
             else
@@ -910,6 +1043,11 @@ namespace Mondas
             }
 
             UpdateButtons();
+        }
+
+        private bool UseDeferredFeedback()
+        {
+            return _prefs != null && _prefs.FeedbackMode == MiniGameFeedbackMode.EndOfRound;
         }
 
         private void AuthenticationControlChanged()
@@ -922,16 +1060,6 @@ namespace Mondas
             public AuthenticationDefenseScenario Scenario { get; set; }
             public bool IsResolved { get; set; }
             public AuthenticationDefenseResult Result { get; set; }
-        }
-
-        private void AuthenticationDefenseForm_LoadedStart()
-        {
-            if (_allScenarios != null && _allScenarios.Count > 0)
-            {
-                return;
-            }
-
-            LoadData();
         }
 
         private void lvQueue_SelectedIndexChanged(object sender, EventArgs e)

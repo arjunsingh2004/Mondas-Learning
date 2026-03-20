@@ -77,12 +77,12 @@ namespace Mondas.Services
 
             if ((source == StatsSource.All || source == StatsSource.AuthenticationDefense) && TableExists(conn, "AuthenticationDefenseAttempts"))
             {
-                authTotal = ScalarInt(conn, "SELECT COUNT(1) FROM AuthenticationDefenseAttempts WHERE UserKey = $uk;", ("$uk;", uk));
+                authTotal = ScalarInt(conn, "SELECT COUNT(1) FROM AuthenticationDefenseAttempts WHERE UserKey = $uk;", ("$uk", uk));
                 authCorrect = ScalarInt(conn, "SELECT COUNT(1) FROM AuthenticationDefenseAttempts WHERE UserKey = $uk AND IsCorrect = 1;", ("$uk", uk));
             }
 
             stats.TotalAttempts = quizTotal + phishTotal + learningTotal + authTotal;
-            stats.CorrectAttempts = quizCorrect + phishCorrect + learningCorrect + authTotal;
+            stats.CorrectAttempts = quizCorrect + phishCorrect + learningCorrect + authCorrect;
             stats.AvgSeconds = LoadAvgSeconds(conn, uk, source);
             stats.CurrentStreak = CalcStreak(conn, uk, source, take: 250);
 
@@ -380,7 +380,7 @@ namespace Mondas.Services
             return streak;
         }
 
-        private static int ComputeAuthenticationStreak(SqliteConnection conn, string userKey, int take)
+        private static int CalcAuthenticationStreak(SqliteConnection conn, string userKey, int take)
         {
             if (!TableExists(conn, "AuthenticationDefenseAttempts"))
             {
@@ -720,7 +720,73 @@ namespace Mondas.Services
             }
         }
 
+        private static void LoadAuthenticationMisconceptions(SqliteConnection conn, string userKey, Dictionary<string, (int Count, DateTime LastUtc)> combined)
+        {
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT TagsJson, SubmittedAt FROM AuthenticationDefenseAttempts WHERE UserKey = $uk AND IsCorrect = 0 ORDER BY SubmittedAt DESC LIMIT 800;";
+            cmd.Parameters.AddWithValue("$uk", userKey);
 
+            using var r = cmd.ExecuteReader();
+
+            while (r.Read())
+            {
+                var tagsJson = r.IsDBNull(0) ? "[]" : (r.GetString(0) ?? "[]");
+                var submittedAtText = r.IsDBNull(1) ? "" : (r.GetString(1) ?? "");
+
+                List<string> tags;
+
+                try
+                {
+                    tags = JsonConvert.DeserializeObject<List<string>>(tagsJson) ?? new List<string>();
+                }
+
+                catch
+                {
+                    tags = new List<string>();
+                }
+
+                if (tags.Count == 0)
+                {
+                    continue;
+                }
+
+                DateTime submittedUtc = DateTime.UtcNow;
+
+                if (!string.IsNullOrWhiteSpace(submittedAtText))
+                {
+                    try
+                    {
+                        submittedUtc = DateTime.Parse(submittedAtText, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+                    }
+
+                    catch
+                    {
+                        submittedUtc = DateTime.UtcNow;
+                    }
+                }
+
+                foreach (var raw in tags)
+                {
+                    var tag = (raw ?? "").Trim();
+
+                    if (tag.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    if (combined.TryGetValue(tag, out var existing))
+                    {
+                        var last = existing.LastUtc > submittedUtc ? existing.LastUtc : submittedUtc;
+                        combined[tag] = (existing.Count + 1, last);
+                    }
+
+                    else
+                    {
+                        combined[tag] = (1, submittedUtc);
+                    }
+                }
+            }
+        }
 
         private static void LoadPhishingMistakeTags(SqliteConnection conn, string userKey, Dictionary<string, (int Count, DateTime LastUtc)> combined)
         {

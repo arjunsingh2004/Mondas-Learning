@@ -50,7 +50,6 @@
             this.lblPerfFilter = new System.Windows.Forms.Label();
             this.gbRecommended = new System.Windows.Forms.GroupBox();
             this.pnlRecommended = new System.Windows.Forms.Panel();
-            this.lnkChangePreferences = new System.Windows.Forms.LinkLabel();
             this.btnStartRecommended = new Syncfusion.WinForms.Controls.SfButton();
             this.lblRecReason = new System.Windows.Forms.Label();
             this.lblRecSummary = new System.Windows.Forms.Label();
@@ -349,7 +348,6 @@
             // 
             // pnlRecommended
             // 
-            this.pnlRecommended.Controls.Add(this.lnkChangePreferences);
             this.pnlRecommended.Controls.Add(this.btnStartRecommended);
             this.pnlRecommended.Controls.Add(this.lblRecReason);
             this.pnlRecommended.Controls.Add(this.lblRecSummary);
@@ -359,19 +357,6 @@
             this.pnlRecommended.Padding = new System.Windows.Forms.Padding(16);
             this.pnlRecommended.Size = new System.Drawing.Size(896, 133);
             this.pnlRecommended.TabIndex = 0;
-            // 
-            // lnkChangePreferences
-            // 
-            this.lnkChangePreferences.ActiveLinkColor = System.Drawing.Color.RoyalBlue;
-            this.lnkChangePreferences.Font = new System.Drawing.Font("Muro", 10F);
-            this.lnkChangePreferences.LinkColor = System.Drawing.Color.Gray;
-            this.lnkChangePreferences.Location = new System.Drawing.Point(216, 80);
-            this.lnkChangePreferences.Name = "lnkChangePreferences";
-            this.lnkChangePreferences.Size = new System.Drawing.Size(301, 83);
-            this.lnkChangePreferences.TabIndex = 3;
-            this.lnkChangePreferences.TabStop = true;
-            this.lnkChangePreferences.Text = "Change Preferences...";
-            this.lnkChangePreferences.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkChangePreferences_LinkClicked);
             // 
             // btnStartRecommended
             // 
@@ -572,7 +557,7 @@
             this.lblPhishingDesc.Location = new System.Drawing.Point(2, 36);
             this.lblPhishingDesc.Name = "lblPhishingDesc";
             this.lblPhishingDesc.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblPhishingDesc.Size = new System.Drawing.Size(435, 63);
+            this.lblPhishingDesc.Size = new System.Drawing.Size(435, 113);
             this.lblPhishingDesc.TabIndex = 1;
             this.lblPhishingDesc.Text = "SPOT RED FLAGS, ANALYSE EMAILS, AND DECIDE WHETHER TO TRUST OR REPORT THEM.";
             this.lblPhishingDesc.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -639,7 +624,7 @@
             this.lblAuthenticationDesc.Location = new System.Drawing.Point(-10, 36);
             this.lblAuthenticationDesc.Name = "lblAuthenticationDesc";
             this.lblAuthenticationDesc.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblAuthenticationDesc.Size = new System.Drawing.Size(460, 63);
+            this.lblAuthenticationDesc.Size = new System.Drawing.Size(460, 119);
             this.lblAuthenticationDesc.TabIndex = 5;
             this.lblAuthenticationDesc.Text = "Strengthen authentication practices, defuce credential risk, and build MFA awaren" +
     "ess";
@@ -719,7 +704,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.GroupBox gbRecommended;
         private System.Windows.Forms.Panel pnlRecommended;
-        private System.Windows.Forms.LinkLabel lnkChangePreferences;
         private Syncfusion.WinForms.Controls.SfButton btnStartRecommended;
         private System.Windows.Forms.Label lblRecReason;
         private System.Windows.Forms.Label lblRecSummary;

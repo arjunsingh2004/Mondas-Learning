@@ -10,21 +10,43 @@ namespace Mondas
     public partial class MiniGamePreferencesForm : SfForm
     {
         private bool _loading;
-        public MiniGamePreferences Preferences { get; private set; }
+        private readonly bool _lockGameType;
+        private readonly MiniGameType _lockedGameType;
 
-        public MiniGamePreferencesForm() : this(MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator))
+        public MiniGamePreferences Preferences
         {
+            get;
+            private set;
         }
 
-        public MiniGamePreferencesForm(MiniGamePreferences initial)
+        public MiniGamePreferencesForm() : this(MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator), false)
+        {
+
+        }
+
+        public MiniGamePreferencesForm(MiniGamePreferences initial) : this(initial, false)
+        {
+
+        }
+
+        public MiniGamePreferencesForm(MiniGamePreferences initial, bool lockGameType)
         {
             InitializeComponent();
-            Preferences = Clone(MiniGamePreferences.Normalise(initial));            
+            var safe = MiniGamePreferences.Normalise(initial);
+            Preferences = Clone(safe);
+            _lockGameType = lockGameType;
+            _lockedGameType = safe.GameType;
         }
 
         private void MiniGamePreferencesForm_Load(object sender, EventArgs e)
         {
             FillUiLists();
+
+            if (_lockGameType && cmbMiniGameType != null)
+            {
+                cmbMiniGameType.Enabled = false;
+            }
+
             ApplyToUi(Preferences);
             ApplyMode(Preferences.UseDefaults);
             UpdateSummary();
@@ -36,7 +58,7 @@ namespace Mondas
             cmbMiniGameType.Items.AddRange(new object[] { "Phishing Simulator", "Authentication Defense" });
 
             cmbRoundCount.Items.Clear();
-            cmbRoundCount.Items.AddRange(new object[] { 5, 10, 15, 29 });
+            cmbRoundCount.Items.AddRange(new object[] { 5, 10, 15, 20 });
 
             cmbTimer.Items.Clear();
             cmbTimer.Items.AddRange(new object[] { "Off", "On" });
@@ -60,7 +82,9 @@ namespace Mondas
             _loading = true;
             prefs = MiniGamePreferences.Normalise(prefs);
 
-            cmbMiniGameType.SelectedItem = prefs.GameType == MiniGameType.AuthenticationDefense ? "Authentication Defense" : "Phishing Simulator";
+            var gameType = _lockGameType ? _lockedGameType : prefs.GameType;
+
+            cmbMiniGameType.SelectedItem = gameType == MiniGameType.AuthenticationDefense ? "Authentication Defense" : "Phishing Simulator";
 
             rbDefault.Checked = prefs.UseDefaults;
             rbCustom.Checked = !prefs.UseDefaults;
@@ -74,16 +98,15 @@ namespace Mondas
             chkIncludeLinks.Checked = prefs.IncludeLinks;
             chkIncludeUrgency.Checked = prefs.IncludeUrgency;
 
-            chkIncludeStrength.Checked = prefs.IncludeStrength;
-            chkIncludeReuse.Checked = prefs.IncludeReuse;
-            chkIncludeManager.Checked = prefs.IncludeManager;
-            chkIncludePatterns.Checked = prefs.IncludePatterns;
+            chkIncludeCredentialAttacks.Checked = prefs.IncludeStrength;
+            chkIncludeMfaScenarios.Checked = prefs.IncludeReuse;
+            chkIncludeRecoveryScenarios.Checked = prefs.IncludeManager;
+            chkIncludeSessionScenarios.Checked = prefs.IncludePatterns;
 
             cmbHints.SelectedItem = prefs.HintMode.ToString();
             cmbFeedbackMode.SelectedItem = prefs.FeedbackMode == MiniGameFeedbackMode.EndOfRound ? "End Of Round" : "Instant";
 
             ApplyGameSections();
-
             _loading = false;
         }
 
@@ -119,7 +142,13 @@ namespace Mondas
 
         private MiniGameType ReadGameType()
         {
+            if (_lockGameType)
+            {
+                return _lockedGameType;
+            }
+
             var text = (cmbMiniGameType.SelectedItem?.ToString() ?? cmbMiniGameType.Text ?? "").Trim().ToUpperInvariant();
+            
             return text.Contains("AUTHENTICATION") ? MiniGameType.AuthenticationDefense : MiniGameType.PhishingSimulator;
         }
 
@@ -143,10 +172,10 @@ namespace Mondas
                 IncludeAttachments = chkIncludeAttachments.Checked,
                 IncludeLinks = chkIncludeLinks.Checked,
                 IncludeUrgency = chkIncludeUrgency.Checked,
-                IncludeStrength = chkIncludeStrength.Checked,
-                IncludeReuse = chkIncludeReuse.Checked,
-                IncludeManager = chkIncludeManager.Checked,
-                IncludePatterns = chkIncludePatterns.Checked,
+                IncludeStrength = chkIncludeCredentialAttacks.Checked,
+                IncludeReuse = chkIncludeMfaScenarios.Checked,
+                IncludeManager = chkIncludeRecoveryScenarios.Checked,
+                IncludePatterns = chkIncludeSessionScenarios.Checked,
                 HintMode = ParseHintMode(),
                 FeedbackMode = ParseFeedbackMode()
             };
@@ -207,7 +236,7 @@ namespace Mondas
                 return;
             }
 
-            lblSummary.Text = $"GAME: AUTHENTICATION DEFENSE · ROUNDS: {prefs.RoundCount} · DIFFICULTY: {(prefs.Difficulty.HasValue ? prefs.Difficulty.Value.ToString().ToUpperInvariant() : "ANY")} · TIMER: {(prefs.TimerEnabled ? "ON" : "OFF")}\r\nTOPICS: STRENTH {(prefs.IncludeStrength ? "ON" : "OFF")} · REUSE {(prefs.IncludeReuse ? "ON" : "OFF")} · MANAGER {(prefs.IncludeManager ? "ON" : "OFF")} · PATTERNS {(prefs.IncludePatterns ? "ON" : "OFF")}\r\nHINTS: {prefs.HintMode.ToString().ToUpperInvariant()} · FEEDBACK: {(prefs.FeedbackMode == MiniGameFeedbackMode.Instant ? "INSTANT" : "END OF ROUND")}";
+            lblSummary.Text = $"GAME: AUTHENTICATION DEFENSE · ROUNDS: {prefs.RoundCount} · DIFFICULTY: {(prefs.Difficulty.HasValue ? prefs.Difficulty.Value.ToString().ToUpperInvariant() : "ANY")} · TIMER: {(prefs.TimerEnabled ? "ON" : "OFF")}\r\nSCENARIOS: CREDENTIAL ATTACKS {(prefs.IncludeStrength ? "ON" : "OFF")} · MFA/STEP-UP {(prefs.IncludeReuse ? "ON" : "OFF")} · RECOVERY/HELPDESK {(prefs.IncludeManager ? "ON" : "OFF")} · SESSION/LEGACY {(prefs.IncludePatterns ? "ON" : "OFF")}\r\nHINTS: {prefs.HintMode.ToString().ToUpperInvariant()} · FEEDBACK: {(prefs.FeedbackMode == MiniGameFeedbackMode.Instant ? "INSTANT" : "END OF ROUND")}";
         }
 
         private static MiniGamePreferences Clone(MiniGamePreferences prefs)
@@ -236,7 +265,7 @@ namespace Mondas
 
         private void cmbMiniGameType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_loading)
+            if (_loading || _lockGameType)
             {
                 return;
             }

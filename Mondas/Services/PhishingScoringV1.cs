@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using Mondas.Models;
 
 namespace Mondas.Services
@@ -70,7 +68,7 @@ namespace Mondas.Services
 
                     else
                     {
-                        basePoints = email.IsPhishing ? -0 : +1;
+                        basePoints = email.IsPhishing ? -3 : +1;
                     }
                 }
 
@@ -83,7 +81,7 @@ namespace Mondas.Services
 
                     else
                     {
-                        basePoints = email.IsPhishing ? -10 : +1;
+                        basePoints = email.IsPhishing ? -4 : +1;
                     }
                 }
             }
