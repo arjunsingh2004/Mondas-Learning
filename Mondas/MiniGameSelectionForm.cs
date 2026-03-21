@@ -25,6 +25,7 @@ namespace Mondas
         private MiniGamePreferences _recommendedPrefs;
         private MiniGamePreferences _recommendedOverride;
         private string _recommendedReason = "";
+        private readonly SharedAdaptiveLearningService _sharedAdaptiveLearningService;
 
         public MiniGameSelectionForm() : this("local")
         {
@@ -43,6 +44,7 @@ namespace Mondas
             _phishingStore = new PhishingAttemptStore(_dbPath);
             _authenticationStore = new AuthenticationDefenseAttemptStore(_dbPath);
             _prefsStore = new MiniGamePreferencesStore();
+            _sharedAdaptiveLearningService = new SharedAdaptiveLearningService(_dbPath, FindQuestionsPath());
         }
 
         private void MiniGameSelectionForm_Load(object sender, EventArgs e)
@@ -145,32 +147,38 @@ namespace Mondas
         {
             try
             {
-                var stats = _statsService.Load(_userId, _userKey, StatsSource.All);
+                var userModel = _sharedAdaptiveLearningService.BuildUserModel(_userKey);
 
-                if (stats.WeakestTopic == Topic.Passwords || stats.WeakestTopic == Topic.DeviceSecurity)
+                var weakestTopic = _sharedAdaptiveLearningService.GetWeakestTopic(userModel, new[] { Topic.Phishing, Topic.SocialEngineering, Topic.Passwords, Topic.DeviceSecurity });
+
+                if (weakestTopic.HasValue)
                 {
-                    var authPrefs = MiniGamePreferences.CreateDefault(MiniGameType.AuthenticationDefense);
-                    authPrefs.UseDefaults = false;
-                    authPrefs.RoundCount = 10;
-                    authPrefs.Difficulty = stats.WeakestAccuracy01 < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium;
+                    var weakestAccuracy = _sharedAdaptiveLearningService.GetMastery01(userModel, weakestTopic.Value);
 
-                    reason = $"Recommended because {stats.WeakestTopic.Value.ToString().ToUpperInvariant()} is currently one of your weakest areas.";
-                    return authPrefs;
-                }
+                    if (weakestTopic == Topic.Passwords || weakestTopic == Topic.DeviceSecurity)
+                    {
+                        var authPrefs = MiniGamePreferences.CreateDefault(MiniGameType.AuthenticationDefense);
+                        authPrefs.UseDefaults = false;
+                        authPrefs.RoundCount = 10;
+                        authPrefs.Difficulty = weakestAccuracy < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium;
 
-                if (stats.WeakestTopic == Topic.Phishing || stats.WeakestTopic == Topic.SocialEngineering)
-                {
-                    var phishingPrefs = MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator);
-                    phishingPrefs.UseDefaults = false;
-                    phishingPrefs.PhishingEmailCount = 10;
-                    phishingPrefs.RoundCount = 10;
-                    phishingPrefs.Difficulty = stats.WeakestAccuracy01 < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium;
+                        reason = $"Recommended because {weakestTopic.Value.ToString().ToUpperInvariant()} is currently one of your weakest areas.";
+                        return authPrefs;
+                    }
 
-                    reason = $"Recommended because {stats.WeakestTopic.Value.ToString().ToUpperInvariant()} is currently one of your weakest areas.";
-                    return phishingPrefs;
+                    if (weakestTopic == Topic.Phishing || weakestTopic == Topic.SocialEngineering)
+                    {
+                        var phishingPrefs = MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator);
+                        phishingPrefs.UseDefaults = false;
+                        phishingPrefs.PhishingEmailCount = 10;
+                        phishingPrefs.RoundCount = 10;
+                        phishingPrefs.Difficulty = weakestAccuracy < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium;
+
+                        reason = $"Recommended because {weakestTopic.Value.ToString().ToUpperInvariant()} is currently one of your weakest areas.";
+                        return phishingPrefs;
+                    }
                 }
             }
-
             catch
             {
 
@@ -458,6 +466,33 @@ namespace Mondas
             var raw = userKey.Substring(2);
             return long.TryParse(raw, out var id) ? id : 0;
         }
+
+        private static string FindQuestionsPath()
+        {
+            var baseDir = AppContext.BaseDirectory;
+
+            var p1 = Path.Combine(baseDir, "questions.json");
+            var p2 = Path.Combine(baseDir, "Resources", "questions.json");
+            var p3 = Path.Combine(baseDir, "Data", "questions.json");
+
+            if (File.Exists(p1))
+            {
+                return p1;
+            }
+
+            if (File.Exists(p2))
+            {
+                return p2;
+            }
+
+            if (File.Exists(p3))
+            {
+                return p3;
+            }
+
+            return p2;
+        }
+
 
         private void btnStartRecommended_Click(object sender, EventArgs e)
         {

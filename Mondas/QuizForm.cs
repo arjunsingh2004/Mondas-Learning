@@ -33,12 +33,12 @@ namespace Mondas
         private int _historyIndex = -1;
 
         private bool _awaitingAdvanceAfterFeedback;
-
         private Timer _uiTimer;
         private int _secondsRemaining;
         private bool _started;
-
         private bool _updateRadioGroup;
+
+        private SharedAdaptiveLearningService _sharedAdaptiveLearningService;
 
         public QuizForm() : this("local", new QuizPreferences { UseDefaults = true })
         {
@@ -146,9 +146,10 @@ namespace Mondas
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
 
             var dbPath = Path.Combine(baseDir, "mondas.db");
-            _attemptRepo = new SqliteAttemptRepository(dbPath);
+            var questionsPath = FixQuestionsJsonPath(baseDir);
 
-            var questionsPath = Path.Combine(baseDir, "Resources", "questions.json");
+            _attemptRepo = new SqliteAttemptRepository(dbPath);
+            _sharedAdaptiveLearningService = new SharedAdaptiveLearningService(dbPath, questionsPath);
 
             try
             {
@@ -162,6 +163,48 @@ namespace Mondas
                 _allQuestions = Array.Empty<Question>();
                 _questionById = new Dictionary<int, Question>();
             }
+        }
+
+        private static string FixQuestionsJsonPath(string baseDir)
+        {
+            var p1 = Path.Combine(baseDir, "questions.json");
+            var p2 = Path.Combine(baseDir, "Resources", "questions.json");
+            var p3 = Path.Combine(baseDir, "Data", "questions.json");
+
+            if (File.Exists(p1))
+            {
+                return p1;
+            }
+
+            if (File.Exists(p2))
+            {
+                return p2;
+            }
+
+            if (File.Exists(p3))
+            {
+                return p3;
+            }
+
+            return p2;
+        }
+
+        private UserModel SharedUserModel()
+        {
+            if (_sharedAdaptiveLearningService != null)
+            {
+                try
+                {
+                    return _sharedAdaptiveLearningService.BuildUserModel(_userKey) ?? new UserModel();
+                }
+                catch
+                {
+                }
+            }
+
+            var fallback = new UserModel();
+            SeedUserModelFromHistory(fallback, _allQuestions);
+            return fallback;
         }
 
         private void StartNewSession()
@@ -184,8 +227,7 @@ namespace Mondas
             var requested = _prefs.UseDefaults ? 10 : Math.Max(1, _prefs.QuestionCount);
             _maxQuestions = Math.Min(requested, pool.Count);
 
-            var userModel = new UserModel();
-            SeedUserModelFromHistory(userModel, _allQuestions);
+            var userModel = SharedUserModel();
 
             bool focusWeak = _prefs.UseDefaults ? true : _prefs.PrioritiseWeakTopics;
             DifficultyBand? prefDiff = _prefs.UseDefaults ? DifficultyBand.Medium : _prefs.Difficulty;

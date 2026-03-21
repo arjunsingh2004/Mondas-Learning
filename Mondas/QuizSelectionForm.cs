@@ -25,6 +25,7 @@ namespace Mondas
         private SqliteAttemptRepository _attemptRepo;
         private IReadOnlyList<Question> _allQuestions = Array.Empty<Question>();
         private Dictionary<int, Question> _questionById = new Dictionary<int, Question>();
+        private SharedAdaptiveLearningService _sharedAdaptiveLearningService;
 
         private string _prefsPath;
         private string _adaptiveDescBase = "";
@@ -66,6 +67,7 @@ namespace Mondas
             var dbPath = Path.Combine(baseDir, "mondas.db");
             var questionsPath = Path.Combine(baseDir, "Resources", "questions.json");
 
+            _sharedAdaptiveLearningService = new SharedAdaptiveLearningService(dbPath, questionsPath);
             _attemptRepo = new SqliteAttemptRepository(dbPath);
 
             try
@@ -337,74 +339,29 @@ namespace Mondas
         {
             reason = "";
 
-            if (_attemptRepo == null || _allQuestions == null || _allQuestions.Count == 0)
+            if (_sharedAdaptiveLearningService == null || _allQuestions == null || _allQuestions.Count == 0)
             {
                 reason = "Questions not loaded yet.";
                 return new QuizPreferences { UseDefaults = true };
             }
 
-            List<AttemptRecord> history;
-            try
-            {
-                history = _attemptRepo.GetForUser(_userKey)?.OrderBy(x => x.SubmittedAt).ToList() ?? new List<AttemptRecord>();
-            }
-            catch
-            {
-                history = new List<AttemptRecord>();
-            }
-
-            if (history.Count == 0)
-            {
-                reason = "No attempts logged yet. Complete a quiz to generate a recommendation.";
-                return new QuizPreferences { UseDefaults = true };
-            }
-
-            var userModel = new UserModel();
-
-            foreach (var rec in history)
-            {
-                if (!_questionById.TryGetValue(rec.QuestionId, out var q))
-                {
-                    continue;
-                }
-
-                var attempt = new QuestionAttempt { QuestionId = rec.QuestionId, StartedAt = rec.SubmittedAt.AddSeconds(-rec.SecondsTaken).ToUniversalTime(), SubmittedAt = rec.SubmittedAt.ToUniversalTime(), IsCorrect = rec.IsCorrect, SelectedOptionIds = SafeReadIds(rec.SelectedOptionIdsJson), ReasonString = rec.ReasonString ?? "", RulesFired = SafeReadRules(rec.RulesFiredJson) };
-                userModel.UpdateFromAttempt(q, attempt);
-            }
+            var userModel = _sharedAdaptiveLearningService.BuildUserModel(_userKey);
 
             var topicsAvailable = _allQuestions.Select(q => q.Metadata.Topic).Where(t => t != Mondas.Models.Topic.Other).Distinct().ToList();
 
-            Topic? weakest = null;
-            double weakestMastery = double.MaxValue;
+            var weakest = _sharedAdaptiveLearningService.GetWeakestTopic(userModel, topicsAvailable);
 
-            foreach (var topic in topicsAvailable)
+            if (!weakest.HasValue)
             {
-                userModel.TopicStats.TryGetValue(topic, out var stats);
-
-                var mastery = stats == null ? 0.0 : stats.Mastery;
-                if (mastery > 1.0)
-                {
-                    mastery /= 100.0;
-                }
-
-                mastery = Math.Max(0.0, Math.Min(1.0, mastery));
-
-                if (mastery < weakestMastery)
-                {
-                    weakestMastery = mastery;
-                    weakest = topic;
-                }
-            }
-
-            if (weakest == null)
-            {
-                reason = "Not enough topic data yet. Answer a few more questions.";
+                reason = "No attempts logged yet. Complete a quiz or mini game to generate a recommendation.";
                 return new QuizPreferences { UseDefaults = true };
             }
 
+            var weakestMastery = _sharedAdaptiveLearningService.GetMastery01(userModel, weakest.Value);
+
             reason = $"Recommended because your mastery in {weakest.Value} is currently lowest ({weakestMastery:P0}).";
 
-            return new QuizPreferences { UseDefaults = false, QuestionCount = 10, TimerEnabled = false, PrioritiseWeakTopics = true, Topics = new List<Topic> { weakest.Value }, Difficulty = DifficultyBand.Medium, QuestionTypes = new List<QuestionType>(), BloomLevel = null, ThreatVector = "" };
+            return new QuizPreferences{ UseDefaults = false, QuestionCount = 10, TimerEnabled = false, PrioritiseWeakTopics = true, Topics = new List<Topic> { weakest.Value }, Difficulty = weakestMastery < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium, QuestionTypes = new List<QuestionType>(), BloomLevel = null, ThreatVector = "" };
         }
 
         private static string DefaultRecommendedSummary()

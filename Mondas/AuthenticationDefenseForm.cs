@@ -5,7 +5,6 @@ using Syncfusion.WinForms.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -46,6 +45,8 @@ namespace Mondas
         private DateTime _scenarioShownUtc;
 
         private readonly MiniGamePreferences _prefs;
+        private readonly SharedAdaptiveLearningService _sharedAdaptiveLearningService;
+        private UserModel _sharedUserModel = new UserModel();
 
         public AuthenticationDefenseForm() : this("local", null)
         {
@@ -72,6 +73,7 @@ namespace Mondas
             _scenarioRepo = new AuthenticationDefenseScenarioRepository(_scenariosPath);
             _attemptStore = new AuthenticationDefenseAttemptStore(_dbPath);
             _scoring = new AuthenticationDefenseScoringV1();
+            _sharedAdaptiveLearningService = new SharedAdaptiveLearningService(_dbPath, FindQuestionsPath());
         }
 
         private void AuthenticationDefenseForm_Load(object sender, EventArgs e)
@@ -153,6 +155,15 @@ namespace Mondas
             catch
             {
                 _history = new List<AuthenticationDefenseAttemptRow>();
+            }
+
+            try
+            {
+                _sharedUserModel = _sharedAdaptiveLearningService.BuildUserModel(_userKey);
+            }
+            catch
+            {
+                _sharedUserModel = new UserModel();
             }
         }
 
@@ -294,6 +305,32 @@ namespace Mondas
             }
 
             cmb.SelectedIndex = 0;
+        }
+
+        private string FindQuestionsPath()
+        {
+            var baseDir = AppContext.BaseDirectory;
+
+            var p1 = Path.Combine(baseDir, "questions.json");
+            var p2 = Path.Combine(baseDir, "Resources", "questions.json");
+            var p3 = Path.Combine(baseDir, "Data", "questions.json");
+
+            if (File.Exists(p1))
+            {
+                return p1;
+            }
+
+            if (File.Exists(p2))
+            {
+                return p2;
+            }
+
+            if (File.Exists(p3))
+            {
+                return p3;
+            }
+
+            return p2;
         }
 
         private void ResetUi()
@@ -504,29 +541,21 @@ namespace Mondas
                 candidates = _allScenarios.Where(x => x != null && !_seenRun.Contains(x.Id ?? "")).ToList();
             }
 
-            if (_prefs != null && _prefs.Difficulty.HasValue)
-            {
-                var filtered = candidates.Where(x => x.Difficulty == _prefs.Difficulty.Value).ToList();
-
-                if (filtered.Count > 0)
-                {
-                    candidates = filtered;
-                }
-            }
-
+            var targetDifficulty = FixTargetDifficulty();
             var weighted = new List<(AuthenticationDefenseScenario scenario, double weight)>();
 
             foreach (var scenario in candidates)
             {
-                var weakness = GetScenarioWeakness(scenario);
-                var weight = 1.0 + (weakness * 2.0);
+                double weight = 1.0;
 
-                if (_prefs != null && _prefs.Difficulty.HasValue && scenario.Difficulty == _prefs.Difficulty.Value)
-                {
-                    weight += 0.50;
-                }
+                var weakness = GetScenarioWeakness(scenario);
+                weight *= 0.35 + (0.65 * weakness);
+
+                var distance = SharedAdaptiveLearningService.DifficultyDistance(scenario.Difficulty, targetDifficulty);
+                weight *= distance == 0 ? 1.0 : distance == 1 ? 0.65 : 0.35;
 
                 weight *= 0.90 + (_rng.NextDouble() * 0.20);
+
                 weighted.Add((scenario, weight));
             }
 
@@ -647,63 +676,53 @@ namespace Mondas
 
         private double GetScenarioWeakness(AuthenticationDefenseScenario scenario)
         {
-            var tags = scenario?.Tags ?? new List<string>();
-
-            if (tags.Count == 0)
+            if (scenario == null)
             {
                 return 0.75;
             }
 
-            double total = 0.0;
-            int count = 0;
+            var topic = _sharedAdaptiveLearningService.MapAuthenticationTopic(scenario);
+            var mastery = _sharedAdaptiveLearningService.GetMastery01(_sharedUserModel, topic);
 
-            foreach (var tag in tags)
-            {
-                total += GetTagWeakness(tag);
-                count++;
-            }
-
-            return count <= 0 ? 0.75 : total / count;
-        }
-
-        private double GetTagWeakness(string tag)
-        {
-            tag = (tag ?? "").Trim();
-
-            if (tag.Length == 0)
-            {
-                return 0.75;
-            }
-
-            int seen = 0;
-            int correct = 0;
-
-            foreach (var row in _history)
-            {
-                var tags = ReadTags(row.TagsJson);
-
-                if (!tags.Any(x => string.Equals((x ?? "").Trim(), tag, StringComparison.OrdinalIgnoreCase)))
-                {
-                    continue;
-                }
-
-                seen++;
-
-                if (row.IsCorrect)
-                {
-                    correct++;
-                }
-            }
-
-            if (seen == 0)
-            {
-                return 0.75;
-            }
-
-            var mastery = (double)correct / seen;
             return 1.0 - mastery;
         }
 
+        private DifficultyBand FixTargetDifficulty()
+        {
+            var baseline = _prefs != null && _prefs.Difficulty.HasValue ? _prefs.Difficulty.Value : DifficultyBand.Medium;
+
+            var recentAccuracy = _runLog.OrderByDescending(x => x.SubmittedUtc).Take(4).Select(GetAttemptAccuracy01).ToList();
+
+            return _sharedAdaptiveLearningService.ResolveTargetDifficulty(recentAccuracy, baseline);
+        }
+
+        private static double GetAttemptAccuracy01(AuthenticationDefenseAttemptRow row)
+        {
+            if (row == null)
+            {
+                return 0.0;
+            }
+
+            if (row.Accuracy01.HasValue)
+            {
+                var value = row.Accuracy01.Value;
+
+                if (value < 0.0)
+                {
+                    return 0.0;
+                }
+
+                if (value > 1.0)
+                {
+                    return 1.0;
+                }
+
+                return value;
+            }
+
+            return row.IsCorrect ? 1.0 : 0.0;
+        }
+        
         private static List<string> ReadTags(string json)
         {
             try
@@ -921,6 +940,11 @@ namespace Mondas
             _attemptStore.Add(row);
             _history.Insert(0, row);
             _runLog.Add(row);
+
+            var topic = _sharedAdaptiveLearningService.MapAuthenticationTopic(_currentScenario);
+            var tags = ReadTags(row.TagsJson);
+
+            _sharedUserModel.UpdateTopicAttempt(topic, row.Accuracy01 ?? (row.IsCorrect ? 1.0 : 0.0), (row.Accuracy01 ?? (row.IsCorrect ? 1.0 : 0.0)) >= 0.999 ? null : tags);
         }
 
         private void MarkQueueResolved(AuthenticationDefenseResult result)

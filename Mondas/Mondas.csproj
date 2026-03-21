@@ -683,6 +683,7 @@
     <Compile Include="Services\QuizSession.cs" />
     <Compile Include="Services\ReportStore.cs" />
     <Compile Include="Services\RuleEngineV1.cs" />
+    <Compile Include="Services\SharedAdaptiveLearningService.cs" />
     <Compile Include="Services\SqliteAttemptRepository.cs" />
     <Compile Include="Services\SqliteDatabaseInitializer.cs" />
     <Compile Include="Services\SqliteUserRepository.cs" />

@@ -31,7 +31,21 @@ namespace Mondas.Models
         public Topic Topic { get; set; }
         public int Seen { get; set; }
         public int Correct { get; set; }
-        public double Accuracy01 => Seen <= 0 ? 0.0 : (double)Correct / Seen;
+        public double MasteryScoreTotal { get; set; }
+        public double Accuracy01
+        {
+            get
+            {
+                if (Seen <= 0)
+                {
+                    return 0.0;
+                }
+
+                var score = MasteryScoreTotal > 0.0 || Correct > 0 ? (MasteryScoreTotal > 0.0 ? MasteryScoreTotal : Correct) : 0.0;
+
+                return score / Seen; 
+            }
+        }
     }
 
     public sealed class MisconceptionRow

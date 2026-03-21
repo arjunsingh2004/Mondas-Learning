@@ -53,6 +53,9 @@ namespace Mondas
         private int _resolvedFinalCount;
         private int _targetEmails;
 
+        private readonly SharedAdaptiveLearningService _sharedAdaptiveLearningService;
+        private UserModel _sharedUserModel = new UserModel();
+
         public PhishingSimulatorForm() : this("local", MiniGamePreferences.CreateDefault(MiniGameType.PhishingSimulator))
         {
         }
@@ -70,6 +73,33 @@ namespace Mondas
             _emailsJsonPath = ResolveEmailsJsonPath();
             _prefs = MiniGamePreferences.Normalise(prefs);
             _targetEmails = Math.Max(1, _prefs.PhishingEmailCount > 0 ? _prefs.PhishingEmailCount : _prefs.RoundCount);
+            _sharedAdaptiveLearningService = new SharedAdaptiveLearningService(_dbPath, FindQuestionsPath());
+        }
+
+        private string FindQuestionsPath()
+        {
+            var baseDir = AppContext.BaseDirectory;
+
+            var p1 = Path.Combine(baseDir, "questions.json");
+            var p2 = Path.Combine(baseDir, "Resources", "questions.json");
+            var p3 = Path.Combine(baseDir, "Data", "questions.json");
+
+            if (File.Exists(p1))
+            {
+                return p1;
+            }
+
+            if (File.Exists(p2))
+            {
+                return p2;
+            }
+
+            if (File.Exists(p3))
+            {
+                return p3;
+            }
+
+            return p2;
         }
 
         private string ResolveEmailsJsonPath()
@@ -145,6 +175,44 @@ namespace Mondas
             {
                 _history = new List<PhishingAttemptRow>();
             }
+
+            try
+            {
+                _sharedUserModel = _sharedAdaptiveLearningService.BuildUserModel(_userKey);
+            }
+
+            catch
+            {
+                _sharedUserModel = new UserModel();
+            }
+        }
+
+        private IReadOnlyList<PhishingEmail> AdaptiveEmailPool()
+        {
+            if (_allEmails == null || _allEmails.Count == 0)
+            {
+                return Array.Empty<PhishingEmail>();
+            }
+
+            var unseen = _allEmails.Where(x => x != null && !_seenRun.Contains(x.Id)).ToList();
+
+            if (unseen.Count == 0)
+            {
+                return _allEmails;
+            }
+
+            var availableTopics = unseen.Select(x => _sharedAdaptiveLearningService.MapPhishingTopic(x)).Distinct().ToList();
+
+            var weakestTopic = _sharedAdaptiveLearningService.GetWeakestTopic(_sharedUserModel, availableTopics);
+
+            if (!weakestTopic.HasValue)
+            {
+                return unseen;
+            }
+
+            var focused = unseen.Where(x => _sharedAdaptiveLearningService.MapPhishingTopic(x) == weakestTopic.Value).ToList();
+
+            return focused.Count > 0 ? focused : unseen;
         }
 
         private bool MatchesPreferences(PhishingEmail email)
@@ -633,7 +701,9 @@ namespace Mondas
 
             ResumeRunClock();
 
-            var pick = _engine.PickNext(allEmails: _allEmails, history: _history ?? new List<PhishingAttemptRow>(), seenThisRun: _seenRun, tagMastery: GetTagMastery);
+            var adaptivePool = AdaptiveEmailPool();
+
+            var pick = _engine.PickNext(allEmails: adaptivePool, history: _history ?? new List<PhishingAttemptRow>(), seenThisRun: _seenRun, tagMastery: GetTagMastery);
 
             if (pick.email ==  null)
             {
@@ -856,6 +926,8 @@ namespace Mondas
             {
                 _currentEmailResolved = true;
                 _resolvedFinalCount++;
+
+                UpdateModelFromFinalDecision(decision);
 
                 PauseRunClock();
 
@@ -1228,7 +1300,7 @@ namespace Mondas
                     tags = new List<string> { "general" };
                 }
 
-                bool match = tags.Any(tag => string.Equals((tag ?? "").Trim(), tag, StringComparison.OrdinalIgnoreCase));
+                bool match = tags.Any(existingTag => string.Equals((existingTag ?? "").Trim(), tag, StringComparison.OrdinalIgnoreCase));
 
                 if (!match)
                 {
@@ -1256,6 +1328,24 @@ namespace Mondas
             }
 
             return (double)correct / seen;
+        }
+
+        private void UpdateModelFromFinalDecision(PhishingDecisionResult decision)
+        {
+            if (_currentEmail == null || decision == null)
+            {
+                return;
+            }
+
+            var topic = _sharedAdaptiveLearningService.MapPhishingTopic(_currentEmail);
+            var tags = _currentEmail.Tags ?? new List<string>();
+
+            if (tags.Count == 0)
+            {
+                tags = new List<string> { "phishing-general" };
+            }
+
+            _sharedUserModel.UpdateTopicAttempt(topic, decision.IsCorrect ? 1.0 : 0.0, decision.IsCorrect ? null : tags);
         }
 
         private static PhishingEmail ReadEmailSnap(string json)

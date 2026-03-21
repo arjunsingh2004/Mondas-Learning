@@ -5,12 +5,15 @@ using System.Linq;
 using Microsoft.Data.Sqlite;
 using Mondas.Models;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Mondas.Services
 {
     public sealed class DashboardStatsService
     {
         private readonly string _dbPath;
+        private readonly string _questionsPath;
+        private readonly SharedAdaptiveLearningService _sharedAdaptiveLearningService;
 
         public DashboardStatsService(string dbPath)
         {
@@ -20,6 +23,8 @@ namespace Mondas.Services
             }
 
             _dbPath = dbPath;
+            _questionsPath = FindQuestionsPath();
+            _sharedAdaptiveLearningService = new SharedAdaptiveLearningService(_dbPath, _questionsPath);
         }
 
         public DashboardStats Load(long userId, string userKey, StatsSource source = StatsSource.All, int minTopicAttempts = 3, int misconceptionLimit = 20)
@@ -86,11 +91,60 @@ namespace Mondas.Services
             stats.AvgSeconds = LoadAvgSeconds(conn, uk, source);
             stats.CurrentStreak = CalcStreak(conn, uk, source, take: 250);
 
-            LoadTopicMastery(conn, uk, stats, source);
+            LoadTopicMasteryFromSharedModel(stats, source);
             CalcWeakStrong(stats, minTopicAttempts);
             LoadTopMisconceptions(conn, uk, stats, source, misconceptionLimit);
 
             return stats;
+        }
+
+        private void LoadTopicMasteryFromSharedModel(DashboardStats stats, StatsSource source)
+        {
+            stats.MasteryByTopic.Clear();
+
+            UserModel userModel;
+
+            try
+            {
+                userModel = _sharedAdaptiveLearningService.BuildUserModel(stats.UserKey);
+            }
+            catch
+            {
+                userModel = new UserModel();
+            }
+
+            var allowedTopics = GetAllowedTopics(source);
+
+            foreach (var topic in allowedTopics)
+            {
+                if (!userModel.TopicStats.TryGetValue(topic, out var topicStats) || topicStats == null || topicStats.QuestionsSeen <= 0)
+                {
+                    continue;
+                }
+
+                stats.MasteryByTopic.Add(new TopicMasteryRow
+                { Topic = topic, Seen = topicStats.QuestionsSeen, Correct = topicStats.QuestionsCorrect, MasteryScoreTotal = topicStats.MasteryScoreTotal });
+            }
+
+            stats.MasteryByTopic.Sort((a, b) => b.Seen.CompareTo(a.Seen));
+        }
+
+        private static IReadOnlyList<Topic> GetAllowedTopics(StatsSource source)
+        {
+            switch (source)
+            {
+                case StatsSource.PhishingSimulator:
+                    return new[] { Topic.Phishing, Topic.SocialEngineering };
+
+                case StatsSource.AuthenticationDefense:
+                    return new[] { Topic.Passwords, Topic.SocialEngineering, Topic.DeviceSecurity };
+
+                case StatsSource.All:
+                case StatsSource.Quiz:
+                case StatsSource.LearningModules:
+                default:
+                    return Enum.GetValues(typeof(Topic)).Cast<Topic>().Where(x => x != Topic.Other).ToArray();
+            }
         }
 
         private static string NormaliseUserKey(string userKey)
@@ -288,6 +342,32 @@ namespace Mondas.Services
             }
 
             return streak;
+        }
+
+        private string FindQuestionsPath()
+        {
+            var baseDir = Path.GetDirectoryName(_dbPath) ?? AppContext.BaseDirectory;
+
+            var p1 = Path.Combine(baseDir, "questions.json");
+            var p2 = Path.Combine(baseDir, "Resources", "questions.json");
+            var p3 = Path.Combine(baseDir, "Data", "questions.json");
+
+            if (File.Exists(p1))
+            {
+                return p1;
+            }
+
+            if (File.Exists(p2))
+            {
+                return p2;
+            }
+
+            if (File.Exists(p3))
+            {
+                return p3;
+            }
+
+            return p2;
         }
 
         private static int CalcQuizStreak(SqliteConnection conn, string userKey, int take)
