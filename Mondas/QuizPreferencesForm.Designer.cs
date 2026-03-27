@@ -53,12 +53,6 @@
             this.cmbDifficulty = new System.Windows.Forms.ComboBox();
             this.gbTypes = new System.Windows.Forms.GroupBox();
             this.clbQuestionTypes = new System.Windows.Forms.CheckedListBox();
-            this.gbAdvanced = new System.Windows.Forms.GroupBox();
-            this.tlpAdvanced = new System.Windows.Forms.TableLayoutPanel();
-            this.lblBloom = new System.Windows.Forms.Label();
-            this.cmbBloom = new System.Windows.Forms.ComboBox();
-            this.lblThreatVector = new System.Windows.Forms.Label();
-            this.cmbThreatVector = new System.Windows.Forms.ComboBox();
             this.pnlPrefsButtons = new System.Windows.Forms.Panel();
             this.btnUseDefaults = new Syncfusion.WinForms.Controls.SfButton();
             this.flpButtonsRight = new System.Windows.Forms.FlowLayoutPanel();
@@ -76,8 +70,6 @@
             this.gbDifficulty.SuspendLayout();
             this.tlpDifficulty.SuspendLayout();
             this.gbTypes.SuspendLayout();
-            this.gbAdvanced.SuspendLayout();
-            this.tlpAdvanced.SuspendLayout();
             this.pnlPrefsButtons.SuspendLayout();
             this.flpButtonsRight.SuspendLayout();
             this.SuspendLayout();
@@ -155,7 +147,6 @@
             this.tlpPrefsSections.Controls.Add(this.gbTopics, 0, 2);
             this.tlpPrefsSections.Controls.Add(this.gbDifficulty, 0, 3);
             this.tlpPrefsSections.Controls.Add(this.gbTypes, 0, 4);
-            this.tlpPrefsSections.Controls.Add(this.gbAdvanced, 0, 5);
             this.tlpPrefsSections.Dock = System.Windows.Forms.DockStyle.Top;
             this.tlpPrefsSections.Location = new System.Drawing.Point(12, 12);
             this.tlpPrefsSections.Name = "tlpPrefsSections";
@@ -166,7 +157,7 @@
             this.tlpPrefsSections.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPrefsSections.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPrefsSections.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpPrefsSections.Size = new System.Drawing.Size(464, 914);
+            this.tlpPrefsSections.Size = new System.Drawing.Size(464, 757);
             this.tlpPrefsSections.TabIndex = 0;
             // 
             // gbMode
@@ -450,95 +441,6 @@
             this.clbQuestionTypes.TabIndex = 0;
             this.clbQuestionTypes.SelectedIndexChanged += new System.EventHandler(this.clbQuestionTypes_SelectedIndexChanged);
             // 
-            // gbAdvanced
-            // 
-            this.gbAdvanced.BackColor = System.Drawing.Color.White;
-            this.gbAdvanced.Controls.Add(this.tlpAdvanced);
-            this.gbAdvanced.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbAdvanced.Font = new System.Drawing.Font("Agency", 11F);
-            this.gbAdvanced.Location = new System.Drawing.Point(0, 757);
-            this.gbAdvanced.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
-            this.gbAdvanced.Name = "gbAdvanced";
-            this.gbAdvanced.Padding = new System.Windows.Forms.Padding(12);
-            this.gbAdvanced.Size = new System.Drawing.Size(464, 145);
-            this.gbAdvanced.TabIndex = 4;
-            this.gbAdvanced.TabStop = false;
-            this.gbAdvanced.Text = "ADVANCED (OPTIONAL)";
-            // 
-            // tlpAdvanced
-            // 
-            this.tlpAdvanced.ColumnCount = 2;
-            this.tlpAdvanced.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
-            this.tlpAdvanced.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpAdvanced.Controls.Add(this.lblBloom, 0, 0);
-            this.tlpAdvanced.Controls.Add(this.cmbBloom, 1, 0);
-            this.tlpAdvanced.Controls.Add(this.lblThreatVector, 0, 1);
-            this.tlpAdvanced.Controls.Add(this.cmbThreatVector, 1, 1);
-            this.tlpAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpAdvanced.Location = new System.Drawing.Point(12, 35);
-            this.tlpAdvanced.Name = "tlpAdvanced";
-            this.tlpAdvanced.RowCount = 2;
-            this.tlpAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpAdvanced.Size = new System.Drawing.Size(440, 98);
-            this.tlpAdvanced.TabIndex = 0;
-            // 
-            // lblBloom
-            // 
-            this.lblBloom.AutoSize = true;
-            this.lblBloom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblBloom.Font = new System.Drawing.Font("Agency", 9.5F);
-            this.lblBloom.Location = new System.Drawing.Point(3, 0);
-            this.lblBloom.Name = "lblBloom";
-            this.lblBloom.Size = new System.Drawing.Size(134, 40);
-            this.lblBloom.TabIndex = 0;
-            this.lblBloom.Text = "Bloom Level";
-            this.lblBloom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cmbBloom
-            // 
-            this.cmbBloom.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbBloom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBloom.Font = new System.Drawing.Font("Muro", 9F);
-            this.cmbBloom.FormattingEnabled = true;
-            this.cmbBloom.Items.AddRange(new object[] {
-            "Any",
-            "Remember",
-            "Understand",
-            "Apply",
-            "Analyse"});
-            this.cmbBloom.Location = new System.Drawing.Point(143, 7);
-            this.cmbBloom.Name = "cmbBloom";
-            this.cmbBloom.Size = new System.Drawing.Size(180, 26);
-            this.cmbBloom.TabIndex = 1;
-            this.cmbBloom.SelectedIndexChanged += new System.EventHandler(this.cmbBloom_SelectedIndexChanged);
-            // 
-            // lblThreatVector
-            // 
-            this.lblThreatVector.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblThreatVector.AutoSize = true;
-            this.lblThreatVector.Font = new System.Drawing.Font("Agency", 8F);
-            this.lblThreatVector.Location = new System.Drawing.Point(3, 62);
-            this.lblThreatVector.Name = "lblThreatVector";
-            this.lblThreatVector.Size = new System.Drawing.Size(128, 13);
-            this.lblThreatVector.TabIndex = 2;
-            this.lblThreatVector.Text = "Threat Vector";
-            this.lblThreatVector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cmbThreatVector
-            // 
-            this.cmbThreatVector.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbThreatVector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbThreatVector.Font = new System.Drawing.Font("Muro", 9F);
-            this.cmbThreatVector.FormattingEnabled = true;
-            this.cmbThreatVector.Items.AddRange(new object[] {
-            "Any"});
-            this.cmbThreatVector.Location = new System.Drawing.Point(143, 56);
-            this.cmbThreatVector.Name = "cmbThreatVector";
-            this.cmbThreatVector.Size = new System.Drawing.Size(180, 26);
-            this.cmbThreatVector.TabIndex = 3;
-            this.cmbThreatVector.SelectedIndexChanged += new System.EventHandler(this.cmbThreatVector_SelectedIndexChanged);
-            // 
             // pnlPrefsButtons
             // 
             this.pnlPrefsButtons.BackColor = System.Drawing.Color.White;
@@ -641,9 +543,6 @@
             this.tlpDifficulty.ResumeLayout(false);
             this.tlpDifficulty.PerformLayout();
             this.gbTypes.ResumeLayout(false);
-            this.gbAdvanced.ResumeLayout(false);
-            this.tlpAdvanced.ResumeLayout(false);
-            this.tlpAdvanced.PerformLayout();
             this.pnlPrefsButtons.ResumeLayout(false);
             this.pnlPrefsButtons.PerformLayout();
             this.flpButtonsRight.ResumeLayout(false);
@@ -674,12 +573,6 @@
         private System.Windows.Forms.ComboBox cmbDifficulty;
         private System.Windows.Forms.GroupBox gbTypes;
         private System.Windows.Forms.CheckedListBox clbQuestionTypes;
-        private System.Windows.Forms.GroupBox gbAdvanced;
-        private System.Windows.Forms.TableLayoutPanel tlpAdvanced;
-        private System.Windows.Forms.Label lblBloom;
-        private System.Windows.Forms.ComboBox cmbBloom;
-        private System.Windows.Forms.Label lblThreatVector;
-        private System.Windows.Forms.ComboBox cmbThreatVector;
         private System.Windows.Forms.Panel pnlPrefsButtons;
         private System.Windows.Forms.FlowLayoutPanel flpButtonsRight;
         private Syncfusion.WinForms.Controls.SfButton btnUseDefaults;

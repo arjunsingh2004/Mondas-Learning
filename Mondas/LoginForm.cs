@@ -1,17 +1,9 @@
-﻿using Syncfusion.WinForms.Controls;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Mondas.Services;
 using Mondas.Contracts.Services;
-using System.Linq.Expressions;
 
 namespace Mondas
 {
@@ -37,6 +29,7 @@ namespace Mondas
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+
             if (lblStatus != null)
             {
                 lblStatus.Text = "";
@@ -193,11 +186,21 @@ namespace Mondas
         {
             SetStatus("Signed in.");
 
-            var dashboard = new DashboardForm(user.Id);
-            dashboard.FormClosed += (_, __) => this.Close();
+            Form nextForm;
 
-            dashboard.Show();
-            this.Hide();
+            if (user.IsAdmin)
+            {
+                nextForm = new AdminDashboardForm(user.FullName);
+            }
+
+            else
+            {
+                nextForm = new DashboardForm(user.Id);
+            }
+
+            nextForm.FormClosed += (_, __) => Close();
+            nextForm.Show();
+            Hide();
         }
 
         private void tlpRoot_Paint(object sender, PaintEventArgs e)

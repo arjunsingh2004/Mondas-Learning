@@ -19,8 +19,6 @@ namespace Mondas
         private void cmbTimer_SelectedIndexChanged(object sender, EventArgs e) { }
         private void cmbDifficulty_SelectedIndexChanged(object sender, EventArgs e) { }
         private void clbQuestionTypes_SelectedIndexChanged(object sender, EventArgs e) { }
-        private void cmbBloom_SelectedIndexChanged(object sender, EventArgs e) { }
-        private void cmbThreatVector_SelectedIndexChanged(object sender, EventArgs e) { }
 
         public QuizPreferences Preferences { get; private set; }
 
@@ -54,15 +52,7 @@ namespace Mondas
             cmbDifficulty.Items.Clear();
             cmbDifficulty.Items.Add("Any");
             cmbDifficulty.Items.AddRange(Enum.GetNames(typeof(DifficultyBand)));
-
-            cmbBloom.Items.Clear();
-            cmbBloom.Items.Add("Any");
-            cmbBloom.Items.AddRange(Enum.GetNames(typeof(BloomLevel)));
-
-            cmbThreatVector.Items.Clear();
-            cmbThreatVector.Items.AddRange(new object[] { "", "Email", "SMS", "Phone", "Web", "USB" });
-            cmbThreatVector.DropDownStyle = ComboBoxStyle.DropDown;
-
+                 
             clbTopics.Items.Clear();
             foreach (Topic t in Enum.GetValues(typeof(Topic)))
             {
@@ -90,10 +80,7 @@ namespace Mondas
             SetCheckedItems(clbTopics, p.Topics);
             SetCheckedItems(clbQuestionTypes, p.QuestionTypes);
 
-            cmbDifficulty.SelectedItem = p.Difficulty.HasValue ? p.Difficulty.Value.ToString() : "Any";
-
-            cmbBloom.SelectedItem = p.BloomLevel.HasValue ? p.BloomLevel.Value.ToString() : "Any";
-            cmbThreatVector.Text = p.ThreatVector ?? "";
+            cmbDifficulty.SelectedItem = p.Difficulty.HasValue ? p.Difficulty.Value.ToString() : "Any";                         
         }
 
         private void SetCheckedItems<T>(CheckedListBox clb, List<T> values)
@@ -114,7 +101,6 @@ namespace Mondas
             gbTopics.Enabled = !useDefaults;
             gbDifficulty.Enabled = !useDefaults;
             gbTypes.Enabled = !useDefaults;
-            gbAdvanced.Enabled = !useDefaults;
         }
 
         private QuizPreferences ReadFromUi()
@@ -136,10 +122,6 @@ namespace Mondas
             p.QuestionTypes = clbQuestionTypes.CheckedItems.Cast<object>().OfType<QuestionType>().ToList();
 
             p.Difficulty = cmbDifficulty.Text == "Any" ? (DifficultyBand?)null : Enum.TryParse<DifficultyBand>(cmbDifficulty.Text, out var d) ? d : (DifficultyBand?)null;
-
-            p.BloomLevel = cmbBloom.Text == "Any" ? (BloomLevel?)null : Enum.TryParse<BloomLevel>(cmbBloom.Text, out var b) ? b : (BloomLevel?)null;
-
-            p.ThreatVector = (cmbThreatVector.Text ?? "").Trim();
 
             return p;
         }
@@ -168,8 +150,6 @@ namespace Mondas
                 TimerEnabled = p.TimerEnabled,
                 PrioritiseWeakTopics = p.PrioritiseWeakTopics,
                 Difficulty = p.Difficulty,
-                BloomLevel = p.BloomLevel,
-                ThreatVector = p.ThreatVector ?? "",
                 Topics = p.Topics?.ToList() ?? new List<Topic>(),
                 QuestionTypes = p.QuestionTypes?.ToList() ?? new List<QuestionType>()
             };

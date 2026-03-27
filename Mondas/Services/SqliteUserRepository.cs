@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using Syncfusion.Windows.Forms.Diagram;
 
 namespace Mondas.Services
 {
@@ -89,8 +84,8 @@ namespace Mondas.Services
             using (var conn = Open())
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"INSERT INTO Users (FullName, Email, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc)
-                                    VALUES (@name, @email, @hash, @salt, @iters, NULL, 0, @created);
+                cmd.CommandText = @"INSERT INTO Users (FullName, Email, IsAdmin, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc)
+                                    VALUES (@name, @email, 0, @hash, @salt, @iters, NULL, 0, @created);
                                     SELECT last_insert_rowid();";
 
                 cmd.Parameters.AddWithValue("@name", fullName.Trim());
@@ -153,7 +148,7 @@ namespace Mondas.Services
             using (var conn = Open())
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"SELECT Id, FullName, Email, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc
+                cmd.CommandText = @"SELECT Id, FullName, Email, IsAdmin, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc
                                     FROM Users
                                     WHERE Email = @email
                                     LIMIT 1;";
@@ -172,12 +167,13 @@ namespace Mondas.Services
                         Id = r.GetInt64(0),
                         FullName = r.GetString(1),
                         Email = r.GetString(2),
-                        PasswordHash = r.GetString(3),
-                        PasswordSalt = r.GetString(4),
-                        PasswordIterations = r.GetInt32(5),
-                        TotpSecretBase32 = r.IsDBNull(6) ? null : r.GetString(6),
-                        TotpEnabled = r.GetInt32(7) == 1,
-                        CreatedUtc = DateTime.Parse(r.GetString(8)).ToUniversalTime()
+                        IsAdmin = r.GetInt32(3) == 1,
+                        PasswordHash = r.GetString(4),
+                        PasswordSalt = r.GetString(5),
+                        PasswordIterations = r.GetInt32(6),
+                        TotpSecretBase32 = r.IsDBNull(7) ? null : r.GetString(7),
+                        TotpEnabled = r.GetInt32(8) == 1,
+                        CreatedUtc = DateTime.Parse(r.GetString(9)).ToUniversalTime()
                     };
                 }
             }
@@ -193,7 +189,7 @@ namespace Mondas.Services
             using (var conn = Open())
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"SELECT Id, FullName, Email, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc
+                cmd.CommandText = @"SELECT Id, FullName, Email, IsSelect PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc
                                     FROM Users
                                     WHERE Id = @id
                                     LIMIT 1;";
@@ -211,15 +207,33 @@ namespace Mondas.Services
                         Id = r.GetInt64(0),
                         FullName = r.GetString(1),
                         Email = r.GetString(2),
-                        PasswordHash = r.GetString(3),
-                        PasswordSalt = r.GetString(4),
-                        PasswordIterations = r.GetInt32(5),
-                        TotpSecretBase32 = r.IsDBNull(6) ? null : r.GetString(6),
-                        TotpEnabled = r.GetInt32(7) == 1,
-                        CreatedUtc = DateTime.Parse(r.GetString(8)).ToUniversalTime()
+                        IsAdmin = r.GetInt32(3) == 1,
+                        PasswordHash = r.GetString(4),
+                        PasswordSalt = r.GetString(5),
+                        PasswordIterations = r.GetInt32(6),
+                        TotpSecretBase32 = r.IsDBNull(7) ? null : r.GetString(7),
+                        TotpEnabled = r.GetInt32(8) == 1,
+                        CreatedUtc = DateTime.Parse(r.GetString(9)).ToUniversalTime()
                     };
                 }
             }
+        }
+
+        public void SetAdminByEmail(string email, bool isAdmin)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return;
+            }
+
+            using var conn = Open();
+            using var cmd = conn.CreateCommand();
+
+            cmd.CommandText = "UPDATE Users SET IsAdmin = @isAdmin WHERE Email = @email;";
+            cmd.Parameters.AddWithValue("@isAdmin", isAdmin ? 1 : 0);
+            cmd.Parameters.AddWithValue("@email", email.Trim().ToLowerInvariant());
+
+            cmd.ExecuteNonQuery();
         }
     }
 
@@ -228,6 +242,7 @@ namespace Mondas.Services
         public long Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
+        public bool IsAdmin { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public int PasswordIterations { get; set; }

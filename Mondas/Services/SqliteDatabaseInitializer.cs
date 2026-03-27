@@ -47,10 +47,7 @@ namespace Mondas.Services
             Text TEXT NOT NULL,
             Explanation TEXT NOT NULL,
             Topic INTEGER NOT NULL,
-            Subtopic TEXT NOT NULL,
             Difficulty INTEGER NOT NULL,
-            BloomLevel INTEGER NOT NULL,
-            ThreatVector TEXT NOT NULL,
             QuestionType INTEGER NOT NULL
             );
 
@@ -80,6 +77,7 @@ namespace Mondas.Services
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             FullName TEXT NOT NULL,
             Email TEXT NOT NULL UNIQUE,
+            IsAdmin INTEGER NOT NULL DEFAULT 0,
             PasswordHash TEXT NOT NULL,
             PasswordSalt TEXT NOT NULL,
             PasswordIterations INTEGER NOT NULL,
@@ -185,7 +183,9 @@ namespace Mondas.Services
         private void SeedFromJson(SqliteConnection conn)
         {
             if (!File.Exists(_jsonPath))
+            {
                 throw new FileNotFoundException("questions.json not found", _jsonPath);
+            }                
 
             var json = File.ReadAllText(_jsonPath);
             var opts = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -208,18 +208,15 @@ namespace Mondas.Services
                 cmd.Transaction = tx;
                 cmd.CommandText = @"
                 INSERT INTO Questions
-                (Id, Text, Explanation, Topic, Subtopic, Difficulty, BloomLevel, ThreatVector, QuestionType)
+                (Id, Text, Explanation, Topic, Difficulty, QuestionType)
                 VALUES
-                ($id, $text, $explanation, $topic, $subtopic, $difficulty, $bloom, $threat, $qtype);";
+                ($id, $text, $explanation, $topic, $difficulty, $qtype);";
 
                 cmd.Parameters.AddWithValue("$id", q.Id);
                 cmd.Parameters.AddWithValue("$text", q.Text ?? "");
                 cmd.Parameters.AddWithValue("$explanation", q.Explanation ?? "");
                 cmd.Parameters.AddWithValue("$topic", (int)ParseEnum(typeof(Topic), q.Metadata?.Topic, Topic.Other));
-                cmd.Parameters.AddWithValue("$subtopic", q.Metadata?.Subtopic ?? "");
                 cmd.Parameters.AddWithValue("$difficulty", (int)ParseEnum(typeof(DifficultyBand), q.Metadata?.Difficulty, DifficultyBand.Easy));
-                cmd.Parameters.AddWithValue("$bloom", (int)ParseEnum(typeof(BloomLevel), q.Metadata?.BloomLevel, BloomLevel.Remember));
-                cmd.Parameters.AddWithValue("$threat", q.Metadata?.ThreatVector ?? "");
                 cmd.Parameters.AddWithValue("$qtype", (int)ParseEnum(typeof(QuestionType), q.Metadata?.QuestionType, QuestionType.SingleChoice));
                 cmd.ExecuteNonQuery();
             }
@@ -268,6 +265,7 @@ namespace Mondas.Services
             {
                 return Enum.Parse(enumType, value.Trim(), true);
             }
+
             catch
             {
                 return fallback;
@@ -320,10 +318,7 @@ namespace Mondas.Services
         private sealed class MetadataJson
         {
             public string? Topic { get; set; }
-            public string? Subtopic { get; set; }
             public string? Difficulty { get; set; }
-            public string? BloomLevel { get; set; }
-            public string? ThreatVector { get; set; }
             public string? QuestionType { get; set; }
             public List<string>? MisconceptionTags { get; set; }
         }

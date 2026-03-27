@@ -18,8 +18,5 @@ namespace Mondas.Models
 
         public DifficultyBand? Difficulty { get; set; } = null;
         public List<QuestionType> QuestionTypes { get; set; } = new();
-
-        public BloomLevel? BloomLevel { get; set; } = null;
-        public string ThreatVector { get; set; } = "";
     }
 }

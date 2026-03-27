@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Id": 110001,
     "Difficulty": "Easy",
@@ -12,10 +12,14 @@
       "DisplayText": "",
       "Url": ""
     },
-    "Attachment": { "FileName": "" },
+    "Attachment": {
+      "FileName": ""
+    },
     "IsPhishing": false,
     "Explanation": "Legit reminder: no link/attachment, no urgency, no credential request in email body.",
-    "Tags": []
+    "Tags": [],
+    "HasLink": false,
+    "HasAttachment": false
   },
   {
     "Id": 110002,
@@ -30,28 +34,42 @@
       "DisplayText": "Verify Account",
       "Url": "http://m1crosoft-support.com/verify/login"
     },
-    "Attachment": { "FileName": "" },
+    "Attachment": {
+      "FileName": ""
+    },
     "IsPhishing": true,
     "Explanation": "Lookalike sender domain + urgency + push to verify via link.",
-    "Tags": [ "urgency", "lookalike-domain", "credential-harvest" ]
+    "Tags": [
+      "urgency",
+      "lookalike-domain",
+      "credential-harvest"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
   },
   {
     "Id": 110003,
-    "Difficulty": "Medium",
-    "SenderName": "Finance",
-    "SenderEmail": "accounts@mondaslearning.com",
-    "ToEmail": "you@mondaslearning.com",
-    "Subject": "Invoice for January (PDF)",
-    "Body": "Hi,\n\nInvoice attached for January.\nIf anything looks off, reply directly.\n\nThanks,\nFinance",
+    "Difficulty": "Easy",
+    "SenderName": "test",
+    "SenderEmail": "test@mondaslearning.com",
+    "ToEmail": "test2@mondaslearning.com",
+    "Subject": "test Invoice for January (PDF)",
+    "Body": "Hi,test\n\nInvoice attached for January.\nIf anything looks off, reply directly.\n\nThanks,\nFinance",
     "ReplyToEmail": "",
     "Link": {
       "DisplayText": "",
-      "Url": ""
+      "Url": "test"
     },
-    "Attachment": { "FileName": "Invoice_Jan.pdf" },
-    "IsPhishing": false,
-    "Explanation": "Plausible internal sender, normal tone, benign PDF attachment.",
-    "Tags": [ "attachment" ]
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": true,
+    "Explanation": "Plausible internal sender, normal tone, benign PDF attachment.\n\ntest",
+    "Tags": [
+      "attachment"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
   },
   {
     "Id": 110004,
@@ -66,10 +84,18 @@
       "DisplayText": "Schedule redelivery",
       "Url": "http://dhl-deliveries.com/redelivery"
     },
-    "Attachment": { "FileName": "" },
+    "Attachment": {
+      "FileName": ""
+    },
     "IsPhishing": true,
     "Explanation": "Generic parcel lure + external domain + link prompt.",
-    "Tags": [ "parcel-lure", "external-domain", "link" ]
+    "Tags": [
+      "parcel-lure",
+      "external-domain",
+      "link"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
   },
   {
     "Id": 110005,
@@ -84,10 +110,18 @@
       "DisplayText": "",
       "Url": ""
     },
-    "Attachment": { "FileName": "Review_Doc.docm" },
+    "Attachment": {
+      "FileName": "Review_Doc.docm"
+    },
     "IsPhishing": true,
     "Explanation": "Reply-To mismatch + macro-enabled doc (docm) + social engineering.",
-    "Tags": [ "reply-to-mismatch", "macro", "social-engineering" ]
+    "Tags": [
+      "reply-to-mismatch",
+      "macro",
+      "social-engineering"
+    ],
+    "HasLink": false,
+    "HasAttachment": true
   },
   {
     "Id": 110006,
@@ -102,10 +136,16 @@
       "DisplayText": "Employee Handbook",
       "Url": "https://mondaslearning.com/handbook"
     },
-    "Attachment": { "FileName": "" },
+    "Attachment": {
+      "FileName": ""
+    },
     "IsPhishing": false,
     "Explanation": "Legit domain + low pressure + reasonable request.",
-    "Tags": [ "legit-link" ]
+    "Tags": [
+      "legit-link"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
   },
   {
     "Id": 110007,
@@ -120,10 +160,18 @@
       "DisplayText": "Update billing",
       "Url": "http://netflix-billing-check.com/update"
     },
-    "Attachment": { "FileName": "" },
+    "Attachment": {
+      "FileName": ""
+    },
     "IsPhishing": true,
     "Explanation": "External billing domain + pressure to update details via link.",
-    "Tags": [ "billing", "pressure", "link" ]
+    "Tags": [
+      "billing",
+      "pressure",
+      "link"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
   },
   {
     "Id": 110008,
@@ -138,9 +186,83 @@
       "DisplayText": "",
       "Url": ""
     },
-    "Attachment": { "FileName": "" },
+    "Attachment": {
+      "FileName": ""
+    },
     "IsPhishing": false,
     "Explanation": "No action request, no link, informational message.",
-    "Tags": [ "info" ]
+    "Tags": [
+      "info"
+    ],
+    "HasLink": false,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110009,
+    "Difficulty": "Easy",
+    "SenderName": "test",
+    "SenderEmail": "test@mondaslearning.com",
+    "ToEmail": "test2@mondaslearning.com",
+    "Subject": "test Invoice for January (PDF)",
+    "Body": "Hi,test\n\nInvoice attached for January.\nIf anything looks off, reply directly.\n\nThanks,\nFinance",
+    "ReplyToEmail": "test",
+    "Link": {
+      "DisplayText": "",
+      "Url": "test"
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": true,
+    "Explanation": "Plausible internal sender, normal tone, benign PDF attachment.\n\ntest",
+    "Tags": [],
+    "HasLink": true,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110010,
+    "Difficulty": "Medium",
+    "SenderName": "test",
+    "SenderEmail": "test",
+    "ToEmail": "test",
+    "Subject": "test",
+    "Body": "test",
+    "ReplyToEmail": "test",
+    "Link": {
+      "DisplayText": "",
+      "Url": "test"
+    },
+    "Attachment": {
+      "FileName": "test"
+    },
+    "IsPhishing": true,
+    "Explanation": "test",
+    "Tags": [],
+    "HasLink": true,
+    "HasAttachment": true
+  },
+  {
+    "Id": 110011,
+    "Difficulty": "Medium",
+    "SenderName": "name",
+    "SenderEmail": "email",
+    "ToEmail": "to email",
+    "Subject": "subj",
+    "Body": "body",
+    "ReplyToEmail": "to",
+    "Link": {
+      "DisplayText": "site",
+      "Url": "blah.com"
+    },
+    "Attachment": {
+      "FileName": "www.cook.com"
+    },
+    "IsPhishing": true,
+    "Explanation": "explanation",
+    "Tags": [
+      "test"
+    ],
+    "HasLink": true,
+    "HasAttachment": true
   }
 ]

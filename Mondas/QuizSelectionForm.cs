@@ -361,7 +361,7 @@ namespace Mondas
 
             reason = $"Recommended because your mastery in {weakest.Value} is currently lowest ({weakestMastery:P0}).";
 
-            return new QuizPreferences{ UseDefaults = false, QuestionCount = 10, TimerEnabled = false, PrioritiseWeakTopics = true, Topics = new List<Topic> { weakest.Value }, Difficulty = weakestMastery < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium, QuestionTypes = new List<QuestionType>(), BloomLevel = null, ThreatVector = "" };
+            return new QuizPreferences{ UseDefaults = false, QuestionCount = 10, TimerEnabled = false, PrioritiseWeakTopics = true, Topics = new List<Topic> { weakest.Value }, Difficulty = weakestMastery < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium, QuestionTypes = new List<QuestionType>() };
         }
 
         private static string DefaultRecommendedSummary()
@@ -422,20 +422,11 @@ namespace Mondas
             if (p.QuestionTypes != null && p.QuestionTypes.Count > 0)
             {
                 parts.Add("TYPES: " + string.Join(", ", p.QuestionTypes).ToUpperInvariant());
-            }     
+            }    
+            
             else
             {
                 parts.Add("TYPES: ANY");
-            }
-
-            if (p.BloomLevel.HasValue)
-            {
-                parts.Add("BLOOM: " + p.BloomLevel.Value.ToString().ToUpperInvariant());
-            }
-
-            if (!string.IsNullOrWhiteSpace(p.ThreatVector))
-            {
-                parts.Add("VECTOR: " + p.ThreatVector.Trim().ToUpperInvariant());
             }
 
             return string.Join(" · ", parts);
@@ -486,7 +477,6 @@ namespace Mondas
 
             p.Topics ??= new List<Topic>();
             p.QuestionTypes ??= new List<QuestionType>();
-            p.ThreatVector ??= "";
 
             return p;
         }

@@ -39,16 +39,14 @@
             this.btnRefresh = new Syncfusion.WinForms.Controls.SfButton();
             this.btnExportCsv = new Syncfusion.WinForms.Controls.SfButton();
             this.pnlSidebar = new System.Windows.Forms.Panel();
-            this.flpAdminNav = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnNavOverview = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnNavUsers = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnNavContent = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnNavExport = new Syncfusion.WinForms.Controls.SfButton();
             this.pnlSidebarSpacer = new System.Windows.Forms.Panel();
             this.lblAdminBadge = new System.Windows.Forms.Label();
             this.lblMondas = new System.Windows.Forms.Label();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tlpPage = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlFooter = new System.Windows.Forms.Panel();
+            this.lblFooterUser = new System.Windows.Forms.Label();
+            this.lblFooterLeft = new System.Windows.Forms.Label();
             this.tlpStats = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTotalUsers = new System.Windows.Forms.Panel();
             this.lblTotalUsersValue = new System.Windows.Forms.Label();
@@ -112,20 +110,20 @@
             this.tabQuizQuestion = new System.Windows.Forms.TabPage();
             this.tlpQuizEditor = new System.Windows.Forms.TableLayoutPanel();
             this.pnlQuizEditorLeft = new System.Windows.Forms.Panel();
+            this.rtbQuizExplanation = new System.Windows.Forms.RichTextBox();
+            this.lblQuizExplanation = new System.Windows.Forms.Label();
             this.dgvQuizOptions = new System.Windows.Forms.DataGridView();
             this.colOptionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOptionCorrect = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOptionCorrect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.lblQuizOptions = new System.Windows.Forms.Label();
             this.rtbQuizQuestionText = new System.Windows.Forms.RichTextBox();
             this.lblQuizQuestionText = new System.Windows.Forms.Label();
             this.pnlQuizEditorRight = new System.Windows.Forms.Panel();
             this.txtMisTags = new System.Windows.Forms.TextBox();
             this.lblMisTags = new System.Windows.Forms.Label();
-            this.cmbQuizMastery = new System.Windows.Forms.ComboBox();
-            this.lblQuizMastery = new System.Windows.Forms.Label();
             this.cmbQuizType = new System.Windows.Forms.ComboBox();
             this.lblQuizType = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbQuizDifficulty = new System.Windows.Forms.ComboBox();
             this.lblQuizDifficulty = new System.Windows.Forms.Label();
             this.cmbQuizTopic = new System.Windows.Forms.ComboBox();
             this.lblQuizTopic = new System.Windows.Forms.Label();
@@ -137,35 +135,51 @@
             this.rtbPhishBody = new System.Windows.Forms.RichTextBox();
             this.lblPhishBody = new System.Windows.Forms.Label();
             this.pnlPhishRight = new System.Windows.Forms.Panel();
+            this.txtPhishTags = new System.Windows.Forms.TextBox();
+            this.lblPhishTags = new System.Windows.Forms.Label();
+            this.txtLinkDisplayText = new System.Windows.Forms.TextBox();
+            this.lblLinkDisplayText = new System.Windows.Forms.Label();
+            this.txtAttachmentName = new System.Windows.Forms.TextBox();
+            this.txtLinkUrl = new System.Windows.Forms.TextBox();
+            this.chkHasAttachment = new System.Windows.Forms.CheckBox();
+            this.chkHasLink = new System.Windows.Forms.CheckBox();
+            this.chkIsPhishing = new System.Windows.Forms.CheckBox();
+            this.cmbPhishDifficulty = new System.Windows.Forms.ComboBox();
+            this.lblPhishDifficulty = new System.Windows.Forms.Label();
+            this.txtPhishSubject = new System.Windows.Forms.TextBox();
+            this.lblSubject = new System.Windows.Forms.Label();
+            this.txtToEmail = new System.Windows.Forms.TextBox();
+            this.lblToEmail = new System.Windows.Forms.Label();
+            this.txtReplyTo = new System.Windows.Forms.TextBox();
+            this.lblReplyTo = new System.Windows.Forms.Label();
             this.txtSenderEmail = new System.Windows.Forms.TextBox();
             this.lblSenderEmail = new System.Windows.Forms.Label();
             this.txtSenderName = new System.Windows.Forms.TextBox();
             this.lblSenderName = new System.Windows.Forms.Label();
             this.tabAuthScenario = new System.Windows.Forms.TabPage();
-            this.txtReplyTo = new System.Windows.Forms.TextBox();
-            this.lblReplyTo = new System.Windows.Forms.Label();
-            this.txtToEmail = new System.Windows.Forms.TextBox();
-            this.lblToEmail = new System.Windows.Forms.Label();
-            this.txtPhishSubject = new System.Windows.Forms.TextBox();
-            this.lblSubject = new System.Windows.Forms.Label();
-            this.lblPhishDifficulty = new System.Windows.Forms.Label();
-            this.cmbPhishDifficulty = new System.Windows.Forms.ComboBox();
-            this.chkIsPhishing = new System.Windows.Forms.CheckBox();
-            this.chkHasLink = new System.Windows.Forms.CheckBox();
-            this.chkHasAttachment = new System.Windows.Forms.CheckBox();
-            this.txtLinkUrl = new System.Windows.Forms.TextBox();
-            this.txtAttachmentName = new System.Windows.Forms.TextBox();
             this.tlpAuthEditor = new System.Windows.Forms.TableLayoutPanel();
             this.pnlAuthLeft = new System.Windows.Forms.Panel();
-            this.lblScenarioTitle = new System.Windows.Forms.Label();
-            this.txtScenarioTitle = new System.Windows.Forms.TextBox();
-            this.lblScenarioBody = new System.Windows.Forms.Label();
-            this.rtbScenarioBody = new System.Windows.Forms.RichTextBox();
-            this.lblScenarioHints = new System.Windows.Forms.Label();
-            this.rtbScenarioHints = new System.Windows.Forms.RichTextBox();
-            this.lblScenarioTags = new System.Windows.Forms.Label();
             this.txtScenarioTags = new System.Windows.Forms.TextBox();
+            this.lblScenarioTags = new System.Windows.Forms.Label();
+            this.rtbScenarioHints = new System.Windows.Forms.RichTextBox();
+            this.lblScenarioHints = new System.Windows.Forms.Label();
+            this.rtbScenarioBody = new System.Windows.Forms.RichTextBox();
+            this.lblScenarioBody = new System.Windows.Forms.Label();
+            this.txtScenarioTitle = new System.Windows.Forms.TextBox();
+            this.lblScenarioTitle = new System.Windows.Forms.Label();
             this.pnlAuthRight = new System.Windows.Forms.Panel();
+            this.gbAuthRequirements = new System.Windows.Forms.GroupBox();
+            this.chkReqAlertOnSuspicious = new System.Windows.Forms.CheckBox();
+            this.chkReqDeviceBinding = new System.Windows.Forms.CheckBox();
+            this.chkReqLegacyBlock = new System.Windows.Forms.CheckBox();
+            this.chkReqStepUp = new System.Windows.Forms.CheckBox();
+            this.chkReqPhishResistant = new System.Windows.Forms.CheckBox();
+            this.chkReqMfa = new System.Windows.Forms.CheckBox();
+            this.cmbRecRecovery = new System.Windows.Forms.ComboBox();
+            this.cmbRecAuthMethod = new System.Windows.Forms.ComboBox();
+            this.cmbAuthDifficulty = new System.Windows.Forms.ComboBox();
+            this.cmbGoalType = new System.Windows.Forms.ComboBox();
+            this.cmbThreatType = new System.Windows.Forms.ComboBox();
             this.cmbRecSession = new System.Windows.Forms.ComboBox();
             this.lblRecSession = new System.Windows.Forms.Label();
             this.lblRecRecovery = new System.Windows.Forms.Label();
@@ -173,31 +187,18 @@
             this.lblAuthDifficulty = new System.Windows.Forms.Label();
             this.lblGoalType = new System.Windows.Forms.Label();
             this.lblThreatType = new System.Windows.Forms.Label();
-            this.cmbThreatType = new System.Windows.Forms.ComboBox();
-            this.cmbGoalType = new System.Windows.Forms.ComboBox();
-            this.cmbAuthDifficulty = new System.Windows.Forms.ComboBox();
-            this.cmbRecAuthMethod = new System.Windows.Forms.ComboBox();
-            this.cmbRecRecovery = new System.Windows.Forms.ComboBox();
-            this.gbAuthRequirements = new System.Windows.Forms.GroupBox();
-            this.chkReqMfa = new System.Windows.Forms.CheckBox();
-            this.chkReqPhishResistant = new System.Windows.Forms.CheckBox();
-            this.chkReqStepUp = new System.Windows.Forms.CheckBox();
-            this.chkReqLegacyBlock = new System.Windows.Forms.CheckBox();
             this.tlpBankActions = new System.Windows.Forms.TableLayoutPanel();
-            this.btnLoadSelected = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnSaveItem = new Syncfusion.WinForms.Controls.SfButton();
-            this.btnSaveAll = new Syncfusion.WinForms.Controls.SfButton();
             this.btnRevertChanges = new Syncfusion.WinForms.Controls.SfButton();
-            this.pnlFooter = new System.Windows.Forms.Panel();
-            this.lblFooterUser = new System.Windows.Forms.Label();
-            this.lblFooterLeft = new System.Windows.Forms.Label();
+            this.btnSaveAll = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnSaveItem = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnLoadSelected = new Syncfusion.WinForms.Controls.SfButton();
             pnlToolbar = new System.Windows.Forms.Panel();
             pnlToolbar.SuspendLayout();
             this.tlpToolbar.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
-            this.flpAdminNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.tlpPage.SuspendLayout();
+            this.pnlFooter.SuspendLayout();
             this.tlpStats.SuspendLayout();
             this.pnlTotalUsers.SuspendLayout();
             this.pnlActiveToday.SuspendLayout();
@@ -239,7 +240,6 @@
             this.pnlAuthRight.SuspendLayout();
             this.gbAuthRequirements.SuspendLayout();
             this.tlpBankActions.SuspendLayout();
-            this.pnlFooter.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlToolbar
@@ -301,11 +301,17 @@
             this.cmbRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRange.Font = new System.Drawing.Font("Agency", 10F);
             this.cmbRange.FormattingEnabled = true;
+            this.cmbRange.Items.AddRange(new object[] {
+            "All Time",
+            "Today",
+            "Last 7 Days",
+            "Last 30 Days"});
             this.cmbRange.Location = new System.Drawing.Point(141, 4);
             this.cmbRange.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
             this.cmbRange.Name = "cmbRange";
             this.cmbRange.Size = new System.Drawing.Size(147, 23);
             this.cmbRange.TabIndex = 1;
+            this.cmbRange.SelectedIndexChanged += new System.EventHandler(this.cmbRange_SelectedIndexChanged);
             // 
             // lblContentType
             // 
@@ -324,11 +330,17 @@
             this.cmbContentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbContentType.Font = new System.Drawing.Font("Agency", 10F);
             this.cmbContentType.FormattingEnabled = true;
+            this.cmbContentType.Items.AddRange(new object[] {
+            "All",
+            "Quiz Question",
+            "Phishing Email",
+            "Auth Scenario"});
             this.cmbContentType.Location = new System.Drawing.Point(365, 4);
             this.cmbContentType.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
             this.cmbContentType.Name = "cmbContentType";
             this.cmbContentType.Size = new System.Drawing.Size(146, 23);
             this.cmbContentType.TabIndex = 3;
+            this.cmbContentType.SelectedIndexChanged += new System.EventHandler(this.cmbContentType_SelectedIndexChanged);
             // 
             // lblSearch
             // 
@@ -345,11 +357,12 @@
             // txtSearch
             // 
             this.txtSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSearch.Location = new System.Drawing.Point(617, 4);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
+            this.txtSearch.Location = new System.Drawing.Point(617, 2);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(0, 2, 10, 4);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(782, 32);
             this.txtSearch.TabIndex = 5;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // btnRefresh
             // 
@@ -366,6 +379,7 @@
             this.btnRefresh.TabIndex = 6;
             this.btnRefresh.Text = "REFRESH";
             this.btnRefresh.UseVisualStyleBackColor = false;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // btnExportCsv
             // 
@@ -382,11 +396,11 @@
             this.btnExportCsv.TabIndex = 7;
             this.btnExportCsv.Text = "EXPORT";
             this.btnExportCsv.UseVisualStyleBackColor = false;
+            this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
             // 
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.RoyalBlue;
-            this.pnlSidebar.Controls.Add(this.flpAdminNav);
             this.pnlSidebar.Controls.Add(this.pnlSidebarSpacer);
             this.pnlSidebar.Controls.Add(this.lblAdminBadge);
             this.pnlSidebar.Controls.Add(this.lblMondas);
@@ -396,70 +410,6 @@
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(220, 773);
             this.pnlSidebar.TabIndex = 0;
-            // 
-            // flpAdminNav
-            // 
-            this.flpAdminNav.BackColor = System.Drawing.Color.Transparent;
-            this.flpAdminNav.Controls.Add(this.btnNavOverview);
-            this.flpAdminNav.Controls.Add(this.btnNavUsers);
-            this.flpAdminNav.Controls.Add(this.btnNavContent);
-            this.flpAdminNav.Controls.Add(this.btnNavExport);
-            this.flpAdminNav.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flpAdminNav.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAdminNav.Location = new System.Drawing.Point(0, 166);
-            this.flpAdminNav.Margin = new System.Windows.Forms.Padding(0);
-            this.flpAdminNav.Name = "flpAdminNav";
-            this.flpAdminNav.Size = new System.Drawing.Size(220, 250);
-            this.flpAdminNav.TabIndex = 3;
-            this.flpAdminNav.WrapContents = false;
-            // 
-            // btnNavOverview
-            // 
-            this.btnNavOverview.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnNavOverview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNavOverview.Font = new System.Drawing.Font("Agency", 16F);
-            this.btnNavOverview.Location = new System.Drawing.Point(0, 10);
-            this.btnNavOverview.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.btnNavOverview.Name = "btnNavOverview";
-            this.btnNavOverview.Size = new System.Drawing.Size(220, 50);
-            this.btnNavOverview.TabIndex = 0;
-            this.btnNavOverview.Text = "OVERVIEW";
-            // 
-            // btnNavUsers
-            // 
-            this.btnNavUsers.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnNavUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNavUsers.Font = new System.Drawing.Font("Agency", 16F);
-            this.btnNavUsers.Location = new System.Drawing.Point(0, 68);
-            this.btnNavUsers.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.btnNavUsers.Name = "btnNavUsers";
-            this.btnNavUsers.Size = new System.Drawing.Size(220, 50);
-            this.btnNavUsers.TabIndex = 1;
-            this.btnNavUsers.Text = "USERS";
-            // 
-            // btnNavContent
-            // 
-            this.btnNavContent.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnNavContent.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNavContent.Font = new System.Drawing.Font("Agency", 13.5F);
-            this.btnNavContent.Location = new System.Drawing.Point(0, 126);
-            this.btnNavContent.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.btnNavContent.Name = "btnNavContent";
-            this.btnNavContent.Size = new System.Drawing.Size(220, 50);
-            this.btnNavContent.TabIndex = 2;
-            this.btnNavContent.Text = "CONTENT BANK";
-            // 
-            // btnNavExport
-            // 
-            this.btnNavExport.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnNavExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNavExport.Font = new System.Drawing.Font("Agency", 16F);
-            this.btnNavExport.Location = new System.Drawing.Point(0, 184);
-            this.btnNavExport.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.btnNavExport.Name = "btnNavExport";
-            this.btnNavExport.Size = new System.Drawing.Size(220, 50);
-            this.btnNavExport.TabIndex = 3;
-            this.btnNavExport.Text = "EXPORT";
             // 
             // pnlSidebarSpacer
             // 
@@ -536,6 +486,40 @@
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tlpPage.Size = new System.Drawing.Size(1673, 747);
             this.tlpPage.TabIndex = 0;
+            // 
+            // pnlFooter
+            // 
+            this.pnlFooter.Controls.Add(this.lblFooterUser);
+            this.pnlFooter.Controls.Add(this.lblFooterLeft);
+            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFooter.Location = new System.Drawing.Point(3, 722);
+            this.pnlFooter.Name = "pnlFooter";
+            this.pnlFooter.Size = new System.Drawing.Size(1667, 22);
+            this.pnlFooter.TabIndex = 5;
+            // 
+            // lblFooterUser
+            // 
+            this.lblFooterUser.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblFooterUser.Font = new System.Drawing.Font("Agency", 10F);
+            this.lblFooterUser.ForeColor = System.Drawing.Color.Gray;
+            this.lblFooterUser.Location = new System.Drawing.Point(1466, 0);
+            this.lblFooterUser.Name = "lblFooterUser";
+            this.lblFooterUser.Size = new System.Drawing.Size(201, 22);
+            this.lblFooterUser.TabIndex = 1;
+            this.lblFooterUser.Text = "ROLE: ADMIN";
+            this.lblFooterUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblFooterLeft
+            // 
+            this.lblFooterLeft.AutoSize = true;
+            this.lblFooterLeft.Font = new System.Drawing.Font("Muro", 9F);
+            this.lblFooterLeft.ForeColor = System.Drawing.Color.Gray;
+            this.lblFooterLeft.Location = new System.Drawing.Point(0, 0);
+            this.lblFooterLeft.Name = "lblFooterLeft";
+            this.lblFooterLeft.Size = new System.Drawing.Size(195, 18);
+            this.lblFooterLeft.TabIndex = 0;
+            this.lblFooterLeft.Text = "© 2026 Mondas Learning";
+            this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tlpStats
             // 
@@ -793,6 +777,7 @@
             this.btnLogout.TabIndex = 1;
             this.btnLogout.Text = "LOG OUT";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblAdminUser
             // 
@@ -912,6 +897,7 @@
             this.dgvUsers.ReadOnly = true;
             this.dgvUsers.RowHeadersVisible = false;
             this.dgvUsers.RowHeadersWidth = 62;
+            this.dgvUsers.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Agency", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvUsers.RowTemplate.Height = 28;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsers.Size = new System.Drawing.Size(609, 161);
@@ -1161,11 +1147,18 @@
             this.cmbBankTopic.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbBankTopic.Font = new System.Drawing.Font("Agency", 10.5F);
             this.cmbBankTopic.FormattingEnabled = true;
+            this.cmbBankTopic.Items.AddRange(new object[] {
+            "All",
+            "Phishing",
+            "Passwords",
+            "Device Security",
+            "Social Engineering"});
             this.cmbBankTopic.Location = new System.Drawing.Point(70, 10);
             this.cmbBankTopic.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
             this.cmbBankTopic.Name = "cmbBankTopic";
             this.cmbBankTopic.Size = new System.Drawing.Size(281, 24);
             this.cmbBankTopic.TabIndex = 1;
+            this.cmbBankTopic.SelectedIndexChanged += new System.EventHandler(this.cmbBankTopic_SelectedIndexChanged);
             // 
             // lblBankDifficulty
             // 
@@ -1185,11 +1178,17 @@
             this.cmbBankDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBankDifficulty.Font = new System.Drawing.Font("Agency", 10.5F);
             this.cmbBankDifficulty.FormattingEnabled = true;
+            this.cmbBankDifficulty.Items.AddRange(new object[] {
+            "All",
+            "Easy",
+            "Medium",
+            "Hard"});
             this.cmbBankDifficulty.Location = new System.Drawing.Point(485, 10);
             this.cmbBankDifficulty.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
             this.cmbBankDifficulty.Name = "cmbBankDifficulty";
             this.cmbBankDifficulty.Size = new System.Drawing.Size(188, 24);
             this.cmbBankDifficulty.TabIndex = 3;
+            this.cmbBankDifficulty.SelectedIndexChanged += new System.EventHandler(this.cmbBankDifficulty_SelectedIndexChanged);
             // 
             // btnNewItem
             // 
@@ -1206,6 +1205,7 @@
             this.btnNewItem.TabIndex = 4;
             this.btnNewItem.Text = "NEW";
             this.btnNewItem.UseVisualStyleBackColor = false;
+            this.btnNewItem.Click += new System.EventHandler(this.btnNewItem_Click);
             // 
             // btnDuplicateItem
             // 
@@ -1217,6 +1217,7 @@
             this.btnDuplicateItem.Size = new System.Drawing.Size(126, 40);
             this.btnDuplicateItem.TabIndex = 5;
             this.btnDuplicateItem.Text = "DUPLICATE";
+            this.btnDuplicateItem.Click += new System.EventHandler(this.btnDuplicateItem_Click);
             // 
             // btnDeleteItem
             // 
@@ -1228,6 +1229,7 @@
             this.btnDeleteItem.Size = new System.Drawing.Size(107, 40);
             this.btnDeleteItem.TabIndex = 6;
             this.btnDeleteItem.Text = "DELETE";
+            this.btnDeleteItem.Click += new System.EventHandler(this.btnDeleteItem_Click);
             // 
             // splitBank
             // 
@@ -1273,6 +1275,7 @@
             this.dgvBankItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvBankItems.Size = new System.Drawing.Size(278, 314);
             this.dgvBankItems.TabIndex = 0;
+            this.dgvBankItems.SelectionChanged += new System.EventHandler(this.dgvBankItems_SelectionChanged);
             // 
             // colBankKey
             // 
@@ -1309,6 +1312,7 @@
             this.tabEditor.Size = new System.Drawing.Size(736, 314);
             this.tabEditor.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabEditor.TabIndex = 0;
+            this.tabEditor.SelectedIndexChanged += new System.EventHandler(this.tabEditor_SelectedIndexChanged);
             // 
             // tabQuizQuestion
             // 
@@ -1340,6 +1344,8 @@
             // 
             // pnlQuizEditorLeft
             // 
+            this.pnlQuizEditorLeft.Controls.Add(this.rtbQuizExplanation);
+            this.pnlQuizEditorLeft.Controls.Add(this.lblQuizExplanation);
             this.pnlQuizEditorLeft.Controls.Add(this.dgvQuizOptions);
             this.pnlQuizEditorLeft.Controls.Add(this.lblQuizOptions);
             this.pnlQuizEditorLeft.Controls.Add(this.rtbQuizQuestionText);
@@ -1351,11 +1357,30 @@
             this.pnlQuizEditorLeft.Size = new System.Drawing.Size(397, 256);
             this.pnlQuizEditorLeft.TabIndex = 0;
             // 
+            // rtbQuizExplanation
+            // 
+            this.rtbQuizExplanation.Font = new System.Drawing.Font("Agency", 10F);
+            this.rtbQuizExplanation.Location = new System.Drawing.Point(1, 112);
+            this.rtbQuizExplanation.Name = "rtbQuizExplanation";
+            this.rtbQuizExplanation.Size = new System.Drawing.Size(394, 59);
+            this.rtbQuizExplanation.TabIndex = 5;
+            this.rtbQuizExplanation.Text = "";
+            // 
+            // lblQuizExplanation
+            // 
+            this.lblQuizExplanation.AutoSize = true;
+            this.lblQuizExplanation.Font = new System.Drawing.Font("Agency", 12F);
+            this.lblQuizExplanation.Location = new System.Drawing.Point(1, 86);
+            this.lblQuizExplanation.Name = "lblQuizExplanation";
+            this.lblQuizExplanation.Size = new System.Drawing.Size(164, 18);
+            this.lblQuizExplanation.TabIndex = 4;
+            this.lblQuizExplanation.Text = "Explanation";
+            // 
             // dgvQuizOptions
             // 
-            this.dgvQuizOptions.AllowUserToAddRows = false;
-            this.dgvQuizOptions.AllowUserToDeleteRows = false;
             this.dgvQuizOptions.AllowUserToResizeRows = false;
+            this.dgvQuizOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvQuizOptions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvQuizOptions.BackgroundColor = System.Drawing.Color.White;
             this.dgvQuizOptions.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -1363,16 +1388,15 @@
             this.dgvQuizOptions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colOptionText,
             this.colOptionCorrect});
-            this.dgvQuizOptions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dgvQuizOptions.Location = new System.Drawing.Point(0, 112);
+            this.dgvQuizOptions.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dgvQuizOptions.Location = new System.Drawing.Point(0, 197);
             this.dgvQuizOptions.MultiSelect = false;
             this.dgvQuizOptions.Name = "dgvQuizOptions";
-            this.dgvQuizOptions.ReadOnly = true;
             this.dgvQuizOptions.RowHeadersVisible = false;
             this.dgvQuizOptions.RowHeadersWidth = 62;
             this.dgvQuizOptions.RowTemplate.Height = 28;
-            this.dgvQuizOptions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvQuizOptions.Size = new System.Drawing.Size(397, 144);
+            this.dgvQuizOptions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvQuizOptions.Size = new System.Drawing.Size(394, 144);
             this.dgvQuizOptions.TabIndex = 3;
             // 
             // colOptionText
@@ -1380,20 +1404,20 @@
             this.colOptionText.HeaderText = "Text";
             this.colOptionText.MinimumWidth = 8;
             this.colOptionText.Name = "colOptionText";
-            this.colOptionText.ReadOnly = true;
             // 
             // colOptionCorrect
             // 
             this.colOptionCorrect.HeaderText = "Correct";
             this.colOptionCorrect.MinimumWidth = 8;
             this.colOptionCorrect.Name = "colOptionCorrect";
-            this.colOptionCorrect.ReadOnly = true;
+            this.colOptionCorrect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colOptionCorrect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // lblQuizOptions
             // 
             this.lblQuizOptions.AutoSize = true;
             this.lblQuizOptions.Font = new System.Drawing.Font("Agency", 12F);
-            this.lblQuizOptions.Location = new System.Drawing.Point(0, 88);
+            this.lblQuizOptions.Location = new System.Drawing.Point(0, 173);
             this.lblQuizOptions.Name = "lblQuizOptions";
             this.lblQuizOptions.Size = new System.Drawing.Size(105, 18);
             this.lblQuizOptions.TabIndex = 2;
@@ -1404,7 +1428,7 @@
             this.rtbQuizQuestionText.Font = new System.Drawing.Font("Agency", 10F);
             this.rtbQuizQuestionText.Location = new System.Drawing.Point(0, 26);
             this.rtbQuizQuestionText.Name = "rtbQuizQuestionText";
-            this.rtbQuizQuestionText.Size = new System.Drawing.Size(409, 59);
+            this.rtbQuizQuestionText.Size = new System.Drawing.Size(394, 59);
             this.rtbQuizQuestionText.TabIndex = 1;
             this.rtbQuizQuestionText.Text = "";
             // 
@@ -1422,11 +1446,9 @@
             // 
             this.pnlQuizEditorRight.Controls.Add(this.txtMisTags);
             this.pnlQuizEditorRight.Controls.Add(this.lblMisTags);
-            this.pnlQuizEditorRight.Controls.Add(this.cmbQuizMastery);
-            this.pnlQuizEditorRight.Controls.Add(this.lblQuizMastery);
             this.pnlQuizEditorRight.Controls.Add(this.cmbQuizType);
             this.pnlQuizEditorRight.Controls.Add(this.lblQuizType);
-            this.pnlQuizEditorRight.Controls.Add(this.comboBox1);
+            this.pnlQuizEditorRight.Controls.Add(this.cmbQuizDifficulty);
             this.pnlQuizEditorRight.Controls.Add(this.lblQuizDifficulty);
             this.pnlQuizEditorRight.Controls.Add(this.cmbQuizTopic);
             this.pnlQuizEditorRight.Controls.Add(this.lblQuizTopic);
@@ -1439,11 +1461,13 @@
             // 
             // txtMisTags
             // 
-            this.txtMisTags.Location = new System.Drawing.Point(0, 194);
+            this.txtMisTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMisTags.Location = new System.Drawing.Point(0, 197);
             this.txtMisTags.Multiline = true;
             this.txtMisTags.Name = "txtMisTags";
             this.txtMisTags.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMisTags.Size = new System.Drawing.Size(296, 59);
+            this.txtMisTags.Size = new System.Drawing.Size(299, 59);
             this.txtMisTags.TabIndex = 9;
             // 
             // lblMisTags
@@ -1456,27 +1480,9 @@
             this.lblMisTags.TabIndex = 8;
             this.lblMisTags.Text = "Misconception Tags";
             // 
-            // cmbQuizMastery
-            // 
-            this.cmbQuizMastery.FormattingEnabled = true;
-            this.cmbQuizMastery.Location = new System.Drawing.Point(130, 125);
-            this.cmbQuizMastery.Name = "cmbQuizMastery";
-            this.cmbQuizMastery.Size = new System.Drawing.Size(169, 23);
-            this.cmbQuizMastery.TabIndex = 7;
-            // 
-            // lblQuizMastery
-            // 
-            this.lblQuizMastery.AutoSize = true;
-            this.lblQuizMastery.Font = new System.Drawing.Font("Agency", 11F);
-            this.lblQuizMastery.Location = new System.Drawing.Point(0, 126);
-            this.lblQuizMastery.Name = "lblQuizMastery";
-            this.lblQuizMastery.Size = new System.Drawing.Size(107, 17);
-            this.lblQuizMastery.TabIndex = 6;
-            this.lblQuizMastery.Text = "Mastery";
-            this.lblQuizMastery.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // cmbQuizType
             // 
+            this.cmbQuizType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbQuizType.FormattingEnabled = true;
             this.cmbQuizType.Location = new System.Drawing.Point(130, 83);
             this.cmbQuizType.Name = "cmbQuizType";
@@ -1494,13 +1500,14 @@
             this.lblQuizType.Text = "Type";
             this.lblQuizType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // comboBox1
+            // cmbQuizDifficulty
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(130, 41);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(169, 23);
-            this.comboBox1.TabIndex = 3;
+            this.cmbQuizDifficulty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbQuizDifficulty.FormattingEnabled = true;
+            this.cmbQuizDifficulty.Location = new System.Drawing.Point(130, 41);
+            this.cmbQuizDifficulty.Name = "cmbQuizDifficulty";
+            this.cmbQuizDifficulty.Size = new System.Drawing.Size(169, 23);
+            this.cmbQuizDifficulty.TabIndex = 3;
             // 
             // lblQuizDifficulty
             // 
@@ -1515,6 +1522,7 @@
             // 
             // cmbQuizTopic
             // 
+            this.cmbQuizTopic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbQuizTopic.FormattingEnabled = true;
             this.cmbQuizTopic.Location = new System.Drawing.Point(130, 0);
             this.cmbQuizTopic.Name = "cmbQuizTopic";
@@ -1596,8 +1604,6 @@
             // 
             // rtbPhishBody
             // 
-            this.rtbPhishBody.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbPhishBody.Location = new System.Drawing.Point(0, 26);
             this.rtbPhishBody.Name = "rtbPhishBody";
             this.rtbPhishBody.Size = new System.Drawing.Size(409, 100);
@@ -1616,6 +1622,10 @@
             // 
             // pnlPhishRight
             // 
+            this.pnlPhishRight.Controls.Add(this.txtPhishTags);
+            this.pnlPhishRight.Controls.Add(this.lblPhishTags);
+            this.pnlPhishRight.Controls.Add(this.txtLinkDisplayText);
+            this.pnlPhishRight.Controls.Add(this.lblLinkDisplayText);
             this.pnlPhishRight.Controls.Add(this.txtAttachmentName);
             this.pnlPhishRight.Controls.Add(this.txtLinkUrl);
             this.pnlPhishRight.Controls.Add(this.chkHasAttachment);
@@ -1639,6 +1649,170 @@
             this.pnlPhishRight.Name = "pnlPhishRight";
             this.pnlPhishRight.Size = new System.Drawing.Size(297, 256);
             this.pnlPhishRight.TabIndex = 1;
+            // 
+            // txtPhishTags
+            // 
+            this.txtPhishTags.Location = new System.Drawing.Point(110, 290);
+            this.txtPhishTags.Multiline = true;
+            this.txtPhishTags.Name = "txtPhishTags";
+            this.txtPhishTags.Size = new System.Drawing.Size(100, 26);
+            this.txtPhishTags.TabIndex = 20;
+            // 
+            // lblPhishTags
+            // 
+            this.lblPhishTags.AutoSize = true;
+            this.lblPhishTags.Font = new System.Drawing.Font("Agency", 8F);
+            this.lblPhishTags.Location = new System.Drawing.Point(0, 290);
+            this.lblPhishTags.Name = "lblPhishTags";
+            this.lblPhishTags.Size = new System.Drawing.Size(46, 13);
+            this.lblPhishTags.TabIndex = 19;
+            this.lblPhishTags.Text = "TAGS";
+            // 
+            // txtLinkDisplayText
+            // 
+            this.txtLinkDisplayText.Location = new System.Drawing.Point(110, 260);
+            this.txtLinkDisplayText.Name = "txtLinkDisplayText";
+            this.txtLinkDisplayText.Size = new System.Drawing.Size(100, 28);
+            this.txtLinkDisplayText.TabIndex = 18;
+            // 
+            // lblLinkDisplayText
+            // 
+            this.lblLinkDisplayText.AutoSize = true;
+            this.lblLinkDisplayText.Font = new System.Drawing.Font("Agency", 8F);
+            this.lblLinkDisplayText.Location = new System.Drawing.Point(0, 260);
+            this.lblLinkDisplayText.Name = "lblLinkDisplayText";
+            this.lblLinkDisplayText.Size = new System.Drawing.Size(80, 13);
+            this.lblLinkDisplayText.TabIndex = 17;
+            this.lblLinkDisplayText.Text = "LINK TEXT";
+            // 
+            // txtAttachmentName
+            // 
+            this.txtAttachmentName.Font = new System.Drawing.Font("Agency", 8F);
+            this.txtAttachmentName.Location = new System.Drawing.Point(165, 234);
+            this.txtAttachmentName.Name = "txtAttachmentName";
+            this.txtAttachmentName.Size = new System.Drawing.Size(132, 24);
+            this.txtAttachmentName.TabIndex = 16;
+            this.txtAttachmentName.Visible = false;
+            // 
+            // txtLinkUrl
+            // 
+            this.txtLinkUrl.Font = new System.Drawing.Font("Agency", 8F);
+            this.txtLinkUrl.Location = new System.Drawing.Point(123, 205);
+            this.txtLinkUrl.Name = "txtLinkUrl";
+            this.txtLinkUrl.Size = new System.Drawing.Size(174, 24);
+            this.txtLinkUrl.TabIndex = 15;
+            this.txtLinkUrl.Visible = false;
+            this.txtLinkUrl.TextChanged += new System.EventHandler(this.txtLinkUrl_TextChanged);
+            // 
+            // chkHasAttachment
+            // 
+            this.chkHasAttachment.AutoSize = true;
+            this.chkHasAttachment.Font = new System.Drawing.Font("Agency", 8F);
+            this.chkHasAttachment.Location = new System.Drawing.Point(0, 235);
+            this.chkHasAttachment.Name = "chkHasAttachment";
+            this.chkHasAttachment.Size = new System.Drawing.Size(168, 21);
+            this.chkHasAttachment.TabIndex = 14;
+            this.chkHasAttachment.Text = "Has Attachment";
+            this.chkHasAttachment.UseVisualStyleBackColor = true;
+            this.chkHasAttachment.CheckedChanged += new System.EventHandler(this.chkHasAttachment_CheckedChanged);
+            // 
+            // chkHasLink
+            // 
+            this.chkHasLink.AutoSize = true;
+            this.chkHasLink.Font = new System.Drawing.Font("Agency", 8F);
+            this.chkHasLink.Location = new System.Drawing.Point(0, 210);
+            this.chkHasLink.Name = "chkHasLink";
+            this.chkHasLink.Size = new System.Drawing.Size(101, 21);
+            this.chkHasLink.TabIndex = 13;
+            this.chkHasLink.Text = "Has Link";
+            this.chkHasLink.UseVisualStyleBackColor = true;
+            this.chkHasLink.CheckedChanged += new System.EventHandler(this.chkHasLink_CheckedChanged);
+            // 
+            // chkIsPhishing
+            // 
+            this.chkIsPhishing.AutoSize = true;
+            this.chkIsPhishing.Font = new System.Drawing.Font("Agency", 8F);
+            this.chkIsPhishing.Location = new System.Drawing.Point(0, 185);
+            this.chkIsPhishing.Name = "chkIsPhishing";
+            this.chkIsPhishing.Size = new System.Drawing.Size(122, 21);
+            this.chkIsPhishing.TabIndex = 12;
+            this.chkIsPhishing.Text = "Is Phishing";
+            this.chkIsPhishing.UseVisualStyleBackColor = true;
+            // 
+            // cmbPhishDifficulty
+            // 
+            this.cmbPhishDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPhishDifficulty.Font = new System.Drawing.Font("Agency", 9F);
+            this.cmbPhishDifficulty.FormattingEnabled = true;
+            this.cmbPhishDifficulty.Location = new System.Drawing.Point(145, 160);
+            this.cmbPhishDifficulty.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
+            this.cmbPhishDifficulty.Name = "cmbPhishDifficulty";
+            this.cmbPhishDifficulty.Size = new System.Drawing.Size(152, 22);
+            this.cmbPhishDifficulty.TabIndex = 11;
+            // 
+            // lblPhishDifficulty
+            // 
+            this.lblPhishDifficulty.AutoSize = true;
+            this.lblPhishDifficulty.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblPhishDifficulty.Location = new System.Drawing.Point(0, 163);
+            this.lblPhishDifficulty.Name = "lblPhishDifficulty";
+            this.lblPhishDifficulty.Size = new System.Drawing.Size(104, 14);
+            this.lblPhishDifficulty.TabIndex = 10;
+            this.lblPhishDifficulty.Text = "Difficulty";
+            // 
+            // txtPhishSubject
+            // 
+            this.txtPhishSubject.Font = new System.Drawing.Font("Agency", 9F);
+            this.txtPhishSubject.Location = new System.Drawing.Point(145, 127);
+            this.txtPhishSubject.Name = "txtPhishSubject";
+            this.txtPhishSubject.Size = new System.Drawing.Size(152, 26);
+            this.txtPhishSubject.TabIndex = 9;
+            // 
+            // lblSubject
+            // 
+            this.lblSubject.AutoSize = true;
+            this.lblSubject.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblSubject.Location = new System.Drawing.Point(0, 132);
+            this.lblSubject.Name = "lblSubject";
+            this.lblSubject.Size = new System.Drawing.Size(81, 14);
+            this.lblSubject.TabIndex = 8;
+            this.lblSubject.Text = "Subject";
+            // 
+            // txtToEmail
+            // 
+            this.txtToEmail.Font = new System.Drawing.Font("Agency", 9F);
+            this.txtToEmail.Location = new System.Drawing.Point(145, 95);
+            this.txtToEmail.Name = "txtToEmail";
+            this.txtToEmail.Size = new System.Drawing.Size(152, 26);
+            this.txtToEmail.TabIndex = 7;
+            // 
+            // lblToEmail
+            // 
+            this.lblToEmail.AutoSize = true;
+            this.lblToEmail.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblToEmail.Location = new System.Drawing.Point(-2, 98);
+            this.lblToEmail.Name = "lblToEmail";
+            this.lblToEmail.Size = new System.Drawing.Size(85, 14);
+            this.lblToEmail.TabIndex = 6;
+            this.lblToEmail.Text = "To Email";
+            // 
+            // txtReplyTo
+            // 
+            this.txtReplyTo.Font = new System.Drawing.Font("Agency", 9F);
+            this.txtReplyTo.Location = new System.Drawing.Point(145, 63);
+            this.txtReplyTo.Name = "txtReplyTo";
+            this.txtReplyTo.Size = new System.Drawing.Size(152, 26);
+            this.txtReplyTo.TabIndex = 5;
+            // 
+            // lblReplyTo
+            // 
+            this.lblReplyTo.AutoSize = true;
+            this.lblReplyTo.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblReplyTo.Location = new System.Drawing.Point(-2, 66);
+            this.lblReplyTo.Name = "lblReplyTo";
+            this.lblReplyTo.Size = new System.Drawing.Size(87, 14);
+            this.lblReplyTo.TabIndex = 4;
+            this.lblReplyTo.Text = "Reply To";
             // 
             // txtSenderEmail
             // 
@@ -1686,131 +1860,6 @@
             this.tabAuthScenario.Text = "Auth Scenario";
             this.tabAuthScenario.UseVisualStyleBackColor = true;
             // 
-            // txtReplyTo
-            // 
-            this.txtReplyTo.Font = new System.Drawing.Font("Agency", 9F);
-            this.txtReplyTo.Location = new System.Drawing.Point(145, 63);
-            this.txtReplyTo.Name = "txtReplyTo";
-            this.txtReplyTo.Size = new System.Drawing.Size(152, 26);
-            this.txtReplyTo.TabIndex = 5;
-            // 
-            // lblReplyTo
-            // 
-            this.lblReplyTo.AutoSize = true;
-            this.lblReplyTo.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblReplyTo.Location = new System.Drawing.Point(-2, 66);
-            this.lblReplyTo.Name = "lblReplyTo";
-            this.lblReplyTo.Size = new System.Drawing.Size(87, 14);
-            this.lblReplyTo.TabIndex = 4;
-            this.lblReplyTo.Text = "Reply To";
-            // 
-            // txtToEmail
-            // 
-            this.txtToEmail.Font = new System.Drawing.Font("Agency", 9F);
-            this.txtToEmail.Location = new System.Drawing.Point(145, 95);
-            this.txtToEmail.Name = "txtToEmail";
-            this.txtToEmail.Size = new System.Drawing.Size(152, 26);
-            this.txtToEmail.TabIndex = 7;
-            // 
-            // lblToEmail
-            // 
-            this.lblToEmail.AutoSize = true;
-            this.lblToEmail.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblToEmail.Location = new System.Drawing.Point(-2, 98);
-            this.lblToEmail.Name = "lblToEmail";
-            this.lblToEmail.Size = new System.Drawing.Size(85, 14);
-            this.lblToEmail.TabIndex = 6;
-            this.lblToEmail.Text = "To Email";
-            // 
-            // txtPhishSubject
-            // 
-            this.txtPhishSubject.Font = new System.Drawing.Font("Agency", 9F);
-            this.txtPhishSubject.Location = new System.Drawing.Point(145, 127);
-            this.txtPhishSubject.Name = "txtPhishSubject";
-            this.txtPhishSubject.Size = new System.Drawing.Size(152, 26);
-            this.txtPhishSubject.TabIndex = 9;
-            // 
-            // lblSubject
-            // 
-            this.lblSubject.AutoSize = true;
-            this.lblSubject.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblSubject.Location = new System.Drawing.Point(0, 132);
-            this.lblSubject.Name = "lblSubject";
-            this.lblSubject.Size = new System.Drawing.Size(81, 14);
-            this.lblSubject.TabIndex = 8;
-            this.lblSubject.Text = "Subject";
-            // 
-            // lblPhishDifficulty
-            // 
-            this.lblPhishDifficulty.AutoSize = true;
-            this.lblPhishDifficulty.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblPhishDifficulty.Location = new System.Drawing.Point(0, 163);
-            this.lblPhishDifficulty.Name = "lblPhishDifficulty";
-            this.lblPhishDifficulty.Size = new System.Drawing.Size(104, 14);
-            this.lblPhishDifficulty.TabIndex = 10;
-            this.lblPhishDifficulty.Text = "Difficulty";
-            // 
-            // cmbPhishDifficulty
-            // 
-            this.cmbPhishDifficulty.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbPhishDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPhishDifficulty.Font = new System.Drawing.Font("Agency", 9F);
-            this.cmbPhishDifficulty.FormattingEnabled = true;
-            this.cmbPhishDifficulty.Location = new System.Drawing.Point(145, 160);
-            this.cmbPhishDifficulty.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
-            this.cmbPhishDifficulty.Name = "cmbPhishDifficulty";
-            this.cmbPhishDifficulty.Size = new System.Drawing.Size(152, 22);
-            this.cmbPhishDifficulty.TabIndex = 11;
-            // 
-            // chkIsPhishing
-            // 
-            this.chkIsPhishing.AutoSize = true;
-            this.chkIsPhishing.Font = new System.Drawing.Font("Agency", 8F);
-            this.chkIsPhishing.Location = new System.Drawing.Point(0, 185);
-            this.chkIsPhishing.Name = "chkIsPhishing";
-            this.chkIsPhishing.Size = new System.Drawing.Size(122, 21);
-            this.chkIsPhishing.TabIndex = 12;
-            this.chkIsPhishing.Text = "Is Phishing";
-            this.chkIsPhishing.UseVisualStyleBackColor = true;
-            // 
-            // chkHasLink
-            // 
-            this.chkHasLink.AutoSize = true;
-            this.chkHasLink.Font = new System.Drawing.Font("Agency", 8F);
-            this.chkHasLink.Location = new System.Drawing.Point(0, 210);
-            this.chkHasLink.Name = "chkHasLink";
-            this.chkHasLink.Size = new System.Drawing.Size(101, 21);
-            this.chkHasLink.TabIndex = 13;
-            this.chkHasLink.Text = "Has Link";
-            this.chkHasLink.UseVisualStyleBackColor = true;
-            // 
-            // chkHasAttachment
-            // 
-            this.chkHasAttachment.AutoSize = true;
-            this.chkHasAttachment.Font = new System.Drawing.Font("Agency", 8F);
-            this.chkHasAttachment.Location = new System.Drawing.Point(0, 235);
-            this.chkHasAttachment.Name = "chkHasAttachment";
-            this.chkHasAttachment.Size = new System.Drawing.Size(168, 21);
-            this.chkHasAttachment.TabIndex = 14;
-            this.chkHasAttachment.Text = "Has Attachment";
-            this.chkHasAttachment.UseVisualStyleBackColor = true;
-            // 
-            // txtLinkUrl
-            // 
-            this.txtLinkUrl.Font = new System.Drawing.Font("Agency", 8F);
-            this.txtLinkUrl.Location = new System.Drawing.Point(123, 205);
-            this.txtLinkUrl.Name = "txtLinkUrl";
-            this.txtLinkUrl.Size = new System.Drawing.Size(174, 24);
-            this.txtLinkUrl.TabIndex = 15;
-            // 
-            // txtAttachmentName
-            // 
-            this.txtAttachmentName.Font = new System.Drawing.Font("Agency", 8F);
-            this.txtAttachmentName.Location = new System.Drawing.Point(165, 234);
-            this.txtAttachmentName.Name = "txtAttachmentName";
-            this.txtAttachmentName.Size = new System.Drawing.Size(132, 24);
-            this.txtAttachmentName.TabIndex = 16;
-            // 
             // tlpAuthEditor
             // 
             this.tlpAuthEditor.ColumnCount = 2;
@@ -1846,6 +1895,76 @@
             this.pnlAuthLeft.Size = new System.Drawing.Size(391, 262);
             this.pnlAuthLeft.TabIndex = 0;
             // 
+            // txtScenarioTags
+            // 
+            this.txtScenarioTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtScenarioTags.Location = new System.Drawing.Point(-3, 255);
+            this.txtScenarioTags.Multiline = true;
+            this.txtScenarioTags.Name = "txtScenarioTags";
+            this.txtScenarioTags.Size = new System.Drawing.Size(391, 48);
+            this.txtScenarioTags.TabIndex = 7;
+            // 
+            // lblScenarioTags
+            // 
+            this.lblScenarioTags.AutoSize = true;
+            this.lblScenarioTags.Font = new System.Drawing.Font("Agency", 11F);
+            this.lblScenarioTags.Location = new System.Drawing.Point(-3, 234);
+            this.lblScenarioTags.Name = "lblScenarioTags";
+            this.lblScenarioTags.Size = new System.Drawing.Size(64, 17);
+            this.lblScenarioTags.TabIndex = 6;
+            this.lblScenarioTags.Text = "TAGS";
+            // 
+            // rtbScenarioHints
+            // 
+            this.rtbScenarioHints.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbScenarioHints.Location = new System.Drawing.Point(0, 167);
+            this.rtbScenarioHints.Name = "rtbScenarioHints";
+            this.rtbScenarioHints.Size = new System.Drawing.Size(391, 64);
+            this.rtbScenarioHints.TabIndex = 5;
+            this.rtbScenarioHints.Text = "";
+            // 
+            // lblScenarioHints
+            // 
+            this.lblScenarioHints.AutoSize = true;
+            this.lblScenarioHints.Font = new System.Drawing.Font("Agency", 11F);
+            this.lblScenarioHints.Location = new System.Drawing.Point(0, 147);
+            this.lblScenarioHints.Name = "lblScenarioHints";
+            this.lblScenarioHints.Size = new System.Drawing.Size(69, 17);
+            this.lblScenarioHints.TabIndex = 4;
+            this.lblScenarioHints.Text = "HINTS";
+            // 
+            // rtbScenarioBody
+            // 
+            this.rtbScenarioBody.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbScenarioBody.Location = new System.Drawing.Point(0, 96);
+            this.rtbScenarioBody.Name = "rtbScenarioBody";
+            this.rtbScenarioBody.Size = new System.Drawing.Size(391, 48);
+            this.rtbScenarioBody.TabIndex = 3;
+            this.rtbScenarioBody.Text = "";
+            // 
+            // lblScenarioBody
+            // 
+            this.lblScenarioBody.AutoSize = true;
+            this.lblScenarioBody.Font = new System.Drawing.Font("Agency", 11F);
+            this.lblScenarioBody.Location = new System.Drawing.Point(0, 76);
+            this.lblScenarioBody.Name = "lblScenarioBody";
+            this.lblScenarioBody.Size = new System.Drawing.Size(180, 17);
+            this.lblScenarioBody.TabIndex = 2;
+            this.lblScenarioBody.Text = "SCENARIO BODY";
+            // 
+            // txtScenarioTitle
+            // 
+            this.txtScenarioTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtScenarioTitle.Location = new System.Drawing.Point(0, 20);
+            this.txtScenarioTitle.Multiline = true;
+            this.txtScenarioTitle.Name = "txtScenarioTitle";
+            this.txtScenarioTitle.Size = new System.Drawing.Size(391, 48);
+            this.txtScenarioTitle.TabIndex = 1;
+            // 
             // lblScenarioTitle
             // 
             this.lblScenarioTitle.AutoSize = true;
@@ -1855,73 +1974,6 @@
             this.lblScenarioTitle.Size = new System.Drawing.Size(174, 17);
             this.lblScenarioTitle.TabIndex = 0;
             this.lblScenarioTitle.Text = "SCENARIO TITLE";
-            // 
-            // txtScenarioTitle
-            // 
-            this.txtScenarioTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtScenarioTitle.Location = new System.Drawing.Point(0, 20);
-            this.txtScenarioTitle.Name = "txtScenarioTitle";
-            this.txtScenarioTitle.Size = new System.Drawing.Size(391, 28);
-            this.txtScenarioTitle.TabIndex = 1;
-            // 
-            // lblScenarioBody
-            // 
-            this.lblScenarioBody.AutoSize = true;
-            this.lblScenarioBody.Font = new System.Drawing.Font("Agency", 11F);
-            this.lblScenarioBody.Location = new System.Drawing.Point(0, 51);
-            this.lblScenarioBody.Name = "lblScenarioBody";
-            this.lblScenarioBody.Size = new System.Drawing.Size(180, 17);
-            this.lblScenarioBody.TabIndex = 2;
-            this.lblScenarioBody.Text = "SCENARIO BODY";
-            // 
-            // rtbScenarioBody
-            // 
-            this.rtbScenarioBody.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbScenarioBody.Location = new System.Drawing.Point(0, 71);
-            this.rtbScenarioBody.Name = "rtbScenarioBody";
-            this.rtbScenarioBody.Size = new System.Drawing.Size(391, 48);
-            this.rtbScenarioBody.TabIndex = 3;
-            this.rtbScenarioBody.Text = "";
-            // 
-            // lblScenarioHints
-            // 
-            this.lblScenarioHints.AutoSize = true;
-            this.lblScenarioHints.Font = new System.Drawing.Font("Agency", 11F);
-            this.lblScenarioHints.Location = new System.Drawing.Point(0, 122);
-            this.lblScenarioHints.Name = "lblScenarioHints";
-            this.lblScenarioHints.Size = new System.Drawing.Size(69, 17);
-            this.lblScenarioHints.TabIndex = 4;
-            this.lblScenarioHints.Text = "HINTS";
-            // 
-            // rtbScenarioHints
-            // 
-            this.rtbScenarioHints.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbScenarioHints.Location = new System.Drawing.Point(0, 142);
-            this.rtbScenarioHints.Name = "rtbScenarioHints";
-            this.rtbScenarioHints.Size = new System.Drawing.Size(391, 48);
-            this.rtbScenarioHints.TabIndex = 5;
-            this.rtbScenarioHints.Text = "";
-            // 
-            // lblScenarioTags
-            // 
-            this.lblScenarioTags.AutoSize = true;
-            this.lblScenarioTags.Font = new System.Drawing.Font("Agency", 11F);
-            this.lblScenarioTags.Location = new System.Drawing.Point(0, 193);
-            this.lblScenarioTags.Name = "lblScenarioTags";
-            this.lblScenarioTags.Size = new System.Drawing.Size(64, 17);
-            this.lblScenarioTags.TabIndex = 6;
-            this.lblScenarioTags.Text = "TAGS";
-            // 
-            // txtScenarioTags
-            // 
-            this.txtScenarioTags.Location = new System.Drawing.Point(0, 214);
-            this.txtScenarioTags.Multiline = true;
-            this.txtScenarioTags.Name = "txtScenarioTags";
-            this.txtScenarioTags.Size = new System.Drawing.Size(391, 48);
-            this.txtScenarioTags.TabIndex = 7;
             // 
             // pnlAuthRight
             // 
@@ -1945,9 +1997,147 @@
             this.pnlAuthRight.Size = new System.Drawing.Size(321, 262);
             this.pnlAuthRight.TabIndex = 1;
             // 
+            // gbAuthRequirements
+            // 
+            this.gbAuthRequirements.Controls.Add(this.chkReqAlertOnSuspicious);
+            this.gbAuthRequirements.Controls.Add(this.chkReqDeviceBinding);
+            this.gbAuthRequirements.Controls.Add(this.chkReqLegacyBlock);
+            this.gbAuthRequirements.Controls.Add(this.chkReqStepUp);
+            this.gbAuthRequirements.Controls.Add(this.chkReqPhishResistant);
+            this.gbAuthRequirements.Controls.Add(this.chkReqMfa);
+            this.gbAuthRequirements.Font = new System.Drawing.Font("Agency", 8F);
+            this.gbAuthRequirements.Location = new System.Drawing.Point(0, 197);
+            this.gbAuthRequirements.Name = "gbAuthRequirements";
+            this.gbAuthRequirements.Size = new System.Drawing.Size(318, 130);
+            this.gbAuthRequirements.TabIndex = 29;
+            this.gbAuthRequirements.TabStop = false;
+            this.gbAuthRequirements.Text = "REQUIRED CONTROLS";
+            // 
+            // chkReqAlertOnSuspicious
+            // 
+            this.chkReqAlertOnSuspicious.AutoSize = true;
+            this.chkReqAlertOnSuspicious.Font = new System.Drawing.Font("Agency", 8F);
+            this.chkReqAlertOnSuspicious.Location = new System.Drawing.Point(8, 96);
+            this.chkReqAlertOnSuspicious.Name = "chkReqAlertOnSuspicious";
+            this.chkReqAlertOnSuspicious.Size = new System.Drawing.Size(197, 21);
+            this.chkReqAlertOnSuspicious.TabIndex = 5;
+            this.chkReqAlertOnSuspicious.Text = "ALERT ON SUSPICIOUS";
+            this.chkReqAlertOnSuspicious.UseVisualStyleBackColor = true;
+            // 
+            // chkReqDeviceBinding
+            // 
+            this.chkReqDeviceBinding.AutoSize = true;
+            this.chkReqDeviceBinding.Font = new System.Drawing.Font("Agency", 8F);
+            this.chkReqDeviceBinding.Location = new System.Drawing.Point(8, 72);
+            this.chkReqDeviceBinding.Name = "chkReqDeviceBinding";
+            this.chkReqDeviceBinding.Size = new System.Drawing.Size(155, 21);
+            this.chkReqDeviceBinding.TabIndex = 4;
+            this.chkReqDeviceBinding.Text = "DEVICE BINDING";
+            this.chkReqDeviceBinding.UseVisualStyleBackColor = true;
+            // 
+            // chkReqLegacyBlock
+            // 
+            this.chkReqLegacyBlock.AutoSize = true;
+            this.chkReqLegacyBlock.Location = new System.Drawing.Point(107, 46);
+            this.chkReqLegacyBlock.Name = "chkReqLegacyBlock";
+            this.chkReqLegacyBlock.Size = new System.Drawing.Size(145, 21);
+            this.chkReqLegacyBlock.TabIndex = 3;
+            this.chkReqLegacyBlock.Text = "Block Legacy";
+            this.chkReqLegacyBlock.UseVisualStyleBackColor = true;
+            // 
+            // chkReqStepUp
+            // 
+            this.chkReqStepUp.AutoSize = true;
+            this.chkReqStepUp.Location = new System.Drawing.Point(8, 46);
+            this.chkReqStepUp.Name = "chkReqStepUp";
+            this.chkReqStepUp.Size = new System.Drawing.Size(93, 21);
+            this.chkReqStepUp.TabIndex = 2;
+            this.chkReqStepUp.Text = "Step-Up";
+            this.chkReqStepUp.UseVisualStyleBackColor = true;
+            // 
+            // chkReqPhishResistant
+            // 
+            this.chkReqPhishResistant.AutoSize = true;
+            this.chkReqPhishResistant.Location = new System.Drawing.Point(80, 22);
+            this.chkReqPhishResistant.Name = "chkReqPhishResistant";
+            this.chkReqPhishResistant.Size = new System.Drawing.Size(190, 21);
+            this.chkReqPhishResistant.TabIndex = 1;
+            this.chkReqPhishResistant.Text = "Phishing-Resistant";
+            this.chkReqPhishResistant.UseVisualStyleBackColor = true;
+            // 
+            // chkReqMfa
+            // 
+            this.chkReqMfa.AutoSize = true;
+            this.chkReqMfa.Location = new System.Drawing.Point(8, 22);
+            this.chkReqMfa.Name = "chkReqMfa";
+            this.chkReqMfa.Size = new System.Drawing.Size(66, 21);
+            this.chkReqMfa.TabIndex = 0;
+            this.chkReqMfa.Text = "MFA";
+            this.chkReqMfa.UseVisualStyleBackColor = true;
+            // 
+            // cmbRecRecovery
+            // 
+            this.cmbRecRecovery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbRecRecovery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRecRecovery.Font = new System.Drawing.Font("Agency", 9F);
+            this.cmbRecRecovery.FormattingEnabled = true;
+            this.cmbRecRecovery.Location = new System.Drawing.Point(156, 130);
+            this.cmbRecRecovery.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
+            this.cmbRecRecovery.Name = "cmbRecRecovery";
+            this.cmbRecRecovery.Size = new System.Drawing.Size(152, 22);
+            this.cmbRecRecovery.TabIndex = 28;
+            // 
+            // cmbRecAuthMethod
+            // 
+            this.cmbRecAuthMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbRecAuthMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRecAuthMethod.Font = new System.Drawing.Font("Agency", 9F);
+            this.cmbRecAuthMethod.FormattingEnabled = true;
+            this.cmbRecAuthMethod.Location = new System.Drawing.Point(156, 97);
+            this.cmbRecAuthMethod.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
+            this.cmbRecAuthMethod.Name = "cmbRecAuthMethod";
+            this.cmbRecAuthMethod.Size = new System.Drawing.Size(152, 22);
+            this.cmbRecAuthMethod.TabIndex = 27;
+            // 
+            // cmbAuthDifficulty
+            // 
+            this.cmbAuthDifficulty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbAuthDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAuthDifficulty.Font = new System.Drawing.Font("Agency", 9F);
+            this.cmbAuthDifficulty.FormattingEnabled = true;
+            this.cmbAuthDifficulty.Location = new System.Drawing.Point(156, 64);
+            this.cmbAuthDifficulty.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
+            this.cmbAuthDifficulty.Name = "cmbAuthDifficulty";
+            this.cmbAuthDifficulty.Size = new System.Drawing.Size(152, 22);
+            this.cmbAuthDifficulty.TabIndex = 26;
+            // 
+            // cmbGoalType
+            // 
+            this.cmbGoalType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbGoalType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbGoalType.Font = new System.Drawing.Font("Agency", 9F);
+            this.cmbGoalType.FormattingEnabled = true;
+            this.cmbGoalType.Location = new System.Drawing.Point(156, 34);
+            this.cmbGoalType.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
+            this.cmbGoalType.Name = "cmbGoalType";
+            this.cmbGoalType.Size = new System.Drawing.Size(152, 22);
+            this.cmbGoalType.TabIndex = 25;
+            // 
+            // cmbThreatType
+            // 
+            this.cmbThreatType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbThreatType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbThreatType.Font = new System.Drawing.Font("Agency", 9F);
+            this.cmbThreatType.FormattingEnabled = true;
+            this.cmbThreatType.Location = new System.Drawing.Point(156, 5);
+            this.cmbThreatType.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
+            this.cmbThreatType.Name = "cmbThreatType";
+            this.cmbThreatType.Size = new System.Drawing.Size(152, 22);
+            this.cmbThreatType.TabIndex = 24;
+            // 
             // cmbRecSession
             // 
-            this.cmbRecSession.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbRecSession.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbRecSession.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRecSession.Font = new System.Drawing.Font("Agency", 9F);
             this.cmbRecSession.FormattingEnabled = true;
@@ -1959,31 +2149,28 @@
             // 
             // lblRecSession
             // 
-            this.lblRecSession.AutoSize = true;
             this.lblRecSession.Font = new System.Drawing.Font("Agency", 9F);
             this.lblRecSession.Location = new System.Drawing.Point(9, 166);
             this.lblRecSession.Name = "lblRecSession";
-            this.lblRecSession.Size = new System.Drawing.Size(119, 14);
+            this.lblRecSession.Size = new System.Drawing.Size(142, 14);
             this.lblRecSession.TabIndex = 22;
             this.lblRecSession.Text = "Rec. Session";
             // 
             // lblRecRecovery
             // 
-            this.lblRecRecovery.AutoSize = true;
             this.lblRecRecovery.Font = new System.Drawing.Font("Agency", 9F);
             this.lblRecRecovery.Location = new System.Drawing.Point(9, 133);
             this.lblRecRecovery.Name = "lblRecRecovery";
-            this.lblRecRecovery.Size = new System.Drawing.Size(142, 14);
+            this.lblRecRecovery.Size = new System.Drawing.Size(153, 14);
             this.lblRecRecovery.TabIndex = 20;
             this.lblRecRecovery.Text = "Rec. Recovery";
             // 
             // lblRecAuthMethod
             // 
-            this.lblRecAuthMethod.AutoSize = true;
             this.lblRecAuthMethod.Font = new System.Drawing.Font("Agency", 9F);
             this.lblRecAuthMethod.Location = new System.Drawing.Point(9, 101);
             this.lblRecAuthMethod.Name = "lblRecAuthMethod";
-            this.lblRecAuthMethod.Size = new System.Drawing.Size(120, 14);
+            this.lblRecAuthMethod.Size = new System.Drawing.Size(175, 14);
             this.lblRecAuthMethod.TabIndex = 18;
             this.lblRecAuthMethod.Text = "Rec. Method";
             // 
@@ -2011,126 +2198,11 @@
             // 
             this.lblThreatType.AutoSize = true;
             this.lblThreatType.Font = new System.Drawing.Font("Agency", 9F);
-            this.lblThreatType.Location = new System.Drawing.Point(11, 8);
+            this.lblThreatType.Location = new System.Drawing.Point(9, 8);
             this.lblThreatType.Name = "lblThreatType";
             this.lblThreatType.Size = new System.Drawing.Size(119, 14);
             this.lblThreatType.TabIndex = 12;
             this.lblThreatType.Text = "Threat Type";
-            // 
-            // cmbThreatType
-            // 
-            this.cmbThreatType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbThreatType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbThreatType.Font = new System.Drawing.Font("Agency", 9F);
-            this.cmbThreatType.FormattingEnabled = true;
-            this.cmbThreatType.Location = new System.Drawing.Point(156, 5);
-            this.cmbThreatType.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
-            this.cmbThreatType.Name = "cmbThreatType";
-            this.cmbThreatType.Size = new System.Drawing.Size(152, 22);
-            this.cmbThreatType.TabIndex = 24;
-            // 
-            // cmbGoalType
-            // 
-            this.cmbGoalType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbGoalType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbGoalType.Font = new System.Drawing.Font("Agency", 9F);
-            this.cmbGoalType.FormattingEnabled = true;
-            this.cmbGoalType.Location = new System.Drawing.Point(156, 34);
-            this.cmbGoalType.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
-            this.cmbGoalType.Name = "cmbGoalType";
-            this.cmbGoalType.Size = new System.Drawing.Size(152, 22);
-            this.cmbGoalType.TabIndex = 25;
-            // 
-            // cmbAuthDifficulty
-            // 
-            this.cmbAuthDifficulty.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbAuthDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAuthDifficulty.Font = new System.Drawing.Font("Agency", 9F);
-            this.cmbAuthDifficulty.FormattingEnabled = true;
-            this.cmbAuthDifficulty.Location = new System.Drawing.Point(156, 64);
-            this.cmbAuthDifficulty.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
-            this.cmbAuthDifficulty.Name = "cmbAuthDifficulty";
-            this.cmbAuthDifficulty.Size = new System.Drawing.Size(152, 22);
-            this.cmbAuthDifficulty.TabIndex = 26;
-            // 
-            // cmbRecAuthMethod
-            // 
-            this.cmbRecAuthMethod.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbRecAuthMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRecAuthMethod.Font = new System.Drawing.Font("Agency", 9F);
-            this.cmbRecAuthMethod.FormattingEnabled = true;
-            this.cmbRecAuthMethod.Location = new System.Drawing.Point(156, 97);
-            this.cmbRecAuthMethod.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
-            this.cmbRecAuthMethod.Name = "cmbRecAuthMethod";
-            this.cmbRecAuthMethod.Size = new System.Drawing.Size(152, 22);
-            this.cmbRecAuthMethod.TabIndex = 27;
-            // 
-            // cmbRecRecovery
-            // 
-            this.cmbRecRecovery.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbRecRecovery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRecRecovery.Font = new System.Drawing.Font("Agency", 9F);
-            this.cmbRecRecovery.FormattingEnabled = true;
-            this.cmbRecRecovery.Location = new System.Drawing.Point(156, 130);
-            this.cmbRecRecovery.Margin = new System.Windows.Forms.Padding(0, 4, 10, 4);
-            this.cmbRecRecovery.Name = "cmbRecRecovery";
-            this.cmbRecRecovery.Size = new System.Drawing.Size(152, 22);
-            this.cmbRecRecovery.TabIndex = 28;
-            // 
-            // gbAuthRequirements
-            // 
-            this.gbAuthRequirements.Controls.Add(this.chkReqLegacyBlock);
-            this.gbAuthRequirements.Controls.Add(this.chkReqStepUp);
-            this.gbAuthRequirements.Controls.Add(this.chkReqPhishResistant);
-            this.gbAuthRequirements.Controls.Add(this.chkReqMfa);
-            this.gbAuthRequirements.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gbAuthRequirements.Font = new System.Drawing.Font("Agency", 8F);
-            this.gbAuthRequirements.Location = new System.Drawing.Point(0, 195);
-            this.gbAuthRequirements.Name = "gbAuthRequirements";
-            this.gbAuthRequirements.Size = new System.Drawing.Size(321, 67);
-            this.gbAuthRequirements.TabIndex = 29;
-            this.gbAuthRequirements.TabStop = false;
-            this.gbAuthRequirements.Text = "REQUIRED CONTROLS";
-            // 
-            // chkReqMfa
-            // 
-            this.chkReqMfa.AutoSize = true;
-            this.chkReqMfa.Location = new System.Drawing.Point(10, 19);
-            this.chkReqMfa.Name = "chkReqMfa";
-            this.chkReqMfa.Size = new System.Drawing.Size(66, 21);
-            this.chkReqMfa.TabIndex = 0;
-            this.chkReqMfa.Text = "MFA";
-            this.chkReqMfa.UseVisualStyleBackColor = true;
-            // 
-            // chkReqPhishResistant
-            // 
-            this.chkReqPhishResistant.AutoSize = true;
-            this.chkReqPhishResistant.Location = new System.Drawing.Point(82, 19);
-            this.chkReqPhishResistant.Name = "chkReqPhishResistant";
-            this.chkReqPhishResistant.Size = new System.Drawing.Size(190, 21);
-            this.chkReqPhishResistant.TabIndex = 1;
-            this.chkReqPhishResistant.Text = "Phishing-Resistant";
-            this.chkReqPhishResistant.UseVisualStyleBackColor = true;
-            // 
-            // chkReqStepUp
-            // 
-            this.chkReqStepUp.AutoSize = true;
-            this.chkReqStepUp.Location = new System.Drawing.Point(10, 43);
-            this.chkReqStepUp.Name = "chkReqStepUp";
-            this.chkReqStepUp.Size = new System.Drawing.Size(93, 21);
-            this.chkReqStepUp.TabIndex = 2;
-            this.chkReqStepUp.Text = "Step-Up";
-            this.chkReqStepUp.UseVisualStyleBackColor = true;
-            // 
-            // chkReqLegacyBlock
-            // 
-            this.chkReqLegacyBlock.AutoSize = true;
-            this.chkReqLegacyBlock.Location = new System.Drawing.Point(109, 43);
-            this.chkReqLegacyBlock.Name = "chkReqLegacyBlock";
-            this.chkReqLegacyBlock.Size = new System.Drawing.Size(145, 21);
-            this.chkReqLegacyBlock.TabIndex = 3;
-            this.chkReqLegacyBlock.Text = "Block Legacy";
-            this.chkReqLegacyBlock.UseVisualStyleBackColor = true;
             // 
             // tlpBankActions
             // 
@@ -2152,35 +2224,21 @@
             this.tlpBankActions.Size = new System.Drawing.Size(1022, 46);
             this.tlpBankActions.TabIndex = 2;
             // 
-            // btnLoadSelected
+            // btnRevertChanges
             // 
-            this.btnLoadSelected.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnLoadSelected.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLoadSelected.Font = new System.Drawing.Font("Muro", 15F);
-            this.btnLoadSelected.ForeColor = System.Drawing.Color.White;
-            this.btnLoadSelected.Location = new System.Drawing.Point(3, 3);
-            this.btnLoadSelected.Name = "btnLoadSelected";
-            this.btnLoadSelected.Size = new System.Drawing.Size(249, 40);
-            this.btnLoadSelected.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnLoadSelected.Style.ForeColor = System.Drawing.Color.White;
-            this.btnLoadSelected.TabIndex = 0;
-            this.btnLoadSelected.Text = "Load Selected";
-            this.btnLoadSelected.UseVisualStyleBackColor = false;
-            // 
-            // btnSaveItem
-            // 
-            this.btnSaveItem.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnSaveItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveItem.Font = new System.Drawing.Font("Muro", 15F);
-            this.btnSaveItem.ForeColor = System.Drawing.Color.White;
-            this.btnSaveItem.Location = new System.Drawing.Point(258, 3);
-            this.btnSaveItem.Name = "btnSaveItem";
-            this.btnSaveItem.Size = new System.Drawing.Size(249, 40);
-            this.btnSaveItem.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnSaveItem.Style.ForeColor = System.Drawing.Color.White;
-            this.btnSaveItem.TabIndex = 1;
-            this.btnSaveItem.Text = "Save Item";
-            this.btnSaveItem.UseVisualStyleBackColor = false;
+            this.btnRevertChanges.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRevertChanges.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRevertChanges.Font = new System.Drawing.Font("Muro", 15F);
+            this.btnRevertChanges.ForeColor = System.Drawing.Color.White;
+            this.btnRevertChanges.Location = new System.Drawing.Point(768, 3);
+            this.btnRevertChanges.Name = "btnRevertChanges";
+            this.btnRevertChanges.Size = new System.Drawing.Size(251, 40);
+            this.btnRevertChanges.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRevertChanges.Style.ForeColor = System.Drawing.Color.White;
+            this.btnRevertChanges.TabIndex = 3;
+            this.btnRevertChanges.Text = "Revert Changes";
+            this.btnRevertChanges.UseVisualStyleBackColor = false;
+            this.btnRevertChanges.Click += new System.EventHandler(this.btnRevertChanges_Click);
             // 
             // btnSaveAll
             // 
@@ -2196,55 +2254,39 @@
             this.btnSaveAll.TabIndex = 2;
             this.btnSaveAll.Text = "Save All";
             this.btnSaveAll.UseVisualStyleBackColor = false;
+            this.btnSaveAll.Click += new System.EventHandler(this.btnSaveAll_Click);
             // 
-            // btnRevertChanges
+            // btnSaveItem
             // 
-            this.btnRevertChanges.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnRevertChanges.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRevertChanges.Font = new System.Drawing.Font("Muro", 15F);
-            this.btnRevertChanges.ForeColor = System.Drawing.Color.White;
-            this.btnRevertChanges.Location = new System.Drawing.Point(768, 3);
-            this.btnRevertChanges.Name = "btnRevertChanges";
-            this.btnRevertChanges.Size = new System.Drawing.Size(251, 40);
-            this.btnRevertChanges.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnRevertChanges.Style.ForeColor = System.Drawing.Color.White;
-            this.btnRevertChanges.TabIndex = 3;
-            this.btnRevertChanges.Text = "Revert Changes";
-            this.btnRevertChanges.UseVisualStyleBackColor = false;
+            this.btnSaveItem.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnSaveItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSaveItem.Font = new System.Drawing.Font("Muro", 15F);
+            this.btnSaveItem.ForeColor = System.Drawing.Color.White;
+            this.btnSaveItem.Location = new System.Drawing.Point(258, 3);
+            this.btnSaveItem.Name = "btnSaveItem";
+            this.btnSaveItem.Size = new System.Drawing.Size(249, 40);
+            this.btnSaveItem.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnSaveItem.Style.ForeColor = System.Drawing.Color.White;
+            this.btnSaveItem.TabIndex = 1;
+            this.btnSaveItem.Text = "Save Item";
+            this.btnSaveItem.UseVisualStyleBackColor = false;
+            this.btnSaveItem.Click += new System.EventHandler(this.btnSaveItem_Click);
             // 
-            // pnlFooter
+            // btnLoadSelected
             // 
-            this.pnlFooter.Controls.Add(this.lblFooterUser);
-            this.pnlFooter.Controls.Add(this.lblFooterLeft);
-            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFooter.Location = new System.Drawing.Point(3, 722);
-            this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(1667, 22);
-            this.pnlFooter.TabIndex = 5;
-            // 
-            // lblFooterUser
-            // 
-            this.lblFooterUser.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblFooterUser.Font = new System.Drawing.Font("Agency", 10F);
-            this.lblFooterUser.ForeColor = System.Drawing.Color.Gray;
-            this.lblFooterUser.Location = new System.Drawing.Point(1466, 0);
-            this.lblFooterUser.Name = "lblFooterUser";
-            this.lblFooterUser.Size = new System.Drawing.Size(201, 22);
-            this.lblFooterUser.TabIndex = 1;
-            this.lblFooterUser.Text = "ROLE: ADMIN";
-            this.lblFooterUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblFooterLeft
-            // 
-            this.lblFooterLeft.AutoSize = true;
-            this.lblFooterLeft.Font = new System.Drawing.Font("Muro", 9F);
-            this.lblFooterLeft.ForeColor = System.Drawing.Color.Gray;
-            this.lblFooterLeft.Location = new System.Drawing.Point(0, 0);
-            this.lblFooterLeft.Name = "lblFooterLeft";
-            this.lblFooterLeft.Size = new System.Drawing.Size(195, 18);
-            this.lblFooterLeft.TabIndex = 0;
-            this.lblFooterLeft.Text = "© 2026 Mondas Learning";
-            this.lblFooterLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadSelected.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnLoadSelected.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadSelected.Font = new System.Drawing.Font("Muro", 15F);
+            this.btnLoadSelected.ForeColor = System.Drawing.Color.White;
+            this.btnLoadSelected.Location = new System.Drawing.Point(3, 3);
+            this.btnLoadSelected.Name = "btnLoadSelected";
+            this.btnLoadSelected.Size = new System.Drawing.Size(249, 40);
+            this.btnLoadSelected.Style.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnLoadSelected.Style.ForeColor = System.Drawing.Color.White;
+            this.btnLoadSelected.TabIndex = 0;
+            this.btnLoadSelected.Text = "Load Selected";
+            this.btnLoadSelected.UseVisualStyleBackColor = false;
+            this.btnLoadSelected.Click += new System.EventHandler(this.btnLoadSelected_Click);
             // 
             // AdminDashboardForm
             // 
@@ -2270,9 +2312,10 @@
             this.tlpToolbar.PerformLayout();
             this.pnlSidebar.ResumeLayout(false);
             this.pnlSidebar.PerformLayout();
-            this.flpAdminNav.ResumeLayout(false);
             this.pnlContent.ResumeLayout(false);
             this.tlpPage.ResumeLayout(false);
+            this.pnlFooter.ResumeLayout(false);
+            this.pnlFooter.PerformLayout();
             this.tlpStats.ResumeLayout(false);
             this.pnlTotalUsers.ResumeLayout(false);
             this.pnlActiveToday.ResumeLayout(false);
@@ -2324,8 +2367,6 @@
             this.gbAuthRequirements.ResumeLayout(false);
             this.gbAuthRequirements.PerformLayout();
             this.tlpBankActions.ResumeLayout(false);
-            this.pnlFooter.ResumeLayout(false);
-            this.pnlFooter.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2337,11 +2378,6 @@
         private System.Windows.Forms.Label lblMondas;
         private System.Windows.Forms.Label lblAdminBadge;
         private System.Windows.Forms.Panel pnlSidebarSpacer;
-        private System.Windows.Forms.FlowLayoutPanel flpAdminNav;
-        private Syncfusion.WinForms.Controls.SfButton btnNavOverview;
-        private Syncfusion.WinForms.Controls.SfButton btnNavUsers;
-        private Syncfusion.WinForms.Controls.SfButton btnNavContent;
-        private Syncfusion.WinForms.Controls.SfButton btnNavExport;
         private System.Windows.Forms.TableLayoutPanel tlpPage;
         private System.Windows.Forms.TableLayoutPanel tlpHeader;
         private System.Windows.Forms.Panel pnlHeaderLeft;
@@ -2421,17 +2457,13 @@
         private System.Windows.Forms.RichTextBox rtbQuizQuestionText;
         private System.Windows.Forms.Label lblQuizOptions;
         private System.Windows.Forms.DataGridView dgvQuizOptions;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOptionText;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOptionCorrect;
         private System.Windows.Forms.Panel pnlQuizEditorRight;
         private System.Windows.Forms.Label lblQuizTopic;
         private System.Windows.Forms.ComboBox cmbQuizTopic;
         private System.Windows.Forms.Label lblQuizDifficulty;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbQuizDifficulty;
         private System.Windows.Forms.ComboBox cmbQuizType;
         private System.Windows.Forms.Label lblQuizType;
-        private System.Windows.Forms.ComboBox cmbQuizMastery;
-        private System.Windows.Forms.Label lblQuizMastery;
         private System.Windows.Forms.Label lblMisTags;
         private System.Windows.Forms.TextBox txtMisTags;
         private System.Windows.Forms.TableLayoutPanel tlpPhishEditor;
@@ -2494,5 +2526,15 @@
         private System.Windows.Forms.Panel pnlFooter;
         private System.Windows.Forms.Label lblFooterUser;
         private System.Windows.Forms.Label lblFooterLeft;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOptionText;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colOptionCorrect;
+        private System.Windows.Forms.RichTextBox rtbQuizExplanation;
+        private System.Windows.Forms.Label lblQuizExplanation;
+        private System.Windows.Forms.Label lblLinkDisplayText;
+        private System.Windows.Forms.TextBox txtLinkDisplayText;
+        private System.Windows.Forms.Label lblPhishTags;
+        private System.Windows.Forms.TextBox txtPhishTags;
+        private System.Windows.Forms.CheckBox chkReqDeviceBinding;
+        private System.Windows.Forms.CheckBox chkReqAlertOnSuspicious;
     }
 }

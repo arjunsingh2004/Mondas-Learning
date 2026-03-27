@@ -57,7 +57,7 @@ namespace Mondas
 
             _host.Start();
 
-            Application.Run(new AdminDashboardForm());
+            Application.Run(new LoginForm());
 
             _host.StopAsync().GetAwaiter().GetResult();
             _host.Dispose();

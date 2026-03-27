@@ -332,16 +332,6 @@ namespace Mondas
                 {
                     q = q.Where(x => x.Metadata.Difficulty == prefs.Difficulty.Value);
                 }
-
-                if (prefs.BloomLevel.HasValue)
-                {
-                    q = q.Where(x => x.Metadata.BloomLevel == prefs.BloomLevel.Value);
-                }
-
-                if (!string.IsNullOrWhiteSpace(prefs.ThreatVector))
-                {
-                    q = q.Where(x => string.Equals(x.Metadata.ThreatVector, prefs.ThreatVector, StringComparison.OrdinalIgnoreCase));
-                }
             }
 
             return q.ToList();
