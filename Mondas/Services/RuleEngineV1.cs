@@ -21,11 +21,23 @@ namespace Mondas.Services
             _allowDifficultyDrift = allowDifficultyDrift;
         }
 
-        public SelectionResult SelectNextQuestion(
-            UserModel userModel,
-            IReadOnlyList<Question> allQuestions,
-            IReadOnlyList<QuestionAttempt> previousAttempts)
+        public SelectionResult SelectNextQuestion(UserModel userModel, IReadOnlyList<Question> allQuestions, IReadOnlyList<QuestionAttempt> previousAttempts)
         {
+            if (userModel == null)
+            {
+                userModel = new UserModel();
+            }
+
+            if (allQuestions == null || allQuestions.Count == 0)
+            {
+                return new SelectionResult{ SelectedQuestion = null, ReasonString = "No questions available.", RulesFired = new List<string> { "NoQuestionsAvailable" } };
+            }
+
+            if (previousAttempts == null)
+            {
+                previousAttempts = Array.Empty<QuestionAttempt>();
+            }
+
             var trace = new List<string>();
 
             var alreadySeen = new HashSet<int>(previousAttempts.Select(a => a.QuestionId));
@@ -68,6 +80,7 @@ namespace Mondas.Services
             {
                 trace.Add(weakestTopic.HasValue ? "PreferWeakTopic:" + weakestTopic.Value : "PreferWeakTopic:None");
             }
+
             else
             {
                 trace.Add("SkipWeakTopicPreference");
@@ -77,6 +90,7 @@ namespace Mondas.Services
             {
                 trace.Add("TargetDifficulty:" + targetDifficulty.Value);
             }
+
             else
             {
                 trace.Add("NoDifficultyPreference");
@@ -134,6 +148,11 @@ namespace Mondas.Services
 
         private static double GetMastery01(UserModel userModel, Topic topic)
         {
+            if (userModel == null)
+            {
+                return 0.0;
+            }
+
             userModel.TopicStats.TryGetValue(topic, out var stats);
 
             var mastery = stats == null ? 0.0 : stats.Mastery;
@@ -147,6 +166,7 @@ namespace Mondas.Services
             {
                 mastery = 0.0;
             }
+
             if (mastery > 1.0)
             {
                 mastery = 1.0;

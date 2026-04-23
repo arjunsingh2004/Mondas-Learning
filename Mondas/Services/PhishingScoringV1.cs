@@ -19,7 +19,7 @@ namespace Mondas.Services
                 return result;
             }
 
-            var signals = AnalyseSignals(email, out var riskScore, out var fired);
+            var signals = AnalyseSignals(email, out var fired);
 
             if (result.RulesFired.Count == 0 && fired.Count > 0)
             {
@@ -94,11 +94,6 @@ namespace Mondas.Services
             if (isFinalDecision)
             {
                 timePenaltyPoints = (int)Math.Round(Math.Min(6.0, timePenalty));
-
-                if (timePenaltyPoints < 0)
-                {
-                    timePenalty = 0;
-                }
             }
 
             result.ScoreDelta = basePoints - timePenaltyPoints;
@@ -160,9 +155,8 @@ namespace Mondas.Services
             return over / 5.0;
         }
 
-        private static List<PhishingSignal> AnalyseSignals(PhishingEmail email, out int riskScore, out List<string> rulesFired)
+        private static List<PhishingSignal> AnalyseSignals(PhishingEmail email, out List<string> rulesFired)
         {
-            riskScore = 0;
             rulesFired = new List<string>();
             var signals = new List<PhishingSignal>();
 
@@ -177,14 +171,12 @@ namespace Mondas.Services
             {
                 signals.Add(new PhishingSignal { Title = "Reply-To mismatch", Detail = "Reply-To differs from the sender address.", Weight = 3 });
                 rulesFired.Add("ReplyToMismatch");
-                riskScore += 3;
             }
 
             if (LooksLikeUrgency(subj) || LooksLikeUrgency(body))
             {
                 signals.Add(new PhishingSignal { Title = "Urgency/Pressure", Detail = "Threats like lockouts or deadlines push you to act fast.", Weight = 2 });
                 rulesFired.Add("UrgencyLanguage");
-                riskScore += 2;
             }
 
             if (!string.IsNullOrWhiteSpace(linkUrl))
@@ -195,20 +187,17 @@ namespace Mondas.Services
                 {
                     signals.Add(new PhishingSignal { Title = "Contains a link", Detail = "Always hover and confirm the real domain before clicking.", Weight = 1 });
                     rulesFired.Add("HasLink");
-                    riskScore += 1;
 
                     if (HasLookalikeHints(domain))
                     {
                         signals.Add(new PhishingSignal { Title = "Suspicious domain", Detail = "Lookalike domains often swap characters (e.g., Microsoft).", Weight = 3 });
                         rulesFired.Add("LookalikeDomain");
-                        riskScore += 3;
                     }
 
                     if (domain.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || linkUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                     {
                         signals.Add(new PhishingSignal { Title = "Non-HTTPS link", Detail = "HTTP links are easier to tamper with than HTTPS.", Weight = 1 });
                         rulesFired.Add("HttpLink");
-                        riskScore += 1;
                     }
                 }
             }
@@ -217,13 +206,11 @@ namespace Mondas.Services
             {
                 signals.Add(new PhishingSignal { Title = "Has an attachment", Detail = "Unexpected attachments can hide malware, especially macros.", Weight = 2 });
                 rulesFired.Add("HasAttachment");
-                riskScore += 2;
 
                 if (attach.EndsWith(".docm", StringComparison.OrdinalIgnoreCase) || attach.EndsWith(".xlsm", StringComparison.OrdinalIgnoreCase) || attach.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
                 {
                     signals.Add(new PhishingSignal { Title = "High-risk file type", Detail = "Macro-enabled or executable files are common malware carriers.", Weight = 3 });
                     rulesFired.Add("DangerousFileType");
-                    riskScore += 3;
                 }
             }
 
