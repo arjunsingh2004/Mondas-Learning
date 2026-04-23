@@ -395,7 +395,7 @@ namespace Mondas
             }
 
             var timeText = _prefs != null && !_prefs.TimerEnabled ? "OFF" : FormatTime(elapsed);
-            lblRunInfo.Text = $"SCORE: {_score} | STREAK | {_streak} | TIME: {timeText}";
+            lblRunInfo.Text = $"SCORE: {_score} | STREAK: | {_streak} | TIME: {timeText}";
         }
 
         private static string FormatTime(TimeSpan value)
@@ -944,7 +944,8 @@ namespace Mondas
             var topic = _sharedAdaptiveLearningService.MapAuthenticationTopic(_currentScenario);
             var tags = ReadTags(row.TagsJson);
 
-            _sharedUserModel.UpdateTopicAttempt(topic, row.Accuracy01 ?? (row.IsCorrect ? 1.0 : 0.0), (row.Accuracy01 ?? (row.IsCorrect ? 1.0 : 0.0)) >= 0.999 ? null : tags);
+            var accuracy = row.Accuracy01 ?? (row.IsCorrect ? 1.0 : 0.0);
+            _sharedUserModel.UpdateTopicAttempt(topic, accuracy, accuracy >= 0.999 ? null : tags);
         }
 
         private void MarkQueueResolved(AuthenticationDefenseResult result)

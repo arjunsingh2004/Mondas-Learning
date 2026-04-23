@@ -200,7 +200,7 @@ namespace Mondas.Services
                     if (HasLookalikeHints(domain))
                     {
                         signals.Add(new PhishingSignal { Title = "Suspicious domain", Detail = "Lookalike domains often swap characters (e.g., Microsoft).", Weight = 3 });
-                        rulesFired.Add("LookalikeDomaim");
+                        rulesFired.Add("LookalikeDomain");
                         riskScore += 3;
                     }
 
@@ -215,7 +215,7 @@ namespace Mondas.Services
 
             if (!string.IsNullOrWhiteSpace(attach))
             {
-                signals.Add(new PhishingSignal { Title = "Has as attachment", Detail = "Unexpected attachments can hide malware, especially macros.", Weight = 2 });
+                signals.Add(new PhishingSignal { Title = "Has an attachment", Detail = "Unexpected attachments can hide malware, especially macros.", Weight = 2 });
                 rulesFired.Add("HasAttachment");
                 riskScore += 2;
 

@@ -110,20 +110,27 @@ namespace Mondas.Services
 
                 if (accuracy >= 0.80)
                 {
+                    if (weakStreak > 0)
+                    {
+                        break;
+                    }
+
                     strongStreak++;
-                    weakStreak = 0;
                 }
 
                 else if (accuracy <= 0.40)
                 {
+                    if (strongStreak > 0)
+                    {
+                        break;
+                    }
+
                     weakStreak++;
-                    strongStreak = 0;
                 }
 
                 else
                 {
-                    strongStreak = 0;
-                    weakStreak = 0;
+                    break;
                 }
             }
 

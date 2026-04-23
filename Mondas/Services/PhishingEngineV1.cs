@@ -197,12 +197,13 @@ namespace Mondas.Services
 
         private static int GetDifficultyDrift(IReadOnlyList<PhishingAttemptRow> attempts)
         {
-            if (attempts.Count == null || attempts.Count < 2)
+            if (attempts == null || attempts.Count < 2)
             {
                 return 0;
             }
 
             var recent = attempts.OrderByDescending(a => a.SubmittedUtc).Take(5).ToList();
+
             int correctStreak = 0;
             int incorrectStreak = 0;
 
@@ -210,23 +211,31 @@ namespace Mondas.Services
             {
                 if (recent[i].IsCorrect)
                 {
+                    if (incorrectStreak > 0)
+                    {
+                        break;
+                    }
+
                     correctStreak++;
-                    incorrectStreak = 0;
                 }
 
                 else
                 {
+                    if (correctStreak > 0)
+                    {
+                        break;
+                    }
+
                     incorrectStreak++;
-                    correctStreak = 0;
                 }
             }
-            
+
             if (incorrectStreak >= 2)
             {
                 return -1;
             }
 
-            if (correctStreak  > 2)
+            if (correctStreak >= 3)
             {
                 return +1;
             }
