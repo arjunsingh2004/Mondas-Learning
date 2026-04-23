@@ -2,153 +2,104 @@
 {
     partial class Start
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxExt1 = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.textBoxExt2 = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.checkBoxAdv1 = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.sfButton1 = new Syncfusion.WinForms.Controls.SfButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxExt2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkBoxAdv1)).BeginInit();
+            this.components = new System.ComponentModel.Container();
+            this.gridBagLayout1 = new Syncfusion.Windows.Forms.Tools.GridBagLayout(this.components);
+            this.lblTagline = new System.Windows.Forms.Label();
+            this.lblMondas = new System.Windows.Forms.Label();
+            this.btnStart = new Syncfusion.WinForms.Controls.SfButton();
+            ((System.ComponentModel.ISupportInitialize)(this.gridBagLayout1)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBoxExt1
+            // lblTagline
             // 
-            this.textBoxExt1.BeforeTouchSize = new System.Drawing.Size(100, 26);
-            this.textBoxExt1.Location = new System.Drawing.Point(527, 46);
-            this.textBoxExt1.Name = "textBoxExt1";
-            this.textBoxExt1.Size = new System.Drawing.Size(100, 26);
-            this.textBoxExt1.TabIndex = 0;
-            this.textBoxExt1.Text = "Username";
+            this.lblTagline.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblTagline.AutoSize = true;
+            this.lblTagline.Font = new System.Drawing.Font("Agency", 15F);
+            this.lblTagline.ForeColor = System.Drawing.Color.White;
+            this.lblTagline.Location = new System.Drawing.Point(200, 295);
+            this.lblTagline.Name = "lblTagline";
+            this.lblTagline.Size = new System.Drawing.Size(584, 22);
+            this.lblTagline.TabIndex = 3;
+            this.lblTagline.Text = "Adaptive cyber-awareness training";
+            this.lblTagline.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBoxExt2
+            // lblMondas
             // 
-            this.textBoxExt2.BeforeTouchSize = new System.Drawing.Size(100, 26);
-            this.textBoxExt2.Location = new System.Drawing.Point(527, 89);
-            this.textBoxExt2.Name = "textBoxExt2";
-            this.textBoxExt2.Size = new System.Drawing.Size(100, 26);
-            this.textBoxExt2.TabIndex = 1;
-            this.textBoxExt2.Text = "Password";
-            this.textBoxExt2.TextChanged += new System.EventHandler(this.textBoxExt2_TextChanged);
+            this.lblMondas.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblMondas.AutoSize = true;
+            this.lblMondas.Font = new System.Drawing.Font("Muro", 48F);
+            this.lblMondas.ForeColor = System.Drawing.Color.White;
+            this.lblMondas.Location = new System.Drawing.Point(334, 144);
+            this.lblMondas.Name = "lblMondas";
+            this.lblMondas.Size = new System.Drawing.Size(338, 96);
+            this.lblMondas.TabIndex = 2;
+            this.lblMondas.Text = "MONDAS";
+            this.lblMondas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // checkBoxAdv1
+            // btnStart
             // 
-            this.checkBoxAdv1.AccessibilityEnabled = true;
-            this.checkBoxAdv1.ImageCheckBoxSize = new System.Drawing.Size(19, 19);
-            this.checkBoxAdv1.Location = new System.Drawing.Point(527, 136);
-            this.checkBoxAdv1.Name = "checkBoxAdv1";
-            this.checkBoxAdv1.Size = new System.Drawing.Size(150, 21);
-            this.checkBoxAdv1.TabIndex = 2;
-            this.checkBoxAdv1.Text = "Remember Me";
-            this.checkBoxAdv1.CheckStateChanged += new System.EventHandler(this.checkBoxAdv1_CheckStateChanged);
-            // 
-            // sfButton1
-            // 
-            this.sfButton1.BackColor = System.Drawing.Color.White;
-            this.sfButton1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            this.sfButton1.Location = new System.Drawing.Point(527, 178);
-            this.sfButton1.Name = "sfButton1";
-            this.sfButton1.Size = new System.Drawing.Size(100, 28);
-            this.sfButton1.Style.BackColor = System.Drawing.Color.White;
-            this.sfButton1.TabIndex = 3;
-            this.sfButton1.Text = "Login";
-            this.sfButton1.UseVisualStyleBackColor = false;
-            this.sfButton1.Click += new System.EventHandler(this.sfButton1_Click);
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(62, 62);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 26);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Welcome to Mondas";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(62, 149);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(189, 20);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Please sign in to continue";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Location = new System.Drawing.Point(62, 235);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(187, 20);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "© 2025 Mondas Learning";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.btnStart.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnStart.AutoSize = true;
+            this.btnStart.BackColor = System.Drawing.Color.White;
+            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStart.Font = new System.Drawing.Font("Muro", 20F);
+            this.btnStart.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.btnStart.Location = new System.Drawing.Point(416, 373);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.btnStart.Size = new System.Drawing.Size(171, 57);
+            this.btnStart.Style.BackColor = System.Drawing.Color.White;
+            this.btnStart.Style.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.btnStart.TabIndex = 4;
+            this.btnStart.Text = "START";
+            this.btnStart.UseVisualStyleBackColor = false;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // Start
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.sfButton1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.checkBoxAdv1);
-            this.Controls.Add(this.textBoxExt2);
-            this.Controls.Add(this.textBoxExt1);
-            this.DoubleBuffered = true;
+            this.BackColor = System.Drawing.Color.RoyalBlue;
+            this.ClientSize = new System.Drawing.Size(984, 611);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.lblTagline);
+            this.Controls.Add(this.lblMondas);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(900, 560);
             this.Name = "Start";
-            this.Style.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
             this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
-            this.Text = "Welcome | Mondas";
-            this.Load += new System.EventHandler(this.Start_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxExt2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkBoxAdv1)).EndInit();
+            this.Text = "Mondas";
+            ((System.ComponentModel.ISupportInitialize)(this.gridBagLayout1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private Syncfusion.Windows.Forms.Tools.TextBoxExt textBoxExt1;
-        private Syncfusion.Windows.Forms.Tools.TextBoxExt textBoxExt2;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv checkBoxAdv1;
-        private Syncfusion.WinForms.Controls.SfButton sfButton1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private Syncfusion.Windows.Forms.Tools.GridBagLayout gridBagLayout1;
+        private System.Windows.Forms.Label lblTagline;
+        private System.Windows.Forms.Label lblMondas;
+        private Syncfusion.WinForms.Controls.SfButton btnStart;
     }
 }
