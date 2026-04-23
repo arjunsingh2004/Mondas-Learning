@@ -34,7 +34,7 @@ namespace Mondas.Contracts.Services
 
             return $"otpauth://totp/{label}?secret={secret}&issuer={iss}&digits={TotpDigits}&period={StepSeconds}";
         }
-    
+
         public bool VerifyCode(string secretBase32, string code)
         {
             if (string.IsNullOrWhiteSpace(secretBase32) || string.IsNullOrWhiteSpace(code))
@@ -44,15 +44,23 @@ namespace Mondas.Contracts.Services
 
             code = code.Trim().Replace(" ", "");
 
-            if (code.Length != 6)
+            if (code.Length != 6 || !code.All(char.IsDigit))
             {
                 return false;
             }
 
-            var secret = Base32.Decode(secretBase32);
-            var now = DateTime.UtcNow;
+            try
+            {
+                var secret = Base32.Decode(secretBase32);
+                var now = DateTime.UtcNow;
 
-            return ComputeCode(secret, now.AddSeconds(-StepSeconds)) == code || ComputeCode(secret, now) == code || ComputeCode(secret, now.AddSeconds(+StepSeconds)) == code;
+                return ComputeCode(secret, now.AddSeconds(-StepSeconds)) == code || ComputeCode(secret, now) == code || ComputeCode(secret, now.AddSeconds(+StepSeconds)) == code;
+            }
+
+            catch
+            {
+                return false;
+            }
         }
 
         public string ComputeCode(byte[] secret, DateTime utcNow)

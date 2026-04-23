@@ -189,10 +189,7 @@ namespace Mondas.Services
             using (var conn = Open())
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"SELECT Id, FullName, Email, IsSelect PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc
-                                    FROM Users
-                                    WHERE Id = @id
-                                    LIMIT 1;";
+                cmd.CommandText = @"SELECT Id, FullName, Email, IsAdmin, PasswordHash, PasswordSalt, PasswordIterations, TotpSecretBase32, TotpEnabled, CreatedUtc FROM Users WHERE Id = @id LIMIT 1;";
                 cmd.Parameters.AddWithValue("@id", id);
 
                 using (var r = cmd.ExecuteReader())

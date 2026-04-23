@@ -27,17 +27,12 @@ namespace Mondas.Services
             }
 
             byte[] hash;
-            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, DefaultIterations))
+            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, DefaultIterations, HashAlgorithmName.SHA256))
             {
                 hash = pbkdf2.GetBytes(HashBytes);
             }
 
-            return new PasswordHashResult
-            {
-                HashBase64 = Convert.ToBase64String(hash),
-                SaltBase64 = Convert.ToBase64String(salt),
-                Iterations = DefaultIterations
-            };
+            return new PasswordHashResult{ HashBase64 = Convert.ToBase64String(hash), SaltBase64 = Convert.ToBase64String(salt), Iterations = DefaultIterations };
         }
 
         public bool Verify(string password, string hashBase64, string saltBase64, int iterations)
@@ -62,7 +57,7 @@ namespace Mondas.Services
             }
 
             byte[] actual;
-            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations))
+            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, HashAlgorithmName.SHA256))
             {
                 actual = pbkdf2.GetBytes(expected.Length);
             }

@@ -171,13 +171,22 @@ namespace Mondas.Services
             {
                 if (a.IsCorrect)
                 {
+                    if (incorrectStreak > 0)
+                    {
+                        break;
+                    }
+
                     correctStreak++;
-                    incorrectStreak = 0;
                 }
+
                 else
                 {
+                    if (correctStreak > 0)
+                    {
+                        break;
+                    }
+
                     incorrectStreak++;
-                    correctStreak = 0;
                 }
             }
 
@@ -185,10 +194,12 @@ namespace Mondas.Services
             {
                 return -1;
             }
+
             if (correctStreak >= 3)
             {
                 return +1;
             }
+
             return 0;
         }
 

@@ -8,7 +8,7 @@ namespace Mondas.Models
         public int QuestionsSeen { get; set; }
         public int QuestionsCorrect { get; set; }
         public double MasteryScoreTotal { get; set; }
-        public double Mastery => QuestionsSeen == 0 ? 0.0 : (double)QuestionsCorrect / QuestionsSeen;
+        public double Mastery => QuestionsSeen == 0 ? 0.0 : MasteryScoreTotal / QuestionsSeen;
     }
 
     public sealed class UserModel
@@ -28,10 +28,12 @@ namespace Mondas.Models
 
             stats.QuestionsSeen++;
 
+            var credit = attempt.IsCorrect ? 1.0 : 0.0;
+            stats.MasteryScoreTotal += credit;
+
             if (attempt.IsCorrect)
             {
                 stats.QuestionsCorrect++;
-                stats.MasteryScoreTotal += 1.0;
             }
 
             if (!attempt.IsCorrect)

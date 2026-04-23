@@ -172,7 +172,7 @@ namespace Mondas
 
             if (!ok)
             {
-                SetStatus("Invalid code. Try again,");
+                SetStatus("Invalid code. Try again.");
                 return;
             }
 
@@ -222,11 +222,6 @@ namespace Mondas
                     }
                 }
             }));
-        }
-
-        private void lnkForgot_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            MessageBox.Show(this, "AS: Implement forgot password here", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     
         private void SetStatus(string msg)

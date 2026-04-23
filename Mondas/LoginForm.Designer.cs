@@ -47,7 +47,6 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.tlpRememberRow = new System.Windows.Forms.TableLayoutPanel();
             this.chkRemember = new System.Windows.Forms.CheckBox();
-            this.lnkForgot = new System.Windows.Forms.LinkLabel();
             this.btnSignIn = new Syncfusion.WinForms.Controls.SfButton();
             this.tlpTwoFa = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTwoFaCode = new System.Windows.Forms.Panel();
@@ -332,7 +331,6 @@
             this.tlpRememberRow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpRememberRow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpRememberRow.Controls.Add(this.chkRemember, 0, 0);
-            this.tlpRememberRow.Controls.Add(this.lnkForgot, 1, 0);
             this.tlpRememberRow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpRememberRow.Location = new System.Drawing.Point(0, 223);
             this.tlpRememberRow.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
@@ -355,22 +353,6 @@
             this.chkRemember.TabIndex = 0;
             this.chkRemember.Text = "Remember Me";
             this.chkRemember.UseVisualStyleBackColor = true;
-            // 
-            // lnkForgot
-            // 
-            this.lnkForgot.AutoSize = true;
-            this.lnkForgot.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lnkForgot.Font = new System.Drawing.Font("Agency", 10F);
-            this.lnkForgot.LinkColor = System.Drawing.Color.RoyalBlue;
-            this.lnkForgot.Location = new System.Drawing.Point(263, 0);
-            this.lnkForgot.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkForgot.Name = "lnkForgot";
-            this.lnkForgot.Size = new System.Drawing.Size(199, 63);
-            this.lnkForgot.TabIndex = 1;
-            this.lnkForgot.TabStop = true;
-            this.lnkForgot.Text = "Forgot Password";
-            this.lnkForgot.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkForgot.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkForgot_LinkClicked);
             // 
             // btnSignIn
             // 
@@ -534,7 +516,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TableLayoutPanel tlpRememberRow;
         private System.Windows.Forms.CheckBox chkRemember;
-        private System.Windows.Forms.LinkLabel lnkForgot;
         private Syncfusion.WinForms.Controls.SfButton btnSignIn;
         private System.Windows.Forms.TableLayoutPanel tlpTwoFa;
         private System.Windows.Forms.Panel pnlTwoFaCode;

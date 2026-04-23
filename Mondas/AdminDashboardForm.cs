@@ -50,7 +50,7 @@ namespace Mondas
         {
             InitializeComponent();
 
-            _adminName = string.IsNullOrWhiteSpace(adminName) ? "ADMIN" : _adminName.Trim().ToUpperInvariant();
+            _adminName = string.IsNullOrWhiteSpace(adminName) ? "ADMIN" : adminName.Trim().ToUpperInvariant();
             _dbPath = Path.Combine(AppContext.BaseDirectory, "mondas.db");
             _questionsPath = FixPath("questions.json");
             _phishingPath = FixPath("phishing_emails.json");
@@ -1178,9 +1178,36 @@ namespace Mondas
         private DateTime? GetLastActiveUtc(string userKey)
         {
             using var conn = Open();
-            using var cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"SELECT MAX(SubmittedAt) FROM (SELECT SubmittedAt FROM Attempts WHERE UserKey = $uk UNION ALL SELECT SubmittedAt FROM PhishingAttempts WHERE UserKey = $uk UNION ALL SELECT SubmittedAt FROM AuthenticationDefenseAttempts WHERE UserKey = $uk UNION ALL SELECT SubmittedAt FROM LearningModuleAttempts WHERE UserKey = $uk);";
+            var parts = new List<string>();
+
+            if (TableExists(conn, "Attempts"))
+            {
+                parts.Add("SELECT SubmittedAt FROM Attempts WHERE UserKey = $uk");
+            }
+
+            if (TableExists(conn, "PhishingAttempts"))
+            {
+                parts.Add("SELECT SubmittedAt FROM PhishingAttempts WHERE UserKey = $uk");
+            }
+
+            if (TableExists(conn, "AuthenticationDefenseAttempts"))
+            {
+                parts.Add("SELECT SubmittedAt FROM AuthenticationDefenseAttempts WHERE UserKey = $uk");
+            }
+
+            if (TableExists(conn, "LearningModuleAttempts"))
+            {
+                parts.Add("SELECT SubmittedAt FROM LearningModuleAttempts WHERE UserKey = $uk");
+            }
+
+            if (parts.Count == 0)
+            {
+                return null;
+            }
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT MAX(SubmittedAt) FROM (" + string.Join(" UNION ALL ", parts) + ");";
             cmd.Parameters.AddWithValue("$uk", userKey);
 
             var value = cmd.ExecuteScalar();
