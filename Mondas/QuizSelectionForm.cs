@@ -7,12 +7,13 @@ using System.Text.Json;
 using System.Windows.Forms;
 using Mondas.Models;
 using Mondas.Services;
+using System.Globalization;
 
 namespace Mondas
 {
     public partial class QuizSelectionForm : SfForm
     {
-        private const string UserKey = "local";
+        private readonly string _userKey;
 
         private QuizPreferences _adaptivePrefs = new QuizPreferences { UseDefaults = true };
 
@@ -24,6 +25,7 @@ namespace Mondas
         private SqliteAttemptRepository _attemptRepo;
         private IReadOnlyList<Question> _allQuestions = Array.Empty<Question>();
         private Dictionary<int, Question> _questionById = new Dictionary<int, Question>();
+        private SharedAdaptiveLearningService _sharedAdaptiveLearningService;
 
         private string _prefsPath;
         private string _adaptiveDescBase = "";
@@ -31,6 +33,13 @@ namespace Mondas
         public QuizSelectionForm()
         {
             InitializeComponent();
+            _userKey = "local";
+        }
+
+        public QuizSelectionForm(string userKey)
+        {
+            InitializeComponent();
+            _userKey = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
         }
 
         private void QuizSelectionForm_Load(object sender, EventArgs e)
@@ -46,7 +55,7 @@ namespace Mondas
             LoadAdaptivePrefsFromDisk();
 
             RefreshCards(recomputeRecommended: true);
-
+            LoadRecentPerformance();
             BeginInvoke(new Action(TidyLabels));
             SizeChanged += (s, _) => TidyLabels();
         }
@@ -58,6 +67,7 @@ namespace Mondas
             var dbPath = Path.Combine(baseDir, "mondas.db");
             var questionsPath = Path.Combine(baseDir, "Resources", "questions.json");
 
+            _sharedAdaptiveLearningService = new SharedAdaptiveLearningService(dbPath, questionsPath);
             _attemptRepo = new SqliteAttemptRepository(dbPath);
 
             try
@@ -75,7 +85,8 @@ namespace Mondas
             var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mondas");
 
             Directory.CreateDirectory(appDataDir);
-            _prefsPath = Path.Combine(appDataDir, "quiz_prefs.json");
+            var safeKey = (_userKey ?? "local").Replace(":", "_").Replace("\\", "_").Replace("/", "_");
+            _prefsPath = Path.Combine(appDataDir, $"quiz_prefs_{safeKey}.json");
         }
 
         private void LoadAdaptivePrefsFromDisk()
@@ -155,6 +166,69 @@ namespace Mondas
 
             UpdateRecommendedCard();
             UpdateAdaptiveCard();
+            LoadRecentPerformance();
+        }
+
+        private void LoadRecentPerformance()
+        {
+            if (lvRecentPerformance == null || _attemptRepo == null)
+            {
+                return;
+            }
+
+            List<AttemptRecord> history;
+
+            try
+            {
+                history = _attemptRepo.GetForUser(_userKey)?.OrderByDescending(x => x.SubmittedAt).Take(20).ToList() ?? new List<AttemptRecord>();
+            }
+
+            catch
+            {
+                history = new List<AttemptRecord>();
+            }
+
+            lvRecentPerformance.BeginUpdate();
+            lvRecentPerformance.Items.Clear();
+
+            foreach (var rec in history)
+            {
+                _questionById.TryGetValue(rec.QuestionId, out var question);
+
+                var topic = GetTopicText(question);
+                var result = rec.IsCorrect ? "CORRECT" : "INCORRECT";
+                var difficulty = GetDifficultyText(question);
+                var date = rec.SubmittedAt.ToLocalTime().ToString("dd MMM yyyy : HH:mm", CultureInfo.InvariantCulture);
+
+                var item = new ListViewItem(topic);
+                item.SubItems.Add(result);
+                item.SubItems.Add(difficulty);
+                item.SubItems.Add(date);
+
+                lvRecentPerformance.Items.Add(item);
+            }
+
+            lvRecentPerformance.EndUpdate();
+        }
+
+        private static string GetTopicText(Question question)
+        {
+            if (question == null)
+            {
+                return "UNKNOWN";
+            }
+
+            return question.Metadata.Topic.ToString().Replace("_", " ").ToUpperInvariant();
+        }
+
+        private static string GetDifficultyText(Question question)
+        {
+            if (question == null)
+            {
+                return "-";
+            }
+
+            return question.Metadata.Difficulty.ToString().ToUpperInvariant();
         }
 
         private void UpdateRecommendedCard()
@@ -251,7 +325,7 @@ namespace Mondas
             prefsToUse ??= new QuizPreferences { UseDefaults = true };
             prefsToUse = Normalise(prefsToUse);
 
-            using (var quiz = new QuizForm(prefsToUse))
+            using (var quiz = new QuizForm(_userKey, prefsToUse))
             {
                 quiz.StartPosition = FormStartPosition.CenterParent;
                 quiz.ShowDialog(this);
@@ -265,74 +339,29 @@ namespace Mondas
         {
             reason = "";
 
-            if (_attemptRepo == null || _allQuestions == null || _allQuestions.Count == 0)
+            if (_sharedAdaptiveLearningService == null || _allQuestions == null || _allQuestions.Count == 0)
             {
                 reason = "Questions not loaded yet.";
                 return new QuizPreferences { UseDefaults = true };
             }
 
-            List<AttemptRecord> history;
-            try
-            {
-                history = _attemptRepo.GetForUser(UserKey)?.OrderBy(x => x.SubmittedAt).ToList() ?? new List<AttemptRecord>();
-            }
-            catch
-            {
-                history = new List<AttemptRecord>();
-            }
+            var userModel = _sharedAdaptiveLearningService.BuildUserModel(_userKey);
 
-            if (history.Count == 0)
+            var topicsAvailable = _allQuestions.Select(q => q.Metadata.Topic).Where(t => t != Mondas.Models.Topic.Other).Distinct().ToList();
+
+            var weakest = _sharedAdaptiveLearningService.GetWeakestTopic(userModel, topicsAvailable);
+
+            if (!weakest.HasValue)
             {
-                reason = "No attempts logged yet. Complete a quiz to generate a recommendation.";
+                reason = "No attempts logged yet. Complete a quiz or mini game to generate a recommendation.";
                 return new QuizPreferences { UseDefaults = true };
             }
 
-            var userModel = new UserModel();
-
-            foreach (var rec in history)
-            {
-                if (!_questionById.TryGetValue(rec.QuestionId, out var q))
-                {
-                    continue;
-                }
-
-                var attempt = new QuestionAttempt { QuestionId = rec.QuestionId, StartedAt = rec.SubmittedAt.AddSeconds(-rec.SecondsTaken).ToUniversalTime(), SubmittedAt = rec.SubmittedAt.ToUniversalTime(), IsCorrect = rec.IsCorrect, SelectedOptionIds = SafeReadIds(rec.SelectedOptionIdsJson), ReasonString = rec.ReasonString ?? "", RulesFired = SafeReadRules(rec.RulesFiredJson) };
-                userModel.UpdateFromAttempt(q, attempt);
-            }
-
-            var topicsAvailable = _allQuestions.Select(q => q.Metadata.Topic).Where(t => t != Topic.Other).Distinct().ToList();
-
-            Topic? weakest = null;
-            double weakestMastery = double.MaxValue;
-
-            foreach (var topic in topicsAvailable)
-            {
-                userModel.TopicStats.TryGetValue(topic, out var stats);
-
-                var mastery = stats == null ? 0.0 : stats.Mastery;
-                if (mastery > 1.0)
-                {
-                    mastery /= 100.0;
-                }
-
-                mastery = Math.Max(0.0, Math.Min(1.0, mastery));
-
-                if (mastery < weakestMastery)
-                {
-                    weakestMastery = mastery;
-                    weakest = topic;
-                }
-            }
-
-            if (weakest == null)
-            {
-                reason = "Not enough topic data yet. Answer a few more questions.";
-                return new QuizPreferences { UseDefaults = true };
-            }
+            var weakestMastery = _sharedAdaptiveLearningService.GetMastery01(userModel, weakest.Value);
 
             reason = $"Recommended because your mastery in {weakest.Value} is currently lowest ({weakestMastery:P0}).";
 
-            return new QuizPreferences { UseDefaults = false, QuestionCount = 10, TimerEnabled = false, PrioritiseWeakTopics = true, Topics = new List<Topic> { weakest.Value }, Difficulty = DifficultyBand.Medium, QuestionTypes = new List<QuestionType>(), BloomLevel = null, ThreatVector = "" };
+            return new QuizPreferences{ UseDefaults = false, QuestionCount = 10, TimerEnabled = false, PrioritiseWeakTopics = true, Topics = new List<Topic> { weakest.Value }, Difficulty = weakestMastery < 0.45 ? DifficultyBand.Easy : DifficultyBand.Medium, QuestionTypes = new List<QuestionType>() };
         }
 
         private static string DefaultRecommendedSummary()
@@ -393,20 +422,11 @@ namespace Mondas
             if (p.QuestionTypes != null && p.QuestionTypes.Count > 0)
             {
                 parts.Add("TYPES: " + string.Join(", ", p.QuestionTypes).ToUpperInvariant());
-            }     
+            }    
+            
             else
             {
                 parts.Add("TYPES: ANY");
-            }
-
-            if (p.BloomLevel.HasValue)
-            {
-                parts.Add("BLOOM: " + p.BloomLevel.Value.ToString().ToUpperInvariant());
-            }
-
-            if (!string.IsNullOrWhiteSpace(p.ThreatVector))
-            {
-                parts.Add("VECTOR: " + p.ThreatVector.Trim().ToUpperInvariant());
             }
 
             return string.Join(" · ", parts);
@@ -457,7 +477,6 @@ namespace Mondas
 
             p.Topics ??= new List<Topic>();
             p.QuestionTypes ??= new List<QuestionType>();
-            p.ThreatVector ??= "";
 
             return p;
         }
@@ -485,7 +504,7 @@ namespace Mondas
 
         private void btnNavDashboard_Click(object sender, EventArgs e)
         {
-            var dash = new DashboardForm();
+            var dash = new DashboardForm(_userKey);
             dash.StartPosition = FormStartPosition.CenterScreen;
             dash.Show();
             Close();

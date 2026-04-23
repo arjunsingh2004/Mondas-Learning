@@ -18,14 +18,6 @@ namespace Mondas.Models
         Hard
     }
 
-    public enum BloomLevel
-    {
-        Remember,
-        Understand,
-        Apply,
-        Analyse
-    }
-
     public enum QuestionType
     {
         SingleChoice,
@@ -37,10 +29,7 @@ namespace Mondas.Models
     public sealed class QuestionMetadata
     {
         public Topic Topic { get; set; }
-        public string Subtopic { get; set; } = "";
         public DifficultyBand Difficulty { get; set; }
-        public BloomLevel BloomLevel { get; set; }
-        public string ThreatVector { get; set; } = "";
         public QuestionType QuestionType { get; set; }
         public List<string> MisconceptionTags { get; set; } = new();
     }

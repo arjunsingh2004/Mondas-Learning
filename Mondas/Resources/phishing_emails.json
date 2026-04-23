@@ -1,0 +1,268 @@
+[
+  {
+    "Id": 110001,
+    "Difficulty": "Easy",
+    "SenderName": "Mondas IT",
+    "SenderEmail": "it@mondaslearning.com",
+    "ToEmail": "you@mondaslearning.com",
+    "Subject": "Password expiry reminder",
+    "Body": "Hi,\n\nYour password will expire in 7 days.\nIf you’ve forgotten it, use the official portal from the Mondas app.\n\nThanks,\nIT",
+    "ReplyToEmail": "",
+    "Link": {
+      "DisplayText": "",
+      "Url": ""
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": false,
+    "Explanation": "Legit reminder: no link/attachment, no urgency, no credential request in email body.",
+    "Tags": [],
+    "HasLink": false,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110002,
+    "Difficulty": "Easy",
+    "SenderName": "Microsoft Support",
+    "SenderEmail": "security@m1crosoft-support.com",
+    "ToEmail": "you@mondaslearning.com",
+    "Subject": "URGENT: Account will be locked in 24 hours",
+    "Body": "Dear user,\n\nWe detected unusual activity.\nVerify your account immediately to avoid suspension.\n\nRegards,\nSecurity Team",
+    "ReplyToEmail": "",
+    "Link": {
+      "DisplayText": "Verify Account",
+      "Url": "http://m1crosoft-support.com/verify/login"
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": true,
+    "Explanation": "Lookalike sender domain + urgency + push to verify via link.",
+    "Tags": [
+      "urgency",
+      "lookalike-domain",
+      "credential-harvest"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110003,
+    "Difficulty": "Easy",
+    "SenderName": "test",
+    "SenderEmail": "test@mondaslearning.com",
+    "ToEmail": "test2@mondaslearning.com",
+    "Subject": "test Invoice for January (PDF)",
+    "Body": "Hi,test\n\nInvoice attached for January.\nIf anything looks off, reply directly.\n\nThanks,\nFinance",
+    "ReplyToEmail": "",
+    "Link": {
+      "DisplayText": "",
+      "Url": "test"
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": true,
+    "Explanation": "Plausible internal sender, normal tone, benign PDF attachment.\n\ntest",
+    "Tags": [
+      "attachment"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110004,
+    "Difficulty": "Medium",
+    "SenderName": "DHL Delivery",
+    "SenderEmail": "tracking@dhl-deliveries.com",
+    "ToEmail": "you@mondaslearning.com",
+    "Subject": "Delivery failed: action required",
+    "Body": "We attempted delivery today but could not complete it.\nPlease schedule a redelivery using the link below.\n\nDHL",
+    "ReplyToEmail": "",
+    "Link": {
+      "DisplayText": "Schedule redelivery",
+      "Url": "http://dhl-deliveries.com/redelivery"
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": true,
+    "Explanation": "Generic parcel lure + external domain + link prompt.",
+    "Tags": [
+      "parcel-lure",
+      "external-domain",
+      "link"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110005,
+    "Difficulty": "Hard",
+    "SenderName": "Arjun Singh",
+    "SenderEmail": "arjun.singh@mondaslearning.com",
+    "ToEmail": "you@mondaslearning.com",
+    "Subject": "Quick favour",
+    "Body": "Hey,\n\nCan you quickly review this doc before I send it?\nJust open the attachment and tell me if it looks ok.\n\nCheers",
+    "ReplyToEmail": "arjun.singh@mondaslearning-mail.com",
+    "Link": {
+      "DisplayText": "",
+      "Url": ""
+    },
+    "Attachment": {
+      "FileName": "Review_Doc.docm"
+    },
+    "IsPhishing": true,
+    "Explanation": "Reply-To mismatch + macro-enabled doc (docm) + social engineering.",
+    "Tags": [
+      "reply-to-mismatch",
+      "macro",
+      "social-engineering"
+    ],
+    "HasLink": false,
+    "HasAttachment": true
+  },
+  {
+    "Id": 110006,
+    "Difficulty": "Hard",
+    "SenderName": "HR Team",
+    "SenderEmail": "hr@mondaslearning.com",
+    "ToEmail": "you@mondaslearning.com",
+    "Subject": "Updated employee handbook",
+    "Body": "Hi,\n\nWe’ve published an updated handbook.\nRead it when you get a chance.\n\nThanks,\nHR",
+    "ReplyToEmail": "",
+    "Link": {
+      "DisplayText": "Employee Handbook",
+      "Url": "https://mondaslearning.com/handbook"
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": false,
+    "Explanation": "Legit domain + low pressure + reasonable request.",
+    "Tags": [
+      "legit-link"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110007,
+    "Difficulty": "Medium",
+    "SenderName": "Netflix",
+    "SenderEmail": "billing@netflix-billing-check.com",
+    "ToEmail": "you@mondaslearning.com",
+    "Subject": "Payment declined",
+    "Body": "We couldn’t process your payment.\nUpdate billing details to avoid service interruption.",
+    "ReplyToEmail": "",
+    "Link": {
+      "DisplayText": "Update billing",
+      "Url": "http://netflix-billing-check.com/update"
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": true,
+    "Explanation": "External billing domain + pressure to update details via link.",
+    "Tags": [
+      "billing",
+      "pressure",
+      "link"
+    ],
+    "HasLink": true,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110008,
+    "Difficulty": "Easy",
+    "SenderName": "Mondas Security",
+    "SenderEmail": "security@mondaslearning.com",
+    "ToEmail": "you@mondaslearning.com",
+    "Subject": "Security tip: phishing links",
+    "Body": "Quick reminder: don’t open unexpected links.\nIf you’re unsure, report it.\n\n— Mondas Security",
+    "ReplyToEmail": "",
+    "Link": {
+      "DisplayText": "",
+      "Url": ""
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": false,
+    "Explanation": "No action request, no link, informational message.",
+    "Tags": [
+      "info"
+    ],
+    "HasLink": false,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110009,
+    "Difficulty": "Easy",
+    "SenderName": "test",
+    "SenderEmail": "test@mondaslearning.com",
+    "ToEmail": "test2@mondaslearning.com",
+    "Subject": "test Invoice for January (PDF)",
+    "Body": "Hi,test\n\nInvoice attached for January.\nIf anything looks off, reply directly.\n\nThanks,\nFinance",
+    "ReplyToEmail": "test",
+    "Link": {
+      "DisplayText": "",
+      "Url": "test"
+    },
+    "Attachment": {
+      "FileName": ""
+    },
+    "IsPhishing": true,
+    "Explanation": "Plausible internal sender, normal tone, benign PDF attachment.\n\ntest",
+    "Tags": [],
+    "HasLink": true,
+    "HasAttachment": false
+  },
+  {
+    "Id": 110010,
+    "Difficulty": "Medium",
+    "SenderName": "test",
+    "SenderEmail": "test",
+    "ToEmail": "test",
+    "Subject": "test",
+    "Body": "test",
+    "ReplyToEmail": "test",
+    "Link": {
+      "DisplayText": "",
+      "Url": "test"
+    },
+    "Attachment": {
+      "FileName": "test"
+    },
+    "IsPhishing": true,
+    "Explanation": "test",
+    "Tags": [],
+    "HasLink": true,
+    "HasAttachment": true
+  },
+  {
+    "Id": 110011,
+    "Difficulty": "Medium",
+    "SenderName": "name",
+    "SenderEmail": "email",
+    "ToEmail": "to email",
+    "Subject": "subj",
+    "Body": "body",
+    "ReplyToEmail": "to",
+    "Link": {
+      "DisplayText": "site",
+      "Url": "blah.com"
+    },
+    "Attachment": {
+      "FileName": "www.cook.com"
+    },
+    "IsPhishing": true,
+    "Explanation": "explanation",
+    "Tags": [
+      "test"
+    ],
+    "HasLink": true,
+    "HasAttachment": true
+  }
+]

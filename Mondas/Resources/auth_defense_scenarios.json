@@ -1,0 +1,182 @@
+[
+  {
+    "Id": "auth-credstuff-admin-01",
+    "Title": "Admin portal under credential stuffing",
+    "ThreatType": "CredentialStuffing",
+    "GoalType": "ProtectAdminSignIn",
+    "Difficulty": "Hard",
+    "Body": "Attackers are replaying reused credentials against the admin portal. The portal protects finance and user management features. Several failed sign-in attempts are arriving from multiple IP addresses, and the concern is that one valid reused password may eventually land.",
+    "Hints": [
+      "Admin access raises the impact immediately.",
+      "Credential stuffing means passwords may already be known.",
+      "Think about strong authentication, throttling and alerting together."
+    ],
+    "Tags": [
+      "credential-stuffing",
+      "admin-access",
+      "mfa",
+      "rate-limit"
+    ],
+    "RecommendedAuthMethod": "Passkey",
+    "RecommendedPasswordPolicy": "PasswordManagerRequired",
+    "RecommendedRecovery": "VerifiedRecoveryDesk",
+    "RecommendedMonitoring": "RealTimeAlerts",
+    "RecommendedRateLimit": "UserAndIpThrottle",
+    "RecommendedSessionControl": "ReauthOnRisk",
+    "RequireMfa": true,
+    "RequirePhishingResistant": true,
+    "RequireDeviceBinding": true,
+    "RequireRiskBasedStepUp": true,
+    "RequireBlockLegacyAuth": true,
+    "RequireAlertOnSuspicious": true
+  },
+  {
+    "Id": "auth-helpdesk-reset-01",
+    "Title": "Helpdesk social engineering on password reset",
+    "ThreatType": "HelpdeskTakeover",
+    "GoalType": "ProtectPasswordReset",
+    "Difficulty": "Medium",
+    "Body": "An attacker is calling the helpdesk pretending to be a locked-out employee and wants a fast password reset before an urgent meeting. The risk is not the password itself but the recovery route being socially engineered.",
+    "Hints": [
+      "The weak point is recovery, not just login.",
+      "Human verification beats convenience here.",
+      "Good monitoring still matters after the reset flow."
+    ],
+    "Tags": [
+      "recovery",
+      "helpdesk",
+      "social-engineering"
+    ],
+    "RecommendedAuthMethod": "PasswordAndOtp",
+    "RecommendedPasswordPolicy": "StrongUnique",
+    "RecommendedRecovery": "VerifiedRecoveryDesk",
+    "RecommendedMonitoring": "RiskDetection",
+    "RecommendedRateLimit": "BasicLockout",
+    "RecommendedSessionControl": "ReauthOnRisk",
+    "RequireMfa": true,
+    "RequirePhishingResistant": false,
+    "RequireDeviceBinding": false,
+    "RequireRiskBasedStepUp": true,
+    "RequireBlockLegacyAuth": false,
+    "RequireAlertOnSuspicious": true
+  },
+  {
+    "Id": "auth-mfa-fatigue-01",
+    "Title": "Push fatigue against a remote worker",
+    "ThreatType": "MfaFatigue",
+    "GoalType": "ProtectUserSignIn",
+    "Difficulty": "Hard",
+    "Body": "A user keeps receiving repeated push prompts on their phone late at night. Attackers likely already know the password and are now trying to wear the user down into approving one of the prompts.",
+    "Hints": [
+      "Push approval alone can be weak here.",
+      "A phishing-resistant step helps more than just more prompts.",
+      "Alerting and step-up controls matter."
+    ],
+    "Tags": [
+      "mfa-fatigue",
+      "push",
+      "user-signin"
+    ],
+    "RecommendedAuthMethod": "Passkey",
+    "RecommendedPasswordPolicy": "StrongUnique",
+    "RecommendedRecovery": "BackupCodes",
+    "RecommendedMonitoring": "RealTimeAlerts",
+    "RecommendedRateLimit": "SmartThrottle",
+    "RecommendedSessionControl": "ReauthOnRisk",
+    "RequireMfa": true,
+    "RequirePhishingResistant": true,
+    "RequireDeviceBinding": false,
+    "RequireRiskBasedStepUp": true,
+    "RequireBlockLegacyAuth": true,
+    "RequireAlertOnSuspicious": true
+  },
+  {
+    "Id": "auth-session-hijack-01",
+    "Title": "Stolen session token on shared device",
+    "ThreatType": "SessionHijack",
+    "GoalType": "ProtectHighRiskAction",
+    "Difficulty": "Medium",
+    "Body": "A session token may have been copied from a shared or unmanaged device. The attacker is less focused on logging in and more focused on reusing an active session to make sensitive changes without re-authenticating.",
+    "Hints": [
+      "This is a session problem more than a password problem.",
+      "Device binding and re-auth on risk become important.",
+      "Monitoring can help contain it quickly."
+    ],
+    "Tags": [
+      "session",
+      "token",
+      "high-risk-action"
+    ],
+    "RecommendedAuthMethod": "PasswordAndOtp",
+    "RecommendedPasswordPolicy": "StrongUnique",
+    "RecommendedRecovery": "BackupCodes",
+    "RecommendedMonitoring": "RiskDetection",
+    "RecommendedRateLimit": "BasicLockout",
+    "RecommendedSessionControl": "DeviceBound",
+    "RequireMfa": true,
+    "RequirePhishingResistant": false,
+    "RequireDeviceBinding": true,
+    "RequireRiskBasedStepUp": true,
+    "RequireBlockLegacyAuth": false,
+    "RequireAlertOnSuspicious": true
+  },
+  {
+    "Id": "auth-legacy-abuse-01",
+    "Title": "Legacy protocol bypass route",
+    "ThreatType": "LegacyProtocolAbuse",
+    "GoalType": "ProtectRemoteAccess",
+    "Difficulty": "Medium",
+    "Body": "The main login flow is fairly modern, but an older authentication path still exists for compatibility reasons. Attackers are targeting the weaker legacy route to avoid stronger controls on the main path.",
+    "Hints": [
+      "Modern login alone is not enough.",
+      "Think about what an attacker will bypass rather than what a normal user sees.",
+      "Blocking weaker backdoors matters here."
+    ],
+    "Tags": [
+      "legacy-auth",
+      "bypass",
+      "remote-access"
+    ],
+    "RecommendedAuthMethod": "PasswordAndOtp",
+    "RecommendedPasswordPolicy": "StrongUnique",
+    "RecommendedRecovery": "BackupCodes",
+    "RecommendedMonitoring": "RiskDetection",
+    "RecommendedRateLimit": "SmartThrottle",
+    "RecommendedSessionControl": "ShortSession",
+    "RequireMfa": true,
+    "RequirePhishingResistant": false,
+    "RequireDeviceBinding": false,
+    "RequireRiskBasedStepUp": false,
+    "RequireBlockLegacyAuth": true,
+    "RequireAlertOnSuspicious": true
+  },
+  {
+    "Id": "auth_20260326211755",
+    "Title": "title",
+    "ThreatType": "PasswordSpraying",
+    "GoalType": "ProtectPasswordReset",
+    "Difficulty": "Medium",
+    "Body": "body",
+    "Hints": [
+      "hints"
+    ],
+    "Tags": [
+      "tag1",
+      "tag2",
+      "tag3",
+      "tag4"
+    ],
+    "RecommendedAuthMethod": "PasswordOnly",
+    "RecommendedPasswordPolicy": "StrongUnique",
+    "RecommendedRecovery": "EmailReset",
+    "RecommendedMonitoring": "BasicLogs",
+    "RecommendedRateLimit": "BasicLockout",
+    "RecommendedSessionControl": "Basic",
+    "RequireMfa": true,
+    "RequirePhishingResistant": true,
+    "RequireDeviceBinding": false,
+    "RequireRiskBasedStepUp": true,
+    "RequireBlockLegacyAuth": false,
+    "RequireAlertOnSuspicious": true
+  }
+]

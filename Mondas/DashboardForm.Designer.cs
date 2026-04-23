@@ -36,7 +36,7 @@
             this.btnNavMiniGames = new System.Windows.Forms.Button();
             this.btnNavReports = new System.Windows.Forms.Button();
             this.btnNavLeaderboard = new System.Windows.Forms.Button();
-            this.btnNavCommunity = new System.Windows.Forms.Button();
+            this.btnNavModules = new System.Windows.Forms.Button();
             this.btnNavSettings = new System.Windows.Forms.Button();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tlpPage = new System.Windows.Forms.TableLayoutPanel();
@@ -69,9 +69,24 @@
             this.tlpMastery = new System.Windows.Forms.TableLayoutPanel();
             this.gbReports = new System.Windows.Forms.GroupBox();
             this.pnlReportsPreview = new System.Windows.Forms.Panel();
-            this.btnViewReports = new Syncfusion.WinForms.Controls.SfButton();
-            this.lblMistakes = new System.Windows.Forms.Label();
+            this.tblReportsPreview = new System.Windows.Forms.TableLayoutPanel();
+            this.lvRecentReports = new System.Windows.Forms.ListView();
+            this.colRecentReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colRecentDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tblReportsKpis = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlKpiStreak = new System.Windows.Forms.Panel();
+            this.lblCapStreak = new System.Windows.Forms.Label();
             this.lblStreak = new System.Windows.Forms.Label();
+            this.pnlKpiMistakes = new System.Windows.Forms.Panel();
+            this.lblCapMistakes = new System.Windows.Forms.Label();
+            this.lblMistakes = new System.Windows.Forms.Label();
+            this.pnlKpiReportsCount = new System.Windows.Forms.Panel();
+            this.lblCapReportsCount = new System.Windows.Forms.Label();
+            this.lblReportsCount = new System.Windows.Forms.Label();
+            this.pnlKpiLastReport = new System.Windows.Forms.Panel();
+            this.lblCapLastReport = new System.Windows.Forms.Label();
+            this.lblLastReport = new System.Windows.Forms.Label();
+            this.btnViewReports = new Syncfusion.WinForms.Controls.SfButton();
             this.gbMisconA = new System.Windows.Forms.GroupBox();
             this.lvMisconA = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -79,13 +94,15 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbMiniGames = new System.Windows.Forms.GroupBox();
             this.tlpMiniTiles = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlTilePass = new System.Windows.Forms.Panel();
-            this.lblTilePassTitle = new System.Windows.Forms.Label();
+            this.pnlTileAuth = new System.Windows.Forms.Panel();
+            this.lblTileAuthTitle = new System.Windows.Forms.Label();
             this.pnlTilePhish = new System.Windows.Forms.Panel();
             this.lblTilePhishTitle = new System.Windows.Forms.Label();
             this.pnlQuizRow = new System.Windows.Forms.Panel();
             this.tlpQuizCenter = new System.Windows.Forms.TableLayoutPanel();
             this.btnStartQuiz = new Syncfusion.WinForms.Controls.SfButton();
+            this.cmbStatsSource = new System.Windows.Forms.ComboBox();
+            this.lblStatsSource = new System.Windows.Forms.Label();
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lblFooterUser = new System.Windows.Forms.Label();
             this.lblFooterLeft = new System.Windows.Forms.Label();
@@ -107,10 +124,16 @@
             this.gbMastery.SuspendLayout();
             this.gbReports.SuspendLayout();
             this.pnlReportsPreview.SuspendLayout();
+            this.tblReportsPreview.SuspendLayout();
+            this.tblReportsKpis.SuspendLayout();
+            this.pnlKpiStreak.SuspendLayout();
+            this.pnlKpiMistakes.SuspendLayout();
+            this.pnlKpiReportsCount.SuspendLayout();
+            this.pnlKpiLastReport.SuspendLayout();
             this.gbMisconA.SuspendLayout();
             this.gbMiniGames.SuspendLayout();
             this.tlpMiniTiles.SuspendLayout();
-            this.pnlTilePass.SuspendLayout();
+            this.pnlTileAuth.SuspendLayout();
             this.pnlTilePhish.SuspendLayout();
             this.pnlQuizRow.SuspendLayout();
             this.tlpQuizCenter.SuspendLayout();
@@ -149,7 +172,7 @@
             this.flpNav.Controls.Add(this.btnNavMiniGames);
             this.flpNav.Controls.Add(this.btnNavReports);
             this.flpNav.Controls.Add(this.btnNavLeaderboard);
-            this.flpNav.Controls.Add(this.btnNavCommunity);
+            this.flpNav.Controls.Add(this.btnNavModules);
             this.flpNav.Controls.Add(this.btnNavSettings);
             this.flpNav.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpNav.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -188,6 +211,7 @@
             this.btnNavQuiz.TabIndex = 1;
             this.btnNavQuiz.Text = "QUIZ";
             this.btnNavQuiz.UseVisualStyleBackColor = false;
+            this.btnNavQuiz.Click += new System.EventHandler(this.btnNavQuiz_Click);
             // 
             // btnNavMiniGames
             // 
@@ -202,6 +226,7 @@
             this.btnNavMiniGames.TabIndex = 2;
             this.btnNavMiniGames.Text = "MINI GAMES";
             this.btnNavMiniGames.UseVisualStyleBackColor = false;
+            this.btnNavMiniGames.Click += new System.EventHandler(this.btnNavMiniGames_Click);
             // 
             // btnNavReports
             // 
@@ -214,8 +239,9 @@
             this.btnNavReports.Name = "btnNavReports";
             this.btnNavReports.Size = new System.Drawing.Size(240, 52);
             this.btnNavReports.TabIndex = 3;
-            this.btnNavReports.Text = "REPORTS";
+            this.btnNavReports.Text = "REPORTS AND CHARTS";
             this.btnNavReports.UseVisualStyleBackColor = false;
+            this.btnNavReports.Click += new System.EventHandler(this.btnNavReports_Click);
             // 
             // btnNavLeaderboard
             // 
@@ -231,19 +257,20 @@
             this.btnNavLeaderboard.Text = "LEADERBOARD";
             this.btnNavLeaderboard.UseVisualStyleBackColor = false;
             // 
-            // btnNavCommunity
+            // btnNavModules
             // 
-            this.btnNavCommunity.FlatAppearance.BorderSize = 0;
-            this.btnNavCommunity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNavCommunity.Font = new System.Drawing.Font("Agency", 10F);
-            this.btnNavCommunity.ForeColor = System.Drawing.Color.White;
-            this.btnNavCommunity.Location = new System.Drawing.Point(0, 360);
-            this.btnNavCommunity.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNavCommunity.Name = "btnNavCommunity";
-            this.btnNavCommunity.Size = new System.Drawing.Size(240, 52);
-            this.btnNavCommunity.TabIndex = 5;
-            this.btnNavCommunity.Text = "COMMUNITY";
-            this.btnNavCommunity.UseVisualStyleBackColor = false;
+            this.btnNavModules.FlatAppearance.BorderSize = 0;
+            this.btnNavModules.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNavModules.Font = new System.Drawing.Font("Agency", 10F);
+            this.btnNavModules.ForeColor = System.Drawing.Color.White;
+            this.btnNavModules.Location = new System.Drawing.Point(0, 360);
+            this.btnNavModules.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNavModules.Name = "btnNavModules";
+            this.btnNavModules.Size = new System.Drawing.Size(240, 52);
+            this.btnNavModules.TabIndex = 5;
+            this.btnNavModules.Text = "Learning Modules";
+            this.btnNavModules.UseVisualStyleBackColor = false;
+            this.btnNavModules.Click += new System.EventHandler(this.btnNavModules_Click);
             // 
             // btnNavSettings
             // 
@@ -285,6 +312,7 @@
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tlpPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpPage.Size = new System.Drawing.Size(908, 578);
             this.tlpPage.TabIndex = 0;
             // 
@@ -389,6 +417,7 @@
             this.tlpStats.Name = "tlpStats";
             this.tlpStats.RowCount = 1;
             this.tlpStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tlpStats.Size = new System.Drawing.Size(902, 89);
             this.tlpStats.TabIndex = 1;
             // 
@@ -409,7 +438,7 @@
             // lblAttemptsValue
             // 
             this.lblAttemptsValue.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblAttemptsValue.Font = new System.Drawing.Font("Muro", 20F);
+            this.lblAttemptsValue.Font = new System.Drawing.Font("Muro", 16F);
             this.lblAttemptsValue.ForeColor = System.Drawing.Color.Black;
             this.lblAttemptsValue.Location = new System.Drawing.Point(8, 27);
             this.lblAttemptsValue.Name = "lblAttemptsValue";
@@ -447,7 +476,7 @@
             // lblAccuracyValue
             // 
             this.lblAccuracyValue.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblAccuracyValue.Font = new System.Drawing.Font("Muro", 20F);
+            this.lblAccuracyValue.Font = new System.Drawing.Font("Muro", 16F);
             this.lblAccuracyValue.ForeColor = System.Drawing.Color.Black;
             this.lblAccuracyValue.Location = new System.Drawing.Point(8, 27);
             this.lblAccuracyValue.Name = "lblAccuracyValue";
@@ -485,7 +514,7 @@
             // lblAvgTimeValue
             // 
             this.lblAvgTimeValue.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblAvgTimeValue.Font = new System.Drawing.Font("Muro", 20F);
+            this.lblAvgTimeValue.Font = new System.Drawing.Font("Muro", 16F);
             this.lblAvgTimeValue.ForeColor = System.Drawing.Color.Black;
             this.lblAvgTimeValue.Location = new System.Drawing.Point(8, 27);
             this.lblAvgTimeValue.Name = "lblAvgTimeValue";
@@ -627,6 +656,7 @@
             // tlpMastery
             // 
             this.tlpMastery.AutoScroll = true;
+            this.tlpMastery.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tlpMastery.ColumnCount = 4;
             this.tlpMastery.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tlpMastery.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -657,14 +687,223 @@
             // pnlReportsPreview
             // 
             this.pnlReportsPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlReportsPreview.Controls.Add(this.btnViewReports);
-            this.pnlReportsPreview.Controls.Add(this.lblMistakes);
-            this.pnlReportsPreview.Controls.Add(this.lblStreak);
+            this.pnlReportsPreview.Controls.Add(this.tblReportsPreview);
             this.pnlReportsPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlReportsPreview.Location = new System.Drawing.Point(3, 28);
             this.pnlReportsPreview.Name = "pnlReportsPreview";
             this.pnlReportsPreview.Size = new System.Drawing.Size(295, 124);
             this.pnlReportsPreview.TabIndex = 0;
+            // 
+            // tblReportsPreview
+            // 
+            this.tblReportsPreview.ColumnCount = 1;
+            this.tblReportsPreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblReportsPreview.Controls.Add(this.lvRecentReports, 0, 0);
+            this.tblReportsPreview.Controls.Add(this.tblReportsKpis, 0, 1);
+            this.tblReportsPreview.Controls.Add(this.btnViewReports, 0, 2);
+            this.tblReportsPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblReportsPreview.Location = new System.Drawing.Point(0, 0);
+            this.tblReportsPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.tblReportsPreview.Name = "tblReportsPreview";
+            this.tblReportsPreview.RowCount = 3;
+            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tblReportsPreview.Size = new System.Drawing.Size(293, 122);
+            this.tblReportsPreview.TabIndex = 0;
+            // 
+            // lvRecentReports
+            // 
+            this.lvRecentReports.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvRecentReports.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvRecentReports.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colRecentReport,
+            this.colRecentDate});
+            this.lvRecentReports.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvRecentReports.Font = new System.Drawing.Font("Agency", 10F);
+            this.lvRecentReports.FullRowSelect = true;
+            this.lvRecentReports.GridLines = true;
+            this.lvRecentReports.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvRecentReports.HideSelection = false;
+            this.lvRecentReports.Location = new System.Drawing.Point(3, 3);
+            this.lvRecentReports.Name = "lvRecentReports";
+            this.lvRecentReports.Size = new System.Drawing.Size(287, 33);
+            this.lvRecentReports.TabIndex = 0;
+            this.lvRecentReports.UseCompatibleStateImageBehavior = false;
+            this.lvRecentReports.View = System.Windows.Forms.View.Details;
+            // 
+            // colRecentReport
+            // 
+            this.colRecentReport.Text = "REPORT";
+            this.colRecentReport.Width = 170;
+            // 
+            // colRecentDate
+            // 
+            this.colRecentDate.Text = "DATE";
+            this.colRecentDate.Width = 90;
+            // 
+            // tblReportsKpis
+            // 
+            this.tblReportsKpis.ColumnCount = 2;
+            this.tblReportsKpis.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.Controls.Add(this.pnlKpiStreak, 0, 0);
+            this.tblReportsKpis.Controls.Add(this.pnlKpiMistakes, 1, 0);
+            this.tblReportsKpis.Controls.Add(this.pnlKpiReportsCount, 0, 1);
+            this.tblReportsKpis.Controls.Add(this.pnlKpiLastReport, 1, 1);
+            this.tblReportsKpis.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblReportsKpis.Location = new System.Drawing.Point(0, 47);
+            this.tblReportsKpis.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.tblReportsKpis.Name = "tblReportsKpis";
+            this.tblReportsKpis.RowCount = 2;
+            this.tblReportsKpis.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblReportsKpis.Size = new System.Drawing.Size(293, 31);
+            this.tblReportsKpis.TabIndex = 1;
+            // 
+            // pnlKpiStreak
+            // 
+            this.pnlKpiStreak.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiStreak.Controls.Add(this.lblCapStreak);
+            this.pnlKpiStreak.Controls.Add(this.lblStreak);
+            this.pnlKpiStreak.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiStreak.Location = new System.Drawing.Point(6, 6);
+            this.pnlKpiStreak.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiStreak.Name = "pnlKpiStreak";
+            this.pnlKpiStreak.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiStreak.Size = new System.Drawing.Size(134, 3);
+            this.pnlKpiStreak.TabIndex = 0;
+            // 
+            // lblCapStreak
+            // 
+            this.lblCapStreak.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapStreak.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapStreak.Location = new System.Drawing.Point(6, 6);
+            this.lblCapStreak.Name = "lblCapStreak";
+            this.lblCapStreak.Size = new System.Drawing.Size(120, 16);
+            this.lblCapStreak.TabIndex = 2;
+            this.lblCapStreak.Text = "STREAK";
+            this.lblCapStreak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblStreak
+            // 
+            this.lblStreak.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblStreak.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblStreak.Location = new System.Drawing.Point(6, 6);
+            this.lblStreak.Name = "lblStreak";
+            this.lblStreak.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblStreak.Size = new System.Drawing.Size(120, 0);
+            this.lblStreak.TabIndex = 2;
+            this.lblStreak.Text = "2";
+            this.lblStreak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlKpiMistakes
+            // 
+            this.pnlKpiMistakes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiMistakes.Controls.Add(this.lblCapMistakes);
+            this.pnlKpiMistakes.Controls.Add(this.lblMistakes);
+            this.pnlKpiMistakes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiMistakes.Location = new System.Drawing.Point(152, 6);
+            this.pnlKpiMistakes.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiMistakes.Name = "pnlKpiMistakes";
+            this.pnlKpiMistakes.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiMistakes.Size = new System.Drawing.Size(135, 3);
+            this.pnlKpiMistakes.TabIndex = 1;
+            // 
+            // lblCapMistakes
+            // 
+            this.lblCapMistakes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapMistakes.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapMistakes.Location = new System.Drawing.Point(6, 6);
+            this.lblCapMistakes.Name = "lblCapMistakes";
+            this.lblCapMistakes.Size = new System.Drawing.Size(121, 16);
+            this.lblCapMistakes.TabIndex = 2;
+            this.lblCapMistakes.Text = "MISTAKES";
+            this.lblCapMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblMistakes
+            // 
+            this.lblMistakes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMistakes.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblMistakes.Location = new System.Drawing.Point(6, 6);
+            this.lblMistakes.Name = "lblMistakes";
+            this.lblMistakes.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblMistakes.Size = new System.Drawing.Size(121, 0);
+            this.lblMistakes.TabIndex = 0;
+            this.lblMistakes.Text = "7";
+            this.lblMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlKpiReportsCount
+            // 
+            this.pnlKpiReportsCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiReportsCount.Controls.Add(this.lblCapReportsCount);
+            this.pnlKpiReportsCount.Controls.Add(this.lblReportsCount);
+            this.pnlKpiReportsCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiReportsCount.Location = new System.Drawing.Point(6, 21);
+            this.pnlKpiReportsCount.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiReportsCount.Name = "pnlKpiReportsCount";
+            this.pnlKpiReportsCount.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiReportsCount.Size = new System.Drawing.Size(134, 4);
+            this.pnlKpiReportsCount.TabIndex = 2;
+            // 
+            // lblCapReportsCount
+            // 
+            this.lblCapReportsCount.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapReportsCount.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapReportsCount.Location = new System.Drawing.Point(6, 6);
+            this.lblCapReportsCount.Name = "lblCapReportsCount";
+            this.lblCapReportsCount.Size = new System.Drawing.Size(120, 16);
+            this.lblCapReportsCount.TabIndex = 2;
+            this.lblCapReportsCount.Text = "REPORTS";
+            this.lblCapReportsCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblReportsCount
+            // 
+            this.lblReportsCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblReportsCount.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblReportsCount.Location = new System.Drawing.Point(6, 6);
+            this.lblReportsCount.Name = "lblReportsCount";
+            this.lblReportsCount.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblReportsCount.Size = new System.Drawing.Size(120, 0);
+            this.lblReportsCount.TabIndex = 3;
+            this.lblReportsCount.Text = "3";
+            this.lblReportsCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlKpiLastReport
+            // 
+            this.pnlKpiLastReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlKpiLastReport.Controls.Add(this.lblCapLastReport);
+            this.pnlKpiLastReport.Controls.Add(this.lblLastReport);
+            this.pnlKpiLastReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlKpiLastReport.Location = new System.Drawing.Point(152, 21);
+            this.pnlKpiLastReport.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlKpiLastReport.Name = "pnlKpiLastReport";
+            this.pnlKpiLastReport.Padding = new System.Windows.Forms.Padding(6);
+            this.pnlKpiLastReport.Size = new System.Drawing.Size(135, 4);
+            this.pnlKpiLastReport.TabIndex = 3;
+            // 
+            // lblCapLastReport
+            // 
+            this.lblCapLastReport.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCapLastReport.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblCapLastReport.Location = new System.Drawing.Point(6, 6);
+            this.lblCapLastReport.Name = "lblCapLastReport";
+            this.lblCapLastReport.Size = new System.Drawing.Size(121, 16);
+            this.lblCapLastReport.TabIndex = 2;
+            this.lblCapLastReport.Text = "LAST REPORT";
+            this.lblCapLastReport.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblLastReport
+            // 
+            this.lblLastReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLastReport.Font = new System.Drawing.Font("Muro", 16F);
+            this.lblLastReport.Location = new System.Drawing.Point(6, 6);
+            this.lblLastReport.Name = "lblLastReport";
+            this.lblLastReport.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.lblLastReport.Size = new System.Drawing.Size(121, 0);
+            this.lblLastReport.TabIndex = 3;
+            this.lblLastReport.Text = "2";
+            this.lblLastReport.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnViewReports
             // 
@@ -672,38 +911,15 @@
             this.btnViewReports.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnViewReports.Font = new System.Drawing.Font("Muro", 9F);
             this.btnViewReports.ForeColor = System.Drawing.Color.White;
-            this.btnViewReports.Location = new System.Drawing.Point(89, 87);
+            this.btnViewReports.Location = new System.Drawing.Point(71, 85);
+            this.btnViewReports.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             this.btnViewReports.Name = "btnViewReports";
-            this.btnViewReports.Size = new System.Drawing.Size(123, 28);
+            this.btnViewReports.Size = new System.Drawing.Size(150, 31);
             this.btnViewReports.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnViewReports.Style.ForeColor = System.Drawing.Color.White;
             this.btnViewReports.TabIndex = 1;
             this.btnViewReports.Text = "VIEW REPORTS";
             this.btnViewReports.UseVisualStyleBackColor = false;
-            // 
-            // lblMistakes
-            // 
-            this.lblMistakes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMistakes.AutoSize = true;
-            this.lblMistakes.Font = new System.Drawing.Font("Muro", 8F);
-            this.lblMistakes.Location = new System.Drawing.Point(204, 39);
-            this.lblMistakes.Name = "lblMistakes";
-            this.lblMistakes.Size = new System.Drawing.Size(78, 16);
-            this.lblMistakes.TabIndex = 0;
-            this.lblMistakes.Text = "7 mistakes";
-            this.lblMistakes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblStreak
-            // 
-            this.lblStreak.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStreak.AutoSize = true;
-            this.lblStreak.Font = new System.Drawing.Font("Muro", 8F);
-            this.lblStreak.Location = new System.Drawing.Point(204, 19);
-            this.lblStreak.Name = "lblStreak";
-            this.lblStreak.Size = new System.Drawing.Size(73, 16);
-            this.lblStreak.TabIndex = 0;
-            this.lblStreak.Text = "10 streak";
-            this.lblStreak.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // gbMisconA
             // 
@@ -769,7 +985,7 @@
             this.tlpMiniTiles.ColumnCount = 2;
             this.tlpMiniTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpMiniTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpMiniTiles.Controls.Add(this.pnlTilePass, 1, 0);
+            this.tlpMiniTiles.Controls.Add(this.pnlTileAuth, 1, 0);
             this.tlpMiniTiles.Controls.Add(this.pnlTilePhish, 0, 0);
             this.tlpMiniTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMiniTiles.Location = new System.Drawing.Point(3, 28);
@@ -781,31 +997,32 @@
             this.tlpMiniTiles.Size = new System.Drawing.Size(295, 63);
             this.tlpMiniTiles.TabIndex = 0;
             // 
-            // pnlTilePass
+            // pnlTileAuth
             // 
-            this.pnlTilePass.BackColor = System.Drawing.Color.RoyalBlue;
-            this.pnlTilePass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlTilePass.Controls.Add(this.lblTilePassTitle);
-            this.pnlTilePass.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnlTilePass.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTilePass.Location = new System.Drawing.Point(147, 6);
-            this.pnlTilePass.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlTilePass.Name = "pnlTilePass";
-            this.pnlTilePass.Padding = new System.Windows.Forms.Padding(12);
-            this.pnlTilePass.Size = new System.Drawing.Size(142, 51);
-            this.pnlTilePass.TabIndex = 1;
+            this.pnlTileAuth.BackColor = System.Drawing.Color.RoyalBlue;
+            this.pnlTileAuth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTileAuth.Controls.Add(this.lblTileAuthTitle);
+            this.pnlTileAuth.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlTileAuth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTileAuth.Location = new System.Drawing.Point(147, 6);
+            this.pnlTileAuth.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTileAuth.Name = "pnlTileAuth";
+            this.pnlTileAuth.Padding = new System.Windows.Forms.Padding(12);
+            this.pnlTileAuth.Size = new System.Drawing.Size(142, 51);
+            this.pnlTileAuth.TabIndex = 1;
             // 
-            // lblTilePassTitle
+            // lblTileAuthTitle
             // 
-            this.lblTilePassTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTilePassTitle.Font = new System.Drawing.Font("Muro", 7F);
-            this.lblTilePassTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTilePassTitle.Location = new System.Drawing.Point(12, 12);
-            this.lblTilePassTitle.Name = "lblTilePassTitle";
-            this.lblTilePassTitle.Size = new System.Drawing.Size(116, 25);
-            this.lblTilePassTitle.TabIndex = 0;
-            this.lblTilePassTitle.Text = "Password Workshop";
-            this.lblTilePassTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTileAuthTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTileAuthTitle.Font = new System.Drawing.Font("Muro", 10F);
+            this.lblTileAuthTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTileAuthTitle.Location = new System.Drawing.Point(12, 12);
+            this.lblTileAuthTitle.Name = "lblTileAuthTitle";
+            this.lblTileAuthTitle.Size = new System.Drawing.Size(116, 25);
+            this.lblTileAuthTitle.TabIndex = 0;
+            this.lblTileAuthTitle.Text = "AUTHENTICATION DEFENSE";
+            this.lblTileAuthTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTileAuthTitle.Click += new System.EventHandler(this.lblTileAuthTitle_Click);
             // 
             // pnlTilePhish
             // 
@@ -824,15 +1041,16 @@
             // lblTilePhishTitle
             // 
             this.lblTilePhishTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTilePhishTitle.Font = new System.Drawing.Font("Muro", 7.5F);
+            this.lblTilePhishTitle.Font = new System.Drawing.Font("Muro", 10F);
             this.lblTilePhishTitle.ForeColor = System.Drawing.Color.White;
             this.lblTilePhishTitle.Location = new System.Drawing.Point(12, 12);
             this.lblTilePhishTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTilePhishTitle.Name = "lblTilePhishTitle";
             this.lblTilePhishTitle.Size = new System.Drawing.Size(115, 25);
             this.lblTilePhishTitle.TabIndex = 0;
-            this.lblTilePhishTitle.Text = "Phishing Simulator";
+            this.lblTilePhishTitle.Text = "PHISHING SIMULATION";
             this.lblTilePhishTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTilePhishTitle.Click += new System.EventHandler(this.lblTilePhishTitle_Click);
             // 
             // pnlQuizRow
             // 
@@ -845,33 +1063,64 @@
             // 
             // tlpQuizCenter
             // 
-            this.tlpQuizCenter.ColumnCount = 1;
+            this.tlpQuizCenter.ColumnCount = 3;
             this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpQuizCenter.Controls.Add(this.btnStartQuiz, 0, 0);
-            this.tlpQuizCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpQuizCenter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 584F));
+            this.tlpQuizCenter.Controls.Add(this.btnStartQuiz, 2, 0);
+            this.tlpQuizCenter.Controls.Add(this.cmbStatsSource, 1, 0);
+            this.tlpQuizCenter.Controls.Add(this.lblStatsSource, 0, 0);
             this.tlpQuizCenter.Location = new System.Drawing.Point(0, 0);
             this.tlpQuizCenter.Name = "tlpQuizCenter";
             this.tlpQuizCenter.RowCount = 1;
             this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpQuizCenter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tlpQuizCenter.Size = new System.Drawing.Size(902, 80);
             this.tlpQuizCenter.TabIndex = 0;
             // 
             // btnStartQuiz
             // 
-            this.btnStartQuiz.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnStartQuiz.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnStartQuiz.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStartQuiz.Font = new System.Drawing.Font("Muro", 13F);
             this.btnStartQuiz.ForeColor = System.Drawing.Color.White;
-            this.btnStartQuiz.Location = new System.Drawing.Point(321, 15);
+            this.btnStartQuiz.Location = new System.Drawing.Point(649, 21);
             this.btnStartQuiz.Name = "btnStartQuiz";
-            this.btnStartQuiz.Size = new System.Drawing.Size(260, 50);
+            this.btnStartQuiz.Size = new System.Drawing.Size(250, 38);
             this.btnStartQuiz.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStartQuiz.Style.ForeColor = System.Drawing.Color.White;
             this.btnStartQuiz.TabIndex = 0;
             this.btnStartQuiz.Text = "START ADAPTIVE QUIZ";
             this.btnStartQuiz.UseVisualStyleBackColor = false;
+            this.btnStartQuiz.Click += new System.EventHandler(this.btnStartQuiz_Click);
+            // 
+            // cmbStatsSource
+            // 
+            this.cmbStatsSource.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbStatsSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStatsSource.FormattingEnabled = true;
+            this.cmbStatsSource.Items.AddRange(new object[] {
+            "ALL",
+            "QUIZ",
+            "PHISHING SIMULATOR",
+            "AUTHENTICATION DEFENSE",
+            "LEARNING MODULES"});
+            this.cmbStatsSource.Location = new System.Drawing.Point(162, 27);
+            this.cmbStatsSource.Name = "cmbStatsSource";
+            this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
+            this.cmbStatsSource.TabIndex = 2;
+            this.cmbStatsSource.SelectedIndexChanged += new System.EventHandler(this.cmbStatsSource_SelectedIndexChanged);
+            // 
+            // lblStatsSource
+            // 
+            this.lblStatsSource.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblStatsSource.AutoSize = true;
+            this.lblStatsSource.Location = new System.Drawing.Point(33, 31);
+            this.lblStatsSource.Name = "lblStatsSource";
+            this.lblStatsSource.Size = new System.Drawing.Size(123, 18);
+            this.lblStatsSource.TabIndex = 3;
+            this.lblStatsSource.Text = "Filter stats by:";
             // 
             // pnlFooter
             // 
@@ -946,14 +1195,20 @@
             this.gbMastery.ResumeLayout(false);
             this.gbReports.ResumeLayout(false);
             this.pnlReportsPreview.ResumeLayout(false);
-            this.pnlReportsPreview.PerformLayout();
+            this.tblReportsPreview.ResumeLayout(false);
+            this.tblReportsKpis.ResumeLayout(false);
+            this.pnlKpiStreak.ResumeLayout(false);
+            this.pnlKpiMistakes.ResumeLayout(false);
+            this.pnlKpiReportsCount.ResumeLayout(false);
+            this.pnlKpiLastReport.ResumeLayout(false);
             this.gbMisconA.ResumeLayout(false);
             this.gbMiniGames.ResumeLayout(false);
             this.tlpMiniTiles.ResumeLayout(false);
-            this.pnlTilePass.ResumeLayout(false);
+            this.pnlTileAuth.ResumeLayout(false);
             this.pnlTilePhish.ResumeLayout(false);
             this.pnlQuizRow.ResumeLayout(false);
             this.tlpQuizCenter.ResumeLayout(false);
+            this.tlpQuizCenter.PerformLayout();
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             this.ResumeLayout(false);
@@ -971,7 +1226,7 @@
         private System.Windows.Forms.Button btnNavMiniGames;
         private System.Windows.Forms.Button btnNavReports;
         private System.Windows.Forms.Button btnNavLeaderboard;
-        private System.Windows.Forms.Button btnNavCommunity;
+        private System.Windows.Forms.Button btnNavModules;
         private System.Windows.Forms.Button btnNavSettings;
         private System.Windows.Forms.TableLayoutPanel tlpPage;
         private System.Windows.Forms.TableLayoutPanel tlpHeader;
@@ -1005,8 +1260,6 @@
         private System.Windows.Forms.GroupBox gbMastery;
         private System.Windows.Forms.TableLayoutPanel tlpMastery;
         private System.Windows.Forms.GroupBox gbReports;
-        private System.Windows.Forms.Panel pnlReportsPreview;
-        private System.Windows.Forms.Label lblStreak;
         private Syncfusion.WinForms.Controls.SfButton btnViewReports;
         private System.Windows.Forms.Label lblMistakes;
         private System.Windows.Forms.GroupBox gbMisconA;
@@ -1018,10 +1271,29 @@
         private System.Windows.Forms.TableLayoutPanel tlpMiniTiles;
         private System.Windows.Forms.Panel pnlTilePhish;
         private System.Windows.Forms.Label lblTilePhishTitle;
-        private System.Windows.Forms.Panel pnlTilePass;
-        private System.Windows.Forms.Label lblTilePassTitle;
+        private System.Windows.Forms.Panel pnlTileAuth;
+        private System.Windows.Forms.Label lblTileAuthTitle;
         private System.Windows.Forms.Panel pnlFooter;
         private System.Windows.Forms.Label lblFooterLeft;
         private System.Windows.Forms.Label lblFooterUser;
+        private System.Windows.Forms.Panel pnlReportsPreview;
+        private System.Windows.Forms.TableLayoutPanel tblReportsPreview;
+        private System.Windows.Forms.ListView lvRecentReports;
+        private System.Windows.Forms.ColumnHeader colRecentReport;
+        private System.Windows.Forms.ColumnHeader colRecentDate;
+        private System.Windows.Forms.TableLayoutPanel tblReportsKpis;
+        private System.Windows.Forms.Panel pnlKpiStreak;
+        private System.Windows.Forms.Panel pnlKpiMistakes;
+        private System.Windows.Forms.Panel pnlKpiReportsCount;
+        private System.Windows.Forms.Panel pnlKpiLastReport;
+        private System.Windows.Forms.Label lblCapStreak;
+        private System.Windows.Forms.Label lblStreak;
+        private System.Windows.Forms.Label lblCapMistakes;
+        private System.Windows.Forms.Label lblCapReportsCount;
+        private System.Windows.Forms.Label lblReportsCount;
+        private System.Windows.Forms.Label lblCapLastReport;
+        private System.Windows.Forms.Label lblLastReport;
+        private System.Windows.Forms.ComboBox cmbStatsSource;
+        private System.Windows.Forms.Label lblStatsSource;
     }
 }

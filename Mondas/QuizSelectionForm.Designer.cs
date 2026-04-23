@@ -59,7 +59,14 @@
             this.btnStartAdaptive = new Syncfusion.WinForms.Controls.SfButton();
             this.lblAdaptiveDesc = new System.Windows.Forms.Label();
             this.gbPerformance = new System.Windows.Forms.GroupBox();
+            this.lvRecentPerformance = new System.Windows.Forms.ListView();
+            this.Topic = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Result = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Accuracy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pnlPerfFilters = new System.Windows.Forms.Panel();
+            this.cmbPerfSource = new System.Windows.Forms.ComboBox();
+            this.lblPerfFilter = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -72,6 +79,7 @@
             this.gbAdaptive.SuspendLayout();
             this.pnlAdaptive.SuspendLayout();
             this.gbPerformance.SuspendLayout();
+            this.pnlPerfFilters.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlSidebar
@@ -236,10 +244,10 @@
             // 
             this.tlpQuizPage.ColumnCount = 1;
             this.tlpQuizPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpQuizPage.Controls.Add(this.gbPerformance, 0, 3);
             this.tlpQuizPage.Controls.Add(this.tlpHeader, 0, 0);
             this.tlpQuizPage.Controls.Add(this.gbRecommended, 0, 1);
             this.tlpQuizPage.Controls.Add(this.gbAdaptive, 0, 2);
-            this.tlpQuizPage.Controls.Add(this.gbPerformance, 0, 3);
             this.tlpQuizPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpQuizPage.Location = new System.Drawing.Point(16, 16);
             this.tlpQuizPage.Name = "tlpQuizPage";
@@ -280,20 +288,20 @@
             // lblSub
             // 
             this.lblSub.AutoSize = true;
-            this.lblSub.Font = new System.Drawing.Font("Agency", 9F);
+            this.lblSub.Font = new System.Drawing.Font("Agency", 12F);
             this.lblSub.Location = new System.Drawing.Point(8, 54);
             this.lblSub.Name = "lblSub";
-            this.lblSub.Size = new System.Drawing.Size(473, 14);
+            this.lblSub.Size = new System.Drawing.Size(620, 18);
             this.lblSub.TabIndex = 1;
             this.lblSub.Text = "CHOOSE A QUIZ MODE AND START TESTING YOUR SKILLS";
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Muro", 22F);
-            this.lblTitle.Location = new System.Drawing.Point(3, 0);
+            this.lblTitle.Font = new System.Drawing.Font("Muro", 26F);
+            this.lblTitle.Location = new System.Drawing.Point(2, -7);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(284, 44);
+            this.lblTitle.Size = new System.Drawing.Size(332, 52);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "QUIZ SELECTION";
             // 
@@ -364,7 +372,7 @@
             this.lnkChangePreferences.ActiveLinkColor = System.Drawing.Color.RoyalBlue;
             this.lnkChangePreferences.Font = new System.Drawing.Font("Muro", 10F);
             this.lnkChangePreferences.LinkColor = System.Drawing.Color.Gray;
-            this.lnkChangePreferences.Location = new System.Drawing.Point(207, 80);
+            this.lnkChangePreferences.Location = new System.Drawing.Point(218, 80);
             this.lnkChangePreferences.Name = "lnkChangePreferences";
             this.lnkChangePreferences.Size = new System.Drawing.Size(301, 83);
             this.lnkChangePreferences.TabIndex = 3;
@@ -376,12 +384,12 @@
             // 
             this.btnStartRecommended.AutoSize = true;
             this.btnStartRecommended.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnStartRecommended.Font = new System.Drawing.Font("Muro", 9F);
+            this.btnStartRecommended.Font = new System.Drawing.Font("Muro", 10F);
             this.btnStartRecommended.ForeColor = System.Drawing.Color.White;
             this.btnStartRecommended.Location = new System.Drawing.Point(0, 70);
             this.btnStartRecommended.Name = "btnStartRecommended";
             this.btnStartRecommended.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.btnStartRecommended.Size = new System.Drawing.Size(182, 49);
+            this.btnStartRecommended.Size = new System.Drawing.Size(200, 49);
             this.btnStartRecommended.Style.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnStartRecommended.Style.ForeColor = System.Drawing.Color.White;
             this.btnStartRecommended.TabIndex = 2;
@@ -479,24 +487,85 @@
             // gbPerformance
             // 
             this.gbPerformance.BackColor = System.Drawing.Color.White;
+            this.gbPerformance.Controls.Add(this.lvRecentPerformance);
             this.gbPerformance.Controls.Add(this.pnlPerfFilters);
             this.gbPerformance.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbPerformance.Font = new System.Drawing.Font("Agency", 12F);
             this.gbPerformance.Location = new System.Drawing.Point(3, 403);
             this.gbPerformance.Name = "gbPerformance";
             this.gbPerformance.Size = new System.Drawing.Size(902, 172);
-            this.gbPerformance.TabIndex = 3;
+            this.gbPerformance.TabIndex = 5;
             this.gbPerformance.TabStop = false;
             this.gbPerformance.Text = "RECENT PERFORMANCE";
             // 
+            // lvRecentPerformance
+            // 
+            this.lvRecentPerformance.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Topic,
+            this.Result,
+            this.Accuracy,
+            this.Date});
+            this.lvRecentPerformance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvRecentPerformance.FullRowSelect = true;
+            this.lvRecentPerformance.GridLines = true;
+            this.lvRecentPerformance.HideSelection = false;
+            this.lvRecentPerformance.Location = new System.Drawing.Point(3, 72);
+            this.lvRecentPerformance.Name = "lvRecentPerformance";
+            this.lvRecentPerformance.Size = new System.Drawing.Size(896, 97);
+            this.lvRecentPerformance.TabIndex = 1;
+            this.lvRecentPerformance.UseCompatibleStateImageBehavior = false;
+            this.lvRecentPerformance.View = System.Windows.Forms.View.Details;
+            // 
+            // Topic
+            // 
+            this.Topic.Text = "TOPIC";
+            this.Topic.Width = 180;
+            // 
+            // Result
+            // 
+            this.Result.Text = "RESULT";
+            this.Result.Width = 180;
+            // 
+            // Accuracy
+            // 
+            this.Accuracy.Text = "DIFFICULTY";
+            this.Accuracy.Width = 180;
+            // 
+            // Date
+            // 
+            this.Date.Text = "DATE";
+            this.Date.Width = 200;
+            // 
             // pnlPerfFilters
             // 
+            this.pnlPerfFilters.Controls.Add(this.cmbPerfSource);
+            this.pnlPerfFilters.Controls.Add(this.lblPerfFilter);
             this.pnlPerfFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlPerfFilters.Location = new System.Drawing.Point(3, 28);
             this.pnlPerfFilters.Name = "pnlPerfFilters";
-            this.pnlPerfFilters.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.pnlPerfFilters.Size = new System.Drawing.Size(896, 42);
+            this.pnlPerfFilters.Size = new System.Drawing.Size(896, 44);
             this.pnlPerfFilters.TabIndex = 0;
+            // 
+            // cmbPerfSource
+            // 
+            this.cmbPerfSource.FormattingEnabled = true;
+            this.cmbPerfSource.Items.AddRange(new object[] {
+            "All",
+            "Phishing Simulator",
+            "Authentication Defense"});
+            this.cmbPerfSource.Location = new System.Drawing.Point(105, 9);
+            this.cmbPerfSource.Name = "cmbPerfSource";
+            this.cmbPerfSource.Size = new System.Drawing.Size(121, 26);
+            this.cmbPerfSource.TabIndex = 1;
+            // 
+            // lblPerfFilter
+            // 
+            this.lblPerfFilter.AutoSize = true;
+            this.lblPerfFilter.Location = new System.Drawing.Point(6, 12);
+            this.lblPerfFilter.Name = "lblPerfFilter";
+            this.lblPerfFilter.Size = new System.Drawing.Size(84, 18);
+            this.lblPerfFilter.TabIndex = 0;
+            this.lblPerfFilter.Text = "SHOW:";
             // 
             // QuizSelectionForm
             // 
@@ -531,6 +600,8 @@
             this.pnlAdaptive.ResumeLayout(false);
             this.pnlAdaptive.PerformLayout();
             this.gbPerformance.ResumeLayout(false);
+            this.pnlPerfFilters.ResumeLayout(false);
+            this.pnlPerfFilters.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -568,6 +639,13 @@
         private Syncfusion.WinForms.Controls.SfButton btnStartAdaptive;
         private Syncfusion.WinForms.Controls.SfButton btnPreferences;
         private System.Windows.Forms.GroupBox gbPerformance;
+        private System.Windows.Forms.ListView lvRecentPerformance;
+        private System.Windows.Forms.ColumnHeader Topic;
+        private System.Windows.Forms.ColumnHeader Result;
+        private System.Windows.Forms.ColumnHeader Accuracy;
+        private System.Windows.Forms.ColumnHeader Date;
         private System.Windows.Forms.Panel pnlPerfFilters;
+        private System.Windows.Forms.ComboBox cmbPerfSource;
+        private System.Windows.Forms.Label lblPerfFilter;
     }
 }

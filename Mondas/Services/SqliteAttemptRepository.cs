@@ -23,15 +23,12 @@ namespace Mondas.Services
             cmd.CommandText = @"INSERT INTO Attempts(UserKey, QuestionId, SelectedOptionIdsJson, IsCorrect, SecondsTaken, SubmittedAt, ReasonString, RulesFiredJson)
             VALUES($userKey, $questionId, $selectedJson, $isCorrect, $secondsTaken, $submittedAt, $reason, $rulesJson);";
 
-            cmd.Parameters.AddWithValue("$userKey", attempt.UserKey ?? "");
+            var uk = string.IsNullOrWhiteSpace(attempt.UserKey) ? "local" : attempt.UserKey.Trim();
+            cmd.Parameters.AddWithValue("$userKey", uk);
             cmd.Parameters.AddWithValue("$questionId", attempt.QuestionId);
             cmd.Parameters.AddWithValue("$selectedJson", attempt.SelectedOptionIdsJson ?? "[]");
             cmd.Parameters.AddWithValue("$isCorrect", attempt.IsCorrect ? 1 : 0);
-
-            if (attempt.SecondsTaken <= 0)
-                cmd.Parameters.AddWithValue("$secondsTaken", DBNull.Value);
-            else
-                cmd.Parameters.AddWithValue("$secondsTaken", attempt.SecondsTaken);
+            cmd.Parameters.AddWithValue("$secondsTaken", attempt.SecondsTaken > 0 ? attempt.SecondsTaken : 0.0);
 
             var submittedUtc = attempt.SubmittedAt.Kind == DateTimeKind.Utc
                 ? attempt.SubmittedAt
@@ -46,6 +43,7 @@ namespace Mondas.Services
 
         public List<AttemptRecord> GetForUser(string userKey)
         {
+            userKey = string.IsNullOrWhiteSpace(userKey) ? "local" : userKey.Trim();
             var result = new List<AttemptRecord>();
 
             using var conn = Open();
