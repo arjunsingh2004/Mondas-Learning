@@ -50,8 +50,8 @@
             this.pnlConfirmPassword = new System.Windows.Forms.Panel();
             this.txtConfirmPassword = new System.Windows.Forms.TextBox();
             this.chkTerms = new System.Windows.Forms.CheckBox();
-            this.btnSignUp = new Syncfusion.WinForms.Controls.SfButton();
             this.lnkSignIn = new System.Windows.Forms.LinkLabel();
+            this.btnSignUp = new System.Windows.Forms.Button();
             this.tlpRoot.SuspendLayout();
             this.pnlHero.SuspendLayout();
             this.tlpHero.SuspendLayout();
@@ -219,8 +219,8 @@
             this.tlpCard.Controls.Add(this.pnlPassword, 0, 8);
             this.tlpCard.Controls.Add(this.pnlConfirmPassword, 0, 10);
             this.tlpCard.Controls.Add(this.chkTerms, 0, 12);
-            this.tlpCard.Controls.Add(this.btnSignUp, 0, 14);
             this.tlpCard.Controls.Add(this.lnkSignIn, 0, 16);
+            this.tlpCard.Controls.Add(this.btnSignUp, 0, 14);
             this.tlpCard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpCard.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tlpCard.Location = new System.Drawing.Point(24, 24);
@@ -395,23 +395,6 @@
             this.chkTerms.Text = "I agree to the Terms and Privacy Policy";
             this.chkTerms.UseVisualStyleBackColor = true;
             // 
-            // btnSignUp
-            // 
-            this.btnSignUp.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnSignUp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSignUp.Font = new System.Drawing.Font("Muro", 18F);
-            this.btnSignUp.ForeColor = System.Drawing.Color.White;
-            this.btnSignUp.Location = new System.Drawing.Point(0, 370);
-            this.btnSignUp.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSignUp.Name = "btnSignUp";
-            this.btnSignUp.Size = new System.Drawing.Size(410, 56);
-            this.btnSignUp.Style.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnSignUp.Style.ForeColor = System.Drawing.Color.White;
-            this.btnSignUp.TabIndex = 10;
-            this.btnSignUp.Text = "SIGN UP";
-            this.btnSignUp.UseVisualStyleBackColor = false;
-            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
-            // 
             // lnkSignIn
             // 
             this.lnkSignIn.AutoSize = true;
@@ -426,6 +409,21 @@
             this.lnkSignIn.Text = "Already have an account? Sign in";
             this.lnkSignIn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lnkSignIn.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSignIn_LinkClicked);
+            // 
+            // btnSignUp
+            // 
+            this.btnSignUp.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnSignUp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSignUp.Font = new System.Drawing.Font("Muro", 15F);
+            this.btnSignUp.ForeColor = System.Drawing.Color.White;
+            this.btnSignUp.Location = new System.Drawing.Point(0, 370);
+            this.btnSignUp.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSignUp.Name = "btnSignUp";
+            this.btnSignUp.Size = new System.Drawing.Size(410, 56);
+            this.btnSignUp.TabIndex = 12;
+            this.btnSignUp.Text = "Sign Up";
+            this.btnSignUp.UseVisualStyleBackColor = false;
+            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
             // SignupForm
             // 
@@ -482,10 +480,10 @@
         private System.Windows.Forms.Panel pnlConfirmPassword;
         private System.Windows.Forms.TextBox txtConfirmPassword;
         private System.Windows.Forms.CheckBox chkTerms;
-        private Syncfusion.WinForms.Controls.SfButton btnSignUp;
         private System.Windows.Forms.LinkLabel lnkSignIn;
         private System.Windows.Forms.Label lblMondas;
         private System.Windows.Forms.Label lblHeroTitle;
         private System.Windows.Forms.Label lblHeroSubtitle;
+        private System.Windows.Forms.Button btnSignUp;
     }
 }

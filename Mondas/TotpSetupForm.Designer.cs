@@ -51,12 +51,12 @@
             this.tlpVerifyRow = new System.Windows.Forms.TableLayoutPanel();
             this.pnlCode = new System.Windows.Forms.Panel();
             this.txtCode = new System.Windows.Forms.TextBox();
-            this.btnVerify = new Syncfusion.WinForms.Controls.SfButton();
             this.tlpFooter = new System.Windows.Forms.TableLayoutPanel();
             this.pnlFooterLeft = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
             this.pnlFooterRight = new System.Windows.Forms.Panel();
-            this.btnContinue = new Syncfusion.WinForms.Controls.SfButton();
+            this.btnVerify = new System.Windows.Forms.Button();
+            this.btnContinue = new System.Windows.Forms.Button();
             this.tlpRoot.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
             this.tlpSidebar.SuspendLayout();
@@ -404,18 +404,6 @@
             this.txtCode.Size = new System.Drawing.Size(240, 29);
             this.txtCode.TabIndex = 0;
             // 
-            // btnVerify
-            // 
-            this.btnVerify.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnVerify.Font = new System.Drawing.Font("Muro", 14F);
-            this.btnVerify.Location = new System.Drawing.Point(278, 0);
-            this.btnVerify.Margin = new System.Windows.Forms.Padding(0);
-            this.btnVerify.Name = "btnVerify";
-            this.btnVerify.Size = new System.Drawing.Size(151, 40);
-            this.btnVerify.TabIndex = 1;
-            this.btnVerify.Text = "VERIFY";
-            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
-            // 
             // tlpFooter
             // 
             this.tlpFooter.AutoSize = true;
@@ -466,16 +454,34 @@
             this.pnlFooterRight.Size = new System.Drawing.Size(148, 33);
             this.pnlFooterRight.TabIndex = 1;
             // 
+            // btnVerify
+            // 
+            this.btnVerify.BackColor = System.Drawing.Color.LightGray;
+            this.btnVerify.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnVerify.Font = new System.Drawing.Font("Muro", 12F);
+            this.btnVerify.ForeColor = System.Drawing.Color.Black;
+            this.btnVerify.Location = new System.Drawing.Point(278, 0);
+            this.btnVerify.Margin = new System.Windows.Forms.Padding(0);
+            this.btnVerify.Name = "btnVerify";
+            this.btnVerify.Size = new System.Drawing.Size(151, 40);
+            this.btnVerify.TabIndex = 1;
+            this.btnVerify.Text = "Verify";
+            this.btnVerify.UseVisualStyleBackColor = false;
+            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
+            // 
             // btnContinue
             // 
+            this.btnContinue.BackColor = System.Drawing.Color.LightGray;
             this.btnContinue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnContinue.Font = new System.Drawing.Font("Muro", 14F);
+            this.btnContinue.Font = new System.Drawing.Font("Muro", 12F);
+            this.btnContinue.ForeColor = System.Drawing.Color.Black;
             this.btnContinue.Location = new System.Drawing.Point(0, 0);
             this.btnContinue.Margin = new System.Windows.Forms.Padding(0);
             this.btnContinue.Name = "btnContinue";
             this.btnContinue.Size = new System.Drawing.Size(148, 33);
             this.btnContinue.TabIndex = 0;
             this.btnContinue.Text = "Continue";
+            this.btnContinue.UseVisualStyleBackColor = false;
             this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 
             // TotpSetupForm
@@ -539,11 +545,11 @@
         private System.Windows.Forms.TableLayoutPanel tlpVerifyRow;
         private System.Windows.Forms.Panel pnlCode;
         private System.Windows.Forms.TextBox txtCode;
-        private Syncfusion.WinForms.Controls.SfButton btnVerify;
         private System.Windows.Forms.TableLayoutPanel tlpFooter;
         private System.Windows.Forms.Panel pnlFooterLeft;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Panel pnlFooterRight;
-        private Syncfusion.WinForms.Controls.SfButton btnContinue;
+        private System.Windows.Forms.Button btnVerify;
+        private System.Windows.Forms.Button btnContinue;
     }
 }
