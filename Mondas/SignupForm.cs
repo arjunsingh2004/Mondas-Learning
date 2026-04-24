@@ -80,8 +80,8 @@ namespace Mondas
 
                 using (var setup = new TotpSetupForm(cleanEmail))
                 {
-                    var result = setup.ShowDialog(this);
-                    
+                    var result = setup.ShowDialog();
+
                     if (result != DialogResult.OK)
                     {
                         MessageBox.Show("2FA setup was cancelled. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -102,9 +102,7 @@ namespace Mondas
                 var userId = _users.CreateUser(fullName.Trim(), cleanEmail, hashResult.HashBase64, hashResult.SaltBase64, hashResult.Iterations);
 
                 _users.SetTotp(userId, secretBase32, true);
-
-                MessageBox.Show("Account created!", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                
                 DialogResult = DialogResult.OK;
                 Close();
                 return;
