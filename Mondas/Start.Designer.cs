@@ -18,12 +18,9 @@
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.gridBagLayout1 = new Syncfusion.Windows.Forms.Tools.GridBagLayout(this.components);
             this.lblTagline = new System.Windows.Forms.Label();
             this.lblMondas = new System.Windows.Forms.Label();
             this.btnStart = new Syncfusion.WinForms.Controls.SfButton();
-            ((System.ComponentModel.ISupportInitialize)(this.gridBagLayout1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTagline
@@ -90,14 +87,12 @@
             this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
             this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             this.Text = "Mondas";
-            ((System.ComponentModel.ISupportInitialize)(this.gridBagLayout1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private Syncfusion.Windows.Forms.Tools.GridBagLayout gridBagLayout1;
         private System.Windows.Forms.Label lblTagline;
         private System.Windows.Forms.Label lblMondas;
         private Syncfusion.WinForms.Controls.SfButton btnStart;

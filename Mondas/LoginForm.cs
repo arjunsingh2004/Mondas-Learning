@@ -210,18 +210,15 @@ namespace Mondas
 
         private void lnkSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            BeginInvoke(new Action(() =>
+            using (var f = new SignupForm())
             {
-                using (var f = new SignupForm())
-                {
-                    var result = f.ShowDialog(this);
+                var result = f.ShowDialog();
 
-                    if (result == DialogResult.OK)
-                    {
-                        SetStatus("Account created! Please sign in.");
-                    }
+                if (result == DialogResult.OK)
+                {
+                    SetStatus("Account created! Please sign in.");
                 }
-            }));
+            }
         }
     
         private void SetStatus(string msg)

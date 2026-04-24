@@ -111,13 +111,5 @@ namespace Mondas
         {
             return _verified ? (_secretBase32 ?? "") : "";
         }
-
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            var img = picQr?.Image;
-            if (picQr != null) picQr.Image = null;
-            img?.Dispose();
-            base.OnFormClosed(e);
-        }
     }
 }

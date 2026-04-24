@@ -2,24 +2,12 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-using Mondas.Contracts.Services;
-using Mondas.Contracts.Views;
-using Mondas.Models;
-using Mondas.Services;
-using Mondas.Views;
 
 namespace Mondas
 {
     internal static class Program
     {
-        public static IHost _host;
-
-        public static T GetService<T>()
-            where T : class
-            => _host.Services.GetService(typeof(T)) as T;
 
         /// <summary>
         ///  The main entry point for the application.
@@ -40,8 +28,6 @@ namespace Mondas
             var init = new Mondas.Services.SqliteDatabaseInitializer (Path.Combine(baseDir, "mondas.db"), Path.Combine(baseDir, "Resources", "questions.json"));
 
             init.Initialize();
-
-            var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
             Application.Run(new Start());
         }
