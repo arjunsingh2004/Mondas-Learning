@@ -11,6 +11,7 @@ namespace Mondas
     {
         private readonly SqliteUserRepository _users;
         private readonly PasswordHasher _hasher;
+        public bool AccountCreated { get; private set; }
 
         public SignupForm()
         {
@@ -78,19 +79,17 @@ namespace Mondas
 
                 string secretBase32;
 
-                using (var setup = new TotpSetupForm(cleanEmail))
+                var setup = new TotpSetupForm(cleanEmail);
+                var result = setup.ShowDialog();
+
+                if (result != DialogResult.OK)
                 {
-                    var result = setup.ShowDialog();
-
-                    if (result != DialogResult.OK)
-                    {
-                        MessageBox.Show("2FA setup was cancelled. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-
-                    secretBase32 = setup.GetVerifiedSecretBase32();
+                    MessageBox.Show("2FA setup was cancelled. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
-            
+
+                secretBase32 = setup.GetVerifiedSecretBase32();
+
                 if (string.IsNullOrWhiteSpace(secretBase32))
                 {
                     MessageBox.Show("2FA setup failed. Account not created.", "Mondas", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -102,8 +101,8 @@ namespace Mondas
                 var userId = _users.CreateUser(fullName.Trim(), cleanEmail, hashResult.HashBase64, hashResult.SaltBase64, hashResult.Iterations);
 
                 _users.SetTotp(userId, secretBase32, true);
-                                
-                DialogResult = DialogResult.OK;
+
+                AccountCreated = true;
                 Close();
                 return;
             }
@@ -116,7 +115,6 @@ namespace Mondas
 
         private void lnkSignIn_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
             Close();
         }
     
