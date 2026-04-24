@@ -789,13 +789,19 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="app.manifest" />
-    <Content Include="Resources\phishing_emails.json" />
+    <Content Include="Resources\phishing_emails.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <Content Include="Resources\learning_modules.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\questions.json" />
-    <Content Include="Resources\auth_defense_scenarios.json" />
+    <Content Include="Resources\questions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\auth_defense_scenarios.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

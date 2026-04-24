@@ -651,7 +651,7 @@
             this.gbMastery.Size = new System.Drawing.Size(589, 155);
             this.gbMastery.TabIndex = 0;
             this.gbMastery.TabStop = false;
-            this.gbMastery.Text = "MASTERY BY TOPIC";
+            this.gbMastery.Text = "OVERALL TOPIC MASTERY";
             // 
             // tlpMastery
             // 
@@ -1106,7 +1106,7 @@
             "PHISHING SIMULATOR",
             "AUTHENTICATION DEFENSE",
             "LEARNING MODULES"});
-            this.cmbStatsSource.Location = new System.Drawing.Point(162, 27);
+            this.cmbStatsSource.Location = new System.Drawing.Point(162, 26);
             this.cmbStatsSource.Name = "cmbStatsSource";
             this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
             this.cmbStatsSource.TabIndex = 2;

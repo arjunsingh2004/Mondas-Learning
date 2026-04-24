@@ -40,6 +40,12 @@
             this.btnNavSettings = new System.Windows.Forms.Button();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tlpQuizPage = new System.Windows.Forms.TableLayoutPanel();
+            this.gbPerformance = new System.Windows.Forms.GroupBox();
+            this.lvRecentPerformance = new System.Windows.Forms.ListView();
+            this.Topic = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Result = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Accuracy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tlpHeader = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeaderLeft = new System.Windows.Forms.Panel();
             this.lblSub = new System.Windows.Forms.Label();
@@ -58,19 +64,11 @@
             this.btnPreferences = new Syncfusion.WinForms.Controls.SfButton();
             this.btnStartAdaptive = new Syncfusion.WinForms.Controls.SfButton();
             this.lblAdaptiveDesc = new System.Windows.Forms.Label();
-            this.gbPerformance = new System.Windows.Forms.GroupBox();
-            this.lvRecentPerformance = new System.Windows.Forms.ListView();
-            this.Topic = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Result = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Accuracy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pnlPerfFilters = new System.Windows.Forms.Panel();
-            this.cmbPerfSource = new System.Windows.Forms.ComboBox();
-            this.lblPerfFilter = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.flpNav.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.tlpQuizPage.SuspendLayout();
+            this.gbPerformance.SuspendLayout();
             this.tlpHeader.SuspendLayout();
             this.pnlHeaderLeft.SuspendLayout();
             this.pnlHeaderRight.SuspendLayout();
@@ -78,8 +76,6 @@
             this.pnlRecommended.SuspendLayout();
             this.gbAdaptive.SuspendLayout();
             this.pnlAdaptive.SuspendLayout();
-            this.gbPerformance.SuspendLayout();
-            this.pnlPerfFilters.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlSidebar
@@ -258,6 +254,57 @@
             this.tlpQuizPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpQuizPage.Size = new System.Drawing.Size(908, 578);
             this.tlpQuizPage.TabIndex = 0;
+            // 
+            // gbPerformance
+            // 
+            this.gbPerformance.BackColor = System.Drawing.Color.White;
+            this.gbPerformance.Controls.Add(this.lvRecentPerformance);
+            this.gbPerformance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbPerformance.Font = new System.Drawing.Font("Agency", 12F);
+            this.gbPerformance.Location = new System.Drawing.Point(3, 403);
+            this.gbPerformance.Name = "gbPerformance";
+            this.gbPerformance.Size = new System.Drawing.Size(902, 172);
+            this.gbPerformance.TabIndex = 5;
+            this.gbPerformance.TabStop = false;
+            this.gbPerformance.Text = "RECENT PERFORMANCE";
+            // 
+            // lvRecentPerformance
+            // 
+            this.lvRecentPerformance.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Topic,
+            this.Result,
+            this.Accuracy,
+            this.Date});
+            this.lvRecentPerformance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvRecentPerformance.FullRowSelect = true;
+            this.lvRecentPerformance.GridLines = true;
+            this.lvRecentPerformance.HideSelection = false;
+            this.lvRecentPerformance.Location = new System.Drawing.Point(3, 28);
+            this.lvRecentPerformance.Name = "lvRecentPerformance";
+            this.lvRecentPerformance.Size = new System.Drawing.Size(896, 141);
+            this.lvRecentPerformance.TabIndex = 1;
+            this.lvRecentPerformance.UseCompatibleStateImageBehavior = false;
+            this.lvRecentPerformance.View = System.Windows.Forms.View.Details;
+            // 
+            // Topic
+            // 
+            this.Topic.Text = "TOPIC";
+            this.Topic.Width = 180;
+            // 
+            // Result
+            // 
+            this.Result.Text = "RESULT";
+            this.Result.Width = 180;
+            // 
+            // Accuracy
+            // 
+            this.Accuracy.Text = "DIFFICULTY";
+            this.Accuracy.Width = 180;
+            // 
+            // Date
+            // 
+            this.Date.Text = "DATE";
+            this.Date.Width = 200;
             // 
             // tlpHeader
             // 
@@ -484,89 +531,6 @@
             this.lblAdaptiveDesc.TabIndex = 0;
             this.lblAdaptiveDesc.Text = "Adaptive questions based on your recent attempts and topic mastery.";
             // 
-            // gbPerformance
-            // 
-            this.gbPerformance.BackColor = System.Drawing.Color.White;
-            this.gbPerformance.Controls.Add(this.lvRecentPerformance);
-            this.gbPerformance.Controls.Add(this.pnlPerfFilters);
-            this.gbPerformance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbPerformance.Font = new System.Drawing.Font("Agency", 12F);
-            this.gbPerformance.Location = new System.Drawing.Point(3, 403);
-            this.gbPerformance.Name = "gbPerformance";
-            this.gbPerformance.Size = new System.Drawing.Size(902, 172);
-            this.gbPerformance.TabIndex = 5;
-            this.gbPerformance.TabStop = false;
-            this.gbPerformance.Text = "RECENT PERFORMANCE";
-            // 
-            // lvRecentPerformance
-            // 
-            this.lvRecentPerformance.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Topic,
-            this.Result,
-            this.Accuracy,
-            this.Date});
-            this.lvRecentPerformance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvRecentPerformance.FullRowSelect = true;
-            this.lvRecentPerformance.GridLines = true;
-            this.lvRecentPerformance.HideSelection = false;
-            this.lvRecentPerformance.Location = new System.Drawing.Point(3, 72);
-            this.lvRecentPerformance.Name = "lvRecentPerformance";
-            this.lvRecentPerformance.Size = new System.Drawing.Size(896, 97);
-            this.lvRecentPerformance.TabIndex = 1;
-            this.lvRecentPerformance.UseCompatibleStateImageBehavior = false;
-            this.lvRecentPerformance.View = System.Windows.Forms.View.Details;
-            // 
-            // Topic
-            // 
-            this.Topic.Text = "TOPIC";
-            this.Topic.Width = 180;
-            // 
-            // Result
-            // 
-            this.Result.Text = "RESULT";
-            this.Result.Width = 180;
-            // 
-            // Accuracy
-            // 
-            this.Accuracy.Text = "DIFFICULTY";
-            this.Accuracy.Width = 180;
-            // 
-            // Date
-            // 
-            this.Date.Text = "DATE";
-            this.Date.Width = 200;
-            // 
-            // pnlPerfFilters
-            // 
-            this.pnlPerfFilters.Controls.Add(this.cmbPerfSource);
-            this.pnlPerfFilters.Controls.Add(this.lblPerfFilter);
-            this.pnlPerfFilters.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlPerfFilters.Location = new System.Drawing.Point(3, 28);
-            this.pnlPerfFilters.Name = "pnlPerfFilters";
-            this.pnlPerfFilters.Size = new System.Drawing.Size(896, 44);
-            this.pnlPerfFilters.TabIndex = 0;
-            // 
-            // cmbPerfSource
-            // 
-            this.cmbPerfSource.FormattingEnabled = true;
-            this.cmbPerfSource.Items.AddRange(new object[] {
-            "All",
-            "Phishing Simulator",
-            "Authentication Defense"});
-            this.cmbPerfSource.Location = new System.Drawing.Point(105, 9);
-            this.cmbPerfSource.Name = "cmbPerfSource";
-            this.cmbPerfSource.Size = new System.Drawing.Size(121, 26);
-            this.cmbPerfSource.TabIndex = 1;
-            // 
-            // lblPerfFilter
-            // 
-            this.lblPerfFilter.AutoSize = true;
-            this.lblPerfFilter.Location = new System.Drawing.Point(6, 12);
-            this.lblPerfFilter.Name = "lblPerfFilter";
-            this.lblPerfFilter.Size = new System.Drawing.Size(84, 18);
-            this.lblPerfFilter.TabIndex = 0;
-            this.lblPerfFilter.Text = "SHOW:";
-            // 
             // QuizSelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -588,6 +552,7 @@
             this.flpNav.ResumeLayout(false);
             this.pnlContent.ResumeLayout(false);
             this.tlpQuizPage.ResumeLayout(false);
+            this.gbPerformance.ResumeLayout(false);
             this.tlpHeader.ResumeLayout(false);
             this.pnlHeaderLeft.ResumeLayout(false);
             this.pnlHeaderLeft.PerformLayout();
@@ -599,9 +564,6 @@
             this.gbAdaptive.ResumeLayout(false);
             this.pnlAdaptive.ResumeLayout(false);
             this.pnlAdaptive.PerformLayout();
-            this.gbPerformance.ResumeLayout(false);
-            this.pnlPerfFilters.ResumeLayout(false);
-            this.pnlPerfFilters.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -644,8 +606,5 @@
         private System.Windows.Forms.ColumnHeader Result;
         private System.Windows.Forms.ColumnHeader Accuracy;
         private System.Windows.Forms.ColumnHeader Date;
-        private System.Windows.Forms.Panel pnlPerfFilters;
-        private System.Windows.Forms.ComboBox cmbPerfSource;
-        private System.Windows.Forms.Label lblPerfFilter;
     }
 }

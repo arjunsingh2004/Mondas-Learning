@@ -12,6 +12,7 @@ namespace Mondas
         private readonly SqliteUserRepository _users;
         private readonly PasswordHasher _hasher;
         public bool AccountCreated { get; private set; }
+        public event EventHandler SignupFinished;
 
         public SignupForm()
         {
@@ -102,8 +103,7 @@ namespace Mondas
 
                 _users.SetTotp(userId, secretBase32, true);
 
-                AccountCreated = true;
-                Close();
+                ReturnToLogin(true);
                 return;
             }
 
@@ -115,9 +115,28 @@ namespace Mondas
 
         private void lnkSignIn_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Close();
+            ReturnToLogin(false);
         }
-    
+
+        private void ReturnToLogin(bool created)
+        {
+            AccountCreated = created;
+            SignupFinished?.Invoke(this, EventArgs.Empty);
+            Hide();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                ReturnToLogin(AccountCreated);
+                return;
+            }
+
+            base.OnFormClosing(e);
+        }
+
         private void WirePlaceholder(TextBox tb, string placeholder, bool isPassword)
         {
             if (tb == null)
