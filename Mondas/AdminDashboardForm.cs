@@ -51,6 +51,10 @@ namespace Mondas
             InitializeComponent();
 
             _adminName = string.IsNullOrWhiteSpace(adminName) ? "ADMIN" : adminName.Trim().ToUpperInvariant();
+
+            lblAdminUser.Text = _adminName;
+            lblFooterUser.Text = $"ROLE: ADMIN | {_adminName}";
+
             _dbPath = Path.Combine(AppContext.BaseDirectory, "mondas.db");
             _questionsPath = FixPath("questions.json");
             _phishingPath = FixPath("phishing_emails.json");
@@ -1603,6 +1607,8 @@ namespace Mondas
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
+            var start = new Start();
+            start.Show();
             Close();
         }
 
@@ -1719,6 +1725,11 @@ namespace Mondas
         private void chkHasAttachment_CheckedChanged(object sender, EventArgs e)
         {
             UpdateInvisibleFields();
+        }
+
+        private void lblAdminUser_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

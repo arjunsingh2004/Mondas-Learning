@@ -51,11 +51,11 @@
             this.tlpVerifyRow = new System.Windows.Forms.TableLayoutPanel();
             this.pnlCode = new System.Windows.Forms.Panel();
             this.txtCode = new System.Windows.Forms.TextBox();
+            this.btnVerify = new System.Windows.Forms.Button();
             this.tlpFooter = new System.Windows.Forms.TableLayoutPanel();
             this.pnlFooterLeft = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
             this.pnlFooterRight = new System.Windows.Forms.Panel();
-            this.btnVerify = new System.Windows.Forms.Button();
             this.btnContinue = new System.Windows.Forms.Button();
             this.tlpRoot.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
@@ -404,6 +404,21 @@
             this.txtCode.Size = new System.Drawing.Size(240, 29);
             this.txtCode.TabIndex = 0;
             // 
+            // btnVerify
+            // 
+            this.btnVerify.BackColor = System.Drawing.Color.LightGray;
+            this.btnVerify.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnVerify.Font = new System.Drawing.Font("Muro", 12F);
+            this.btnVerify.ForeColor = System.Drawing.Color.Black;
+            this.btnVerify.Location = new System.Drawing.Point(278, 0);
+            this.btnVerify.Margin = new System.Windows.Forms.Padding(0);
+            this.btnVerify.Name = "btnVerify";
+            this.btnVerify.Size = new System.Drawing.Size(151, 40);
+            this.btnVerify.TabIndex = 1;
+            this.btnVerify.Text = "Verify";
+            this.btnVerify.UseVisualStyleBackColor = false;
+            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
+            // 
             // tlpFooter
             // 
             this.tlpFooter.AutoSize = true;
@@ -453,21 +468,6 @@
             this.pnlFooterRight.Name = "pnlFooterRight";
             this.pnlFooterRight.Size = new System.Drawing.Size(148, 33);
             this.pnlFooterRight.TabIndex = 1;
-            // 
-            // btnVerify
-            // 
-            this.btnVerify.BackColor = System.Drawing.Color.LightGray;
-            this.btnVerify.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnVerify.Font = new System.Drawing.Font("Muro", 12F);
-            this.btnVerify.ForeColor = System.Drawing.Color.Black;
-            this.btnVerify.Location = new System.Drawing.Point(278, 0);
-            this.btnVerify.Margin = new System.Windows.Forms.Padding(0);
-            this.btnVerify.Name = "btnVerify";
-            this.btnVerify.Size = new System.Drawing.Size(151, 40);
-            this.btnVerify.TabIndex = 1;
-            this.btnVerify.Text = "Verify";
-            this.btnVerify.UseVisualStyleBackColor = false;
-            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
             // 
             // btnContinue
             // 

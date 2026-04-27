@@ -698,6 +698,12 @@ namespace Mondas
 
             try
             {
+                if (url.Contains("youtube.com", StringComparison.OrdinalIgnoreCase) || url.Contains("youtu.be", StringComparison.OrdinalIgnoreCase))
+                {
+                    wvPreview.NavigateToString(BuildPreviewHtml("Video preview unavailable", "This video cannot be embedded reliably in the desktop preview. Click Open Resource to watch it in your browser."));
+                    return;
+                }
+
                 wvPreview.Source = new Uri(url);
             }
 
@@ -709,7 +715,7 @@ namespace Mondas
 
         private static string BuildPreviewHtml(string title, string text)
         {
-            return "<html><body style='font-family:Agency; padding:24px; color:#222;'>" + $"<h2 style='margin-top:0;'>{title}</h2>" + $"<p>{text}</p>" + "</body></html>";
+            return "<html><body style='font-family:Agency; padding:24px; color:white;'>" + $"<h2 style='margin-top:0;'>{title}</h2>" + $"<p>{text}</p>" + "</body></html>";
         }
 
         private static void NavPreviewHtml(Control preview, string html)

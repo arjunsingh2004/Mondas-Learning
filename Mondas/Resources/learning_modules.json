@@ -290,7 +290,7 @@
     "overview": "Learn what makes a password strong, how reuse creates risk, and how to create better credentials.",
     "estimatedMinutes": 9,
     "openUrl": "https://www.ncsc.gov.uk/",
-    "previewUrl": "https://www.youtube.com/embed/0Wd3JoUHXno?si=vmgulsnoBCE_5L55",
+    "previewUrl": "https://www.youtube.com/embed/0Wd3JoUHXno",
     "appliesToSources": [ "Quiz" ],
     "misconceptionTags": [],
     "objectives": [

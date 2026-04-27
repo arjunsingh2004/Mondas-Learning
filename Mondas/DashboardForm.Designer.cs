@@ -387,6 +387,7 @@
             this.btnLogout.TabIndex = 1;
             this.btnLogout.Text = "LOG OUT";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblUser
             // 
@@ -651,7 +652,7 @@
             this.gbMastery.Size = new System.Drawing.Size(589, 155);
             this.gbMastery.TabIndex = 0;
             this.gbMastery.TabStop = false;
-            this.gbMastery.Text = "MASTERY BY TOPIC";
+            this.gbMastery.Text = "OVERALL TOPIC MASTERY";
             // 
             // tlpMastery
             // 

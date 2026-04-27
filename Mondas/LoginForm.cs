@@ -12,6 +12,7 @@ namespace Mondas
         private readonly SqliteUserRepository _users;
         private readonly PasswordHasher _hasher;
         private readonly TotpService _totp;
+        private SignupForm _signupForm;
 
         private UserRow _pendingUser;
 
@@ -210,15 +211,29 @@ namespace Mondas
 
         private void lnkSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var f = new SignupForm())
+            if (_signupForm == null || _signupForm.IsDisposed)
             {
-                var result = f.ShowDialog();
+                _signupForm = new SignupForm();
 
-                if (result == DialogResult.OK)
+                _signupForm.SignupFinished += (_, __) =>
                 {
-                    SetStatus("Account created! Please sign in.");
-                }
+                    if (IsDisposed)
+                    {
+                        return;
+                    }
+
+                    Show();
+
+                    if (_signupForm.AccountCreated)
+                    {
+                        SetStatus("Account created! Please sign in.");
+                    }
+                };
             }
+
+            Hide();
+            _signupForm.Show(this);
+            _signupForm.BringToFront();
         }
     
         private void SetStatus(string msg)
@@ -348,6 +363,16 @@ namespace Mondas
             {
 
             }
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            if (_signupForm != null && !_signupForm.IsDisposed)
+            {
+                _signupForm.Dispose();
+            }
+
+            base.OnFormClosed(e);
         }
     }
 }

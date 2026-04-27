@@ -789,6 +789,7 @@
             this.lblAdminUser.Size = new System.Drawing.Size(151, 18);
             this.lblAdminUser.TabIndex = 0;
             this.lblAdminUser.Text = "ADMIN NAME";
+            this.lblAdminUser.Click += new System.EventHandler(this.lblAdminUser_Click);
             // 
             // pnlHeaderLeft
             // 

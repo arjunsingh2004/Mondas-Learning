@@ -1345,7 +1345,6 @@ namespace Mondas
         private void btnLogout_Click(object sender, EventArgs e)
         {
             var start = new Start();
-            start.StartPosition = FormStartPosition.CenterScreen;
             start.Show();
             Close();
         }
@@ -1598,6 +1597,11 @@ namespace Mondas
         private void cmbSource_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshAll();
+        }
+
+        private void cmbTopic_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
