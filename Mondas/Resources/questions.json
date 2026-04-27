@@ -1,121 +1,316 @@
 [
-  {
-    "Id": 1,
-    "Text": "Which of these Test is the strongest password?",
-    "Explanation": "test",
-    "Metadata": {
-      "Topic": "Passwords",
-      "Difficulty": "Easy",
-      "QuestionType": "SingleChoice",
-      "MisconceptionTags": [
-        "short_ok",
-        "simple_words_ok"
-      ]
-    },
-    "Options": [
-      {
+    {
         "Id": 1,
-        "Text": "Password123",
-        "IsCorrect": false
-      },
-      {
+        "Text": "Which of these is the strongest password?",
+        "Explanation": "A strong password should be long, difficult to guess, and not based on common words or simple patterns.",
+        "Metadata": {
+            "Topic": "Passwords",
+            "Difficulty": "Easy",
+            "QuestionType": "SingleChoice",
+            "MisconceptionTags": [
+                "short_ok",
+                "simple_words_ok"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "Password123",
+                "IsCorrect": false
+            },
+            {
+                "Id": 2,
+                "Text": "H0rse!Staple!Rain?92",
+                "IsCorrect": true
+            },
+            {
+                "Id": 3,
+                "Text": "qwerty",
+                "IsCorrect": false
+            }
+        ]
+    },
+    {
         "Id": 2,
-        "Text": "H0rse!Staple!Rain?92",
-        "IsCorrect": true
-      },
-      {
+        "Text": "You receive an email from your bank asking you to verify your account. What is the biggest red flag?",
+        "Explanation": "Banks do not usually ask users to click links in unexpected emails and enter full login credentials. A suspicious sender address is a major warning sign.",
+        "Metadata": {
+            "Topic": "Phishing",
+            "Difficulty": "Medium",
+            "QuestionType": "SingleChoice",
+            "MisconceptionTags": [
+                "trusts_brand_logo",
+                "ignores_sender_address"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "It uses your full name",
+                "IsCorrect": false
+            },
+            {
+                "Id": 2,
+                "Text": "The sender address is unusual and not your bank's official domain",
+                "IsCorrect": true
+            },
+            {
+                "Id": 3,
+                "Text": "The email uses your bank's logo",
+                "IsCorrect": false
+            }
+        ]
+    },
+    {
         "Id": 3,
-        "Text": "qwerty",
-        "IsCorrect": false
-      }
-    ]
-  },
-  {
-    "Id": 2,
-    "Text": "You receive an email from your bank asking you to verify your account. What is the biggest red flag?",
-    "Explanation": "Banks don't ask you to click links and enter full credentials from random emails.",
-    "Metadata": {
-      "Topic": "Phishing",
-      "Difficulty": "Medium",
-      "QuestionType": "SingleChoice",
-      "MisconceptionTags": [
-        "trusts_brand_logo",
-        "ignores_sender_address"
-      ]
+        "Text": "True or false: It is safe to reuse the same strong password across several important accounts.",
+        "Explanation": "Even a strong password becomes risky if reused. If one account is compromised, attackers may try the same password on other services.",
+        "Metadata": {
+            "Topic": "Passwords",
+            "Difficulty": "Easy",
+            "QuestionType": "TrueFalse",
+            "MisconceptionTags": [
+                "password_reuse_ok",
+                "one_password_enough"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "True",
+                "IsCorrect": false
+            },
+            {
+                "Id": 2,
+                "Text": "False",
+                "IsCorrect": true
+            }
+        ]
     },
-    "Options": [
-      {
-        "Id": 1,
-        "Text": "It uses your full name",
-        "IsCorrect": false
-      },
-      {
-        "Id": 2,
-        "Text": "The sender address is weird and not your bank's domain",
-        "IsCorrect": true
-      },
-      {
-        "Id": 3,
-        "Text": "The email uses your bank's logo",
-        "IsCorrect": false
-      }
-    ]
-  },
-  {
-    "Id": 3,
-    "Text": "test",
-    "Explanation": "",
-    "Metadata": {
-      "Topic": "Phishing",
-      "Difficulty": "Easy",
-      "QuestionType": "TrueFalse",
-      "MisconceptionTags": [
-        "test"
-      ]
+    {
+        "Id": 4,
+        "Text": "Which of these are signs that a message could be a phishing attempt?",
+        "Explanation": "Phishing messages often use urgency, suspicious links, unexpected attachments, or requests for sensitive information.",
+        "Metadata": {
+            "Topic": "Phishing",
+            "Difficulty": "Medium",
+            "QuestionType": "MultipleChoice",
+            "MisconceptionTags": [
+                "ignores_urgency",
+                "clicks_suspicious_links",
+                "trusts_unexpected_attachments"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "The message pressures you to act immediately",
+                "IsCorrect": true
+            },
+            {
+                "Id": 2,
+                "Text": "The link goes to a strange or misspelled domain",
+                "IsCorrect": true
+            },
+            {
+                "Id": 3,
+                "Text": "The sender asks for your password or one-time code",
+                "IsCorrect": true
+            },
+            {
+                "Id": 4,
+                "Text": "The email contains a professional-looking logo",
+                "IsCorrect": false
+            }
+        ]
     },
-    "Options": [
-      {
-        "Id": 1,
-        "Text": "test",
-        "IsCorrect": true
-      },
-      {
-        "Id": 2,
-        "Text": "test",
-        "IsCorrect": true
-      }
-    ]
-  },
-  {
-    "Id": 4,
-    "Text": "Which of these Test is the strongest password?",
-    "Explanation": "",
-    "Metadata": {
-      "Topic": "Phishing",
-      "Difficulty": "Hard",
-      "QuestionType": "MultipleChoice",
-      "MisconceptionTags": [
-        "short_ok",
-        "simple_words_ok",
-        "test"
-      ]
+    {
+        "Id": 5,
+        "Text": "You find a USB drive in a university computer lab. What is the safest thing to do?",
+        "Explanation": "Unknown USB devices can contain malware or be used to compromise a device. They should not be plugged into personal or work computers.",
+        "Metadata": {
+            "Topic": "DeviceSecurity",
+            "Difficulty": "Easy",
+            "QuestionType": "SingleChoice",
+            "MisconceptionTags": [
+                "trusts_unknown_device",
+                "ignores_malware_risk"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "Plug it in to check who it belongs to",
+                "IsCorrect": false
+            },
+            {
+                "Id": 2,
+                "Text": "Hand it to IT support or lost property without opening it",
+                "IsCorrect": true
+            },
+            {
+                "Id": 3,
+                "Text": "Open the files but avoid downloading anything",
+                "IsCorrect": false
+            }
+        ]
     },
-    "Options": [
-      {
-        "Id": 1,
-        "Text": "Password123",
-        "IsCorrect": true
-      },
-      {
-        "Id": 2,
-        "Text": "H0rse!Staple!Rain?92",
-        "IsCorrect": false
-      },
-      {
-        "Id": 3,
-        "Text": "qwerty",
-        "IsCorrect": true
-      }
-    ]
-  }
+    {
+        "Id": 6,
+        "Text": "A message appears to come from your manager asking you to send a one-time passcode urgently. What should you do?",
+        "Explanation": "One-time passcodes and MFA codes should never be shared. Urgent requests should be verified through a trusted channel.",
+        "Metadata": {
+            "Topic": "SocialEngineering",
+            "Difficulty": "Medium",
+            "QuestionType": "Scenario",
+            "MisconceptionTags": [
+                "trusts_authority_request",
+                "shares_mfa_code",
+                "responds_to_urgency"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "Send the code because the request came from your manager",
+                "IsCorrect": false
+            },
+            {
+                "Id": 2,
+                "Text": "Refuse to share the code and verify the request through a trusted contact method",
+                "IsCorrect": true
+            },
+            {
+                "Id": 3,
+                "Text": "Send the code only if the message includes your name",
+                "IsCorrect": false
+            }
+        ]
+    },
+    {
+        "Id": 7,
+        "Text": "Which of the following are good password security practices?",
+        "Explanation": "Strong password security includes using unique passwords, avoiding reuse, and using a password manager where appropriate.",
+        "Metadata": {
+            "Topic": "Passwords",
+            "Difficulty": "Medium",
+            "QuestionType": "MultipleChoice",
+            "MisconceptionTags": [
+                "password_reuse_ok",
+                "memorisation_only",
+                "weak_password_habits"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "Use a unique password for each important account",
+                "IsCorrect": true
+            },
+            {
+                "Id": 2,
+                "Text": "Reuse one strong password across all accounts",
+                "IsCorrect": false
+            },
+            {
+                "Id": 3,
+                "Text": "Use a reputable password manager to store complex passwords",
+                "IsCorrect": true
+            },
+            {
+                "Id": 4,
+                "Text": "Base all passwords on your name and date of birth so they are easy to remember",
+                "IsCorrect": false
+            }
+        ]
+    },
+    {
+        "Id": 8,
+        "Text": "True or false: A website using HTTPS always means the website is safe and legitimate.",
+        "Explanation": "HTTPS encrypts the connection, but it does not prove that the website itself is trustworthy. Phishing sites can also use HTTPS.",
+        "Metadata": {
+            "Topic": "Phishing",
+            "Difficulty": "Medium",
+            "QuestionType": "TrueFalse",
+            "MisconceptionTags": [
+                "https_means_safe",
+                "ignores_domain_checking"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "True",
+                "IsCorrect": false
+            },
+            {
+                "Id": 2,
+                "Text": "False",
+                "IsCorrect": true
+            }
+        ]
+    },
+    {
+        "Id": 9,
+        "Text": "You receive an email saying your account will be suspended unless you click a link immediately. What is the safest response?",
+        "Explanation": "Urgency is a common phishing technique. The safest response is to avoid the link and check the account through the official website or app.",
+        "Metadata": {
+            "Topic": "Phishing",
+            "Difficulty": "Easy",
+            "QuestionType": "SingleChoice",
+            "MisconceptionTags": [
+                "responds_to_urgency",
+                "clicks_email_links",
+                "ignores_official_channel"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "Click the link quickly before the account is suspended",
+                "IsCorrect": false
+            },
+            {
+                "Id": 2,
+                "Text": "Ignore the email completely and never check the account",
+                "IsCorrect": false
+            },
+            {
+                "Id": 3,
+                "Text": "Go directly to the official website or app instead of using the email link",
+                "IsCorrect": true
+            }
+        ]
+    },
+    {
+        "Id": 10,
+        "Text": "Which action best reduces the risk of a device being compromised through outdated software?",
+        "Explanation": "Software updates often include security patches that fix known vulnerabilities. Delaying them can leave devices exposed.",
+        "Metadata": {
+            "Topic": "DeviceSecurity",
+            "Difficulty": "Easy",
+            "QuestionType": "SingleChoice",
+            "MisconceptionTags": [
+                "delays_updates",
+                "ignores_patch_security"
+            ]
+        },
+        "Options": [
+            {
+                "Id": 1,
+                "Text": "Install software updates when they are available from trusted sources",
+                "IsCorrect": true
+            },
+            {
+                "Id": 2,
+                "Text": "Only update software if the device becomes slow",
+                "IsCorrect": false
+            },
+            {
+                "Id": 3,
+                "Text": "Avoid updates because they are mainly cosmetic",
+                "IsCorrect": false
+            }
+        ]
+    }
 ]
