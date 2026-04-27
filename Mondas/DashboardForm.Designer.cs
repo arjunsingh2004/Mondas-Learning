@@ -387,6 +387,7 @@
             this.btnLogout.TabIndex = 1;
             this.btnLogout.Text = "LOG OUT";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblUser
             // 
@@ -1106,7 +1107,7 @@
             "PHISHING SIMULATOR",
             "AUTHENTICATION DEFENSE",
             "LEARNING MODULES"});
-            this.cmbStatsSource.Location = new System.Drawing.Point(162, 26);
+            this.cmbStatsSource.Location = new System.Drawing.Point(162, 27);
             this.cmbStatsSource.Name = "cmbStatsSource";
             this.cmbStatsSource.Size = new System.Drawing.Size(153, 26);
             this.cmbStatsSource.TabIndex = 2;

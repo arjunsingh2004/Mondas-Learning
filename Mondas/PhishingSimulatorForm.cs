@@ -553,6 +553,8 @@ namespace Mondas
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
+            var start = new Start();
+            start.Show();
             Close();
         }
 

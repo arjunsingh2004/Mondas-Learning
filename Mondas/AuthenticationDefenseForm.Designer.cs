@@ -194,9 +194,9 @@
             this.lblAuthSubtitle.Font = new System.Drawing.Font("Agency", 10F);
             this.lblAuthSubtitle.Location = new System.Drawing.Point(8, 45);
             this.lblAuthSubtitle.Name = "lblAuthSubtitle";
-            this.lblAuthSubtitle.Size = new System.Drawing.Size(458, 15);
+            this.lblAuthSubtitle.Size = new System.Drawing.Size(460, 15);
             this.lblAuthSubtitle.TabIndex = 3;
-            this.lblAuthSubtitle.Text = "BUILD THE CORRECT DEFENSE FOR EACH ATTACK";
+            this.lblAuthSubtitle.Text = "BUILD THE CORRECT DEFENCE FOR EACH ATTACK";
             // 
             // lblAuthTitle
             // 
@@ -204,9 +204,9 @@
             this.lblAuthTitle.Font = new System.Drawing.Font("Muro", 24F);
             this.lblAuthTitle.Location = new System.Drawing.Point(3, -10);
             this.lblAuthTitle.Name = "lblAuthTitle";
-            this.lblAuthTitle.Size = new System.Drawing.Size(493, 48);
+            this.lblAuthTitle.Size = new System.Drawing.Size(495, 48);
             this.lblAuthTitle.TabIndex = 2;
-            this.lblAuthTitle.Text = "AUTHENTICATION DEFENSE";
+            this.lblAuthTitle.Text = "AUTHENTICATION DEFENCE";
             // 
             // lblRunInfo
             // 
@@ -257,6 +257,7 @@
             this.lblUser.Size = new System.Drawing.Size(206, 24);
             this.lblUser.TabIndex = 6;
             this.lblUser.Text = "ARJUN SINGH";
+            this.lblUser.Click += new System.EventHandler(this.lblUser_Click);
             // 
             // tlpAuthMain
             // 
@@ -650,7 +651,7 @@
             this.gbDefenseBuilder.Size = new System.Drawing.Size(1208, 239);
             this.gbDefenseBuilder.TabIndex = 1;
             this.gbDefenseBuilder.TabStop = false;
-            this.gbDefenseBuilder.Text = "DEFENSE BUILDER";
+            this.gbDefenseBuilder.Text = "DEFENCE BUILDER";
             // 
             // tlpDefenseBuilder
             // 
@@ -1147,7 +1148,7 @@
             this.Style.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
             this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
-            this.Text = "Authentication Defense - Mondas";
+            this.Text = "Authentication Defence - Mondas";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.AuthenticationDefenseForm_Load);
             this.tlpAuthRoot.ResumeLayout(false);

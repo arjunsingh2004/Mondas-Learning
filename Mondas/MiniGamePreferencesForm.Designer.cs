@@ -381,7 +381,7 @@
             this.cmbDifficulty.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDifficulty.FormattingEnabled = true;
-            this.cmbDifficulty.Location = new System.Drawing.Point(161, 73);
+            this.cmbDifficulty.Location = new System.Drawing.Point(161, 74);
             this.cmbDifficulty.Name = "cmbDifficulty";
             this.cmbDifficulty.Size = new System.Drawing.Size(121, 25);
             this.cmbDifficulty.TabIndex = 5;
@@ -620,7 +620,7 @@
             this.cmbHints.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbHints.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbHints.FormattingEnabled = true;
-            this.cmbHints.Location = new System.Drawing.Point(161, 12);
+            this.cmbHints.Location = new System.Drawing.Point(161, 11);
             this.cmbHints.Name = "cmbHints";
             this.cmbHints.Size = new System.Drawing.Size(121, 25);
             this.cmbHints.TabIndex = 1;
@@ -642,7 +642,7 @@
             this.cmbFeedbackMode.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbFeedbackMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFeedbackMode.FormattingEnabled = true;
-            this.cmbFeedbackMode.Location = new System.Drawing.Point(161, 45);
+            this.cmbFeedbackMode.Location = new System.Drawing.Point(161, 46);
             this.cmbFeedbackMode.Name = "cmbFeedbackMode";
             this.cmbFeedbackMode.Size = new System.Drawing.Size(121, 25);
             this.cmbFeedbackMode.TabIndex = 3;
@@ -678,7 +678,7 @@
             this.tlpPrefsButtons.ColumnCount = 3;
             this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.0597F));
             this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.9403F));
-            this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
+            this.tlpPrefsButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.tlpPrefsButtons.Controls.Add(this.btnCancel, 2, 0);
             this.tlpPrefsButtons.Controls.Add(this.btnUseDefaults, 0, 0);
             this.tlpPrefsButtons.Controls.Add(this.btnApply, 1, 0);
@@ -698,7 +698,7 @@
             this.btnCancel.BackColor = System.Drawing.Color.Crimson;
             this.btnCancel.Font = new System.Drawing.Font("Muro", 10F);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(441, 9);
+            this.btnCancel.Location = new System.Drawing.Point(440, 9);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnCancel.Size = new System.Drawing.Size(91, 40);
@@ -734,7 +734,7 @@
             this.btnApply.BackColor = System.Drawing.Color.SeaGreen;
             this.btnApply.Font = new System.Drawing.Font("Muro", 10F);
             this.btnApply.ForeColor = System.Drawing.Color.White;
-            this.btnApply.Location = new System.Drawing.Point(354, 9);
+            this.btnApply.Location = new System.Drawing.Point(353, 9);
             this.btnApply.Name = "btnApply";
             this.btnApply.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.btnApply.Size = new System.Drawing.Size(81, 40);
